@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext ctxt) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Multi Page Application"),
-        ),
-        body: Checkbox(value: false, onChanged: null));
+    return Scaffold(
+        appBar: AppBar(
+      title: const Text("Multi Page Application"),
+    ));
   }
 }
