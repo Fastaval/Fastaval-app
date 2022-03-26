@@ -1,4 +1,5 @@
 import 'package:fastaval_app/constants/styleconstants.dart';
+import 'package:fastaval_app/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final userIdController = TextEditingController();
+  final passwordController = TextEditingController();
   bool _rememberMe = false;
 
   @override
@@ -59,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 30.0),
-                      _buildEmailTF(),
+                      _buildUserIdTF(),
                       const SizedBox(
                         height: 30.0,
                       ),
@@ -78,12 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildEmailTF() {
+  Widget _buildUserIdTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Email',
+          'Deltager nummer',
           style: kLabelStyle,
         ),
         const SizedBox(height: 10.0),
@@ -92,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            keyboardType: TextInputType.emailAddress,
+            controller: userIdController,
+            keyboardType: TextInputType.number,
             style: const TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -101,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),
               prefixIcon: const Icon(
-                Icons.email,
+                Icons.portrait,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Email',
+              hintText: 'Indtast deltager nummer',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -134,7 +138,8 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () => login('34',
+            '407106'), //login(userIdController.text, passwordController.text),
         child: const Text(
           'LOGIN',
           style: TextStyle(
@@ -163,6 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: passwordController,
             obscureText: true,
             style: const TextStyle(
               color: Colors.white,
