@@ -2,6 +2,8 @@ import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../utils/services/rest_api_service.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -134,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () =>
+            fetchProgram(), //'34', '407106'), //login(userIdController.text, passwordController.text),
         child: const Text(
           'LOGIN',
           style: TextStyle(
