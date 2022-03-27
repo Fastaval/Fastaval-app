@@ -28,17 +28,4 @@ class Food {
     textDa = json['text_da'];
     textEn = json['text_en'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['time'] = this.time;
-    data['time_end'] = this.timeEnd;
-    data['title_da'] = this.titleDa;
-    data['title_en'] = this.titleEn;
-    data['food_id'] = this.foodId;
-    data['time_id'] = this.timeId;
-    data['text_da'] = this.textDa;
-    data['text_en'] = this.textEn;
-    return data;
-  }
 }

@@ -138,8 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => login('34',
-            '407106'), //login(userIdController.text, passwordController.text),
+        onPressed: () => login(userIdController.text, passwordController.text),
         child: const Text(
           'LOGIN',
           style: TextStyle(

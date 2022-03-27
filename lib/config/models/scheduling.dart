@@ -46,23 +46,4 @@ class Scheduling {
     meetRoomId = json['meet_room_id'];
     meetRoomName = json['meet_room_name'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['activity_type'] = this.activityType;
-    data['id'] = this.id;
-    data['schedule_id'] = this.scheduleId;
-    data['title_da'] = this.titleDa;
-    data['title_en'] = this.titleEn;
-    data['room_da'] = this.roomDa;
-    data['room_en'] = this.roomEn;
-    data['start'] = this.start;
-    data['stop'] = this.stop;
-    data['play_room_id'] = this.playRoomId;
-    data['play_room_name'] = this.playRoomName;
-    data['meet_room_id'] = this.meetRoomId;
-    data['meet_room_name'] = this.meetRoomName;
-    return data;
-  }
 }

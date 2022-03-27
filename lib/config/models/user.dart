@@ -1,7 +1,6 @@
 import 'food.dart';
 import 'otto_party.dart';
 import 'scheduling.dart';
-import 'sleep.dart';
 import 'wear.dart';
 
 class User {
@@ -39,54 +38,28 @@ class User {
     category = json['category'];
     if (json['food'] != null) {
       food = <Food>[];
-      json['food'].forEach((v) {
-        food!.add(Food.fromJson(v));
+      json['food'].forEach((foodItem) {
+        food!.add(Food.fromJson(foodItem));
       });
     }
     if (json['wear'] != null) {
       wear = <Wear>[];
-      json['wear'].forEach((v) {
-        wear!.add(Wear.fromJson(v));
+      json['wear'].forEach((wearItem) {
+        wear!.add(Wear.fromJson(wearItem));
       });
     }
     if (json['scheduling'] != null) {
       scheduling = <Scheduling>[];
-      json['scheduling'].forEach((v) {
-        scheduling!.add(Scheduling.fromJson(v));
+      json['scheduling'].forEach((shedulingtem) {
+        scheduling!.add(Scheduling.fromJson(shedulingtem));
       });
     }
     barcode = json['barcode'];
     if (json['otto_party'] != null) {
       ottoParty = <OttoParty>[];
-      json['otto_party'].forEach((v) {
-        ottoParty!.add(OttoParty.fromJson(v));
+      json['otto_party'].forEach((ottoPartyItem) {
+        ottoParty!.add(OttoParty.fromJson(ottoPartyItem));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['checked_in'] = this.checkedIn;
-    data['messages'] = this.messages;
-    if (this.sleep != null) {
-      data['sleep'] = this.sleep;
-    }
-    data['category'] = this.category;
-    if (this.food != null) {
-      data['food'] = this.food!.map((v) => v.toJson()).toList();
-    }
-    if (this.wear != null) {
-      data['wear'] = this.wear!.map((v) => v.toJson()).toList();
-    }
-    if (this.scheduling != null) {
-      data['scheduling'] = this.scheduling!.map((v) => v.toJson()).toList();
-    }
-    data['barcode'] = this.barcode;
-    if (this.ottoParty != null) {
-      data['otto_party'] = this.ottoParty!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }

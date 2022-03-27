@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fastaval_app/config/models/user.dart';
 import 'package:http/http.dart' as http;
+
+import '../../config/models/user.dart';
 
 const String baseUrl = 'https://infosys-test.fastaval.dk/api';
 
