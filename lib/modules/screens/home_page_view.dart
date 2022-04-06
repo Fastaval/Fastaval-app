@@ -1,9 +1,8 @@
+import 'package:fastaval_app/modules/screens/Programscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
+import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fastaval_app/modules/screens/infoscreen.dart';
-
-import 'dashboard_view.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({Key? key, required this.title}) : super(key: key);
@@ -18,8 +17,8 @@ class HomePageState extends State<HomePageView> {
   int _currentIndex = 1;
   final List<Widget> _children = [
     LoginScreen(),
-    const InfoScreen(),
-    DashboardView(Colors.blue),
+    InfoScreen(),
+    Programscreen(),
   ];
 
   @override
