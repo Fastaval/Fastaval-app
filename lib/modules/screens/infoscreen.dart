@@ -1,62 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const <Widget>[
-        Card(
-          child: ListTile(
-            title: Text('Wifi'),
+    return Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFF9800),
+                      Color(0xFFFB8c00),
+                      Color(0xFFF57C00),
+                      Color(0xFFEF6c00),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[_buildVagttelefon()],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-        Card(child: ListTile(title: Text('One-line ListTile'))),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(),
-            title: Text('One-line with leading widget'),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            title: Text('One-line with trailing widget'),
-            trailing: Icon(Icons.more_vert),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(),
-            title: Text('One-line with both widgets'),
-            trailing: Icon(Icons.more_vert),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            title: Text('One-line dense ListTile'),
-            dense: true,
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Two-line ListTile'),
-            subtitle: Text('Here is a second line'),
-            trailing: Icon(Icons.more_vert),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 72.0),
-            title: Text('Three-line ListTile'),
-            subtitle:
-                Text('A sufficiently long subtitle warrants three lines.'),
-            trailing: Icon(Icons.more_vert),
-            isThreeLine: true,
-          ),
-        ),
-      ],
+      ),
     );
   }
+}
+
+Widget _buildVagttelefon() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('Vagt Telefon'),
+            subtitle: Text('00000000'),
+          ),
+        ],
+      ),
+    ),
+  );
 }
