@@ -1,9 +1,6 @@
 import 'package:fastaval_app/config/models/activity.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
-import 'package:http/http.dart' as http;
 
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
@@ -13,7 +10,7 @@ class Programscreen extends StatefulWidget {
 }
 
 class _ProgramscreenState extends State<Programscreen> {
-  late Future<List<Activity>> futureProgram;
+  late Future<Activity> futureProgram;
 
   @override
   void initState() {
@@ -29,10 +26,10 @@ class _ProgramscreenState extends State<Programscreen> {
             !programSnap.hasData) {
           return Container();
         }
-        return const DefaultTabController(
+        return DefaultTabController(
           length: 6,
           child: Scaffold(
-            appBar: TabBar(
+            appBar: const TabBar(
               tabs: [
                 Tab(text: "onsdag"),
                 Tab(text: "torsdag"),
