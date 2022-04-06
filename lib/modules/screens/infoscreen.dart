@@ -38,7 +38,7 @@ class InfoScreen extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[_buildVagttelefon()],
+                    children: <Widget>[_buildSafeFastaval(), _buildWIFI()],
                   ),
                 ),
               )
@@ -50,19 +50,154 @@ class InfoScreen extends StatelessWidget {
   }
 }
 
-Widget _buildVagttelefon() {
-  return SizedBox(
+Widget _buildSafeFastaval() {
+  return Container(
     width: double.infinity,
     child: Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Vagt Telefon'),
-            subtitle: Text('00000000'),
+      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.phone),
+        title: const Text(
+          'Safe Fastaval',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
           ),
-        ],
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const <Widget>[
+            Text(
+              'Vagthavende General: +45 61 40 92 65',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Tryghedsvært: +45 61 40 92 64',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Safemail: safe@fastaval.dk',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildWIFI() {
+  return Container(
+    width: double.infinity,
+    child: Card(
+      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.phone),
+        title: const Text(
+          'WIFI',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const <Widget>[
+            Text(
+              'Netværk: Undervisning',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Brugernavn: mfg-guest@mf-gym.dk',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Kode: Teleskop2022 ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildOpenHours() {
+  return Container(
+    width: double.infinity,
+    child: Card(
+      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.phone),
+        title: const Text(
+          'Åbningstider',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const <Widget>[
+            Text(
+              'Informationen',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Tryghedsvært: +45 61 40 92 64',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              'Safemail: safe@fastaval.dk',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );
