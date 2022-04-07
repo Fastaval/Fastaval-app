@@ -3,13 +3,27 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
+import '../../config/models/program.dart';
 import '../../config/models/user.dart';
 
 const String baseUrl = 'https://infosys-test.fastaval.dk/api';
 
+Future<Program> fetchProgram() async {
+  var url = Uri.parse('$baseUrl/app/v2/activities/*');
+
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    var program = Program.fromJson(jsonDecode(response.body));
+    inspect(program);
+    return program;
+  } else {
+    throw Exception('Failed to load program');
+  }
+}
+
 Future<User> login(String userId, String password) async {
   var url = Uri.parse('$baseUrl/user/$userId?pass=$password');
-
   final response = await http.get(url);
 
   if (response.statusCode == 200) {

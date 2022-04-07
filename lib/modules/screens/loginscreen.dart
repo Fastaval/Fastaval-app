@@ -3,6 +3,8 @@ import 'package:fastaval_app/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../utils/services/rest_api_service.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
