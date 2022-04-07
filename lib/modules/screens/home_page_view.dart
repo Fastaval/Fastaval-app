@@ -18,6 +18,7 @@ class HomePageState extends State<HomePageView> {
     LoginScreen(),
     InfoScreen(),
     Programscreen(),
+    Programscreen(),
   ];
 
   @override
@@ -32,13 +33,19 @@ class HomePageState extends State<HomePageView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: onTabTapped,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: new Icon(Icons.person), label: 'Profil'),
+              icon: Icon(
+                Icons.person,
+              ),
+              label: 'Profil'),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.info), label: 'Information'),
+              icon: Icon(
+                Icons.info,
+              ),
+              label: 'Information'),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.calendar_view_day), label: 'Program')
+              icon: Icon(Icons.calendar_view_day), label: 'Program'),
         ],
       ),
     );
