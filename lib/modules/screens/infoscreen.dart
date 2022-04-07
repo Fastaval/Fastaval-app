@@ -42,6 +42,12 @@ class InfoScreen extends StatelessWidget {
                       _buildSafeFastaval(),
                       _buildWIFI(),
                       _buildOpenHours(),
+                      _buildstores(),
+                      //_buildfood(),
+                      _buildfastawaer(),
+                      _buildlostfound(),
+                      _buildTransport(),
+                      const Padding(padding: EdgeInsets.only(bottom: 80))
                     ],
                   ),
                 ),
@@ -55,10 +61,10 @@ class InfoScreen extends StatelessWidget {
 }
 
 Widget _buildSafeFastaval() {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
       elevation: 5,
       child: ListTile(
         leading: const Icon(Icons.phone),
@@ -123,7 +129,7 @@ Widget _buildWIFI() {
           ),
         ),
         subtitle: Container(
-          padding: EdgeInsets.only(top: 1),
+          padding: const EdgeInsets.only(top: 1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const <Widget>[
@@ -163,10 +169,10 @@ Widget _buildOpenHours() {
   return Container(
     width: double.infinity,
     child: Card(
-      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
       elevation: 5,
       child: ListTile(
-        leading: const Icon(Icons.calendar_today),
+        leading: const Icon(Icons.watch),
         title: const Text(
           'Åbningstider',
           style: TextStyle(
@@ -355,6 +361,262 @@ Widget _buildOpenHours() {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 4),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildstores() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.store),
+        title: const Text(
+          'Butikker',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Container(
+          padding: const EdgeInsets.only(top: 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Epic Panda i B45',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Onsdag kl.16.00 - 23.00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'Tors-lør kl.10.00 - 23.00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'Søndag kl.10.00 - 15.00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10),
+              ),
+              const Text(
+                'Tier1MTG i A07 (kl. 10.00-22.00)',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10),
+              ),
+              const Text(
+                'Corra Design i fællesområdet  (Fre-søn kl. 10.00-16.00)',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildlostfound() {
+  return Container(
+    width: double.infinity,
+    child: Card(
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.move_to_inbox),
+        title: const Text(
+          'Lost & Found',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Container(
+          padding: const EdgeInsets.only(top: 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                'Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildfastawaer() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.person),
+        title: const Text(
+          'Fasta-Wear',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Container(
+          padding: const EdgeInsets.only(top: 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                'Har du bestilt wear?',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+              ),
+              Text(
+                'Det kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+              ),
+              Text(
+                'I år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildTransport() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.local_parking),
+        title: const Text(
+          'Transport og Parkering',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+                "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads."),
+            Text("Hobro Togstation er ca. 2,5 km fra Fastaval."),
+            Text("Hobro Taxa: +45 98 51 23 00"),
+            Text("Krone Taxa: +45 98 52 11 11"),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildfood() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      elevation: 5,
+      child: ListTile(
+        leading: const Icon(Icons.food_bank),
+        title: const Text(
+          'Mad Information',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+        subtitle: Container(
+          padding: const EdgeInsets.only(top: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                'Mad tider:',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),
