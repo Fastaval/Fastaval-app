@@ -38,7 +38,11 @@ class InfoScreen extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[_buildSafeFastaval(), _buildWIFI()],
+                    children: <Widget>[
+                      _buildSafeFastaval(),
+                      _buildWIFI(),
+                      _buildOpenHours(),
+                    ],
                   ),
                 ),
               )
@@ -102,13 +106,13 @@ Widget _buildSafeFastaval() {
 }
 
 Widget _buildWIFI() {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+      margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
       elevation: 5,
       child: ListTile(
-        leading: const Icon(Icons.phone),
+        leading: const Icon(Icons.wifi),
         title: const Text(
           'WIFI',
           style: TextStyle(
@@ -118,34 +122,37 @@ Widget _buildWIFI() {
             fontFamily: 'OpenSans',
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              'Netværk: Undervisning',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
+        subtitle: Container(
+          padding: EdgeInsets.only(top: 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                'Netværk: Undervisning',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
               ),
-            ),
-            Text(
-              'Brugernavn: mfg-guest@mf-gym.dk',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
+              Text(
+                'Brugernavn: mfg-guest@mf-gym.dk',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
               ),
-            ),
-            Text(
-              'Kode: Teleskop2022 ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
-              ),
-            )
-          ],
+              Text(
+                'Kode: Teleskop2022 ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ),
@@ -159,7 +166,7 @@ Widget _buildOpenHours() {
       margin: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
       elevation: 5,
       child: ListTile(
-        leading: const Icon(Icons.phone),
+        leading: const Icon(Icons.calendar_today),
         title: const Text(
           'Åbningstider',
           style: TextStyle(
@@ -169,34 +176,188 @@ Widget _buildOpenHours() {
             fontFamily: 'OpenSans',
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              'Informationen',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
+        subtitle: Container(
+          padding: const EdgeInsets.only(top: 2, left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //infomation
+              const Text(
+                'Informationen:',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
               ),
-            ),
-            Text(
-              'Tryghedsvært: +45 61 40 92 64',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Onsdag kl. 	15:00 - 21:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'Tor-lør   kl.	 09:00 - 21:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'Søndag kl. 	09:00 - 17:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              'Safemail: safe@fastaval.dk',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: 'OpenSans',
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
               ),
-            )
-          ],
+              //kaffekro
+              const Text(
+                "Otto's Kaffekro:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Ons-søn kl. 	09:00 - 23:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+              ),
+              //brætspilscafe
+              const Text(
+                "Brætspilscaféen:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Ons-lør  kl. 	09:00 - 02:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'søndag  kl. 	09:00 - 15:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+              ),
+              //Kiosken
+              const Text(
+                "Kiosken:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Ons-søn kl. 	08:00 - 00:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+              ),
+              //Baren
+              const Text(
+                "Baren:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Ons-søn kl. 	17:00 - 02:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+              ),
+              const Text(
+                "Oasen:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: const <Widget>[
+                  Text(
+                    'Onsdag kl. 	16:00 - 02:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                  Text(
+                    'Tor-søn kl. 	12:00 - 02:00',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+              ),
+            ],
+          ),
         ),
       ),
     ),
