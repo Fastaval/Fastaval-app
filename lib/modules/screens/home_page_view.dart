@@ -2,7 +2,6 @@ import 'package:fastaval_app/modules/screens/Programscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({Key? key, required this.title}) : super(key: key);
@@ -19,6 +18,7 @@ class HomePageState extends State<HomePageView> {
     LoginScreen(),
     InfoScreen(),
     Programscreen(),
+    Programscreen(),
   ];
 
   @override
@@ -33,13 +33,19 @@ class HomePageState extends State<HomePageView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: onTabTapped,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: new Icon(Icons.person), label: 'Profil'),
+              icon: Icon(
+                Icons.person,
+              ),
+              label: 'Profil'),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.home), label: 'Oversigt'),
+              icon: Icon(
+                Icons.info,
+              ),
+              label: 'Information'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_view_day), label: 'Program')
+              icon: Icon(Icons.calendar_view_day), label: 'Program'),
         ],
       ),
     );

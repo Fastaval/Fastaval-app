@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fastaval_app/config/models/activity.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/program.dart';
@@ -32,5 +33,18 @@ Future<User> login(String userId, String password) async {
     return user;
   } else {
     throw Exception('Failed to load login');
+  }
+}
+
+Future<Activity> getProgram() async {
+  var url = Uri.parse('$baseUrl/app/v2/activities/*');
+
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    var activity = Activity.fromJson(jsonDecode(response.body));
+    return activity;
+  } else {
+    throw Exception('Failed to download programs');
   }
 }
