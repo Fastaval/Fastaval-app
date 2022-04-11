@@ -1,4 +1,5 @@
 import 'package:fastaval_app/config/models/activity.dart';
+import 'package:intl/intl.dart';
 import 'package:fastaval_app/config/models/program.dart';
 import 'package:flutter/material.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
@@ -71,14 +72,19 @@ class _ProgramscreenState extends State<Programscreen> {
   }
 }
 
+Widget box({width: 100.0, height: 50.0}) => Container(
+      width: width,
+      height: height,
+      color: Colors.grey,
+    );
+
 //tid   titel   hvor
 Widget _buildsession() {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: const <Widget>[
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: <Widget>[
       //when
-      Text('time'),
-
+      timebox(timestamp: DateTime.now()),
       //what
       Text('hvad'),
 
@@ -88,3 +94,13 @@ Widget _buildsession() {
   );
 }
 
+Widget timebox(
+        {double? width = 100,
+        double? height = 50,
+        required DateTime timestamp}) =>
+    Container(
+      width: width,
+      height: height,
+      color: Colors.grey,
+      child: Text(DateFormat.yMMMMEEEEd().format(timestamp)),
+    );
