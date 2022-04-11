@@ -80,7 +80,7 @@ Widget _buildSafeFastaval() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const <Widget>[
             Text(
-              'Vagthavende General: +45 61 40 92 65',
+              'Vagthavende General: +45 61 40 90 65',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16.0,

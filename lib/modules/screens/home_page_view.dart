@@ -1,9 +1,15 @@
+
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fastaval_app/modules/screens/Programscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+
+import 'profilescreen.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({Key? key, required this.title}) : super(key: key);
@@ -17,9 +23,8 @@ class HomePageView extends StatefulWidget {
 class HomePageState extends State<HomePageView> {
   int _currentIndex = 1;
   final List<Widget> _children = [
-    LoginScreen(),
+    ProfileScreen(),
     InfoScreen(),
-    Programscreen(),
     Programscreen(),
   ];
 
@@ -29,7 +34,9 @@ class HomePageState extends State<HomePageView> {
       appBar: AppBar(
         title: Text(
           widget.title,
+          style: TextStyle(color: Colors.white),
         ),
+
         actions: [
           IconButton(
             icon: const Icon(Icons.qr_code),
@@ -53,6 +60,39 @@ class HomePageState extends State<HomePageView> {
               );
             },
           )
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(
+                  CupertinoIcons.barcode,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  // do something
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.map,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  // do something
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  // do something
+                },
+              )
+            ],
+          ),
         ],
       ),
       body: _children[_currentIndex],
