@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:fastaval_app/config/models/activity.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/program.dart';
@@ -24,11 +25,16 @@ Future<Program> fetchProgram() async {
 }
 
 Future<User> login(String userId, String password) async {
-  var url = Uri.parse('$baseUrl/user/$userId?pass=$password');
+  final UserService userService = UserService();
+
+  var url = Uri.parse('$baseUrl/v3/user/$userId?pass=$password');
   final response = await http.get(url);
+  inspect(response);
 
   if (response.statusCode == 200) {
     var user = User.fromJson(jsonDecode(response.body));
+
+    userService.setUser(user);
     inspect(user);
     return user;
   } else {

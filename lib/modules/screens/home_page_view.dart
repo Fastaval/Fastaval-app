@@ -1,6 +1,8 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fastaval_app/modules/screens/Programscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class HomePageView extends StatefulWidget {
@@ -28,6 +30,30 @@ class HomePageState extends State<HomePageView> {
         title: Text(
           widget.title,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.qr_code),
+            tooltip: 'Show barcode',
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context){
+                    return AlertDialog(
+                      content: Center(
+                        child: RotatedBox(
+                          quarterTurns: 1,
+                          child: BarcodeWidget(
+                            barcode: Barcode.ean8(), // Barcode type and settings
+                            data: '22000347',
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+              );
+            },
+          )
+        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

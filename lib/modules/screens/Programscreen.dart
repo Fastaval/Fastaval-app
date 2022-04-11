@@ -1,4 +1,3 @@
-import 'package:fastaval_app/config/models/activity.dart';
 import 'package:fastaval_app/config/models/program.dart';
 import 'package:flutter/material.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';

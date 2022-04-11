@@ -1,3 +1,5 @@
+import 'package:fastaval_app/config/models/sleep.dart';
+
 import 'food.dart';
 import 'otto_party.dart';
 import 'scheduling.dart';
@@ -8,7 +10,7 @@ class User {
   String? name;
   int? checkedIn;
   String? messages;
-  int? sleep;
+  Sleep? sleep;
   String? category;
   List<Food>? food;
   List<Wear>? wear;
@@ -34,7 +36,7 @@ class User {
     name = json['name'];
     checkedIn = json['checked_in'];
     messages = json['messages'] ?? '';
-    sleep = json['sleep'];
+    sleep = Sleep.fromJson(json['sleep']);
     category = json['category'];
     if (json['food'] != null) {
       food = <Food>[];
@@ -62,4 +64,18 @@ class User {
       });
     }
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'checked_in': checkedIn,
+    'messages': messages,
+    'sleep': sleep,
+    'category': category,
+    'food': food,
+    'wear': wear,
+    'scheduling': scheduling,
+    'barcode': barcode,
+    'otto_party': ottoParty
+  };
 }
