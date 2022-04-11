@@ -1,7 +1,12 @@
-import 'Programscreen.dart';
-import 'loginscreen.dart';
+
+import 'package:barcode_widget/barcode_widget.dart';
+import 'package:fastaval_app/modules/screens/Programscreen.dart';
+import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
+
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import 'profilescreen.dart';
@@ -31,6 +36,30 @@ class HomePageState extends State<HomePageView> {
           widget.title,
           style: TextStyle(color: Colors.white),
         ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.qr_code),
+            tooltip: 'Show barcode',
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context){
+                    return AlertDialog(
+                      content: Center(
+                        child: RotatedBox(
+                          quarterTurns: 1,
+                          child: BarcodeWidget(
+                            barcode: Barcode.ean8(), // Barcode type and settings
+                            data: '22000347',
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+              );
+            },
+          )
         actions: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

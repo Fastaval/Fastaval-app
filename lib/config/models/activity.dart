@@ -65,4 +65,25 @@ class Activity {
     type = json['type'];
     wordpressId = json['wp_id'];
   }
+
+  Map<String, dynamic> toJson() => {
+    'aktivitet_id': id,
+    'author': author,
+    'can_sign_up': canSignUp,
+    'description_da': descriptionDa,
+    'description_en': descriptionEn,
+    'gms': gms,
+    'language': language,
+    'max_player': maxPlayer,
+    'min_player': minPlayer,
+    'play_hours': playHours,
+    'price': price,
+    'afviklinger': sessions,
+    'text_da': textDa,
+    'text_en': textEn,
+    'title_da': titleDa,
+    'title_da': titleEn,
+    'type': type,
+    'wp_id': wordpressId
+  };
 }

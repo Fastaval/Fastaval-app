@@ -14,4 +14,12 @@ class Sleep {
     areaName = json['area_name'];
     areaId = json['area_id'];
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'access': access,
+    'mattress': mattress,
+    'areaName': areaName,
+    'areaId': areaId
+  };
 }
