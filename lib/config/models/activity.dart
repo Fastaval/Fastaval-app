@@ -50,7 +50,7 @@ class Activity {
     language = json['language'];
     maxPlayer = json['max_player'];
     minPlayer = json['min_player'];
-    playHours = json['play_hours'];
+    playHours = json['play_hours'].toDouble();
     price = json['price'];
     if (json['afviklinger'] != null) {
       sessions = <Session>[];

@@ -1,4 +1,5 @@
 import 'package:fastaval_app/config/models/activity.dart';
+import 'package:fastaval_app/config/models/program.dart';
 import 'package:flutter/material.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
 
@@ -10,12 +11,16 @@ class Programscreen extends StatefulWidget {
 }
 
 class _ProgramscreenState extends State<Programscreen> {
-  late Future<Activity> futureProgram;
-
+  late Future<Program> futureProgram;
+  Program? myprogram;
   @override
   void initState() {
     super.initState();
-    futureProgram = getProgram();
+    futureProgram = fetchProgram();
+
+    futureProgram.then((Program value) {
+      myprogram = value;
+    });
   }
 
   @override
@@ -31,16 +36,17 @@ class _ProgramscreenState extends State<Programscreen> {
           child: Scaffold(
             appBar: const TabBar(
               tabs: [
-                Tab(text: "onsdag"),
-                Tab(text: "torsdag"),
-                Tab(text: "fredag"),
-                Tab(text: "lørdag"),
-                Tab(text: "søndag"),
-                Tab(text: "mandag"),
+                Tab(text: "ons"),
+                Tab(text: "tors"),
+                Tab(text: "fre"),
+                Tab(text: "lør"),
+                Tab(text: "søn"),
+                Tab(text: "man"),
               ],
             ),
             body: TabBarView(
               children: [
+                _buildOnsdag(),
                 Center(child: Text("torsdag")),
                 Center(child: Text("fredag")),
                 Center(child: Text("lørdag")),
@@ -51,7 +57,34 @@ class _ProgramscreenState extends State<Programscreen> {
           ),
         );
       },
-      future: getProgram(),
+      future: fetchProgram(),
+    );
+  }
+
+  Widget _buildOnsdag() {
+    return SizedBox(
+      child: Container(
+          padding: EdgeInsets.only(top: 20),
+          alignment: Alignment.topCenter,
+          child: _buildsession()),
     );
   }
 }
+
+//tid   titel   hvor
+Widget _buildsession() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: const <Widget>[
+      //when
+      Text('time'),
+
+      //what
+      Text('hvad'),
+
+      //where
+      Text('hvor'),
+    ],
+  );
+}
+

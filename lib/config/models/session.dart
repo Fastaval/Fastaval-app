@@ -21,7 +21,7 @@ class Session {
   Session.fromJson(dynamic json) {
     id = json['afvikling_id'];
     activityId = json['aktivitet_id'];
-    length = json['length'];
+    length = json['length'].toDouble();
     linked = json['linked'];
     roomId = json['lokale_id'];
     roomName = json['lokale_navn'];
