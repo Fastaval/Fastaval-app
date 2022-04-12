@@ -1,10 +1,28 @@
-
 import 'package:fastaval_app/config/models/activity.dart';
+import 'package:fastaval_app/config/models/activity_item.dart';
 import 'package:intl/intl.dart';
 
 import 'package:fastaval_app/config/models/program.dart';
 import 'package:flutter/material.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
+
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+Future<List<ActivityItem>> getProgram() async {
+  var url = Uri.parse('https://infosys.fastaval.dk/api/app/v2/activities/*');
+
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    return (jsonDecode(response.body) as List)
+        .map((item) => ActivityItem.fromJson(item))
+        .toList();
+  } else {
+    throw Exception('Failed to download programs');
+  }
+}
 
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
@@ -14,15 +32,15 @@ class Programscreen extends StatefulWidget {
 }
 
 class _ProgramscreenState extends State<Programscreen> {
-  late Future<Program> futureProgram;
-  Program? myprogram;
+  late Future<List<ActivityItem>> futureProgram;
+  late List<ActivityItem> list;
   @override
   void initState() {
     super.initState();
-    futureProgram = fetchProgram();
+    futureProgram = getProgram();
 
-    futureProgram.then((Program value) {
-      myprogram = value;
+    futureProgram.then((List<ActivityItem> value) {
+      list = value;
     });
   }
 
@@ -30,10 +48,6 @@ class _ProgramscreenState extends State<Programscreen> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       builder: (context, programSnap) {
-        if (programSnap.connectionState == ConnectionState.none ||
-            !programSnap.hasData) {
-          return Container();
-        }
         return DefaultTabController(
           length: 6,
           child: Scaffold(
@@ -60,7 +74,7 @@ class _ProgramscreenState extends State<Programscreen> {
           ),
         );
       },
-      future: fetchProgram(),
+      future: getProgram(),
     );
   }
 
@@ -69,7 +83,15 @@ class _ProgramscreenState extends State<Programscreen> {
       child: Container(
           padding: EdgeInsets.only(top: 20),
           alignment: Alignment.topCenter,
-          child: _buildsession()),
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              ActivityItem item = list[index];
+              return Column(
+                children: <Widget>[Text(item.daTitle)],
+              );
+            },
+          )),
     );
   }
 }
