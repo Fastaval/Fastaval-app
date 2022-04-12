@@ -11,21 +11,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'https://infosys-test.fastaval.dk/api';
-
-Future<List<ActivityItem>> getProgram() async {
-  var url = Uri.parse('$baseUrl/app/v2/activities/*');
-
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    return (jsonDecode(response.body) as List)
-        .map((item) => ActivityItem.fromJson(item))
-        .toList();
-  } else {
-    throw Exception('Failed to download programs');
-  }
-}
+const String baseUrl = 'https://infosys.fastaval.dk/api';
 
 Future<List<ActivityItem>> getday(String isoDate) async {
   var url = Uri.parse('$baseUrl/app/v3/activities/$isoDate');
@@ -49,18 +35,6 @@ class Programscreen extends StatefulWidget {
 }
 
 class _ProgramscreenState extends State<Programscreen> {
-  late Future<List<ActivityItem>> futureProgram;
-  late List<ActivityItem> list;
-  @override
-  void initState() {
-    super.initState();
-    futureProgram = getProgram();
-
-    futureProgram.then((List<ActivityItem> value) {
-      list = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -92,6 +66,7 @@ class _ProgramscreenState extends State<Programscreen> {
     List<ActivityItem> _list = [];
     List<ActivityRun>? _runlist = [];
     Map<int, ActivityItem> _activityMap = <int, ActivityItem>{};
+    Map<String, Color> _colorMap = <String, Color>{};
     getday(day).then((List<ActivityItem> value) {
       _list = value;
 
@@ -107,36 +82,48 @@ class _ProgramscreenState extends State<Programscreen> {
       }
       _runlist.sort((a, b) => a.start - b.start);
     });
-
+    _colorMap.putIfAbsent('rolle', () => Colors.red.shade600);
+    _colorMap.putIfAbsent('braet', () => Colors.green.shade400);
+    _colorMap.putIfAbsent('live', () => Colors.blue.shade700);
+    _colorMap.putIfAbsent('ottoviteter', () => Colors.amber.shade300);
+    _colorMap.putIfAbsent('junior', () => Colors.lightGreen.shade200);
+    _colorMap.putIfAbsent('magic', () => Colors.red.shade100);
+    _colorMap.putIfAbsent('workshop', () => Colors.amber.shade300);
+    _colorMap.putIfAbsent('figur', () => Colors.amber.shade300);
     return FutureBuilder(
       builder: (context, programSnap) {
         return SizedBox(
           child: Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
               child: ListView.builder(
                 itemCount: _runlist.length,
                 itemBuilder: (context, index) {
                   ActivityRun item = _runlist[index];
+
                   return Container(
-                    padding: EdgeInsets.only(left: 30, right: 30),
+                    padding: const EdgeInsets.only(left: 30, right: 30),
                     child: Column(
                       children: <Widget>[
                         Row(
                           children: <Widget>[
                             //when
 
-                            timebox(timestamp: unixtodatetime(item.start)),
-                            Padding(padding: EdgeInsets.only(left: 20)),
+                            timebox(
+                                timestamp: unixtodatetime(item.start),
+                                color:
+                                    _colorMap[_activityMap[item.activity]!.type]
+                                        as Color),
+                            const Padding(padding: EdgeInsets.only(left: 20)),
 
                             //what
                             Text(
                               _activityMap[item.activity]!.daTitle,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
-                        Divider(height: 6)
+                        const Divider(height: 6)
                       ],
                     ),
                   );
@@ -154,33 +141,18 @@ class _ProgramscreenState extends State<Programscreen> {
         color: Colors.grey,
       );
 
-//tid   titel   hvor
-  Widget _buildsession() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        //when
-        timebox(timestamp: DateTime.now()),
-        //what
-        Text('hvad'),
-
-        //where
-        Text('hvor'),
-      ],
-    );
-  }
-
-  Widget timebox({required DateTime timestamp}) => Container(
-        padding: EdgeInsets.all(20),
+  Widget timebox({required DateTime timestamp, required Color color}) =>
+      Container(
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.orange,
+          color: color,
           shape: BoxShape.circle,
         ),
         child: Container(
           child: Text(
             DateFormat.Hm().format(timestamp),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         ),
       );
