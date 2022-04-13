@@ -19,7 +19,7 @@ class Sleep {
     'id': id,
     'access': access,
     'mattress': mattress,
-    'areaName': areaName,
-    'areaId': areaId
+    'area_name': areaName,
+    'area_id': areaId
   };
 }

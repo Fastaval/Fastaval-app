@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
-
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
 
@@ -11,14 +9,14 @@ class UserService {
   Future<User> getUser() async {
     String userString = await storage.getString(USER_KEY);
     try {
-      return Future.value(User.fromJson(userString));
+      return Future.value(User.fromJson(jsonDecode(userString)));
     } catch (error) {
       return Future.error(error);
     }
   }
 
   void setUser(User user) {
-    String userString = jsonEncode(user.toJson());
+    String userString = jsonEncode(user);
     storage.setString(USER_KEY, userString);
   }
 

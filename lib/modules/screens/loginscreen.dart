@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utils/services/rest_api_service.dart';
+import '../notifications/login_notification.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -140,7 +143,10 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => login(userIdController.text, passwordController.text),
+        onPressed: () => login(userIdController.text, passwordController.text)
+            .then((value) => scheduleMicrotask(() {
+                  LoginNotification(loggedIn: true).dispatch(context);
+                })),
         child: const Text(
           'LOGIN',
           style: TextStyle(

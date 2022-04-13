@@ -1,7 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:fastaval_app/config/models/activity.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +34,7 @@ Future<User> login(String userId, String password) async {
     var user = User.fromJson(jsonDecode(response.body));
 
     userService.setUser(user);
-    inspect(user);
+
     return user;
   } else {
     throw Exception('Failed to load login');
