@@ -131,6 +131,49 @@ Widget _buildSafeFastaval() {
                   const Expanded(
                     flex: 2,
                     child: Text(
+                      'GDS:',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        canLaunch('tel:+4561409264').then((bool result) async {
+                          if (result) {
+                            final Uri launchUri = Uri(
+                              scheme: 'tel',
+                              path: '+4561409264',
+                            );
+                            await launch(launchUri.toString());
+                          }
+                        });
+                      },
+                      child: const Text(
+                        '+45 61 40 92 64',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  const Expanded(
+                    flex: 2,
+                    child: Text(
                       'Tryghedsvært:',
                       style: TextStyle(
                         color: Colors.black,
