@@ -131,7 +131,6 @@ class _ProgramscreenState extends State<Programscreen> {
               )),
         );
       },
-      future: getday('2022-04-13'),
     );
   }
 

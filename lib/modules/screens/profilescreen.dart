@@ -8,8 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-final UserService userService = UserService();
-
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
   final User appUser;
@@ -105,7 +103,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildUsermessages() {
     return SizedBox(
-      width: double.infinity,
       child: Card(
         margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
         elevation: 5,
@@ -147,7 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   buildUserProgram() => SizedBox(
-        width: double.infinity,
         child: Card(
           margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
           elevation: 5,
@@ -182,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             itemBuilder: (context, index) {
               Scheduling item = schedul[index];
               return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
@@ -197,7 +193,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     maxLines: 2,
                   ),
-                  const Padding(padding: EdgeInsets.only(left: 10)),
                   Text(
                     item.titleDa!,
                     style: const TextStyle(
@@ -206,15 +201,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontFamily: 'OpenSans',
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(left: 10)),
-                  // Text(
-                  //   item.roomDa!,
-                  //   style: const TextStyle(
-                  //     fontSize: 16,
-                  //     color: Colors.black,
-                  //     fontFamily: 'OpenSans',
-                  //   ),
-                  // ),
+                  Text(
+                    item.roomDa!,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
                 ],
               );
             },
@@ -259,7 +253,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(DateFormat.Hm().format(unixtodatetime(item.time!)),
+                  Text(
+                      DateFormat.Hm().format(unixtodatetime(item.time!)) +
+                          ' - ',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontFamily: 'OpenSans',
+                      )),
+                  Text(DateFormat.Hm().format(unixtodatetime(item.timeEnd!)),
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -281,35 +283,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
-
-    // return ListView.builder(
-    //   itemCount: food.length,
-    //   itemBuilder: (context, index) {
-    //     Food item = food[index];
-
-    //     return Container(
-    //       padding: const EdgeInsets.only(left: 30, right: 30),
-    //       child: Column(
-    //         children: <Widget>[
-    //           Row(
-    //             children: <Widget>[
-    //               //when
-    //               Text(DateFormat.Hm().format(unixtodatetime(item.time!))),
-    //               const Padding(padding: EdgeInsets.only(left: 20)),
-
-    //               //what
-    //               Text(
-    //                 item.textDa!,
-    //                 style: const TextStyle(fontSize: 18),
-    //               ),
-    //             ],
-    //           ),
-    //           const Padding(padding: EdgeInsets.only(bottom: 10))
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }
 

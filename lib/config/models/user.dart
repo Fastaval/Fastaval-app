@@ -38,31 +38,15 @@ class User {
     messages = json['messages'] ?? '';
     sleep = Sleep.fromJson(json['sleep']);
     category = json['category'];
-    if (json['food'] != null) {
-      food = <Food>[];
-      json['food'].forEach((foodItem) {
-        food!.add(Food.fromJson(foodItem));
-      });
-    }
-    if (json['wear'] != null) {
-      wear = <Wear>[];
-      json['wear'].forEach((wearItem) {
-        wear!.add(Wear.fromJson(wearItem));
-      });
-    }
-    if (json['scheduling'] != null) {
-      scheduling = <Scheduling>[];
-      json['scheduling'].forEach((shedulingtem) {
-        scheduling!.add(Scheduling.fromJson(shedulingtem));
-      });
-    }
+    var foodArray = json['food'] as List;
+    food = foodArray.map((item) => Food.fromJson(item)).toList();
+    var wearArray = json['wear'] as List;
+    wear = wearArray.map((item) => Wear.fromJson(item)).toList();
+    var schedulingArray = json['scheduling'] as List;
+    scheduling = schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
     barcode = json['barcode'];
-    if (json['otto_party'] != null) {
-      ottoParty = <OttoParty>[];
-      json['otto_party'].forEach((ottoPartyItem) {
-        ottoParty!.add(OttoParty.fromJson(ottoPartyItem));
-      });
-    }
+    var ottoPartyArray = json['otto_party'] as List;
+    ottoParty = ottoPartyArray.map((item) => OttoParty.fromJson(item)).toList();
   }
 
   Map<String, dynamic> toJson() => {
