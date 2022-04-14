@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
@@ -80,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
+                      // _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                     ],
                   ),
@@ -150,13 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-
         onPressed: () => login(userIdController.text, passwordController.text)
             .then((value) => scheduleMicrotask(() {
-                  LoginNotification(loggedIn: true).dispatch(context);
-               widget.parent.setState(() {});
+                  LoginNotification(loggedIn: true, user: value)
+                      .dispatch(context);
                 })),
-
         child: const Text(
           'LOGIN',
           style: TextStyle(
