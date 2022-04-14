@@ -1,8 +1,7 @@
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/utils/services/rest_api_service.dart';
-import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -52,9 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const Padding(padding: EdgeInsets.only(top: 10)),
                           const SizedBox(height: 30.0),
                           buildIdIcon(),
-                          buildUsermessages(),
+                          buildUserMessages(),
                           buildUserProgram(),
-                          buildFoodtimes(),
+                          buildFoodTimes(),
                           const Padding(padding: EdgeInsets.only(bottom: 80))
                         ],
                       ),
@@ -72,23 +71,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          child: Container(
-            child: Text(
-              widget.appUser.id.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
+          child: Text(
+            widget.appUser.id.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 58,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
             ),
           ),
         ),
-        Text(
+        const Text(
           'Deltager nummer',
           style: TextStyle(
             color: Colors.white,
@@ -101,14 +98,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildUsermessages() {
+  Widget buildUserMessages() {
     return SizedBox(
       width: double.infinity,
       child: Card(
-        margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+        margin: kCardMargin,
         elevation: 5,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: kCardPadding,
           child: ListTile(
             leading: const Icon(Icons.mail),
             title: const Text(
@@ -131,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        messagesfromfastaval(),
+                        messagesFromFastaval(),
                         style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -152,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  String messagesfromfastaval() {
+  String messagesFromFastaval() {
     if (widget.appUser.messages == '') {
       return 'Fastaval har ingen beskeder til dig i nu';
     } else {
@@ -162,10 +159,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   buildUserProgram() => SizedBox(
         child: Card(
-          margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+          margin: kCardMargin,
           elevation: 5,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: kCardPadding,
             child: ListTile(
               title: const Text(
                 'Dit Program',
@@ -206,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(left: 20)),
+                Padding(padding: EdgeInsets.only(left: 20)),
                 Expanded(
                   flex: 2,
                   child: Text(
@@ -219,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(left: 20)),
+                Padding(padding: EdgeInsets.only(left: 20)),
                 Expanded(
                   flex: 4,
                   child: Text(
@@ -235,13 +232,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Spacer(),
               ],
             ),
-            Divider(height: 3),
+            const Divider(height: 3),
             ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: schedul.length,
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 10);
+                return const SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
                 Scheduling item = schedul[index];
@@ -251,9 +248,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       flex: 3,
                       child: Text(
                         DateFormat.EEEE('da_DK')
-                                .format(unixtodatetime(item.start!)) +
+                                .format(unixToDateTime(item.start!)) +
                             ' ' +
-                            DateFormat.Hm().format(unixtodatetime(item.start!)),
+                            DateFormat.Hm().format(unixToDateTime(item.start!)),
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -297,10 +294,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildFoodtimes() => SizedBox(
+  buildFoodTimes() => SizedBox(
         width: double.infinity,
         child: Card(
-          margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+          margin: kCardMargin,
           elevation: 5,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -330,11 +327,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 10,
             ),
             ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: food.length,
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 10);
+                return const SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
                 Food item = food[index];
@@ -344,26 +341,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                          DateFormat.Hm().format(unixtodatetime(item.time!)) +
+                          DateFormat.Hm().format(unixToDateTime(item.time!)) +
                               ' - ' +
                               DateFormat.Hm()
-                                  .format(unixtodatetime(item.timeEnd!)),
+                                  .format(unixToDateTime(item.timeEnd!)),
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                             fontFamily: 'OpenSans',
                           )),
                     ),
-                    // Expanded(
-                    //   flex: 3,
-                    //   child: Text(
-                    //       DateFormat.Hm().format(unixtodatetime(item.timeEnd!)),
-                    //       style: const TextStyle(
-                    //         fontSize: 16,
-                    //         color: Colors.black,
-                    //         fontFamily: 'OpenSans',
-                    //       )),
-                    // ),
                     const Padding(padding: EdgeInsets.only(left: 20)),
                     Expanded(
                       flex: 3,
@@ -387,6 +374,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-DateTime unixtodatetime(int timeInUnixTime) {
+DateTime unixToDateTime(int timeInUnixTime) {
   return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }

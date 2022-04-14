@@ -1,6 +1,6 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/modules/screens/Programscreen.dart';
+import 'package:fastaval_app/modules/screens/programscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
@@ -55,7 +55,6 @@ List<BottomNavigationBarItem> loggedInBars = [
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
   late PdfViewerController _pdfViewerController;
-  final GlobalKey<SfPdfViewerState> _pdfViewerStateKey = GlobalKey();
   late User user;
   @override
   void initState() {

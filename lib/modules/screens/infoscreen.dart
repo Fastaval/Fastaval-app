@@ -1,3 +1,4 @@
+import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -62,10 +63,10 @@ Widget _buildSafeFastaval() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.phone),
           title: const Text(
@@ -251,10 +252,10 @@ Widget _buildWIFI() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.wifi),
           title: const Text(
@@ -308,10 +309,10 @@ Widget _buildOpenHours() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.watch),
           title: const Text(
@@ -717,10 +718,10 @@ Widget _buildstores() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.store),
           title: const Text(
@@ -808,10 +809,10 @@ Widget _buildlostfound() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.move_to_inbox),
           title: const Text(
@@ -849,10 +850,10 @@ Widget _buildfastawaer() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.person),
           title: const Text(
@@ -912,10 +913,10 @@ Widget _buildTransport() {
   return SizedBox(
     width: double.infinity,
     child: Card(
-      margin: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+      margin: kCardMargin,
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: kCardPadding,
         child: ListTile(
           leading: const Icon(Icons.local_parking),
           title: const Text(

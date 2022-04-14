@@ -18,7 +18,7 @@ class UserService {
 
   void setUser(User user) {
     String userString = jsonEncode(user);
-    storage.setString(USER_KEY, userString);
+    storage.setString(kUserKey, userString);
   }
 
   Future<bool?> hasBarcode() async {
