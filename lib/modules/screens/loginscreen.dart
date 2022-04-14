@@ -1,7 +1,11 @@
-import 'dart:async';
 
+import 'dart:async';
+import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
+import 'package:fastaval_app/modules/screens/home_page_view.dart';
+import 'package:fastaval_app/modules/screens/profilescreen.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +13,9 @@ import '../../utils/services/rest_api_service.dart';
 import '../notifications/login_notification.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  late HomePageState parent;
+
+  LoginScreen(this.parent, {Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -19,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final userIdController = TextEditingController();
   final passwordController = TextEditingController();
   bool _rememberMe = false;
+  bool loggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -137,16 +144,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 45.0),
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
+
         onPressed: () => login(userIdController.text, passwordController.text)
             .then((value) => scheduleMicrotask(() {
                   LoginNotification(loggedIn: true).dispatch(context);
+               widget.parent.setState(() {});
                 })),
+
         child: const Text(
           'LOGIN',
           style: TextStyle(

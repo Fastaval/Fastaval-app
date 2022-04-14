@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../config/models/program.dart';
 import '../../config/models/user.dart';
 
-const String baseUrl = 'https://infosys-test.fastaval.dk/api';
+const String baseUrl = 'https://infosys.fastaval.dk/api';
 
 Future<Program> fetchProgram() async {
   var url = Uri.parse('$baseUrl/app/v2/activities/*');
@@ -35,6 +35,7 @@ Future<User> login(String userId, String password) async {
 
     userService.setUser(user);
 
+    inspect(user);
     return user;
   } else {
     throw Exception('Failed to load login');
