@@ -1,3 +1,5 @@
+
+import 'dart:async';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/modules/screens/home_page_view.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utils/services/rest_api_service.dart';
+import '../notifications/login_notification.dart';
 
 class LoginScreen extends StatefulWidget {
   late HomePageState parent;
@@ -147,18 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () {
-          login(userIdController.text, passwordController.text).then((value) {
-            if (value.barcode == null) {
-              widget.parent.userBarCode = "";
-            } else {
-              widget.parent.userBarCode = value.barcode!;
-            }
-            widget.parent.myuser = value;
-            widget.parent.isLoggedIn = true;
-            widget.parent.setState(() {});
-          });
-        },
+
+        onPressed: () => login(userIdController.text, passwordController.text)
+            .then((value) => scheduleMicrotask(() {
+                  LoginNotification(loggedIn: true).dispatch(context);
+               widget.parent.setState(() {});
+                })),
+
         child: const Text(
           'LOGIN',
           style: TextStyle(
