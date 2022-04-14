@@ -8,6 +8,7 @@ import 'local_storage_service.dart';
 class UserService {
   final String USER_KEY = 'USER_KEY';
   final LocalStorageService storage = LocalStorageService();
+
   Future<User> getUser() async {
     String userString = await storage.getString(USER_KEY);
     try {

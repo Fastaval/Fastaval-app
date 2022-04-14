@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import '../../config/models/program.dart';
 import '../../config/models/user.dart';
 
-const String baseUrl = 'https://infosys-test.fastaval.dk/api';
+const String baseUrl = 'https://infosys.fastaval.dk/api';
 
 Future<Program> fetchProgram() async {
   var url = Uri.parse('$baseUrl/app/v2/activities/*');
@@ -34,7 +34,7 @@ Future<User> login(String userId, String password) async {
   if (response.statusCode == 200) {
     var user = User.fromJson(jsonDecode(response.body));
 
-    userService.setUser(user);
+    //userService.setUser(user);
     inspect(user);
     return user;
   } else {

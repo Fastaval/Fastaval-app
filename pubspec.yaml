@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
-
+  flutter_pdfview: ^1.2.1
   barcode_widget: ^2.0.2
   english_words: ^4.0.0
   shared_preferences: ^2.0.13
@@ -41,6 +41,10 @@ dependencies:
   swipeable_page_route: ^0.2.6
   google_fonts: ^2.3.1
   intl: ^0.17.0
+  native_pdf_view: ^6.0.0+1
+  device_info_plus_web: ^2.1.0
+  pdfx: ^1.0.1+1
+  syncfusion_flutter_pdfviewer: ^20.1.48-beta.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +62,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - Mariagerfjord_kort_2022.pdf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

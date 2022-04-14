@@ -88,6 +88,14 @@ Widget _buildSafeFastaval() {
               ),
             ),
             Text(
+              'GDS: +45 61 40 92 64',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
               'Tryghedsvært: +45 61 40 92 64',
               style: TextStyle(
                 color: Colors.black,
@@ -576,10 +584,37 @@ Widget _buildTransport() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-                "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads."),
-            Text("Hobro Togstation er ca. 2,5 km fra Fastaval."),
-            Text("Hobro Taxa: +45 98 51 23 00"),
-            Text("Krone Taxa: +45 98 52 11 11"),
+              "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads.",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              "Hobro Togstation er ca. 2,5 km fra Fastaval.",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              "Hobro Taxa: +45 98 51 23 00",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+            Text(
+              "Krone Taxa: +45 98 52 11 11",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'OpenSans',
+              ),
+            ),
           ],
         ),
       ),

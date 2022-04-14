@@ -123,7 +123,7 @@ class _ProgramscreenState extends State<Programscreen> {
                             ),
                           ],
                         ),
-                        const Divider(height: 6)
+                        const Padding(padding: EdgeInsets.only(bottom: 10))
                       ],
                     ),
                   );
@@ -134,12 +134,6 @@ class _ProgramscreenState extends State<Programscreen> {
       future: getday('2022-04-13'),
     );
   }
-
-  Widget box({width: 100.0, height: 50.0}) => Container(
-        width: width,
-        height: height,
-        color: Colors.grey,
-      );
 
   Widget timebox({required DateTime timestamp, required Color color}) =>
       Container(
