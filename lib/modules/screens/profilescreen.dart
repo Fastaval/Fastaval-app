@@ -167,7 +167,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListTile(
-              leading: const Icon(Icons.food_bank),
               title: const Text(
                 'Dit Program',
                 style: TextStyle(
@@ -197,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               children: const <Widget>[
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     'Hvornår',
                     style: TextStyle(
@@ -234,11 +233,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 Spacer(),
-                Spacer()
               ],
             ),
             Divider(height: 3),
             ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: schedul.length,
               separatorBuilder: (BuildContext context, int index) {
@@ -249,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Text(
                         DateFormat.EEEE('da_DK')
                                 .format(unixtodatetime(item.start!)) +
@@ -260,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.black,
                           fontFamily: 'OpenSans',
                         ),
-                        maxLines: 2,
+                        maxLines: 1,
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(left: 20)),
@@ -285,6 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.black,
                           fontFamily: 'OpenSans',
                         ),
+                        maxLines: 1,
                       ),
                     ),
                   ],
@@ -305,7 +305,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
-              leading: const Icon(Icons.food_bank),
               title: const Text(
                 'Mad tider',
                 style: TextStyle(
@@ -331,6 +330,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 10,
             ),
             ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: food.length,
               separatorBuilder: (BuildContext context, int index) {
