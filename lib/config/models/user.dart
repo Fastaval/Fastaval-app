@@ -66,16 +66,16 @@ class User {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'checked_in': checkedIn,
-    'messages': messages,
-    'sleep': sleep,
-    'category': category,
-    'food': food,
-    'wear': wear,
-    'scheduling': scheduling,
-    'barcode': barcode,
-    'otto_party': ottoParty
-  };
+        'id': id,
+        'name': name,
+        'checked_in': checkedIn,
+        'messages': messages,
+        'sleep': sleep,
+        'category': category,
+        'food': food,
+        'wear': wear,
+        'scheduling': scheduling,
+        'barcode': barcode,
+        'otto_party': ottoParty
+      };
 }
