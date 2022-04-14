@@ -327,6 +327,7 @@ Widget _buildOpenHours() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 //infomation
                 const Text(
