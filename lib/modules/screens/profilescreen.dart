@@ -179,113 +179,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       );
 
-  Widget buildUsersProgram(List<Scheduling> schedul) {
+  Widget buildUsersProgram(List<Scheduling> schedule) {
     initializeDateFormatting('da_DK', null);
 
     return Container(
-      padding: const EdgeInsets.only(top: 2, left: 10),
       child: SafeArea(
         child: Column(
           children: <Widget>[
             const SizedBox(
               height: 10,
             ),
-            Row(
-              children: const <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Hvornår',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(left: 20)),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Hvad',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(left: 20)),
-                Expanded(
-                  flex: 4,
-                  child: Text(
-                    'Hvor',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                ),
-                Spacer(),
-              ],
+            buildThreeSideBySideTexts('Hvornår', 'Hvad', 'Hvor'),
+            const Divider(
+              height: 10,
+              thickness: 2,
             ),
-            const Divider(height: 3),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: schedul.length,
+              itemCount: schedule.length,
               separatorBuilder: (BuildContext context, int index) {
                 return const SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
-                Scheduling item = schedul[index];
-                return Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        DateFormat.EEEE('da_DK')
-                                .format(unixToDateTime(item.start!)) +
-                            ' ' +
-                            DateFormat.Hm().format(unixToDateTime(item.start!)),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        item.titleDa!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        item.roomDa!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                );
+                Scheduling item = schedule[index];
+                return buildUserProgramRow(item);
               },
             )
           ],
@@ -372,6 +290,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
+
+Widget buildUserProgramRow(Scheduling item) {
+  return buildThreeSideBySideTexts(
+      DateFormat.EEEE('da_DK')
+      .format(unixToDateTime(item.start!)) +
+      ' ' +
+      DateFormat.Hm().format(unixToDateTime(item.start!)),
+      item.titleDa!,
+      item.roomDa!
+  );
+}
+
+Widget buildThreeSideBySideTexts(String left, String center, String right) {
+  return Row(
+    children: <Widget>[
+      Expanded(
+        flex: 2,
+        child: Text(
+          left,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+          maxLines: 1,
+        ),
+      ),
+      Expanded(
+        flex: 3,
+        child: Text(
+          center,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 3,
+        child: Text(
+          right,
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+          maxLines: 1,
+        ),
+      ),
+    ],
+  );
 }
 
 DateTime unixToDateTime(int timeInUnixTime) {
