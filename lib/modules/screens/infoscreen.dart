@@ -562,7 +562,7 @@ Widget _buildOpenHours() {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            'Ons-søn',
+                            'Ons-lør',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16.0,
@@ -573,7 +573,35 @@ Widget _buildOpenHours() {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            'kl. 08:00 - 00:00',
+                            'kl. 09:00 - 00:00',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                        ),
+                        Spacer()
+                      ],
+                    ),
+                    Row(
+                      children: const <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'søndag',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            'kl. 09:00 - 17:00',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Colors.black,

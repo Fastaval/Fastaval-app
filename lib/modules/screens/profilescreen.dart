@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               children: const <Widget>[
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     'Hvornår',
                     style: TextStyle(
@@ -245,7 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Text(
                         DateFormat.EEEE('da_DK')
                                 .format(unixToDateTime(item.start!)) +
