@@ -153,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (widget.appUser.messages == '') {
       return 'Fastaval har ingen beskeder til dig i nu';
     } else {
-      return widget.appUser.messages.toString();
+      return widget.appUser.messages!;
     }
   }
 
@@ -294,13 +294,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 Widget buildUserProgramRow(Scheduling item) {
   return buildThreeSideBySideTexts(
-      DateFormat.EEEE('da_DK')
-      .format(unixToDateTime(item.start!)) +
-      ' ' +
-      DateFormat.Hm().format(unixToDateTime(item.start!)),
+      DateFormat.EEEE('da_DK').format(unixToDateTime(item.start!)) +
+          ' ' +
+          DateFormat.Hm().format(unixToDateTime(item.start!)),
       item.titleDa!,
-      item.roomDa!
-  );
+      item.roomDa!);
 }
 
 Widget buildThreeSideBySideTexts(String left, String center, String right) {
