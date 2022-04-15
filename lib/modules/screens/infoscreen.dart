@@ -84,162 +84,31 @@ Widget _buildSafeFastaval() {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Vagthavende General:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        canLaunch('tel:+4561409065').then((bool result) async {
-                          if (result) {
-                            final Uri launchUri = Uri(
-                              scheme: 'tel',
-                              path: '+4561409065',
-                            );
-                            await launch(launchUri.toString());
-                          }
-                        });
-                      },
-                      child: const Text(
-                        '+45 61 40 90 65',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              buildSideBySideTextWithUrlAction('Vagthavende General:', '+45 61 40 90 65', Uri(
+                scheme: 'tel',
+                path: '+4561409065',
+              )),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 2,
-                    child: Text(
-                      'GDS:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        canLaunch('tel:+4561409264').then((bool result) async {
-                          if (result) {
-                            final Uri launchUri = Uri(
-                              scheme: 'tel',
-                              path: '+4561409264',
-                            );
-                            await launch(launchUri.toString());
-                          }
-                        });
-                      },
-                      child: const Text(
-                        '+45 61 40 92 64',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              buildSideBySideTextWithUrlAction('GDS:', '+45 61 40 92 63', Uri(
+                scheme: 'tel',
+                path: '+4561409263',
+              )),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Tryghedsvært:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        canLaunch('tel:+4561409264').then((bool result) async {
-                          if (result) {
-                            final Uri launchUri = Uri(
-                              scheme: 'tel',
-                              path: '+4561409264',
-                            );
-                            await launch(launchUri.toString());
-                          }
-                        });
-                      },
-                      child: const Text(
-                        '+45 61 40 92 64',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              buildSideBySideTextWithUrlAction('Tryghedsvært:', '+45 61 40 92 64', Uri(
+                scheme: 'tel',
+                path: '+4561409264',
+              )),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: const <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Safemail:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'safe@fastaval.dk',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              buildSideBySideTextWithUrlAction('Safemail:', 'safe@fastaval.dk', Uri(
+                scheme: 'mailto',
+                path: 'safe@fastaval.dk',
+              )),
             ],
           ),
         ),
@@ -270,39 +139,18 @@ Widget _buildWIFI() {
           subtitle: Container(
             padding: const EdgeInsets.only(top: 1),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
-                  'Netværk: Undervisning',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Text(
-                  'Brugernavn: mfg-guest@mf-gym.dk',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Text(
-                  'Kode: Teleskop2022 ',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                )
-              ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  buildSideBySideText('Netværk:', 'Undervisning'),
+                  buildSideBySideText('Brugernavn:', 'mfg-guest@mf-gym.dk', true),
+                  buildSideBySideText('Kode:', 'Teleskop2022', true),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
 }
 
 Widget _buildOpenHours() {
@@ -341,90 +189,9 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Onsdag',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 15:00 - 21:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Tor-lør',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 21:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Søndag',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 17:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Onsdag:', 'kl. 15:00 - 21:00'),
+                    buildSideBySideText('Tor-lør:', 'kl. 09:00 - 21:00'),
+                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
                   ],
                 ),
                 const Padding(
@@ -441,34 +208,7 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Ons-søn',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 23:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Ons-søn:', 'kl. 09:00 - 23:00'),
                   ],
                 ),
                 const Padding(
@@ -485,62 +225,8 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Ons-lør',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 02:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'søndag',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 15:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 02:00'),
+                    buildSideBySideText('søndag:', 'kl. 09:00 - 15:00'),
                   ],
                 ),
                 const Padding(
@@ -557,62 +243,8 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Ons-lør',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 00:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'søndag',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 09:00 - 17:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 00:00'),
+                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
                   ],
                 ),
                 const Padding(
@@ -629,34 +261,7 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Ons-søn',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 17:00 - 02:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Ons-søn:', 'kl. 17:00 - 02:00'),
                   ],
                 ),
                 const Padding(
@@ -672,62 +277,8 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Onsdag',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 16:00 - 02:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Tor-søn',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'kl. 12:00 - 02:00',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
+                    buildSideBySideText('Onsdag:', 'kl. 16:00 - 02:00'),
+                    buildSideBySideText('Tor-søn:', 'kl. 12:00 - 02:00'),
                   ],
                 ),
                 const Padding(
@@ -775,55 +326,44 @@ Widget _buildstores() {
                   ),
                 ),
                 Column(
-                  children: const <Widget>[
-                    Text(
-                      'Onsdag kl.16.00 - 23.00',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                    Text(
-                      'Tors-lør kl.10.00 - 23.00',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                    Text(
-                      'Søndag kl.10.00 - 15.00',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
+                  children: <Widget>[
+                    buildSideBySideText('Onsdag:', 'kl. 16.00 - 23.00'),
+                    buildSideBySideText('Tors-lør:', 'kl. 10.00 - 23.00'),
+                    buildSideBySideText('Søndag:', 'kl. 10.00 - 15.00'),
                   ],
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 10),
                 ),
                 const Text(
-                  'Tier1MTG i A07 (kl. 10.00-22.00)',
+                  'Tier1MTG i A07',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
                   ),
+                ),
+                Column(
+                  children: <Widget>[
+                    buildSideBySideText('Ons-søn:', 'kl. 10.00 - 22.00'),
+                  ],
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 10),
                 ),
                 const Text(
-                  'Corra Design i fællesområdet  (Fre-søn kl. 10.00-16.00)',
+                  'Corra Design i fællesområdet',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
                   ),
-                )
+                ),
+                Column(
+                  children: <Widget>[
+                    buildSideBySideText('Fre-søn:', 'kl. 10.00 - 16.00'),
+                  ],
+                ),
               ],
             ),
           ),
@@ -958,16 +498,113 @@ Widget _buildTransport() {
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const <Widget>[
-              Text(
-                  "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads."),
-              Text("Hobro Togstation er ca. 2,5 km fra Fastaval."),
-              Text("Hobro Taxa: +45 98 51 23 00"),
-              Text("Krone Taxa: +45 98 52 11 11"),
+            children: <Widget>[
+              const SizedBox(height: 5),
+              const Text(
+                  "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads.",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                )
+              ),
+              const SizedBox(height: 10),
+              const Text("Hobro Togstation er ca. 2,5 km fra Fastaval.",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  )),
+              const SizedBox(height: 10),
+              buildSideBySideTextWithUrlAction('Hobro Taxa:', '+45 98 51 23 00', Uri(
+                scheme: 'tel',
+                path: '+4598512300',
+              )),
+              const SizedBox(height: 10),
+              buildSideBySideTextWithUrlAction('Krone Taxa:', '+45 98 52 11 11', Uri(
+                scheme: 'tel',
+                path: '+4598521111',
+              )),
             ],
           ),
         ),
       ),
     ),
+  );
+}
+
+Widget buildSideBySideTextWithUrlAction(String title, String link, Uri launchUrl) {
+  return Row(
+    children: <Widget>[
+      Expanded(
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+      Expanded(
+        child: GestureDetector(
+          onTap: () {
+            canLaunch(launchUrl.toString()).then((bool result) async {
+              if (result) {
+                await launch(launchUrl.toString());
+              }
+            });
+          },
+          child: Text(
+            launchUrl.path,
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16.0,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildSideBySideText(String left, String right, [bool? selectable]) {
+  selectable = selectable ?? false;
+  return Row(
+    children: <Widget>[
+      Expanded(
+        child: Text(
+          left,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+      Expanded(
+        child: selectable
+            ? SelectableText(
+                right,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              )
+            : Text(
+                right,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+              ),
+        ),
+      ),
+    ],
   );
 }

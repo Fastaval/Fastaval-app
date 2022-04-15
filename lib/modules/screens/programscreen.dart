@@ -79,14 +79,14 @@ class _ProgramscreenState extends State<Programscreen> {
       }
       _runlist.sort((a, b) => a.start - b.start);
     });
-    _colorMap.putIfAbsent('rolle', () => Colors.red.shade600);
-    _colorMap.putIfAbsent('braet', () => Colors.green.shade400);
-    _colorMap.putIfAbsent('live', () => Colors.blue.shade700);
-    _colorMap.putIfAbsent('ottoviteter', () => Colors.amber.shade300);
-    _colorMap.putIfAbsent('junior', () => Colors.lightGreen.shade200);
-    _colorMap.putIfAbsent('magic', () => Colors.red.shade100);
-    _colorMap.putIfAbsent('workshop', () => Colors.amber.shade300);
-    _colorMap.putIfAbsent('figur', () => Colors.amber.shade300);
+    _colorMap.putIfAbsent('rolle', () => Colors.lightGreen.shade300);
+    _colorMap.putIfAbsent('braet', () => Colors.blue.shade300);
+    _colorMap.putIfAbsent('live', () => Colors.teal.shade400);
+    _colorMap.putIfAbsent('ottoviteter', () => Colors.orangeAccent.shade400);
+    _colorMap.putIfAbsent('junior', () => Colors.pink.shade300);
+    _colorMap.putIfAbsent('magic', () => Colors.purpleAccent.shade100);
+    _colorMap.putIfAbsent('workshop', () => Colors.amberAccent.shade200);
+    _colorMap.putIfAbsent('figur', () => Colors.red.shade300);
     return FutureBuilder(
       builder: (context, programSnap) {
         return SizedBox(
