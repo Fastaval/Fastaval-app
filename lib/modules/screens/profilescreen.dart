@@ -10,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
   final User appUser;
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -48,13 +49,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Center(
                       child: Column(
                         children: <Widget>[
-                          const Padding(padding: EdgeInsets.only(top: 10)),
-                          const SizedBox(height: 30.0),
+                          const SizedBox(height: 40.0),
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
                           buildFoodTimes(),
-                          const Padding(padding: EdgeInsets.only(bottom: 80))
+                          const SizedBox(height: 80.0),
                         ],
                       ),
                     )),
@@ -107,7 +107,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Padding(
           padding: kCardPadding,
           child: ListTile(
-            leading: const Icon(Icons.mail),
+            trailing: const Icon(Icons.speaker_notes),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
             title: const Text(
               'Beskeder Fra Fastaval',
               style: TextStyle(
@@ -117,31 +118,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontFamily: 'OpenSans',
               ),
             ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        messagesFromFastaval(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                          fontSize: 16.0,
+            subtitle: Container(
+              padding: const EdgeInsets.only(top: 2, left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          messagesFromFastaval(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'OpenSans',
+                            fontSize: 16.0,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -164,6 +168,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Padding(
             padding: kCardPadding,
             child: ListTile(
+              trailing: const Icon(Icons.calendar_view_day),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
               title: const Text(
                 'Dit Program',
                 style: TextStyle(
@@ -173,7 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontFamily: 'OpenSans',
                 ),
               ),
-              subtitle: buildUsersProgram(widget.appUser.scheduling!),
+              subtitle: Container(
+                padding: const EdgeInsets.only(top: 2, left: 10),
+                child: buildUsersProgram(widget.appUser.scheduling!),
+              ),
             ),
           ),
         ),
@@ -182,32 +191,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildUsersProgram(List<Scheduling> schedule) {
     initializeDateFormatting('da_DK', null);
 
-    return Container(
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-            ),
-            buildThreeSideBySideTexts('Hvornår', 'Hvad', 'Hvor'),
-            const Divider(
-              height: 10,
-              thickness: 2,
-            ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: schedule.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                Scheduling item = schedule[index];
-                return buildUserProgramRow(item);
-              },
-            )
-          ],
-        ),
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          const SizedBox(
+            height: 10,
+          ),
+          buildThreeSideBySideTexts('Hvornår', 'Hvad', 'Hvor'),
+          const Divider(
+            height: 10,
+            thickness: 2,
+          ),
+          ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: schedule.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 10);
+            },
+            itemBuilder: (context, index) {
+              Scheduling item = schedule[index];
+              return buildUserProgramRow(item);
+            },
+          )
+        ],
       ),
     );
   }
@@ -218,8 +225,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: kCardMargin,
           elevation: 5,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: kCardPadding,
             child: ListTile(
+              trailing: const Icon(Icons.fastfood),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
               title: const Text(
                 'Mad tider',
                 style: TextStyle(
@@ -294,13 +303,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 Widget buildUserProgramRow(Scheduling item) {
   return buildThreeSideBySideTexts(
-      DateFormat.EEEE('da_DK')
-      .format(unixToDateTime(item.start!)) +
-      ' ' +
-      DateFormat.Hm().format(unixToDateTime(item.start!)),
+      DateFormat.EEEE('da_DK').format(unixToDateTime(item.start!)) +
+          ' ' +
+          DateFormat.Hm().format(unixToDateTime(item.start!)),
       item.titleDa!,
-      item.roomDa!
-  );
+      item.roomDa!);
 }
 
 Widget buildThreeSideBySideTexts(String left, String center, String right) {
