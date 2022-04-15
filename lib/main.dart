@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Fastaval App Login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange),
-      home: HomePageView(title: 'The Fastaval APP\'en'),
+      home: const HomePageView(title: 'The Fastaval APP\'en'),
     );
   }
 }

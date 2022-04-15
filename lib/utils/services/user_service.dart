@@ -4,11 +4,11 @@ import '../../config/models/user.dart';
 import 'local_storage_service.dart';
 
 class UserService {
-  final String USER_KEY = 'USER_KEY';
+  static const String kUserKey = 'USER_KEY';
   final LocalStorageService storage = LocalStorageService();
 
   Future<User> getUser() async {
-    String userString = await storage.getString(USER_KEY);
+    String userString = await storage.getString(kUserKey);
     try {
       return Future.value(User.fromJson(jsonDecode(userString)));
     } catch (error) {
@@ -18,7 +18,7 @@ class UserService {
 
   void setUser(User user) {
     String userString = jsonEncode(user);
-    storage.setString(USER_KEY, userString);
+    storage.setString(kUserKey, userString);
   }
 
   Future<bool?> hasBarcode() async {

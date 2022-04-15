@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/modules/screens/home_page_view.dart';
-import 'package:fastaval_app/modules/screens/profilescreen.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
-import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +20,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final userIdController = TextEditingController();
   final passwordController = TextEditingController();
-  bool _rememberMe = false;
   bool loggedIn = false;
 
   @override
@@ -96,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Deltager nummer',
           style: kLabelStyle,
         ),
@@ -112,10 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.only(top: 14.0),
-              prefixIcon: const Icon(
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
                 Icons.portrait,
                 color: Colors.white,
               ),
@@ -133,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
-        child: Text(
+        child: const Text(
           'Forgot Password?',
           style: kLabelStyle,
         ),
@@ -172,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Password',
           style: kLabelStyle,
         ),
@@ -188,10 +184,10 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.only(top: 14.0),
-              prefixIcon: const Icon(
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
                 Icons.lock,
                 color: Colors.white,
               ),
@@ -204,30 +200,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildRememberMeCheckbox() {
-    return SizedBox(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
-        ],
-      ),
-    );
-  }
 }

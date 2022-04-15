@@ -1,8 +1,7 @@
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/utils/services/rest_api_service.dart';
-import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -52,9 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const Padding(padding: EdgeInsets.only(top: 10)),
                           const SizedBox(height: 30.0),
                           buildIdIcon(),
-                          buildUsermessages(),
+                          buildUserMessages(),
                           buildUserProgram(),
-                          buildFoodtimes(),
+                          buildFoodTimes(),
                           const Padding(padding: EdgeInsets.only(bottom: 80))
                         ],
                       ),
@@ -72,23 +71,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          child: Container(
-            child: Text(
-              widget.appUser.id.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
+          child: Text(
+            widget.appUser.id.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 58,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
             ),
           ),
         ),
-        Text(
+        const Text(
           'Deltager nummer',
           style: TextStyle(
             color: Colors.white,
@@ -101,41 +98,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildUsermessages() {
+  Widget buildUserMessages() {
     return SizedBox(
+      width: double.infinity,
       child: Card(
-        margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+        margin: kCardMargin,
         elevation: 5,
-        child: ListTile(
-          leading: const Icon(Icons.mail),
-          title: const Text(
-            'Beskeder Fra Fastaval',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                messagesfromfastaval(),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                  fontSize: 16.0,
-                ),
+        child: Padding(
+          padding: kCardPadding,
+          child: ListTile(
+            leading: const Icon(Icons.mail),
+            title: const Text(
+              'Beskeder Fra Fastaval',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
               ),
-            ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        messagesFromFastaval(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  String messagesfromfastaval() {
+  String messagesFromFastaval() {
     if (widget.appUser.messages == '') {
       return 'Fastaval har ingen beskeder til dig i nu';
     } else {
@@ -145,20 +159,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   buildUserProgram() => SizedBox(
         child: Card(
-          margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+          margin: kCardMargin,
           elevation: 5,
-          child: ListTile(
-            leading: const Icon(Icons.food_bank),
-            title: const Text(
-              'Dit Program',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
+          child: Padding(
+            padding: kCardPadding,
+            child: ListTile(
+              title: const Text(
+                'Dit Program',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
               ),
+              subtitle: buildUsersProgram(widget.appUser.scheduling!),
             ),
-            subtitle: buildUsersProgram(widget.appUser.scheduling!),
           ),
         ),
       );
@@ -166,126 +182,198 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildUsersProgram(List<Scheduling> schedul) {
     initializeDateFormatting('da_DK', null);
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: schedul.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: 10);
-            },
-            itemBuilder: (context, index) {
-              Scheduling item = schedul[index];
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    DateFormat.EEEE('da_DK')
-                            .format(unixtodatetime(item.start!)) +
-                        ' ' +
-                        DateFormat.Hm().format(unixtodatetime(item.start!)),
-                    style: const TextStyle(
-                      fontSize: 16,
+    return Container(
+      padding: const EdgeInsets.only(top: 2, left: 10),
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: const <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Hvornår',
+                    style: TextStyle(
                       color: Colors.black,
-                      fontFamily: 'OpenSans',
-                    ),
-                    maxLines: 2,
-                  ),
-                  Text(
-                    item.titleDa!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                      fontSize: 16.0,
                       fontFamily: 'OpenSans',
                     ),
                   ),
-                  Text(
-                    item.roomDa!,
-                    style: const TextStyle(
-                      fontSize: 16,
+                ),
+                Padding(padding: EdgeInsets.only(left: 20)),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Hvad',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
                       color: Colors.black,
+                      fontSize: 16.0,
                       fontFamily: 'OpenSans',
                     ),
                   ),
-                ],
-              );
-            },
-          )
-        ],
+                ),
+                Padding(padding: EdgeInsets.only(left: 20)),
+                Expanded(
+                  flex: 4,
+                  child: Text(
+                    'Hvor',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+            const Divider(height: 3),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: schedul.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 10);
+              },
+              itemBuilder: (context, index) {
+                Scheduling item = schedul[index];
+                return Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        DateFormat.EEEE('da_DK')
+                                .format(unixToDateTime(item.start!)) +
+                            ' ' +
+                            DateFormat.Hm().format(unixToDateTime(item.start!)),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                        ),
+                        maxLines: 1,
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(left: 20)),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        item.titleDa!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(left: 20)),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        item.roomDa!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                        ),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 
-  buildFoodtimes() => SizedBox(
+  buildFoodTimes() => SizedBox(
         width: double.infinity,
         child: Card(
-          margin: const EdgeInsetsDirectional.fromSTEB(8, 10, 8, 0),
+          margin: kCardMargin,
           elevation: 5,
-          child: ListTile(
-            leading: const Icon(Icons.food_bank),
-            title: const Text(
-              'Mad tider',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: const Text(
+                'Mad tider',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
               ),
+              subtitle: buildUserFood(widget.appUser.food!),
             ),
-            subtitle: buildUserFood(widget.appUser.food!),
           ),
         ),
       );
+
   buildUserFood(List food) {
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: food.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: 10);
-            },
-            itemBuilder: (context, index) {
-              Food item = food[index];
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                      DateFormat.Hm().format(unixtodatetime(item.time!)) +
-                          ' - ',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'OpenSans',
-                      )),
-                  Text(DateFormat.Hm().format(unixtodatetime(item.timeEnd!)),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: 'OpenSans',
-                      )),
-                  const Padding(padding: EdgeInsets.only(left: 20)),
-                  Text(
-                    item.titleDa!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontFamily: 'OpenSans',
+    return Container(
+      padding: const EdgeInsets.only(top: 2, left: 10),
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: food.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 10);
+              },
+              itemBuilder: (context, index) {
+                Food item = food[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                          DateFormat.Hm().format(unixToDateTime(item.time!)) +
+                              ' - ' +
+                              DateFormat.Hm()
+                                  .format(unixToDateTime(item.timeEnd!)),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontFamily: 'OpenSans',
+                          )),
                     ),
-                  ),
-                ],
-              );
-            },
-          )
-        ],
+                    const Padding(padding: EdgeInsets.only(left: 20)),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        item.titleDa!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-DateTime unixtodatetime(int timeInUnixTime) {
+DateTime unixToDateTime(int timeInUnixTime) {
   return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }

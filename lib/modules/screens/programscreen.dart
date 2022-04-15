@@ -1,11 +1,8 @@
-import 'package:fastaval_app/config/models/activity.dart';
 import 'package:fastaval_app/config/models/activity_item.dart';
 import 'package:fastaval_app/config/models/activity_run.dart';
 import 'package:intl/intl.dart';
 
-import 'package:fastaval_app/config/models/program.dart';
 import 'package:flutter/material.dart';
-import 'package:fastaval_app/utils/services/rest_api_service.dart';
 
 import 'dart:convert';
 
@@ -13,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 const String baseUrl = 'https://infosys.fastaval.dk/api';
 
-Future<List<ActivityItem>> getday(String isoDate) async {
+Future<List<ActivityItem>> getDay(String isoDate) async {
   var url = Uri.parse('$baseUrl/app/v3/activities/$isoDate');
 
   final response = await http.get(url);
@@ -67,7 +64,7 @@ class _ProgramscreenState extends State<Programscreen> {
     List<ActivityRun>? _runlist = [];
     Map<int, ActivityItem> _activityMap = <int, ActivityItem>{};
     Map<String, Color> _colorMap = <String, Color>{};
-    getday(day).then((List<ActivityItem> value) {
+    getDay(day).then((List<ActivityItem> value) {
       _list = value;
 
       for (ActivityItem ac in _list) {
@@ -109,7 +106,7 @@ class _ProgramscreenState extends State<Programscreen> {
                           children: <Widget>[
                             //when
 
-                            timebox(
+                            timeBox(
                                 timestamp: unixtodatetime(item.start),
                                 color:
                                     _colorMap[_activityMap[item.activity]!.type]
@@ -134,19 +131,17 @@ class _ProgramscreenState extends State<Programscreen> {
     );
   }
 
-  Widget timebox({required DateTime timestamp, required Color color}) =>
+  Widget timeBox({required DateTime timestamp, required Color color}) =>
       Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
         ),
-        child: Container(
-          child: Text(
-            DateFormat.Hm().format(timestamp),
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18),
-          ),
+        child: Text(
+          DateFormat.Hm().format(timestamp),
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 18),
         ),
       );
 }
