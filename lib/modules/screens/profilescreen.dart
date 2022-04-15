@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
-                          buildFoodTimes(),
+                          if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
                           const SizedBox(height: 80.0),
                         ],
                       ),
@@ -312,6 +312,7 @@ Widget buildUserProgramRow(Scheduling item) {
 
 Widget buildThreeSideBySideTexts(String left, String center, String right) {
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Expanded(
         flex: 2,
@@ -323,7 +324,7 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
             color: Colors.black,
             fontFamily: 'OpenSans',
           ),
-          maxLines: 1,
+          maxLines: 2,
         ),
       ),
       Expanded(
@@ -348,7 +349,7 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
             color: Colors.black,
             fontFamily: 'OpenSans',
           ),
-          maxLines: 1,
+          maxLines: 2,
         ),
       ),
     ],
