@@ -281,7 +281,7 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText('Onsdag:', 'kl. 16:00 - 02:00'),
-                    buildSideBySideText('Tor-søn:', 'kl. 12:00 - 02:00'),
+                    buildSideBySideText('Tor-lør:', 'kl. 12:00 - 02:00'),
                   ],
                 ),
               ],
