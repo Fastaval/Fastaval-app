@@ -8,7 +8,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'https://infosys.fastaval.dk/api';
+const String baseUrl = 'https://infosys-test.fastaval.dk/api';
 
 Future<List<ActivityItem>> getDay(String isoDate) async {
   var url = Uri.parse('$baseUrl/app/v3/activities/$isoDate');
@@ -48,11 +48,11 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
-            buildday("2022-04-13"),
-            buildday("2022-04-14"),
-            buildday("2022-04-15"),
-            buildday("2022-04-16"),
-            buildday("2022-04-17"),
+            buildday("2023-04-05"),
+            buildday("2023-04-06"),
+            buildday("2023-04-07"),
+            buildday("2023-04-08"),
+            buildday("2023-04-09"),
           ],
         ),
       ),

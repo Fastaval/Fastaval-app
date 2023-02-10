@@ -2,7 +2,7 @@ get https://infosys-test.fastaval.dk/api/user/34?pass=407106 HTTP/1.1
 
 ###
 
-GET https://infosys-test.fastaval.dk/api/app/v3/activities/2022-04-13
+GET https://infosys-test.fastaval.dk/api/app/v3/activities/2023-04-07
 
 ###
 

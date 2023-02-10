@@ -1,5 +1,5 @@
 class OttoParty {
-  String? id;
+  int? id;
   String? titleEn;
   String? titleDa;
   int? amount;
@@ -13,10 +13,6 @@ class OttoParty {
     amount = json['amount'];
   }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title_da': titleDa,
-    'title_en': titleEn,
-    'amount': amount
-  };
+  Map<String, dynamic> toJson() =>
+      {'id': id, 'title_da': titleDa, 'title_en': titleEn, 'amount': amount};
 }

@@ -6,7 +6,7 @@ import 'scheduling.dart';
 import 'wear.dart';
 
 class User {
-  String? id;
+  int? id;
   String? name;
   int? checkedIn;
   String? messages;
@@ -15,7 +15,7 @@ class User {
   List<Food>? food;
   List<Wear>? wear;
   List<Scheduling>? scheduling;
-  String? barcode;
+  int? barcode;
   List<OttoParty>? ottoParty;
 
   User(
@@ -43,7 +43,8 @@ class User {
     var wearArray = json['wear'] as List;
     wear = wearArray.map((item) => Wear.fromJson(item)).toList();
     var schedulingArray = json['scheduling'] as List;
-    scheduling = schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
+    scheduling =
+        schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
     barcode = json['barcode'];
     var ottoPartyArray = json['otto_party'] as List;
     ottoParty = ottoPartyArray.map((item) => OttoParty.fromJson(item)).toList();

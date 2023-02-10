@@ -3,8 +3,8 @@ class Food {
   int? timeEnd;
   String? titleDa;
   String? titleEn;
-  String? id;
-  String? timeId;
+  int? id;
+  int? timeId;
   String? textDa;
   String? textEn;
 
@@ -30,13 +30,13 @@ class Food {
   }
 
   Map<String, dynamic> toJson() => {
-    'time': time,
-    'time_end': timeEnd,
-    'title_da': titleDa,
-    'title_en': titleEn,
-    'food_id': id,
-    'time_id': timeId,
-    'text_da': textDa,
-    'text_en': textEn
-  };
+        'time': time,
+        'time_end': timeEnd,
+        'title_da': titleDa,
+        'title_en': titleEn,
+        'food_id': id,
+        'time_id': timeId,
+        'text_da': textDa,
+        'text_en': textEn
+      };
 }

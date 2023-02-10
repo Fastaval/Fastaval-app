@@ -106,7 +106,7 @@ class HomePageState extends State<HomePageView> {
                                         child: BarcodeWidget(
                                           barcode: Barcode
                                               .ean8(), // Barcode type and settings
-                                          data: user.barcode!,
+                                          data: user.barcode.toString(),
                                         ),
                                       ),
                                     ),

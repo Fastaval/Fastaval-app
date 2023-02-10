@@ -1,7 +1,7 @@
 class ActivityRun {
   final int id;
   final int activity;
-  final String localeId;
+  final int localeId;
   final String localeName;
   final int start;
   final int linked;

@@ -18,7 +18,7 @@ class ActivityItem {
   final String type;
   final double playHours;
   final String language;
-  final String wpId;
+  final int wpId;
   final int canSignUp;
 
   ActivityItem(

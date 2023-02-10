@@ -1,9 +1,9 @@
 class Wear {
-  String? amount;
-  String? size;
+  int? amount;
+  int? size;
   String? titleDa;
   String? titleEn;
-  String? wearId;
+  int? wearId;
   int? received;
 
   Wear(
@@ -24,11 +24,11 @@ class Wear {
   }
 
   Map<String, dynamic> toJson() => {
-    'amount': amount,
-    'size': size,
-    'title_da': titleDa,
-    'title_en': titleEn,
-    'wear_id': wearId,
-    'received': received
-  };
+        'amount': amount,
+        'size': size,
+        'title_da': titleDa,
+        'title_en': titleEn,
+        'wear_id': wearId,
+        'received': received
+      };
 }

@@ -21,8 +21,8 @@ class UserService {
     storage.setString(kUserKey, userString);
   }
 
-  Future<bool?> hasBarcode() async {
-    User user = await getUser();
-    return user.barcode?.isNotEmpty;
-  }
+  //Future<bool?> hasBarcode() async {
+  //  User user = await getUser();
+  //  return user.barcode?.isNotEmpty;
+  // }
 }
