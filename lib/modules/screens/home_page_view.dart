@@ -1,4 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
-import 'profilescreen.dart';
 
 List<BottomNavigationBarItem> loggedInBars = [
   const BottomNavigationBarItem(
@@ -61,8 +61,8 @@ class HomePageState extends State<HomePageView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.title,
-            style: const TextStyle(color: Colors.white),
+            tr('app.title'),
+            style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             Row(
@@ -129,10 +129,7 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> loggedInWidgets() {
     return <Widget>[
-      //ProfilePage(parent),
-      ProfileScreen(
-        appUser: user,
-      ),
+      LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -140,7 +137,6 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> notLoggedInWidgets() {
     return <Widget>[
-      //ProfilePage(parent),
       LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
@@ -155,9 +151,7 @@ class HomePageState extends State<HomePageView> {
 }
 
 class HomePageView extends StatefulWidget {
-  final String title;
-
-  const HomePageView({Key? key, required this.title}) : super(key: key);
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
