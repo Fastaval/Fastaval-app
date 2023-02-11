@@ -7,7 +7,7 @@ import 'package:fastaval_app/modules/screens/programscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
 import 'profilescreen.dart';
@@ -44,7 +44,6 @@ List<BottomNavigationBarItem> notLoggedInNavBars = [
 
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
-  late PdfViewerController _pdfViewerController;
   late User user;
   int _currentIndex = 1;
 
@@ -104,21 +103,7 @@ class HomePageState extends State<HomePageView> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                            insetPadding:
-                                const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                            child: Scaffold(
-                                body: RotatedBox(
-                                    quarterTurns: 1,
-                                    child: SfPdfViewer.asset(
-                                      'Mariagerfjord_kort_2022.pdf',
-                                      controller: _pdfViewerController,
-                                    ))));
-                      },
-                    );
+                    Fluttertoast.showToast(msg: 'No map for you');
                   },
                 ),
               ],
@@ -140,16 +125,12 @@ class HomePageState extends State<HomePageView> {
 
   @override
   void initState() {
-    _pdfViewerController = PdfViewerController();
-
     super.initState();
   }
 
-  List<Widget> loggedInWidgets() {
+  List<Widget> notLoggedInWidgets() {
     return <Widget>[
-      ProfileScreen(
-        appUser: user,
-      ),
+      LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -157,6 +138,7 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> notLoggedInWidgets() {
     return <Widget>[
+      //ProfilePage(parent),
       LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
