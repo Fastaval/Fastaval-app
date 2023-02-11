@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
 import 'package:fastaval_app/modules/screens/loginscreen.dart';
+import 'package:fastaval_app/modules/screens/profilescreen.dart';
 import 'package:fastaval_app/modules/screens/programscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -129,7 +130,9 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> loggedInWidgets() {
     return <Widget>[
-      LoginScreen(this),
+      ProfileScreen(
+        appUser: user,
+      ),
       const InfoScreen(),
       const Programscreen(),
     ];
