@@ -16,9 +16,7 @@ Future<List<ActivityItem>> getDay(String isoDate) async {
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
-    return (jsonDecode(response.body) as List)
-        .map((item) => ActivityItem.fromJson(item))
-        .toList();
+    return (jsonDecode(response.body) as List).map((item) => ActivityItem.fromJson(item)).toList();
   } else {
     throw Exception('Failed to download programs');
   }
@@ -108,9 +106,7 @@ class _ProgramscreenState extends State<Programscreen> {
 
                             timeBox(
                                 timestamp: unixtodatetime(item.start),
-                                color:
-                                    _colorMap[_activityMap[item.activity]!.type]
-                                        as Color),
+                                color: _colorMap[_activityMap[item.activity]!.type] as Color),
                             const Padding(padding: EdgeInsets.only(left: 20)),
 
                             //what
@@ -131,8 +127,7 @@ class _ProgramscreenState extends State<Programscreen> {
     );
   }
 
-  Widget timeBox({required DateTime timestamp, required Color color}) =>
-      Container(
+  Widget timeBox({required DateTime timestamp, required Color color}) => Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,

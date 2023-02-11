@@ -33,8 +33,7 @@ List<BottomNavigationBarItem> notLoggedInNavBars = [
         Icons.info,
       ),
       label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
+  const BottomNavigationBarItem(icon: Icon(Icons.calendar_view_day), label: 'Program'),
 ];
 
 List<BottomNavigationBarItem> loggedInBars = [
@@ -48,8 +47,7 @@ List<BottomNavigationBarItem> loggedInBars = [
         Icons.info,
       ),
       label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
+  const BottomNavigationBarItem(icon: Icon(Icons.calendar_view_day), label: 'Program'),
 ];
 
 class HomePageState extends State<HomePageView> {
@@ -104,8 +102,7 @@ class HomePageState extends State<HomePageView> {
                                       child: RotatedBox(
                                         quarterTurns: 1,
                                         child: BarcodeWidget(
-                                          barcode: Barcode
-                                              .ean8(), // Barcode type and settings
+                                          barcode: Barcode.ean8(), // Barcode type and settings
                                           data: user.barcode.toString(),
                                         ),
                                       ),
@@ -125,8 +122,7 @@ class HomePageState extends State<HomePageView> {
                       context: context,
                       builder: (BuildContext context) {
                         return Dialog(
-                            insetPadding:
-                                const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                            insetPadding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                             child: Scaffold(
                                 body: RotatedBox(
                                     quarterTurns: 1,
@@ -142,9 +138,7 @@ class HomePageState extends State<HomePageView> {
             ),
           ],
         ),
-        body: _loggedIn
-            ? loggedInWidgets()[_currentIndex]
-            : notLoggedInWidgets()[_currentIndex],
+        body: _loggedIn ? loggedInWidgets()[_currentIndex] : notLoggedInWidgets()[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,

@@ -144,11 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => login(userIdController.text, passwordController.text)
-            .then((value) => scheduleMicrotask(() {
-                  LoginNotification(loggedIn: true, user: value)
-                      .dispatch(context);
-                })),
+        onPressed: () => login(userIdController.text, passwordController.text).then((value) => scheduleMicrotask(() {
+              LoginNotification(loggedIn: true, user: value).dispatch(context);
+            })),
         child: const Text(
           'LOGIN',
           style: TextStyle(

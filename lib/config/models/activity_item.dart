@@ -42,9 +42,7 @@ class ActivityItem {
 
   ActivityItem.fromJson(Map<String, dynamic> json)
       : id = json['aktivitet_id'],
-        runs = List.from(json['afviklinger'])
-            .map((run) => ActivityRun.fromJson(run))
-            .toList(),
+        runs = List.from(json['afviklinger']).map((run) => ActivityRun.fromJson(run)).toList(),
         daTitle = json['title_da'],
         daText = json['text_da'],
         daDescription = json['description_da'],

@@ -8,7 +8,7 @@ import 'wear.dart';
 class User {
   int? id;
   String? name;
-  int? checkedIn;
+  bool? hasCheckedIn;
   String? messages;
   Sleep? sleep;
   String? category;
@@ -21,7 +21,7 @@ class User {
   User(
       {this.id,
       this.name,
-      this.checkedIn,
+      this.hasCheckedIn,
       this.messages,
       this.sleep,
       this.category,
@@ -34,18 +34,21 @@ class User {
   User.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    checkedIn = json['checked_in'];
+    hasCheckedIn = json['checked_in'] != 0;
     messages = json['messages'] ?? '';
     sleep = Sleep.fromJson(json['sleep']);
     category = json['category'];
+    barcode = json['barcode'];
+
     var foodArray = json['food'] as List;
     food = foodArray.map((item) => Food.fromJson(item)).toList();
+
     var wearArray = json['wear'] as List;
     wear = wearArray.map((item) => Wear.fromJson(item)).toList();
+
     var schedulingArray = json['scheduling'] as List;
-    scheduling =
-        schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
-    barcode = json['barcode'];
+    scheduling = schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
+
     var ottoPartyArray = json['otto_party'] as List;
     ottoParty = ottoPartyArray.map((item) => OttoParty.fromJson(item)).toList();
   }
@@ -53,7 +56,7 @@ class User {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'checked_in': checkedIn,
+        'checked_in': hasCheckedIn,
         'messages': messages,
         'sleep': sleep,
         'category': category,
