@@ -3,63 +3,87 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class InfoScreen extends StatelessWidget {
-  const InfoScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFFF9800),
-                      Color(0xFFFB8c00),
-                      Color(0xFFF57C00),
-                      Color(0xFFEF6c00),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      _buildSafeFastaval(),
-                      _buildWiFi(),
-                      _buildOpenHours(),
-                      _buildStores(),
-                      _buildFastaWaer(),
-                      _buildLostFound(),
-                      _buildTransport(),
-                      const Padding(padding: EdgeInsets.only(bottom: 80))
-                    ],
-                  ),
-                ),
-              )
-            ],
+Widget buildSideBySideText(String left, String right, [bool? selectable]) {
+  selectable = selectable ?? false;
+  return Row(
+    children: <Widget>[
+      Expanded(
+        flex: 4,
+        child: Text(
+          left,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: 'OpenSans',
           ),
         ),
       ),
-    );
-  }
+      Expanded(
+        flex: 6,
+        child: selectable
+            ? SelectableText(
+                right,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              )
+            : Text(
+                right,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+      ),
+    ],
+  );
 }
 
-Widget _buildSafeFastaval() {
+Widget buildSideBySideTextWithUrlAction(String title, String link, Uri url) {
+  return Row(
+    children: <Widget>[
+      Expanded(
+        flex: 11,
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 9,
+        child: GestureDetector(
+          onTap: () {
+            canLaunchUrl(url).then((bool result) async {
+              if (result) {
+                await launchUrl(url);
+              }
+            });
+          },
+          child: Text(
+            url.path,
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16.0,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildFastaWaer() {
   return SizedBox(
     width: double.infinity,
     child: Card(
@@ -68,10 +92,10 @@ Widget _buildSafeFastaval() {
       child: Padding(
         padding: kCardPadding,
         child: ListTile(
-          trailing: const Icon(Icons.phone),
+          trailing: const Icon(Icons.person),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
           title: const Text(
-            'Safe Fastaval',
+            'Fasta-Wear',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.0,
@@ -83,47 +107,37 @@ Widget _buildSafeFastaval() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  height: 10,
+              children: const <Widget>[
+                Text(
+                  'Har du bestilt wear?',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
                 ),
-                buildSideBySideTextWithUrlAction(
-                    'Vagthavende General:',
-                    '+45 61 40 90 65',
-                    Uri(
-                      scheme: 'tel',
-                      path: '+4561409065',
-                    )),
-                const SizedBox(
-                  height: 10,
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
                 ),
-                buildSideBySideTextWithUrlAction(
-                    'GDS:',
-                    '+45 61 40 92 63',
-                    Uri(
-                      scheme: 'tel',
-                      path: '+4561409263',
-                    )),
-                const SizedBox(
-                  height: 10,
+                Text(
+                  'Det kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
                 ),
-                buildSideBySideTextWithUrlAction(
-                    'Tryghedsvært:',
-                    '+45 61 40 92 64',
-                    Uri(
-                      scheme: 'tel',
-                      path: '+4561409264',
-                    )),
-                const SizedBox(
-                  height: 10,
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
                 ),
-                buildSideBySideTextWithUrlAction(
-                    'Safemail:',
-                    'safe@fastaval.dk',
-                    Uri(
-                      scheme: 'mailto',
-                      path: 'safe@fastaval.dk',
-                    )),
+                Text(
+                  'I år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
               ],
             ),
           ),
@@ -133,7 +147,7 @@ Widget _buildSafeFastaval() {
   );
 }
 
-Widget _buildWiFi() {
+Widget _buildLostFound() {
   return SizedBox(
     width: double.infinity,
     child: Card(
@@ -142,10 +156,10 @@ Widget _buildWiFi() {
       child: Padding(
         padding: kCardPadding,
         child: ListTile(
-          trailing: const Icon(Icons.wifi),
+          trailing: const Icon(Icons.move_to_inbox),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
           title: const Text(
-            'WIFI',
+            'Lost & Found',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.0,
@@ -157,10 +171,15 @@ Widget _buildWiFi() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                buildSideBySideText('Netværk:', 'Undervisning'),
-                buildSideBySideText('Brugernavn:', 'mfg-guest@mf-gym.dk', true),
-                buildSideBySideText('Kode:', 'Teleskop2022', true),
+              children: const <Widget>[
+                Text(
+                  'Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
               ],
             ),
           ),
@@ -293,6 +312,80 @@ Widget _buildOpenHours() {
   );
 }
 
+Widget _buildSafeFastaval() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: kCardMargin,
+      elevation: 5,
+      child: Padding(
+        padding: kCardPadding,
+        child: ListTile(
+          trailing: const Icon(Icons.phone),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+          title: const Text(
+            'Safe Fastaval',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+          subtitle: Container(
+            padding: const EdgeInsets.only(top: 2, left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                buildSideBySideTextWithUrlAction(
+                    'Vagthavende General:',
+                    '+45 61 40 90 65',
+                    Uri(
+                      scheme: 'tel',
+                      path: '+4561409065',
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                buildSideBySideTextWithUrlAction(
+                    'GDS:',
+                    '+45 61 40 92 63',
+                    Uri(
+                      scheme: 'tel',
+                      path: '+4561409263',
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                buildSideBySideTextWithUrlAction(
+                    'Tryghedsvært:',
+                    '+45 61 40 92 64',
+                    Uri(
+                      scheme: 'tel',
+                      path: '+4561409264',
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                buildSideBySideTextWithUrlAction(
+                    'Safemail:',
+                    'safe@fastaval.dk',
+                    Uri(
+                      scheme: 'mailto',
+                      path: 'safe@fastaval.dk',
+                    )),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 Widget _buildStores() {
   return SizedBox(
     width: double.infinity,
@@ -370,112 +463,6 @@ Widget _buildStores() {
   );
 }
 
-Widget _buildLostFound() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.move_to_inbox),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Lost & Found',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
-                  'Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _buildFastaWaer() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.person),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Fasta-Wear',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
-                  'Har du bestilt wear?',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'Det kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'I år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
 Widget _buildTransport() {
   return SizedBox(
     width: double.infinity,
@@ -541,83 +528,95 @@ Widget _buildTransport() {
   );
 }
 
-Widget buildSideBySideTextWithUrlAction(
-    String title, String link, Uri launchUrl) {
-  return Row(
-    children: <Widget>[
-      Expanded(
-        flex: 11,
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
-      Expanded(
-        flex: 9,
-        child: GestureDetector(
-          onTap: () {
-            canLaunch(launchUrl.toString()).then((bool result) async {
-              if (result) {
-                await launch(launchUrl.toString());
-              }
-            });
-          },
-          child: Text(
-            launchUrl.path,
-            textAlign: TextAlign.right,
-            style: const TextStyle(
+Widget _buildWiFi() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: kCardMargin,
+      elevation: 5,
+      child: Padding(
+        padding: kCardPadding,
+        child: ListTile(
+          trailing: const Icon(Icons.wifi),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+          title: const Text(
+            'WIFI',
+            style: TextStyle(
               color: Colors.black,
-              fontSize: 16.0,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
               fontFamily: 'OpenSans',
+            ),
+          ),
+          subtitle: Container(
+            padding: const EdgeInsets.only(top: 2, left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                buildSideBySideText('Netværk:', 'Undervisning'),
+                buildSideBySideText('Brugernavn:', 'mfg-guest@mf-gym.dk', true),
+                buildSideBySideText('Kode:', 'Teleskop2022', true),
+              ],
             ),
           ),
         ),
       ),
-    ],
+    ),
   );
 }
 
-Widget buildSideBySideText(String left, String right, [bool? selectable]) {
-  selectable = selectable ?? false;
-  return Row(
-    children: <Widget>[
-      Expanded(
-        flex: 4,
-        child: Text(
-          left,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-            fontFamily: 'OpenSans',
+class InfoScreen extends StatelessWidget {
+  const InfoScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFF9800),
+                      Color(0xFFFB8c00),
+                      Color(0xFFF57C00),
+                      Color(0xFFEF6c00),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildSafeFastaval(),
+                      _buildWiFi(),
+                      _buildOpenHours(),
+                      _buildStores(),
+                      _buildFastaWaer(),
+                      _buildLostFound(),
+                      _buildTransport(),
+                      const Padding(padding: EdgeInsets.only(bottom: 80))
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
-      Expanded(
-        flex: 6,
-        child: selectable
-            ? SelectableText(
-                right,
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontFamily: 'OpenSans',
-                ),
-              )
-            : Text(
-                right,
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontFamily: 'OpenSans',
-                ),
-              ),
-      ),
-    ],
-  );
+    );
+  }
 }
