@@ -4,12 +4,69 @@ import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+
+Widget buildThreeSideBySideTexts(String left, String center, String right) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Expanded(
+        flex: 2,
+        child: Text(
+          left,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+          maxLines: 2,
+        ),
+      ),
+      Expanded(
+        flex: 3,
+        child: Text(
+          center,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 3,
+        child: Text(
+          right,
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontFamily: 'OpenSans',
+          ),
+          maxLines: 2,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildUserProgramRow(Scheduling item) {
+  return buildThreeSideBySideTexts(
+      '${DateFormat.EEEE('da_DK').format(unixToDateTime(item.start!))} ${DateFormat.Hm().format(unixToDateTime(item.start!))}',
+      item.titleDa!,
+      item.roomDa!);
+}
+
+DateTime unixToDateTime(int timeInUnixTime) {
+  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
+}
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
   final User appUser;
+  const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -66,6 +123,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  buildFoodTimes() => SizedBox(
+        width: double.infinity,
+        child: Card(
+          margin: kCardMargin,
+          elevation: 5,
+          child: Padding(
+            padding: kCardPadding,
+            child: ListTile(
+              trailing: const Icon(Icons.fastfood),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+              title: const Text(
+                'Mad tider',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+              subtitle: buildUserFood(widget.appUser.food!),
+            ),
+          ),
+        ),
+      );
+
   Widget buildIdIcon() {
     return Column(
       children: [
@@ -95,6 +177,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  buildUserFood(List food) {
+    return Container(
+      padding: const EdgeInsets.only(top: 2, left: 10),
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: food.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 10);
+              },
+              itemBuilder: (context, index) {
+                Food item = food[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                          '${DateFormat.Hm().format(unixToDateTime(item.time!))} - ${DateFormat.Hm().format(unixToDateTime(item.timeEnd!))}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontFamily: 'OpenSans',
+                          )),
+                    ),
+                    const Padding(padding: EdgeInsets.only(left: 20)),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        item.titleDa!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -151,14 +286,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  String messagesFromFastaval() {
-    if (widget.appUser.messages == '') {
-      return 'Fastaval har ingen beskeder til dig i nu';
-    } else {
-      return widget.appUser.messages!;
-    }
   }
 
   buildUserProgram() => SizedBox(
@@ -219,143 +346,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildFoodTimes() => SizedBox(
-        width: double.infinity,
-        child: Card(
-          margin: kCardMargin,
-          elevation: 5,
-          child: Padding(
-            padding: kCardPadding,
-            child: ListTile(
-              trailing: const Icon(Icons.fastfood),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: const Text(
-                'Mad tider',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-              ),
-              subtitle: buildUserFood(widget.appUser.food!),
-            ),
-          ),
-        ),
-      );
-
-  buildUserFood(List food) {
-    return Container(
-      padding: const EdgeInsets.only(top: 2, left: 10),
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-            ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: food.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                Food item = food[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                          DateFormat.Hm().format(unixToDateTime(item.time!)) +
-                              ' - ' +
-                              DateFormat.Hm()
-                                  .format(unixToDateTime(item.timeEnd!)),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontFamily: 'OpenSans',
-                          )),
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        item.titleDa!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            )
-          ],
-        ),
-      ),
-    );
+  String messagesFromFastaval() {
+    if (widget.appUser.messages == '') {
+      return 'Fastaval har ingen beskeder til dig i nu';
+    } else {
+      return widget.appUser.messages!;
+    }
   }
-}
-
-Widget buildUserProgramRow(Scheduling item) {
-  return buildThreeSideBySideTexts(
-      DateFormat.EEEE('da_DK').format(unixToDateTime(item.start!)) +
-          ' ' +
-          DateFormat.Hm().format(unixToDateTime(item.start!)),
-      item.titleDa!,
-      item.roomDa!);
-}
-
-Widget buildThreeSideBySideTexts(String left, String center, String right) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Expanded(
-        flex: 2,
-        child: Text(
-          left,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-          maxLines: 2,
-        ),
-      ),
-      Expanded(
-        flex: 3,
-        child: Text(
-          center,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
-      Expanded(
-        flex: 3,
-        child: Text(
-          right,
-          textAlign: TextAlign.right,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-          maxLines: 2,
-        ),
-      ),
-    ],
-  );
-}
-
-DateTime unixToDateTime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }

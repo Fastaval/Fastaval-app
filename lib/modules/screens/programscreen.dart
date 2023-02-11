@@ -1,12 +1,10 @@
-import 'package:fastaval_app/config/models/activity_item.dart';
-import 'package:fastaval_app/config/models/activity_run.dart';
-import 'package:intl/intl.dart';
-
-import 'package:flutter/material.dart';
-
 import 'dart:convert';
 
+import 'package:fastaval_app/config/models/activity_item.dart';
+import 'package:fastaval_app/config/models/activity_run.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 const String baseUrl = 'https://infosys-test.fastaval.dk/api';
 
@@ -22,6 +20,10 @@ Future<List<ActivityItem>> getDay(String isoDate) async {
   } else {
     throw Exception('Failed to download programs');
   }
+}
+
+DateTime unixtodatetime(int timeInUnixTime) {
+  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
 
 class Programscreen extends StatefulWidget {
@@ -60,33 +62,33 @@ class _ProgramscreenState extends State<Programscreen> {
   }
 
   Widget buildday(String day) {
-    List<ActivityItem> _list = [];
-    List<ActivityRun>? _runlist = [];
-    Map<int, ActivityItem> _activityMap = <int, ActivityItem>{};
-    Map<String, Color> _colorMap = <String, Color>{};
+    List<ActivityItem> list = [];
+    List<ActivityRun>? runlist = [];
+    Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
+    Map<String, Color> colorMap = <String, Color>{};
     getDay(day).then((List<ActivityItem> value) {
-      _list = value;
+      list = value;
 
-      for (ActivityItem ac in _list) {
+      for (ActivityItem ac in list) {
         if (ac.type != 'system') {
-          _activityMap.putIfAbsent(ac.id, () => ac);
+          activityMap.putIfAbsent(ac.id, () => ac);
           for (ActivityRun run in ac.runs) {
             if (unixtodatetime(run.start).toString().substring(0, 10) == day) {
-              _runlist.add(run);
+              runlist.add(run);
             }
           }
         }
       }
-      _runlist.sort((a, b) => a.start - b.start);
+      runlist.sort((a, b) => a.start - b.start);
     });
-    _colorMap.putIfAbsent('rolle', () => Colors.lightGreen.shade300);
-    _colorMap.putIfAbsent('braet', () => Colors.blue.shade300);
-    _colorMap.putIfAbsent('live', () => Colors.teal.shade400);
-    _colorMap.putIfAbsent('ottoviteter', () => Colors.orangeAccent.shade400);
-    _colorMap.putIfAbsent('junior', () => Colors.pink.shade300);
-    _colorMap.putIfAbsent('magic', () => Colors.purpleAccent.shade100);
-    _colorMap.putIfAbsent('workshop', () => Colors.amberAccent.shade200);
-    _colorMap.putIfAbsent('figur', () => Colors.red.shade300);
+    colorMap.putIfAbsent('rolle', () => Colors.lightGreen.shade300);
+    colorMap.putIfAbsent('braet', () => Colors.blue.shade300);
+    colorMap.putIfAbsent('live', () => Colors.teal.shade400);
+    colorMap.putIfAbsent('ottoviteter', () => Colors.orangeAccent.shade400);
+    colorMap.putIfAbsent('junior', () => Colors.pink.shade300);
+    colorMap.putIfAbsent('magic', () => Colors.purpleAccent.shade100);
+    colorMap.putIfAbsent('workshop', () => Colors.amberAccent.shade200);
+    colorMap.putIfAbsent('figur', () => Colors.red.shade300);
     return FutureBuilder(
       builder: (context, programSnap) {
         return SizedBox(
@@ -94,9 +96,9 @@ class _ProgramscreenState extends State<Programscreen> {
               padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
               child: ListView.builder(
-                itemCount: _runlist.length,
+                itemCount: runlist.length,
                 itemBuilder: (context, index) {
-                  ActivityRun item = _runlist[index];
+                  ActivityRun item = runlist[index];
 
                   return Container(
                     padding: const EdgeInsets.only(left: 30, right: 30),
@@ -109,13 +111,13 @@ class _ProgramscreenState extends State<Programscreen> {
                             timeBox(
                                 timestamp: unixtodatetime(item.start),
                                 color:
-                                    _colorMap[_activityMap[item.activity]!.type]
+                                    colorMap[activityMap[item.activity]!.type]
                                         as Color),
                             const Padding(padding: EdgeInsets.only(left: 20)),
 
                             //what
                             Text(
-                              _activityMap[item.activity]!.daTitle,
+                              activityMap[item.activity]!.daTitle,
                               style: const TextStyle(fontSize: 18),
                             ),
                           ],
@@ -144,8 +146,4 @@ class _ProgramscreenState extends State<Programscreen> {
           style: const TextStyle(fontSize: 18),
         ),
       );
-}
-
-DateTime unixtodatetime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
