@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
-import 'profilescreen.dart';
 
 List<BottomNavigationBarItem> loggedInBars = [
   const BottomNavigationBarItem(
@@ -62,7 +61,7 @@ class HomePageState extends State<HomePageView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'app.title'.tr(),
+            tr('app.title'),
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
@@ -128,7 +127,7 @@ class HomePageState extends State<HomePageView> {
     super.initState();
   }
 
-  List<Widget> notLoggedInWidgets() {
+  List<Widget> loggedInWidgets() {
     return <Widget>[
       LoginScreen(this),
       const InfoScreen(),
@@ -138,7 +137,6 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> notLoggedInWidgets() {
     return <Widget>[
-      //ProfilePage(parent),
       LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
@@ -153,7 +151,7 @@ class HomePageState extends State<HomePageView> {
 }
 
 class HomePageView extends StatefulWidget {
-  const HomePageView();
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
