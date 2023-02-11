@@ -5,11 +5,10 @@ import 'package:fastaval_app/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../utils/services/rest_api_service.dart';
 import '../notifications/login_notification.dart';
 
 class LoginScreen extends StatefulWidget {
-  late HomePageState parent;
+  late final HomePageState parent;
 
   LoginScreen(this.parent, {Key? key}) : super(key: key);
 
