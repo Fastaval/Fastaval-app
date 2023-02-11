@@ -1,40 +1,15 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/modules/screens/programscreen.dart';
-import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
+import 'package:fastaval_app/modules/screens/loginscreen.dart';
+import 'package:fastaval_app/modules/screens/programscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
-import 'profilescreen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
-
-class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  HomePageState createState() => HomePageState();
-}
-
-List<BottomNavigationBarItem> notLoggedInNavBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.login,
-      ),
-      label: 'Login'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(icon: Icon(Icons.calendar_view_day), label: 'Program'),
-];
+import 'profilescreen.dart';
 
 List<BottomNavigationBarItem> loggedInBars = [
   const BottomNavigationBarItem(
@@ -47,20 +22,28 @@ List<BottomNavigationBarItem> loggedInBars = [
         Icons.info,
       ),
       label: 'Information'),
-  const BottomNavigationBarItem(icon: Icon(Icons.calendar_view_day), label: 'Program'),
+  const BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_view_day), label: 'Program'),
+];
+
+List<BottomNavigationBarItem> notLoggedInNavBars = [
+  const BottomNavigationBarItem(
+      icon: Icon(
+        Icons.login,
+      ),
+      label: 'Login'),
+  const BottomNavigationBarItem(
+      icon: Icon(
+        Icons.info,
+      ),
+      label: 'Information'),
+  const BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_view_day), label: 'Program'),
 ];
 
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
-  late PdfViewerController _pdfViewerController;
   late User user;
-  @override
-  void initState() {
-    _pdfViewerController = PdfViewerController();
-
-    super.initState();
-  }
-
   int _currentIndex = 1;
 
   bool _loggedIn = false;
@@ -102,7 +85,8 @@ class HomePageState extends State<HomePageView> {
                                       child: RotatedBox(
                                         quarterTurns: 1,
                                         child: BarcodeWidget(
-                                          barcode: Barcode.ean8(), // Barcode type and settings
+                                          barcode: Barcode
+                                              .ean8(), // Barcode type and settings
                                           data: user.barcode.toString(),
                                         ),
                                       ),
@@ -118,27 +102,16 @@ class HomePageState extends State<HomePageView> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                            insetPadding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                            child: Scaffold(
-                                body: RotatedBox(
-                                    quarterTurns: 1,
-                                    child: SfPdfViewer.asset(
-                                      'Mariagerfjord_kort_2022.pdf',
-                                      controller: _pdfViewerController,
-                                    ))));
-                      },
-                    );
+                    Fluttertoast.showToast(msg: 'No map for you');
                   },
                 ),
               ],
             ),
           ],
         ),
-        body: _loggedIn ? loggedInWidgets()[_currentIndex] : notLoggedInWidgets()[_currentIndex],
+        body: _loggedIn
+            ? loggedInWidgets()[_currentIndex]
+            : notLoggedInWidgets()[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
@@ -149,13 +122,9 @@ class HomePageState extends State<HomePageView> {
     );
   }
 
-  List<Widget> notLoggedInWidgets() {
-    return <Widget>[
-      //ProfilePage(parent),
-      LoginScreen(this),
-      const InfoScreen(),
-      const Programscreen(),
-    ];
+  @override
+  void initState() {
+    super.initState();
   }
 
   List<Widget> loggedInWidgets() {
@@ -169,9 +138,27 @@ class HomePageState extends State<HomePageView> {
     ];
   }
 
+  List<Widget> notLoggedInWidgets() {
+    return <Widget>[
+      //ProfilePage(parent),
+      LoginScreen(this),
+      const InfoScreen(),
+      const Programscreen(),
+    ];
+  }
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
+}
+
+class HomePageView extends StatefulWidget {
+  final String title;
+
+  const HomePageView({Key? key, required this.title}) : super(key: key);
+
+  @override
+  HomePageState createState() => HomePageState();
 }
