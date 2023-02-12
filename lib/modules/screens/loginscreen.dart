@@ -109,9 +109,11 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => login(userIdController.text, passwordController.text).then((value) => scheduleMicrotask(() {
-              LoginNotification(loggedIn: true, user: value).dispatch(context);
-            })),
+        onPressed: () => login(userIdController.text, passwordController.text)
+            .then((value) => scheduleMicrotask(() {
+                  LoginNotification(loggedIn: true, user: value)
+                      .dispatch(context);
+                })),
         child: const Text(
           'LOGIN',
           style: TextStyle(
@@ -141,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextField(
             controller: passwordController,
+            keyboardType: TextInputType.number,
             obscureText: true,
             style: const TextStyle(
               color: Colors.white,
