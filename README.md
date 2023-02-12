@@ -4,10 +4,11 @@ A Flutter project for Alea's Fastaval
 
 ## Commands
 
-| Command            | Descriptions                                                                |
-| ------------------ | --------------------------------------------------------------------------- |
-| `flutter run`      | Starts the project in a local browser                                       |
-| `flutter gen-l10n` | Generates the translationfiles located in `.dart_tool/flutter_gen/gen_l10n` |
+| Command                                                   | Descriptions                                           |
+| --------------------------------------------------------- | ------------------------------------------------------ |
+| `flutter run`                                             | Starts the project in a local browser                  |
+| `flutter clean`                                           | Cleans all project files. Good before building release |
+| `flutter build appbundle --no-tree-shake-icons --release` | Builds a release bundle of android                     |
 
 ## Flutter Documentation
 
