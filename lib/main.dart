@@ -6,6 +6,15 @@ import 'firebase_options.dart';
 
 import 'modules/screens/home_page_view.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -14,15 +23,20 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-    // TODO: If necessary send token to application server.
-    print(fcmToken);
-    // Note: This callback is fired at each app startup and whenever a new
-    // token is generated.
-  }).onError((err) {
-    // Error getting token.
-  });
   print(fcmToken);
+
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await firebaseMessaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(
     EasyLocalization(
         supportedLocales: const [Locale('da'), Locale('en')],
