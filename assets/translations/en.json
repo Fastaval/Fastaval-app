@@ -1,5 +1,10 @@
 {
   "app": {
-    "title": "Fastaval App EN"
+    "title": "Fastaval App"
+  },
+  "appbar": {
+    "barcode": {
+      "show": "Show barcode"
+    }
   }
 }

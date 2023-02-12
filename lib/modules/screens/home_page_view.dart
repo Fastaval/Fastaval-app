@@ -75,7 +75,7 @@ class HomePageState extends State<HomePageView> {
                       CupertinoIcons.barcode,
                       color: Colors.white,
                     ),
-                    tooltip: 'Show barcode',
+                    tooltip: tr('appbar.barcode.show'),
                     onPressed: () {
                       userService.getUser().then((user) => {
                             showDialog(

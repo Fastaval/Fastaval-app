@@ -1,5 +1,10 @@
 {
   "app": {
-    "title": "Fastaval App DK"
+    "title": "Fastaval App"
+  },
+  "appbar": {
+    "barcode": {
+      "show": "Vis stregkode"
+    }
   }
 }
