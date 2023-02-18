@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-
   Future<String> getString(String key) async {
     final prefs = await SharedPreferences.getInstance();
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,9 +95,9 @@ Widget _buildFastaWaer() {
         child: ListTile(
           trailing: const Icon(Icons.person),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Fasta-Wear',
-            style: TextStyle(
+          title: Text(
+            tr('info.fastaWear.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -107,36 +108,17 @@ Widget _buildFastaWaer() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  'Har du bestilt wear?',
-                  style: TextStyle(
+                  tr('info.fastaWear.text'),
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'Det kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'I år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
                 ),
               ],
             ),

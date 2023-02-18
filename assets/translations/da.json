@@ -3,8 +3,23 @@
     "title": "Fastaval App"
   },
   "appbar": {
+    "map": {
+      "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
+    },
     "barcode": {
       "show": "Vis stregkode"
     }
+  },
+  "info": {
+    "fastaWear": {
+      "title": "Fasta-Wear",
+      "text": "Har du bestilt wear?\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval."
+    }
+  },
+  "bottomNavigation": {
+    "login": "Log ind",
+    "information": "Information",
+    "profil": "Profil",
+    "program": "Program"
   }
 }
