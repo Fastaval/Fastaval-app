@@ -208,14 +208,11 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(
-                        tr('info.openHours.information.day1.text'),
-                        tr('info.openHours.information.day1.value')),
+                        tr('info.openHours.information.day1'), "15.00 - 20.30"),
                     buildSideBySideText(
-                        tr('info.openHours.information.day2.text'),
-                        tr('info.openHours.information.day2.value')),
+                        tr('info.openHours.information.day2'), "09.30 - 20.30"),
                     buildSideBySideText(
-                        tr('info.openHours.information.day3.text'),
-                        tr('info.openHours.information.day3.value')),
+                        tr('info.openHours.information.day3'), "09.30 - 17.00"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -230,8 +227,11 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(
-                        tr('info.openHours.coffeeCafe.day1.text'),
-                        tr('info.openHours.coffeeCafe.day1.value')),
+                        tr('info.openHours.coffeeCafe.day1'), "11.30 - 01.00"),
+                    buildSideBySideText(
+                        tr('info.openHours.coffeeCafe.day2'), "09.00 - 01.00"),
+                    buildSideBySideText(
+                        tr('info.openHours.coffeeCafe.day3'), "09.00 - 15.00"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -246,11 +246,9 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(
-                        tr('info.openHours.boardGames.day1.text'),
-                        tr('info.openHours.boardGames.day1.value')),
+                        tr('info.openHours.boardGames.day1'), "09.00 - 02.00"),
                     buildSideBySideText(
-                        tr('info.openHours.boardGames.day2.text'),
-                        tr('info.openHours.boardGames.day2.value')),
+                        tr('info.openHours.boardGames.day2'), "09.00 - 15.00"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -264,10 +262,10 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText(tr('info.openHours.kiosk.day1.text'),
-                        tr('info.openHours.kiosk.day1.value')),
-                    buildSideBySideText(tr('info.openHours.kiosk.day2.text'),
-                        tr('info.openHours.kiosk.day2.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.kiosk.day1'), "08.00 - 00.00"),
+                    buildSideBySideText(
+                        tr('info.openHours.kiosk.day2'), "08.00 - 16.00"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -281,8 +279,8 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText(tr('info.openHours.bar.day1.text'),
-                        tr('info.openHours.bar.day1.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.bar.day1'), "17.00 - 02.00"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -296,10 +294,10 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText(tr('info.openHours.oasis.day1.text'),
-                        tr('info.openHours.oasis.day1.value')),
-                    buildSideBySideText(tr('info.openHours.oasis.day2.text'),
-                        tr('info.openHours.oasis.day2.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.oasis.day1'), "15.00 - 02.00"),
+                    buildSideBySideText(
+                        tr('info.openHours.oasis.day2'), "12.00 - 02.00"),
                   ],
                 ),
               ],
@@ -340,41 +338,41 @@ Widget _buildSafeFastaval() {
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.safe.text1.text'),
-                    tr('info.safe.text1.value'),
+                    tr('info.safe.dutyGeneral'),
+                    "+4561409065",
                     Uri(
                       scheme: 'tel',
-                      path: tr('info.safe.text1.value'),
+                      path: "+4561409065",
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.safe.text2.text'),
-                    tr('info.safe.text2.value'),
+                    tr('info.safe.heroForce'),
+                    "+4561409263",
                     Uri(
                       scheme: 'tel',
-                      path: tr('info.safe.text2.value'),
+                      path: "+4561409263",
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.safe.text3.text'),
-                    tr('info.safe.text3.value'),
+                    tr('info.safe.safetyHost'),
+                    "+4561409264",
                     Uri(
                       scheme: 'tel',
-                      path: tr('info.safe.text3.value'),
+                      path: "+4561409264",
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.safe.text4.text'),
-                    tr('info.safe.text4.value'),
+                    tr('info.safe.safetyMail'),
+                    "safe@fastaval.dk",
                     Uri(
                       scheme: 'mailto',
-                      path: tr('info.safe.text4.value'),
+                      path: "safe@fastaval.dk",
                     )),
               ],
             ),
@@ -549,11 +547,17 @@ Widget _buildWiFi() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 buildSideBySideText(
-                    tr('info.wifi.text1'), 'Undervisning', false),
+                    tr('info.wifi.networkName'), 'Undervisning'),
+                const SizedBox(
+                  height: 10,
+                ),
                 buildSideBySideText(
-                    tr('info.wifi.text2'), 'mfg-guest@mf-gym.dk', true),
+                    tr('info.wifi.networkUser'), 'mfg-guest@mf-gym.dk', true),
+                const SizedBox(
+                  height: 10,
+                ),
                 buildSideBySideText(
-                    tr('info.wifi.text3'), 'Teleskop2022', true),
+                    tr('info.wifi.networkCode'), 'Teleskop2022', true),
               ],
             ),
           ),
