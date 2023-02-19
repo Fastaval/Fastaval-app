@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget buildSideBySideText(String left, String right, [bool? selectable]) {
-  selectable = selectable ?? false;
+Widget buildSideBySideText(String left, String right,
+    [bool selectable = false]) {
   return Row(
     children: <Widget>[
       Expanded(
@@ -209,13 +209,13 @@ Widget _buildOpenHours() {
                   children: <Widget>[
                     buildSideBySideText(
                         tr('info.openHours.information.day1.text'),
-                        tr('info.openHours.information.day1.time')),
+                        tr('info.openHours.information.day1.value')),
                     buildSideBySideText(
                         tr('info.openHours.information.day2.text'),
-                        tr('info.openHours.information.day2.time')),
+                        tr('info.openHours.information.day2.value')),
                     buildSideBySideText(
                         tr('info.openHours.information.day3.text'),
-                        tr('info.openHours.information.day3.time')),
+                        tr('info.openHours.information.day3.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -231,7 +231,7 @@ Widget _buildOpenHours() {
                   children: <Widget>[
                     buildSideBySideText(
                         tr('info.openHours.coffeeCafe.day1.text'),
-                        tr('info.openHours.coffeeCafe.day1.time')),
+                        tr('info.openHours.coffeeCafe.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -247,10 +247,10 @@ Widget _buildOpenHours() {
                   children: <Widget>[
                     buildSideBySideText(
                         tr('info.openHours.boardGames.day1.text'),
-                        tr('info.openHours.boardGames.day1.time')),
+                        tr('info.openHours.boardGames.day1.value')),
                     buildSideBySideText(
                         tr('info.openHours.boardGames.day2.text'),
-                        tr('info.openHours.boardGames.day2.time')),
+                        tr('info.openHours.boardGames.day2.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -265,9 +265,9 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(tr('info.openHours.kiosk.day1.text'),
-                        tr('info.openHours.kiosk.day1.time')),
+                        tr('info.openHours.kiosk.day1.value')),
                     buildSideBySideText(tr('info.openHours.kiosk.day2.text'),
-                        tr('info.openHours.kiosk.day2.time')),
+                        tr('info.openHours.kiosk.day2.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -282,7 +282,7 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(tr('info.openHours.bar.day1.text'),
-                        tr('info.openHours.bar.day1.time')),
+                        tr('info.openHours.bar.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -297,9 +297,9 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(tr('info.openHours.oasis.day1.text'),
-                        tr('info.openHours.oasis.day1.time')),
+                        tr('info.openHours.oasis.day1.value')),
                     buildSideBySideText(tr('info.openHours.oasis.day2.text'),
-                        tr('info.openHours.oasis.day2.time')),
+                        tr('info.openHours.oasis.day2.value')),
                   ],
                 ),
               ],
@@ -396,9 +396,9 @@ Widget _buildStores() {
         child: ListTile(
           trailing: const Icon(Icons.store),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Butikker',
-            style: TextStyle(
+          title: Text(
+            tr('info.stores.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -410,9 +410,9 @@ Widget _buildStores() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Epic Panda i B45',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store1.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -420,15 +420,18 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 16.00 - 23.00'),
-                    buildSideBySideText('Tors-lør:', 'kl. 10.00 - 23.00'),
-                    buildSideBySideText('Søndag:', 'kl. 10.00 - 15.00'),
+                    buildSideBySideText(tr('info.stores.store1.day1.text'),
+                        tr('info.stores.store1.day1.value')),
+                    buildSideBySideText(tr('info.stores.store1.day2.text'),
+                        tr('info.stores.store1.day2.value')),
+                    buildSideBySideText(tr('info.stores.store1.day3.text'),
+                        tr('info.stores.store1.day3.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Tier1MTG i A07',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store2.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -436,13 +439,14 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 10.00 - 22.00'),
+                    buildSideBySideText(tr('info.stores.store2.day1.text'),
+                        tr('info.stores.store2.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Corra Design i fællesområdet',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store3.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -450,7 +454,8 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Fre-søn:', 'kl. 10.00 - 16.00'),
+                    buildSideBySideText(tr('info.stores.store3.day1.text'),
+                        tr('info.stores.store3.day1.value')),
                   ],
                 ),
               ],
@@ -473,9 +478,9 @@ Widget _buildTransport() {
         child: ListTile(
           trailing: const Icon(Icons.local_parking),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Transport og Parkering',
-            style: TextStyle(
+          title: Text(
+            tr('info.transportAndParking.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -488,35 +493,26 @@ Widget _buildTransport() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 5),
-                const Text(
-                    "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads.",
-                    style: TextStyle(
+                Text(tr('info.transportAndParking.text'),
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
                     )),
-                const SizedBox(height: 10),
-                const Text("Hobro Togstation er ca. 2,5 km fra Fastaval.",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
+                buildSideBySideTextWithUrlAction(
+                    tr('info.transportAndParking.taxi1.text'),
+                    tr('info.transportAndParking.taxi1.value'),
+                    Uri(
+                      scheme: 'tel',
+                      path: tr('info.transportAndParking.taxi1.value'),
                     )),
                 const SizedBox(height: 10),
                 buildSideBySideTextWithUrlAction(
-                    'Hobro Taxa:',
-                    '+45 98 51 23 00',
+                    tr('info.transportAndParking.taxi2.text'),
+                    tr('info.transportAndParking.taxi2.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4598512300',
-                    )),
-                const SizedBox(height: 10),
-                buildSideBySideTextWithUrlAction(
-                    'Krone Taxa:',
-                    '+45 98 52 11 11',
-                    Uri(
-                      scheme: 'tel',
-                      path: '+4598521111',
+                      path: tr('info.transportAndParking.taxi2.value'),
                     )),
               ],
             ),
@@ -552,9 +548,12 @@ Widget _buildWiFi() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                buildSideBySideText('Netværk:', 'Undervisning'),
-                buildSideBySideText('Brugernavn:', 'mfg-guest@mf-gym.dk', true),
-                buildSideBySideText('Kode:', 'Teleskop2022', true),
+                buildSideBySideText(
+                    tr('info.wifi.text1'), 'Undervisning', false),
+                buildSideBySideText(
+                    tr('info.wifi.text2'), 'mfg-guest@mf-gym.dk', true),
+                buildSideBySideText(
+                    tr('info.wifi.text3'), 'Teleskop2022', true),
               ],
             ),
           ),

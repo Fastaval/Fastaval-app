@@ -3,24 +3,94 @@
     "title": "Fastaval App"
   },
   "appbar": {
-    "map": {
-      "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
-    },
     "barcode": {
       "show": "Vis stregkode"
+    },
+    "map": {
+      "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
+  },
+  "bottomNavigation": {
+    "information": "Information",
+    "login": "Log ind",
+    "profil": "Profil",
+    "program": "Program"
   },
   "info": {
     "fastaWear": {
-      "title": "Fasta-Wear",
-      "text": "Har du bestilt wear?\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval."
+      "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval.",
+      "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "title": "Glemte sager",
-      "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!"
+      "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!",
+      "title": "Glemte Sager"
+    },
+    "openHours": {
+      "bar": {
+        "day1": {
+          "text": "Ons-søn",
+          "value": "kl. 17:00 - 02:00"
+        },
+        "title": "Baren"
+      },
+      "boardGames": {
+        "day1": {
+          "text": "Ons-lør:",
+          "value": "kl. 09:00 - 02:00"
+        },
+        "day2": {
+          "text": "Søndag:",
+          "value": "kl. 09.00 - 15:00"
+        },
+        "title": "Brætspilscaféen:"
+      },
+      "coffeeCafe": {
+        "day1": {
+          "text": "Ons-søn",
+          "value": "kl. 09:00 - 23:00"
+        },
+        "title": "Otto's Kaffekro"
+      },
+      "information": {
+        "day1": {
+          "text": "Onsdag:",
+          "value": "kl. 15:00 - 21:00"
+        },
+        "day2": {
+          "text": "Tor-lør:",
+          "value": "kl. 09.00 - 21:00"
+        },
+        "day3": {
+          "text": "Søn:",
+          "value": "kl. 09:00 - 17:00"
+        },
+        "title": "Informationen:"
+      },
+      "kiosk": {
+        "day1": {
+          "text": "Ons-lør:",
+          "value": "kl. 09:00 - 00:00"
+        },
+        "day2": {
+          "text": "Søndag:",
+          "value": "kl. 09.00 - 17:00"
+        },
+        "title": "Kiosken:"
+      },
+      "oasis": {
+        "day1": {
+          "text": "Onsdag:",
+          "value": "kl. 16:00 - 02:00"
+        },
+        "day2": {
+          "text": "Tor-lør:",
+          "value": "kl. 12:00 - 02:00"
+        },
+        "title": "Oasen:"
+      },
+      "title": "Åbningstider"
     },
     "safe": {
-      "title": "Tryg Fastaval",
       "text1": {
         "text": "Vagthavende General:",
         "value": "+4561409065"
@@ -36,45 +106,57 @@
       "text4": {
         "text": "Safe-mail:",
         "value": "safe@fastaval.dk"
-      }
+      },
+      "title": "Tryg Fastaval"
     },
-    "openHours": {
-      "title": "Åbningstider",
-      "information": {
-        "title": "Informationen:",
-        "day1": { "text": "Onsdag:", "time": "kl. 15:00 - 21:00" },
-        "day2": { "text": "Tor-lør:", "time": "kl. 09.00 - 21:00" },
-        "day3": { "text": "Søn:", "time": "kl. 09:00 - 17:00" }
+    "stores": {
+      "store1": {
+        "day1": {
+          "text": "Onsdag:",
+          "value": "kl. 16:00 - 23:00"
+        },
+        "day2": {
+          "text": "Tor-lør:",
+          "value": "kl. 10:00 - 23:00"
+        },
+        "day3": {
+          "text": "Søndag:",
+          "value": "kl. 10:00 - 15:00"
+        },
+        "title": "Epic Panda i B45"
       },
-      "coffeeCafe": {
-        "title": "Otto's Kaffekro",
-        "day1": { "text": "Ons-søn", "time": "kl. 09:00 - 23:00" }
+      "store2": {
+        "day1": {
+          "text": "Ons-søn",
+          "value": "kl. 10:00 - 22:00"
+        },
+        "title": "Tier1MTG i A07"
       },
-      "boardGames": {
-        "title": "Brætspilscaféen:",
-        "day1": { "text": "Ons-lør:", "time": "kl. 09:00 - 02:00" },
-        "day2": { "text": "Søndag:", "time": "kl. 09.00 - 15:00" }
+      "store3": {
+        "day1": {
+          "text": "Fre-søn",
+          "value": "kl. 10:00 - 16:00"
+        },
+        "title": "Corra Design i fællesområdet"
       },
-      "kiosk": {
-        "title": "Kiosken:",
-        "day1": { "text": "Ons-lør:", "time": "kl. 09:00 - 00:00" },
-        "day2": { "text": "Søndag:", "time": "kl. 09.00 - 17:00" }
+      "title": "Butikker"
+    },
+    "transportAndParking": {
+      "taxi1": {
+        "text": "Hobro Taxa:",
+        "value": "+4598512300"
       },
-      "bar": {
-        "title": "Baren",
-        "day1": { "text": "Ons-søn", "time": "kl. 17:00 - 02:00" }
+      "taxi2": {
+        "text": "Krone Taxa:",
+        "value": "+4598521111"
       },
-      "oasis": {
-        "title": "Oasen:",
-        "day1": { "text": "Onsdag:", "time": "kl. 16:00 - 02:00" },
-        "day2": { "text": "Tor-lør:", "time": "kl. 12:00 - 02:00" }
-      }
+      "text": "Parkering kan gøres på gymnasiets- eller idrætscenterets parkeringsplads.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
+      "title": "Transport & Parkering"
+    },
+    "wifi": {
+      "text1": "Netværk:",
+      "text2": "Brugernavn:",
+      "text3": "Kode:"
     }
-  },
-  "bottomNavigation": {
-    "login": "Log ind",
-    "information": "Information",
-    "profil": "Profil",
-    "program": "Program"
   }
 }
