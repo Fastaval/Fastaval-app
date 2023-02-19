@@ -140,9 +140,9 @@ Widget _buildLostFound() {
         child: ListTile(
           trailing: const Icon(Icons.move_to_inbox),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Lost & Found',
-            style: TextStyle(
+          title: Text(
+            tr('info.lostAndFound.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -153,10 +153,10 @@ Widget _buildLostFound() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  'Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!',
-                  style: TextStyle(
+                  tr('info.lostAndFound.text'),
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
@@ -182,9 +182,9 @@ Widget _buildOpenHours() {
         child: ListTile(
           trailing: const Icon(Icons.access_time),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Åbningstider',
-            style: TextStyle(
+          title: Text(
+            tr('info.openHours.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -197,9 +197,9 @@ Widget _buildOpenHours() {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Informationen:',
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.information.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -207,15 +207,21 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 15:00 - 21:00'),
-                    buildSideBySideText('Tor-lør:', 'kl. 09:00 - 21:00'),
-                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day1.text'),
+                        tr('info.openHours.information.day1.time')),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day2.text'),
+                        tr('info.openHours.information.day2.time')),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day3.text'),
+                        tr('info.openHours.information.day3.time')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Otto's Kaffekro:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.coffeeCafe.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -223,13 +229,15 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 09:00 - 23:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.coffeeCafe.day1.text'),
+                        tr('info.openHours.coffeeCafe.day1.time')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Brætspilscaféen:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.boardgames.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -237,8 +245,12 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 02:00'),
-                    buildSideBySideText('søndag:', 'kl. 09:00 - 15:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.boardgames.day1.text'),
+                        tr('info.openHours.boardgames.day1.time')),
+                    buildSideBySideText(
+                        tr('info.openHours.boardgames.day2.text'),
+                        tr('info.openHours.boardgames.day2.time')),
                   ],
                 ),
                 const SizedBox(height: 10),

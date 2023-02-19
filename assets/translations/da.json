@@ -14,6 +14,28 @@
     "fastaWear": {
       "title": "Fasta-Wear",
       "text": "Har du bestilt wear?\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval."
+    },
+    "lostAndFound": {
+      "title": "Glemte sager",
+      "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!"
+    },
+    "openHours": {
+      "title": "Åbningstider",
+      "information": {
+        "title": "Informationen:",
+        "day1": { "text": "Onsdag:", "time": "kl. 15:00 - 21:00" },
+        "day2": { "text": "Tor-lør:", "time": "kl. 09.00 - 21:00" },
+        "day3": { "text": "Søn:", "time": "kl. 09:00 - 17:00" }
+      },
+      "coffeeCafe": {
+        "title": "Otto's Kaffekro",
+        "day1": { "text": "Ons-søn", "time": "kl. 09:00 - 23:01" }
+      },
+      "boardgames": {
+        "title": "Brætspilscaféen:",
+        "day1": { "text": "Ons-lør:", "time": "kl. 09:00 - 02:01" },
+        "day2": { "text": "Søndag:", "time": "kl. 09.00 - 15:00" }
+      }
     }
   },
   "bottomNavigation": {
