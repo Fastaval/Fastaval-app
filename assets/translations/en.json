@@ -19,6 +19,25 @@
       "title": "Glemte sager",
       "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!"
     },
+    "safe": {
+      "title": "Tryg Fastaval",
+      "text1": {
+        "text": "General on duty:",
+        "value": "+4561409065"
+      },
+      "text2": {
+        "text": "Hero force:",
+        "value": "+4561409063"
+      },
+      "text3": {
+        "text": "Safety hosts:",
+        "value": "+4561409064"
+      },
+      "text4": {
+        "text": "Safety mail:",
+        "value": "safe@fastaval.dk"
+      }
+    },
     "openHours": {
       "title": "Åbningstider",
       "information": {
@@ -31,10 +50,24 @@
         "title": "Otto's Kaffekro",
         "day1": { "text": "Ons-søn", "time": "kl. 09:00 - 23:01" }
       },
-      "boardgames": {
+      "boardGames": {
         "title": "Brætspilscaféen:",
         "day1": { "text": "Ons-lør:", "time": "kl. 09:00 - 02:01" },
         "day2": { "text": "Søndag:", "time": "kl. 09.00 - 15:00" }
+      },
+      "kiosk": {
+        "title": "Kiosken:",
+        "day1": { "text": "Ons-lør:", "time": "kl. 09:00 - 00:00" },
+        "day2": { "text": "Søndag:", "time": "kl. 09.00 - 17:00" }
+      },
+      "bar": {
+        "title": "Baren",
+        "day1": { "text": "Ons-søn", "time": "kl. 17:00 - 02:00" }
+      },
+      "oasis": {
+        "title": "Oasen:",
+        "day1": { "text": "Onsdag:", "time": "kl. 16:00 - 02:00" },
+        "day2": { "text": "Tor-lør:", "time": "kl. 12:00 - 02:00" }
       }
     }
   },

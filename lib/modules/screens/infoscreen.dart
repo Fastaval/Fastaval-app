@@ -236,7 +236,7 @@ Widget _buildOpenHours() {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  tr('info.openHours.boardgames.title'),
+                  tr('info.openHours.boardGames.title'),
                   style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
@@ -246,17 +246,17 @@ Widget _buildOpenHours() {
                 Column(
                   children: <Widget>[
                     buildSideBySideText(
-                        tr('info.openHours.boardgames.day1.text'),
-                        tr('info.openHours.boardgames.day1.time')),
+                        tr('info.openHours.boardGames.day1.text'),
+                        tr('info.openHours.boardGames.day1.time')),
                     buildSideBySideText(
-                        tr('info.openHours.boardgames.day2.text'),
-                        tr('info.openHours.boardgames.day2.time')),
+                        tr('info.openHours.boardGames.day2.text'),
+                        tr('info.openHours.boardGames.day2.time')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Kiosken:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.kiosk.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -264,14 +264,16 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 00:00'),
-                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
+                    buildSideBySideText(tr('info.openHours.kiosk.day1.text'),
+                        tr('info.openHours.kiosk.day1.time')),
+                    buildSideBySideText(tr('info.openHours.kiosk.day2.text'),
+                        tr('info.openHours.kiosk.day2.time')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Baren:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.bar.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -279,13 +281,14 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 17:00 - 02:00'),
+                    buildSideBySideText(tr('info.openHours.bar.day1.text'),
+                        tr('info.openHours.bar.day1.time')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Oasen:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.oasis.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -293,8 +296,10 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 16:00 - 02:00'),
-                    buildSideBySideText('Tor-lør:', 'kl. 12:00 - 02:00'),
+                    buildSideBySideText(tr('info.openHours.oasis.day1.text'),
+                        tr('info.openHours.oasis.day1.time')),
+                    buildSideBySideText(tr('info.openHours.oasis.day2.text'),
+                        tr('info.openHours.oasis.day2.time')),
                   ],
                 ),
               ],
@@ -317,9 +322,9 @@ Widget _buildSafeFastaval() {
         child: ListTile(
           trailing: const Icon(Icons.phone),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Safe Fastaval',
-            style: TextStyle(
+          title: Text(
+            tr('info.safe.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -335,41 +340,41 @@ Widget _buildSafeFastaval() {
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Vagthavende General:',
-                    '+45 61 40 90 65',
+                    tr('info.safe.text1.text'),
+                    tr('info.safe.text1.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409065',
+                      path: tr('info.safe.text1.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'GDS:',
-                    '+45 61 40 92 63',
+                    tr('info.safe.text2.text'),
+                    tr('info.safe.text2.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409263',
+                      path: tr('info.safe.text2.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Tryghedsvært:',
-                    '+45 61 40 92 64',
+                    tr('info.safe.text3.text'),
+                    tr('info.safe.text3.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409264',
+                      path: tr('info.safe.text3.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Safemail:',
-                    'safe@fastaval.dk',
+                    tr('info.safe.text4.text'),
+                    tr('info.safe.text4.value'),
                     Uri(
                       scheme: 'mailto',
-                      path: 'safe@fastaval.dk',
+                      path: tr('info.safe.text4.value'),
                     )),
               ],
             ),
