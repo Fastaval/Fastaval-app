@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
@@ -5,7 +6,6 @@ import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
 Widget buildThreeSideBySideTexts(String left, String center, String right) {
   return Row(
@@ -133,9 +133,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ListTile(
               trailing: const Icon(Icons.fastfood),
               contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: const Text(
-                'Mad tider',
-                style: TextStyle(
+              title: Text(
+                tr('profile.foodTimes'),
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -167,9 +167,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        const Text(
-          'Deltager nummer',
-          style: TextStyle(
+        Text(
+          tr('profile.participantNumber'),
+          style: const TextStyle(
             color: Colors.white,
             fontFamily: 'OpenSans',
             fontSize: 20.0,
@@ -244,9 +244,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: ListTile(
             trailing: const Icon(Icons.speaker_notes),
             contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-            title: const Text(
-              'Beskeder Fra Fastaval',
-              style: TextStyle(
+            title: Text(
+              tr('profile.messagesFromFastaval'),
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -297,9 +297,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ListTile(
               trailing: const Icon(Icons.calendar_view_day),
               contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: const Text(
-                'Dit Program',
-                style: TextStyle(
+              title: Text(
+                tr('profile.yourProgram'),
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -324,7 +324,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(
             height: 10,
           ),
-          buildThreeSideBySideTexts('Hvornår', 'Hvad', 'Hvor'),
+          buildThreeSideBySideTexts(
+              tr('profile.when'), tr('profile.what'), tr('profile.where')),
           const Divider(
             height: 10,
             thickness: 2,
@@ -347,10 +348,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   String messagesFromFastaval() {
-    if (widget.appUser.messages == '') {
-      return 'Fastaval har ingen beskeder til dig i nu';
-    } else {
-      return widget.appUser.messages!;
-    }
+    return widget.appUser.messages == ''
+        ? tr('noMessagesRightNow')
+        : widget.appUser.messages!;
   }
 }

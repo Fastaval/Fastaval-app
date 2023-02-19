@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget buildSideBySideText(String left, String right, [bool? selectable]) {
-  selectable = selectable ?? false;
+Widget buildSideBySideText(String left, String right,
+    [bool selectable = false]) {
   return Row(
     children: <Widget>[
       Expanded(
@@ -94,9 +95,9 @@ Widget _buildFastaWaer() {
         child: ListTile(
           trailing: const Icon(Icons.person),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Fasta-Wear',
-            style: TextStyle(
+          title: Text(
+            tr('info.fastaWear.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -107,36 +108,17 @@ Widget _buildFastaWaer() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  'Har du bestilt wear?',
-                  style: TextStyle(
+                  tr('info.fastaWear.text'),
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'Det kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-                Text(
-                  'I år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
                 ),
               ],
             ),
@@ -158,9 +140,9 @@ Widget _buildLostFound() {
         child: ListTile(
           trailing: const Icon(Icons.move_to_inbox),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Lost & Found',
-            style: TextStyle(
+          title: Text(
+            tr('info.lostAndFound.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -171,10 +153,10 @@ Widget _buildLostFound() {
             padding: const EdgeInsets.only(top: 2, left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  'Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!',
-                  style: TextStyle(
+                  tr('info.lostAndFound.text'),
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: 'OpenSans',
@@ -200,9 +182,9 @@ Widget _buildOpenHours() {
         child: ListTile(
           trailing: const Icon(Icons.access_time),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Åbningstider',
-            style: TextStyle(
+          title: Text(
+            tr('info.openHours.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -215,9 +197,9 @@ Widget _buildOpenHours() {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Informationen:',
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.information.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -225,15 +207,21 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 15:00 - 21:00'),
-                    buildSideBySideText('Tor-lør:', 'kl. 09:00 - 21:00'),
-                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day1.text'),
+                        tr('info.openHours.information.day1.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day2.text'),
+                        tr('info.openHours.information.day2.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.information.day3.text'),
+                        tr('info.openHours.information.day3.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Otto's Kaffekro:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.coffeeCafe.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -241,13 +229,15 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 09:00 - 23:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.coffeeCafe.day1.text'),
+                        tr('info.openHours.coffeeCafe.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Brætspilscaféen:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.boardGames.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -255,14 +245,18 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 02:00'),
-                    buildSideBySideText('søndag:', 'kl. 09:00 - 15:00'),
+                    buildSideBySideText(
+                        tr('info.openHours.boardGames.day1.text'),
+                        tr('info.openHours.boardGames.day1.value')),
+                    buildSideBySideText(
+                        tr('info.openHours.boardGames.day2.text'),
+                        tr('info.openHours.boardGames.day2.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Kiosken:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.kiosk.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -270,14 +264,16 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-lør:', 'kl. 09:00 - 00:00'),
-                    buildSideBySideText('Søndag:', 'kl. 09:00 - 17:00'),
+                    buildSideBySideText(tr('info.openHours.kiosk.day1.text'),
+                        tr('info.openHours.kiosk.day1.value')),
+                    buildSideBySideText(tr('info.openHours.kiosk.day2.text'),
+                        tr('info.openHours.kiosk.day2.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Baren:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.bar.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -285,13 +281,14 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 17:00 - 02:00'),
+                    buildSideBySideText(tr('info.openHours.bar.day1.text'),
+                        tr('info.openHours.bar.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Oasen:",
-                  style: TextStyle(
+                Text(
+                  tr('info.openHours.oasis.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -299,8 +296,10 @@ Widget _buildOpenHours() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 16:00 - 02:00'),
-                    buildSideBySideText('Tor-lør:', 'kl. 12:00 - 02:00'),
+                    buildSideBySideText(tr('info.openHours.oasis.day1.text'),
+                        tr('info.openHours.oasis.day1.value')),
+                    buildSideBySideText(tr('info.openHours.oasis.day2.text'),
+                        tr('info.openHours.oasis.day2.value')),
                   ],
                 ),
               ],
@@ -323,9 +322,9 @@ Widget _buildSafeFastaval() {
         child: ListTile(
           trailing: const Icon(Icons.phone),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Safe Fastaval',
-            style: TextStyle(
+          title: Text(
+            tr('info.safe.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -341,41 +340,41 @@ Widget _buildSafeFastaval() {
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Vagthavende General:',
-                    '+45 61 40 90 65',
+                    tr('info.safe.text1.text'),
+                    tr('info.safe.text1.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409065',
+                      path: tr('info.safe.text1.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'GDS:',
-                    '+45 61 40 92 63',
+                    tr('info.safe.text2.text'),
+                    tr('info.safe.text2.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409263',
+                      path: tr('info.safe.text2.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Tryghedsvært:',
-                    '+45 61 40 92 64',
+                    tr('info.safe.text3.text'),
+                    tr('info.safe.text3.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4561409264',
+                      path: tr('info.safe.text3.value'),
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 buildSideBySideTextWithUrlAction(
-                    'Safemail:',
-                    'safe@fastaval.dk',
+                    tr('info.safe.text4.text'),
+                    tr('info.safe.text4.value'),
                     Uri(
                       scheme: 'mailto',
-                      path: 'safe@fastaval.dk',
+                      path: tr('info.safe.text4.value'),
                     )),
               ],
             ),
@@ -397,9 +396,9 @@ Widget _buildStores() {
         child: ListTile(
           trailing: const Icon(Icons.store),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Butikker',
-            style: TextStyle(
+          title: Text(
+            tr('info.stores.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -411,9 +410,9 @@ Widget _buildStores() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Epic Panda i B45',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store1.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -421,15 +420,18 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Onsdag:', 'kl. 16.00 - 23.00'),
-                    buildSideBySideText('Tors-lør:', 'kl. 10.00 - 23.00'),
-                    buildSideBySideText('Søndag:', 'kl. 10.00 - 15.00'),
+                    buildSideBySideText(tr('info.stores.store1.day1.text'),
+                        tr('info.stores.store1.day1.value')),
+                    buildSideBySideText(tr('info.stores.store1.day2.text'),
+                        tr('info.stores.store1.day2.value')),
+                    buildSideBySideText(tr('info.stores.store1.day3.text'),
+                        tr('info.stores.store1.day3.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Tier1MTG i A07',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store2.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -437,13 +439,14 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Ons-søn:', 'kl. 10.00 - 22.00'),
+                    buildSideBySideText(tr('info.stores.store2.day1.text'),
+                        tr('info.stores.store2.day1.value')),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Corra Design i fællesområdet',
-                  style: TextStyle(
+                Text(
+                  tr('info.stores.store3.title'),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
@@ -451,7 +454,8 @@ Widget _buildStores() {
                 ),
                 Column(
                   children: <Widget>[
-                    buildSideBySideText('Fre-søn:', 'kl. 10.00 - 16.00'),
+                    buildSideBySideText(tr('info.stores.store3.day1.text'),
+                        tr('info.stores.store3.day1.value')),
                   ],
                 ),
               ],
@@ -474,9 +478,9 @@ Widget _buildTransport() {
         child: ListTile(
           trailing: const Icon(Icons.local_parking),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'Transport og Parkering',
-            style: TextStyle(
+          title: Text(
+            tr('info.transportAndParking.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -489,35 +493,26 @@ Widget _buildTransport() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 5),
-                const Text(
-                    "Parkering kan gøres på Gymnasiets eller Idrætscenterets Parkeringsplads.",
-                    style: TextStyle(
+                Text(tr('info.transportAndParking.text'),
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: 'OpenSans',
                     )),
-                const SizedBox(height: 10),
-                const Text("Hobro Togstation er ca. 2,5 km fra Fastaval.",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
+                buildSideBySideTextWithUrlAction(
+                    tr('info.transportAndParking.taxi1.text'),
+                    tr('info.transportAndParking.taxi1.value'),
+                    Uri(
+                      scheme: 'tel',
+                      path: tr('info.transportAndParking.taxi1.value'),
                     )),
                 const SizedBox(height: 10),
                 buildSideBySideTextWithUrlAction(
-                    'Hobro Taxa:',
-                    '+45 98 51 23 00',
+                    tr('info.transportAndParking.taxi2.text'),
+                    tr('info.transportAndParking.taxi2.value'),
                     Uri(
                       scheme: 'tel',
-                      path: '+4598512300',
-                    )),
-                const SizedBox(height: 10),
-                buildSideBySideTextWithUrlAction(
-                    'Krone Taxa:',
-                    '+45 98 52 11 11',
-                    Uri(
-                      scheme: 'tel',
-                      path: '+4598521111',
+                      path: tr('info.transportAndParking.taxi2.value'),
                     )),
               ],
             ),
@@ -539,9 +534,9 @@ Widget _buildWiFi() {
         child: ListTile(
           trailing: const Icon(Icons.wifi),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'WIFI',
-            style: TextStyle(
+          title: Text(
+            tr('info.wifi.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -553,9 +548,12 @@ Widget _buildWiFi() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                buildSideBySideText('Netværk:', 'Undervisning'),
-                buildSideBySideText('Brugernavn:', 'mfg-guest@mf-gym.dk', true),
-                buildSideBySideText('Kode:', 'Teleskop2022', true),
+                buildSideBySideText(
+                    tr('info.wifi.text1'), 'Undervisning', false),
+                buildSideBySideText(
+                    tr('info.wifi.text2'), 'mfg-guest@mf-gym.dk', true),
+                buildSideBySideText(
+                    tr('info.wifi.text3'), 'Teleskop2022', true),
               ],
             ),
           ),
