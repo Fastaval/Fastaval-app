@@ -534,9 +534,9 @@ Widget _buildWiFi() {
         child: ListTile(
           trailing: const Icon(Icons.wifi),
           contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: const Text(
-            'WIFI',
-            style: TextStyle(
+          title: Text(
+            tr('info.wifi.title'),
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,

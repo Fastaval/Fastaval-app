@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Fastaval App"
+    "title": "Fastaval"
   },
   "appbar": {
     "barcode": {
@@ -18,90 +18,90 @@
   },
   "info": {
     "fastaWear": {
-      "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.\n\nThis year, all registered participants will receive a name tag. It can be found in the Information section under Fastaval.",
+      "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.\n\nThis year, all registered participants will receive a name tag. It can be collected in the Information during Fastaval.",
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "text": "Have you lost or found something? ",
+      "text": "Have you lost or found something? Go to The Information for help!",
       "title": "Lost & Found"
     },
     "openHours": {
       "bar": {
         "day1": {
           "text": "Wed-Sun",
-          "value": "at "
+          "value": "at 17.00 - 02.00"
         },
-        "title": "The bar"
+        "title": "The Bar"
       },
       "boardGames": {
         "day1": {
           "text": "Wed-Sat:",
-          "value": "at "
+          "value": "at 09.00 - 02.00"
         },
         "day2": {
           "text": "Sunday:",
-          "value": "at "
+          "value": "at 09.00 - 15.00"
         },
-        "title": "The board game cafe:"
+        "title": "The Board Game Café"
       },
       "coffeeCafe": {
         "day1": {
           "text": "Wed-Sun",
-          "value": "at "
+          "value": "at 09.00 - 23.00"
         },
-        "title": "Otto's Kaffekro"
+        "title": "Otto's Coffee Inn"
       },
       "information": {
         "day1": {
           "text": "Wednesday:",
-          "value": "at "
+          "value": "at 15.00 - 21.00"
         },
         "day2": {
           "text": "Thu-Sat:",
-          "value": "at "
+          "value": "at 09.00 - 21.00"
         },
         "day3": {
-          "text": "Son:",
-          "value": "at "
+          "text": "Sunday:",
+          "value": "at 09.00 - 17.00"
         },
-        "title": "The information:"
+        "title": "The Information"
       },
       "kiosk": {
         "day1": {
           "text": "Wed-Sat:",
-          "value": "at "
+          "value": "at 09.00 - 00.00"
         },
         "day2": {
           "text": "Sunday:",
-          "value": "at "
+          "value": "at 09.00 - 17.00"
         },
-        "title": "The kiosk:"
+        "title": "The Kiosk"
       },
       "oasis": {
         "day1": {
           "text": "Wednesday:",
-          "value": "at "
+          "value": "at 16.00 - 02.00"
         },
         "day2": {
           "text": "Thu-Sat:",
-          "value": "at "
+          "value": "at 12.00 - 02.00"
         },
-        "title": "The Oasis:"
+        "title": "The Oasis"
       },
-      "title": "Opening hours"
+      "title": "Opening Hours"
     },
     "safe": {
       "text1": {
         "text": "General on duty:",
-        "value": "4561409065"
+        "value": "+4561409065"
       },
       "text2": {
         "text": "Hero Force:",
-        "value": "4561409063"
+        "value": "+4561409063"
       },
       "text3": {
         "text": "Safety host:",
-        "value": "4561409064"
+        "value": "+4561409064"
       },
       "text4": {
         "text": "Safety mail:",
@@ -113,29 +113,29 @@
       "store1": {
         "day1": {
           "text": "Wednesday:",
-          "value": "at "
+          "value": "at 16:00 - 23:00"
         },
         "day2": {
           "text": "Thu-Sat:",
-          "value": "at "
+          "value": "at 10:00 - 23:00"
         },
         "day3": {
           "text": "Sunday:",
-          "value": "at "
+          "value": "at 10:00 - 15:00"
         },
         "title": "Epic Panda in B45"
       },
       "store2": {
         "day1": {
-          "text": "Wed-Sun",
-          "value": "at "
+          "text": "Wed-Sun:",
+          "value": "at 10:00 - 22:00"
         },
         "title": "Tier1MTG in A07"
       },
       "store3": {
         "day1": {
-          "text": "Fri-Sun",
-          "value": "at "
+          "text": "Fri-Sun:",
+          "value": "at 10:00 - 16:00"
         },
         "title": "Corra Design in the common area"
       },
@@ -147,16 +147,42 @@
         "value": "+4598512300"
       },
       "taxi2": {
-        "text": "Crown Taxi:",
+        "text": "Krone Taxi:",
         "value": "+4598521111"
       },
-      "text": "Parking can be done at the school or sports center parking Lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
-      "title": "Transportation"
+      "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
+      "title": "Transportation & Parking"
     },
     "wifi": {
+      "title": "WiFi",
       "text1": "Network:",
       "text2": "User name:",
       "text3": "Code:"
     }
+  },
+  "login": {
+    "enterParticipantNumber": "Enter participant number",
+    "enterPassword": "Enter password",
+    "forgotPassword": "Forgot password?",
+    "participantNumber": "Participant number",
+    "password": "Password",
+    "signIn": "Sign in"
+  },
+  "profile": {
+    "foodTimes": "Food Times",
+    "messagesFromFastaval": "Messages From Fastaval",
+    "noMessagesRightNow": "Fastaval has no messages from you right now",
+    "participantNumber": "Participant number",
+    "what": "What",
+    "when": "When",
+    "where": "Where",
+    "yourProgram": "Your Program"
+  },
+  "program": {
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun",
+    "thursday": "Thu",
+    "wednesday": "Wed"
   }
 }

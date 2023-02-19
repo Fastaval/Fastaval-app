@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Fastaval App"
+    "title": "Fastaval"
   },
   "appbar": {
     "barcode": {
@@ -28,63 +28,63 @@
     "openHours": {
       "bar": {
         "day1": {
-          "text": "Ons-søn",
-          "value": "kl. 17:00 - 02:00"
+          "text": "Ons-Søn",
+          "value": "kl. 17.00 - 02.00"
         },
         "title": "Baren"
       },
       "boardGames": {
         "day1": {
-          "text": "Ons-lør:",
-          "value": "kl. 09:00 - 02:00"
+          "text": "Ons-Lør:",
+          "value": "kl. 09.00 - 02.00"
         },
         "day2": {
           "text": "Søndag:",
-          "value": "kl. 09.00 - 15:00"
+          "value": "kl. 09.00 - 15.00"
         },
         "title": "Brætspilscaféen:"
       },
       "coffeeCafe": {
         "day1": {
-          "text": "Ons-søn",
-          "value": "kl. 09:00 - 23:00"
+          "text": "Ons-Søn",
+          "value": "kl. 09.00 - 23.00"
         },
         "title": "Otto's Kaffekro"
       },
       "information": {
         "day1": {
           "text": "Onsdag:",
-          "value": "kl. 15:00 - 21:00"
+          "value": "kl. 15.00 - 21.00"
         },
         "day2": {
-          "text": "Tor-lør:",
-          "value": "kl. 09.00 - 21:00"
+          "text": "Tor-Lør:",
+          "value": "kl. 09.00 - 21.00"
         },
         "day3": {
-          "text": "Søn:",
-          "value": "kl. 09:00 - 17:00"
+          "text": "Søndag:",
+          "value": "kl. 09.00 - 17.00"
         },
         "title": "Informationen:"
       },
       "kiosk": {
         "day1": {
-          "text": "Ons-lør:",
-          "value": "kl. 09:00 - 00:00"
+          "text": "Ons-Lør:",
+          "value": "kl. 09.00 - 00.00"
         },
         "day2": {
           "text": "Søndag:",
-          "value": "kl. 09.00 - 17:00"
+          "value": "kl. 09.00 - 17.00"
         },
         "title": "Kiosken:"
       },
       "oasis": {
         "day1": {
           "text": "Onsdag:",
-          "value": "kl. 16:00 - 02:00"
+          "value": "kl. 16.00 - 02.00"
         },
         "day2": {
-          "text": "Tor-lør:",
-          "value": "kl. 12:00 - 02:00"
+          "text": "Tor-Lør:",
+          "value": "kl. 12.00 - 02.00"
         },
         "title": "Oasen:"
       },
@@ -116,7 +116,7 @@
           "value": "kl. 16:00 - 23:00"
         },
         "day2": {
-          "text": "Tor-lør:",
+          "text": "Tor-Lør:",
           "value": "kl. 10:00 - 23:00"
         },
         "day3": {
@@ -127,14 +127,14 @@
       },
       "store2": {
         "day1": {
-          "text": "Ons-søn",
+          "text": "Ons-Søn",
           "value": "kl. 10:00 - 22:00"
         },
         "title": "Tier1MTG i A07"
       },
       "store3": {
         "day1": {
-          "text": "Fre-søn",
+          "text": "Fre-Søn",
           "value": "kl. 10:00 - 16:00"
         },
         "title": "Corra Design i fællesområdet"
@@ -154,9 +154,35 @@
       "title": "Transport & Parkering"
     },
     "wifi": {
+      "title": "WiFi",
       "text1": "Netværk:",
       "text2": "Brugernavn:",
       "text3": "Kode:"
     }
+  },
+  "login": {
+    "enterParticipantNumber": "Indtast deltager nummer",
+    "enterPassword": "Indtast kodeord",
+    "forgotPassword": "Glemt kodeord?",
+    "participantNumber": "Deltager nummer",
+    "password": "Kodeord",
+    "signIn": "Log ind"
+  },
+  "profile": {
+    "foodTimes": "Mad tider",
+    "messagesFromFastaval": "Beskeder Fra Fastaval",
+    "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
+    "participantNumber": "Deltager nummer",
+    "what": "Hvad",
+    "when": "Hvornår",
+    "where": "Hvor",
+    "yourProgram": "Dit Program"
+  },
+  "program": {
+    "friday": "Fre",
+    "saturday": "Lør",
+    "sunday": "Søn",
+    "thursday": "Tor",
+    "wednesday": "Ons"
   }
 }
