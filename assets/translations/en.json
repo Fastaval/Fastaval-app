@@ -99,14 +99,8 @@
       "title": "Shops"
     },
     "transportAndParking": {
-      "taxi1": {
-        "text": "Hobro Taxi:",
-        "value": "+4598512300"
-      },
-      "taxi2": {
-        "text": "Krone Taxi:",
-        "value": "+4598521111"
-      },
+      "taxi1": "Hobro Taxi",
+      "taxi2": "Kajs Taxi",
       "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
       "title": "Transportation & Parking"
     },

@@ -99,14 +99,8 @@
       "title": "Butikker"
     },
     "transportAndParking": {
-      "taxi1": {
-        "text": "Hobro Taxa:",
-        "value": "+4598512300"
-      },
-      "taxi2": {
-        "text": "Krone Taxa:",
-        "value": "+4598521111"
-      },
+      "taxi2": "Hobro Taxa",
+      "taxi1": "Kajs Taxi",
       "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
       "title": "Transport & Parkering"
     },

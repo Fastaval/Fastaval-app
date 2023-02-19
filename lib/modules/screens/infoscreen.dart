@@ -498,19 +498,19 @@ Widget _buildTransport() {
                       fontFamily: 'OpenSans',
                     )),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.transportAndParking.taxi1.text'),
-                    tr('info.transportAndParking.taxi1.value'),
+                    tr('info.transportAndParking.taxi1'),
+                    "+4598525354",
                     Uri(
                       scheme: 'tel',
-                      path: tr('info.transportAndParking.taxi1.value'),
+                      path: "+4598525354",
                     )),
                 const SizedBox(height: 10),
                 buildSideBySideTextWithUrlAction(
-                    tr('info.transportAndParking.taxi2.text'),
-                    tr('info.transportAndParking.taxi2.value'),
+                    tr('info.transportAndParking.taxi2'),
+                    "+4598512300",
                     Uri(
                       scheme: 'tel',
-                      path: tr('info.transportAndParking.taxi2.value'),
+                      path: "+4598512300",
                     )),
               ],
             ),
