@@ -22,91 +22,48 @@
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "text": "Have you lost or found something? Go to The Information for help!",
+      "text": "Have you lost or found something?\nGo to The Information for help!",
       "title": "Lost & Found"
     },
     "openHours": {
       "bar": {
-        "day1": {
-          "text": "Wed-Sun",
-          "value": "at 17.00 - 02.00"
-        },
+        "day1": "Wed-Sun",
         "title": "The Bar"
       },
       "boardGames": {
-        "day1": {
-          "text": "Wed-Sat:",
-          "value": "at 09.00 - 02.00"
-        },
-        "day2": {
-          "text": "Sunday:",
-          "value": "at 09.00 - 15.00"
-        },
+        "day1": "Wed-Sat",
+        "day2": "Sunday",
         "title": "The Board Game Café"
       },
       "coffeeCafe": {
-        "day1": {
-          "text": "Wed-Sun",
-          "value": "at 09.00 - 23.00"
-        },
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "day3": "Sun",
         "title": "Otto's Coffee Inn"
       },
       "information": {
-        "day1": {
-          "text": "Wednesday:",
-          "value": "at 15.00 - 21.00"
-        },
-        "day2": {
-          "text": "Thu-Sat:",
-          "value": "at 09.00 - 21.00"
-        },
-        "day3": {
-          "text": "Sunday:",
-          "value": "at 09.00 - 17.00"
-        },
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "day3": "Sunday",
         "title": "The Information"
       },
       "kiosk": {
-        "day1": {
-          "text": "Wed-Sat:",
-          "value": "at 09.00 - 00.00"
-        },
-        "day2": {
-          "text": "Sunday:",
-          "value": "at 09.00 - 17.00"
-        },
+        "day1": "Wed-Sat",
+        "day2": "Sunday",
         "title": "The Kiosk"
       },
       "oasis": {
-        "day1": {
-          "text": "Wednesday:",
-          "value": "at 16.00 - 02.00"
-        },
-        "day2": {
-          "text": "Thu-Sat:",
-          "value": "at 12.00 - 02.00"
-        },
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
         "title": "The Oasis"
       },
       "title": "Opening Hours"
     },
     "safe": {
-      "text1": {
-        "text": "General on duty:",
-        "value": "+4561409065"
-      },
-      "text2": {
-        "text": "Hero Force:",
-        "value": "+4561409063"
-      },
-      "text3": {
-        "text": "Safety host:",
-        "value": "+4561409064"
-      },
-      "text4": {
-        "text": "Safety mail:",
-        "value": "safe@fastaval.dk"
-      },
+      "dutyGeneral": "General on duty",
+      "heroForce": "Hero Force",
+      "safetyHost": "Safety host",
+      "safetyMail": "Safety mail",
       "title": "Safe Fastaval"
     },
     "stores": {
@@ -142,22 +99,16 @@
       "title": "Shops"
     },
     "transportAndParking": {
-      "taxi1": {
-        "text": "Hobro Taxi:",
-        "value": "+4598512300"
-      },
-      "taxi2": {
-        "text": "Krone Taxi:",
-        "value": "+4598521111"
-      },
+      "taxi1": "Hobro Taxi",
+      "taxi2": "Kajs Taxi",
       "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
       "title": "Transportation & Parking"
     },
     "wifi": {
       "title": "WiFi",
-      "text1": "Network:",
-      "text2": "User name:",
-      "text3": "Code:"
+      "networkName": "Network",
+      "networkUser": "User name",
+      "networkCode": "Code"
     }
   },
   "login": {

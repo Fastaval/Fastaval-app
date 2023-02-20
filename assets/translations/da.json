@@ -22,91 +22,48 @@
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!",
+      "text": "Har du mistet eller fundet noget?\nGå til Informationen for at få hjælp!",
       "title": "Glemte Sager"
     },
     "openHours": {
       "bar": {
-        "day1": {
-          "text": "Ons-Søn",
-          "value": "kl. 17.00 - 02.00"
-        },
+        "day1": "Ons-Søn",
         "title": "Baren"
       },
       "boardGames": {
-        "day1": {
-          "text": "Ons-Lør:",
-          "value": "kl. 09.00 - 02.00"
-        },
-        "day2": {
-          "text": "Søndag:",
-          "value": "kl. 09.00 - 15.00"
-        },
-        "title": "Brætspilscaféen:"
+        "day1": "Ons-Lør",
+        "day2": "Søndag",
+        "title": "Brætspilscaféen"
       },
       "coffeeCafe": {
-        "day1": {
-          "text": "Ons-Søn",
-          "value": "kl. 09.00 - 23.00"
-        },
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "day3": "Søndag",
         "title": "Otto's Kaffekro"
       },
       "information": {
-        "day1": {
-          "text": "Onsdag:",
-          "value": "kl. 15.00 - 21.00"
-        },
-        "day2": {
-          "text": "Tor-Lør:",
-          "value": "kl. 09.00 - 21.00"
-        },
-        "day3": {
-          "text": "Søndag:",
-          "value": "kl. 09.00 - 17.00"
-        },
-        "title": "Informationen:"
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "day3": "Søndag",
+        "title": "Informationen"
       },
       "kiosk": {
-        "day1": {
-          "text": "Ons-Lør:",
-          "value": "kl. 09.00 - 00.00"
-        },
-        "day2": {
-          "text": "Søndag:",
-          "value": "kl. 09.00 - 17.00"
-        },
-        "title": "Kiosken:"
+        "day1": "Ons-Lør",
+        "day2": "Søndag",
+        "title": "Kiosken"
       },
       "oasis": {
-        "day1": {
-          "text": "Onsdag:",
-          "value": "kl. 16.00 - 02.00"
-        },
-        "day2": {
-          "text": "Tor-Lør:",
-          "value": "kl. 12.00 - 02.00"
-        },
-        "title": "Oasen:"
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "title": "Oasen"
       },
       "title": "Åbningstider"
     },
     "safe": {
-      "text1": {
-        "text": "Vagthavende General:",
-        "value": "+4561409065"
-      },
-      "text2": {
-        "text": "Heltestyrken:",
-        "value": "+4561409063"
-      },
-      "text3": {
-        "text": "Tryghedsvært:",
-        "value": "+4561409064"
-      },
-      "text4": {
-        "text": "Safe-mail:",
-        "value": "safe@fastaval.dk"
-      },
+      "dutyGeneral": "Vagthavende general",
+      "heroForce": "Heltestyrken",
+      "safetyHost": "Tryghedsvært",
+      "safetyMail": "Safe-mail",
       "title": "Tryg Fastaval"
     },
     "stores": {
@@ -142,22 +99,16 @@
       "title": "Butikker"
     },
     "transportAndParking": {
-      "taxi1": {
-        "text": "Hobro Taxa:",
-        "value": "+4598512300"
-      },
-      "taxi2": {
-        "text": "Krone Taxa:",
-        "value": "+4598521111"
-      },
-      "text": "Parkering kan gøres på gymnasiets- eller idrætscenterets parkeringsplads.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
+      "taxi2": "Hobro Taxa",
+      "taxi1": "Kajs Taxi",
+      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
       "title": "Transport & Parkering"
     },
     "wifi": {
       "title": "WiFi",
-      "text1": "Netværk:",
-      "text2": "Brugernavn:",
-      "text3": "Kode:"
+      "networkName": "Netværk",
+      "networkUser": "Brugernavn",
+      "networkCode": "Kode"
     }
   },
   "login": {
