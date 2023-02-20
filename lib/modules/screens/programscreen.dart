@@ -112,10 +112,13 @@ class _ProgramscreenState extends State<Programscreen> {
                             const Padding(padding: EdgeInsets.only(left: 20)),
 
                             //what
-                            Text(
-                              activityMap[item.activity]!.daTitle,
+                            Flexible(
+                                child: Text(
+                              context.locale.toString() == 'en'
+                                  ? activityMap[item.activity]!.enTitle
+                                  : activityMap[item.activity]!.daTitle,
                               style: const TextStyle(fontSize: 18),
-                            ),
+                            )),
                           ],
                         ),
                         const Padding(padding: EdgeInsets.only(bottom: 10))
