@@ -14,18 +14,12 @@ import '../notifications/login_notification.dart';
 
 List<BottomNavigationBarItem> loggedInBars = [
   BottomNavigationBarItem(
-      icon: const Icon(
-        Icons.person,
-      ),
-      label: tr('bottomNavigation.profil')),
+      icon: const Icon(Icons.person), label: tr('bottomNavigation.profil')),
   BottomNavigationBarItem(
-      icon: const Icon(
-        Icons.info,
-      ),
-      label: tr('bottomNavigation.information')),
+      icon: const Icon(Icons.info), label: tr('bottomNavigation.information')),
   BottomNavigationBarItem(
       icon: const Icon(Icons.calendar_view_day),
-      label: tr('bottomNavigation.program')),
+      label: tr('bottomNavigation.program'))
 ];
 
 List<BottomNavigationBarItem> notLoggedInNavBars = [
