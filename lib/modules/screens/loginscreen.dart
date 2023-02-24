@@ -6,6 +6,7 @@ import 'package:fastaval_app/modules/screens/home_page_view.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../notifications/login_notification.dart';
 
@@ -21,8 +22,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final userIdController = TextEditingController();
-  final passwordController = TextEditingController();
+  TextEditingController userIdController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isChecked = false;
   bool loggedIn = false;
 
   @override
@@ -92,8 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildRememberMeCheckbox() {
-    return Container();
-    // TODO: Reenable when we know how this works
+    return Row(children: [
+      const Text('test'),
+      Checkbox(value: isChecked, onChanged: handleRememberMe)
+    ]);
   }
 
   Widget _buildForgotPasswordBtn() {
@@ -209,5 +213,19 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
     );
+  }
+
+  handleRememberMe(bool? value) {
+    isChecked = value!;
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setBool("remember_me", value);
+        prefs.setString('userId', userIdController.text);
+        prefs.setString('password', passwordController.text);
+      },
+    );
+    setState(() {
+      isChecked = value;
+    });
   }
 }
