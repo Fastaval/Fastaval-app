@@ -33,7 +33,7 @@ dependencies:
   flutter_pdfview: ^1.2.1
   barcode_widget: ^2.0.2
   english_words: ^4.0.0
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.0.18
   url_launcher: ^6.0.20
   cupertino_icons: ^1.0.2
   swipeable_page_route: ^0.3.0
