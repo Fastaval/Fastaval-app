@@ -118,7 +118,8 @@
     "participantNumber": "Deltager nummer",
     "password": "Kodeord",
     "rememberMe": "Husk mit login",
-    "signIn": "Log ind"
+    "signIn": "Log ind",
+    "signOut": "Log ud"
   },
   "profile": {
     "foodTimes": "Mad tider",

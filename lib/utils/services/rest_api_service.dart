@@ -23,7 +23,7 @@ Future<Program> fetchProgram() async {
   }
 }
 
-Future<User> login(String userId, String password) async {
+Future<User> checkUserLogin(String userId, String password) async {
   var url = Uri.parse('$baseUrl/v3/user/$userId?pass=$password');
   final response = await http.get(url);
   inspect(response);

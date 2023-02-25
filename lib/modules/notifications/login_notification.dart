@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class LoginNotification extends Notification {
   bool loggedIn = false;
-  User user;
+  User? user;
   LoginNotification({
     required this.loggedIn,
     required this.user,

@@ -137,15 +137,16 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
-        onPressed: () => login(userIdController.text, passwordController.text)
-            .then((value) => scheduleMicrotask(() {
-                  if (_rememberMe == true) {
-                    UserService().setUser(value);
-                  }
+        onPressed: () =>
+            checkUserLogin(userIdController.text, passwordController.text)
+                .then((value) => scheduleMicrotask(() {
+                      if (_rememberMe == true) {
+                        UserService().setUser(value);
+                      }
 
-                  LoginNotification(loggedIn: true, user: value)
-                      .dispatch(context);
-                })),
+                      LoginNotification(loggedIn: true, user: value)
+                          .dispatch(context);
+                    })),
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(

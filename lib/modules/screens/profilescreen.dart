@@ -3,6 +3,8 @@ import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
+import 'package:fastaval_app/modules/notifications/login_notification.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -106,12 +108,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Center(
                       child: Column(
                         children: <Widget>[
-                          const SizedBox(height: 40.0),
+                          const SizedBox(height: 10.0),
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
                           if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
-                          const SizedBox(height: 80.0),
+                          const SizedBox(height: 30.0),
+                          buildLogoutBtn(),
+                          const SizedBox(height: 30.0),
                         ],
                       ),
                     )),
@@ -353,5 +357,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   String messagesFromFastaval() {
     return widget.appUser.messages ?? tr('profile.noMessagesRightNow');
+  }
+
+  Widget buildLogoutBtn() {
+    return Padding(
+        padding: const EdgeInsets.all(40),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            onPressed: () => {
+              UserService().removeUser(),
+              LoginNotification(loggedIn: false, user: null).dispatch(context)
+            },
+            child: Text(
+              tr('login.signOut'),
+              style: const TextStyle(
+                color: Colors.deepOrange,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+          ),
+        ));
   }
 }
