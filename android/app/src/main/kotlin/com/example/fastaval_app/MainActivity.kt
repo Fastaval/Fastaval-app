@@ -1,4 +1,4 @@
-package com.example.fastaval_app
+package dk.alea.fastaval.fastaval_app
 
 import io.flutter.embedding.android.FlutterActivity
 

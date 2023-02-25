@@ -1,71 +1,23 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/modules/screens/programscreen.dart';
-import 'package:fastaval_app/modules/screens/loginscreen.dart';
 import 'package:fastaval_app/modules/screens/infoscreen.dart';
+import 'package:fastaval_app/modules/screens/loginscreen.dart';
+import 'package:fastaval_app/modules/screens/profilescreen.dart';
+import 'package:fastaval_app/modules/screens/programscreen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
-import 'profilescreen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  HomePageState createState() => HomePageState();
-}
-
-List<BottomNavigationBarItem> notLoggedInNavBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.login,
-      ),
-      label: 'Login'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
-];
-
-List<BottomNavigationBarItem> loggedInBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.person,
-      ),
-      label: 'Profil'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
-];
-
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
-  late PdfViewerController _pdfViewerController;
-  late User user;
-  @override
-  void initState() {
-    _pdfViewerController = PdfViewerController();
-
-    super.initState();
-  }
-
-  int _currentIndex = 1;
-
+  late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
+  late User? _user;
   bool _loggedIn = false;
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +25,15 @@ class HomePageState extends State<HomePageView> {
       onNotification: (notification) {
         setState(() {
           _loggedIn = notification.loggedIn;
-          user = notification.user;
+          _user = notification.user;
+          _bottomNavList = _bottomNavItems();
         });
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.title,
+            tr('app.title'),
             style: const TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
@@ -93,7 +46,7 @@ class HomePageState extends State<HomePageView> {
                       CupertinoIcons.barcode,
                       color: Colors.white,
                     ),
-                    tooltip: 'Show barcode',
+                    tooltip: tr('appbar.barcode.show'),
                     onPressed: () {
                       userService.getUser().then((user) => {
                             showDialog(
@@ -104,8 +57,8 @@ class HomePageState extends State<HomePageView> {
                                       child: RotatedBox(
                                         quarterTurns: 1,
                                         child: BarcodeWidget(
-                                          barcode: Barcode
-                                              .ean8(), // Barcode type and settings
+                                          barcode: Barcode.ean8(),
+                                          // Barcode type and settings
                                           data: user.barcode.toString(),
                                         ),
                                       ),
@@ -121,55 +74,58 @@ class HomePageState extends State<HomePageView> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                            insetPadding:
-                                const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                            child: Scaffold(
-                                body: RotatedBox(
-                                    quarterTurns: 1,
-                                    child: SfPdfViewer.asset(
-                                      'Mariagerfjord_kort_2022.pdf',
-                                      controller: _pdfViewerController,
-                                    ))));
-                      },
-                    );
+                    Fluttertoast.showToast(
+                        msg: tr('appbar.map.noMapAvailable'));
                   },
                 ),
               ],
             ),
           ],
         ),
-        body: _loggedIn
-            ? loggedInWidgets()[_currentIndex]
-            : notLoggedInWidgets()[_currentIndex],
+        body: _screens()[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: onTabTapped,
-          items: _loggedIn ? loggedInBars : notLoggedInNavBars,
+          items: _bottomNavList,
         ),
       ),
     );
   }
 
-  List<Widget> notLoggedInWidgets() {
-    return <Widget>[
-      //ProfilePage(parent),
-      LoginScreen(this),
-      const InfoScreen(),
-      const Programscreen(),
+  @override
+  initState() {
+    super.initState();
+    _fetchUser();
+  }
+
+  List<BottomNavigationBarItem> _bottomNavItems() {
+    return <BottomNavigationBarItem>[
+      _loggedIn
+          ? BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: tr('bottomNavigation.profil'))
+          : BottomNavigationBarItem(
+              icon: const Icon(
+                Icons.login,
+              ),
+              label: tr('bottomNavigation.login')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: tr('bottomNavigation.information')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.calendar_view_day),
+          label: tr('bottomNavigation.program'))
     ];
   }
 
-  List<Widget> loggedInWidgets() {
+  List<Widget> _screens() {
     return <Widget>[
-      //ProfilePage(parent),
-      ProfileScreen(
-        appUser: user,
-      ),
+      _loggedIn && _user != null
+          ? ProfileScreen(
+              appUser: _user!,
+            )
+          : LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -180,4 +136,21 @@ class HomePageState extends State<HomePageView> {
       _currentIndex = index;
     });
   }
+
+  Future _fetchUser() async {
+    await userService
+        .getUser()
+        .then((newUser) => {_user = newUser, _loggedIn = true});
+
+    setState(() {
+      _bottomNavList = _bottomNavItems();
+    });
+  }
+}
+
+class HomePageView extends StatefulWidget {
+  const HomePageView({Key? key}) : super(key: key);
+
+  @override
+  HomePageState createState() => HomePageState();
 }

@@ -16,10 +16,10 @@ class Sleep {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'access': access,
-    'mattress': mattress,
-    'area_name': areaName,
-    'area_id': areaId
-  };
+        'id': id,
+        'access': access,
+        'mattress': mattress,
+        'area_name': areaName,
+        'area_id': areaId
+      };
 }

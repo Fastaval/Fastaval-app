@@ -2,7 +2,7 @@ class Scheduling {
   String? type;
   String? activityType;
   int? id;
-  String? scheduleId;
+  int? scheduleId;
   String? titleDa;
   String? titleEn;
   String? roomDa;
