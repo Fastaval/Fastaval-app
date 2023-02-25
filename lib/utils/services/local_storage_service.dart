@@ -13,4 +13,10 @@ class LocalStorageService {
 
     prefs.setString(key, value);
   }
+
+  void deleteString(String key) async {
+    var preferences = await SharedPreferences.getInstance();
+
+    preferences.remove(key);
+  }
 }

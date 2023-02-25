@@ -15,7 +15,7 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
-  late User _user;
+  late User? _user;
   bool _loggedIn = false;
   int _currentIndex = 1;
 
@@ -121,9 +121,9 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> _screens() {
     return <Widget>[
-      _loggedIn
+      _loggedIn && _user != null
           ? ProfileScreen(
-              appUser: _user,
+              appUser: _user!,
             )
           : LoginScreen(this),
       const InfoScreen(),

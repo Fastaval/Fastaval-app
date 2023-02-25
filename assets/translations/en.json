@@ -118,7 +118,8 @@
     "participantNumber": "Participant number",
     "password": "Password",
     "rememberMe": "Remember my login",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "signOut": "Sign out"
   },
   "profile": {
     "foodTimes": "Food Times",
