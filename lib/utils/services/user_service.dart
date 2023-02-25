@@ -23,7 +23,7 @@ class UserService {
   }
 
   removeUser() {
-    storageService.setString(kUserKey, '');
+    storageService.deleteString(kUserKey);
   }
 
   //Future<bool?> hasBarcode() async {
