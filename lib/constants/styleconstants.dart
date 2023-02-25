@@ -24,4 +24,5 @@ final kBoxDecorationStyle = BoxDecoration(
 );
 
 const kCardMargin = EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0);
+const newkCardMargin = EdgeInsets.all(16);
 const kCardPadding = EdgeInsets.all(16.0);

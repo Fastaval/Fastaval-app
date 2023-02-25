@@ -17,17 +17,16 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
         flex: 2,
         child: Text(
           left,
-          textAlign: TextAlign.left,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
             fontFamily: 'OpenSans',
           ),
-          maxLines: 2,
         ),
       ),
       Expanded(
-        flex: 3,
+        flex: 5,
         child: Text(
           center,
           textAlign: TextAlign.left,
@@ -39,7 +38,7 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
         ),
       ),
       Expanded(
-        flex: 3,
+        flex: 4,
         child: Text(
           right,
           textAlign: TextAlign.right,
@@ -48,18 +47,22 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
             color: Colors.black,
             fontFamily: 'OpenSans',
           ),
-          maxLines: 2,
+          maxLines: 4,
         ),
       ),
     ],
   );
 }
 
-Widget buildUserProgramRow(Scheduling item) {
-  return buildThreeSideBySideTexts(
-      '${DateFormat.EEEE('da_DK').format(unixToDateTime(item.start!))} ${DateFormat.Hm().format(unixToDateTime(item.start!))}',
-      item.titleDa!,
-      item.roomDa!);
+Widget buildUserProgramRow(Scheduling item, context) {
+  var lang = 'en'; //context.locale.toString();
+  var day = DateFormat.E(lang == 'en' ? 'en_UK' : 'da_DK')
+      .format(unixToDateTime(item.start!));
+  var time = DateFormat.Hm().format(unixToDateTime(item.start!));
+  var title = lang == 'en' ? item.titleEn! : item.titleDa!;
+  var room = lang == 'en' ? item.roomEn! : item.roomDa!;
+
+  return buildThreeSideBySideTexts("$day $time", title, room);
 }
 
 DateTime unixToDateTime(int timeInUnixTime) {
@@ -76,7 +79,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -112,7 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
-                          if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
+                          //if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
+                          buildFoodTimes(),
                           const SizedBox(height: 30.0),
                           buildLogoutBtn(),
                           const SizedBox(height: 30.0),
@@ -129,29 +133,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildFoodTimes() {
     return SizedBox(
-      width: double.infinity,
-      child: Card(
-        margin: kCardMargin,
-        elevation: 5,
-        child: Padding(
-          padding: kCardPadding,
-          child: ListTile(
-            trailing: const Icon(Icons.fastfood),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-            title: Text(
-              tr('profile.foodTimes'),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
+        width: double.infinity,
+        child: Card(
+            margin: newkCardMargin,
+            elevation: 10,
+            child: Column(children: [
+              ListTile(
+                trailing: const Icon(Icons.fastfood),
+                title: Text(
+                  tr('profile.foodTimes'),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
               ),
-            ),
-            subtitle: buildUserFood(widget.appUser.food!),
-          ),
-        ),
-      ),
-    );
+              buildFoodList(widget.appUser.food)
+            ])));
+  }
+
+  Widget buildFoodList(List<Food>? food) {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          children: [
+            ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: food!.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  Food item = food[index];
+                  return Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                            '${DateFormat.Hm().format(unixToDateTime(item.time!))} - ${DateFormat.Hm().format(unixToDateTime(item.timeEnd!))}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontFamily: 'OpenSans',
+                            )),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Text(
+                          context.locale.toString() == 'en'
+                              ? item.titleEn!
+                              : item.titleDa!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                })
+          ],
+        ));
   }
 
   Widget buildIdIcon() {
@@ -183,59 +229,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget buildUserFood(List food) {
-    return Container(
-      padding: const EdgeInsets.only(top: 2, left: 10),
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-            ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: food.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                Food item = food[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                          '${DateFormat.Hm().format(unixToDateTime(item.time!))} - ${DateFormat.Hm().format(unixToDateTime(item.timeEnd!))}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontFamily: 'OpenSans',
-                          )),
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        item.titleDa!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            )
-          ],
-        ),
-      ),
     );
   }
 
@@ -299,59 +292,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Card(
         margin: kCardMargin,
         elevation: 5,
-        child: Padding(
-          padding: kCardPadding,
-          child: ListTile(
-            trailing: const Icon(Icons.calendar_view_day),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-            title: Text(
-              tr('profile.yourProgram'),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
+        child: ListTile(
+          title: Text(
+            tr('profile.yourProgram'),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
             ),
-            subtitle: Container(
-              padding: const EdgeInsets.only(top: 2, left: 10),
-              child: buildUsersProgram(widget.appUser.scheduling!),
-            ),
+          ),
+          subtitle: Container(
+            child: buildUsersProgram(widget.appUser.scheduling!, context),
           ),
         ),
       ),
     );
   }
 
-  Widget buildUsersProgram(List<Scheduling> schedule) {
+  Widget buildUsersProgram(List<Scheduling> schedule, context) {
     initializeDateFormatting('da_DK', null);
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 10,
-          ),
-          buildThreeSideBySideTexts(
-              tr('profile.when'), tr('profile.what'), tr('profile.where')),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: schedule.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 10);
-            },
-            itemBuilder: (context, index) {
-              Scheduling item = schedule[index];
-              return buildUserProgramRow(item);
-            },
-          )
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 10),
+        buildThreeSideBySideTexts(
+            tr('profile.when'), tr('profile.what'), tr('profile.where')),
+        const Divider(height: 10, thickness: 2),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: schedule.length,
+          separatorBuilder: (context, int index) {
+            return const SizedBox(height: 10);
+          },
+          itemBuilder: (buildContext, index) {
+            Scheduling item = schedule[index];
+            return buildUserProgramRow(item, context);
+          },
+        )
+      ],
     );
   }
 
