@@ -5,7 +5,7 @@ class LocalStorageService {
     final prefs = await SharedPreferences.getInstance();
 
     var valueString = prefs.getString(key);
-    return Future.value(valueString);
+    return Future.value(valueString ?? '');
   }
 
   void setString(String key, String value) async {

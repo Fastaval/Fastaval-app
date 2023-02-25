@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/program.dart';
@@ -25,20 +24,15 @@ Future<Program> fetchProgram() async {
 }
 
 Future<User> login(String userId, String password) async {
-  final UserService userService = UserService();
-
   var url = Uri.parse('$baseUrl/v3/user/$userId?pass=$password');
   final response = await http.get(url);
   inspect(response);
 
   if (response.statusCode == 200) {
     var user = User.fromJson(jsonDecode(response.body));
-
-    userService.setUser(user);
-
     return user;
   } else {
     throw Exception('Failed to load login');
-    //TODO:fix fejl
+    //TODO: Vis fejl hvis login fejler
   }
 }

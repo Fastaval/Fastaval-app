@@ -4,28 +4,24 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/modules/screens/home_page_view.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../notifications/login_notification.dart';
 
 class LoginScreen extends StatefulWidget {
   final HomePageState parent;
-
   const LoginScreen(this.parent, {Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-/*   @override
-  _LoginScreenState createState() => _LoginScreenState(); */
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool isChecked = false;
-  bool loggedIn = false;
+  bool _rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 30.0),
                       _buildUserIdTF(),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
+                      const SizedBox(height: 30.0),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
+                      // _buildForgotPasswordBtn(),
+                      const SizedBox(height: 10.0),
                       _buildRememberMeCheckbox(),
+                      const SizedBox(height: 30.0),
                       _buildLoginBtn(),
                     ],
                   ),
@@ -94,16 +90,35 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildRememberMeCheckbox() {
+    Color getColor(Set<MaterialState> states) {
+      return Colors.orange;
+    }
+
     return Row(children: [
-      const Text('test'),
-      Checkbox(value: isChecked, onChanged: handleRememberMe)
+      Transform.scale(
+          scale: 1.3,
+          child: Checkbox(
+              checkColor: Colors.white,
+              fillColor: MaterialStateProperty.resolveWith(getColor),
+              shape: const CircleBorder(),
+              value: _rememberMe,
+              onChanged: (value) {
+                setState(() {
+                  _rememberMe = value!;
+                });
+              })),
+      Text(
+        tr('login.rememberMe'),
+        style: kLabelStyle,
+      ),
     ]);
   }
 
+  /* TODO: Reenable when we know how this works
   Widget _buildForgotPasswordBtn() {
     return Container();
-    // TODO: Reenable when we know how this works
-    /* return Container(
+    
+     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
@@ -112,12 +127,11 @@ class _LoginScreenState extends State<LoginScreen> {
           style: kLabelStyle,
         ),
       ),
-    ); */
-  }
+    ); 
+  }*/
 
   Widget _buildLoginBtn() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 45.0),
+    return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
@@ -125,6 +139,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         onPressed: () => login(userIdController.text, passwordController.text)
             .then((value) => scheduleMicrotask(() {
+                  if (_rememberMe == true) {
+                    UserService().setUser(value);
+                  }
+
                   LoginNotification(loggedIn: true, user: value)
                       .dispatch(context);
                 })),
@@ -213,19 +231,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
     );
-  }
-
-  handleRememberMe(bool? value) {
-    isChecked = value!;
-    SharedPreferences.getInstance().then(
-      (prefs) {
-        prefs.setBool("remember_me", value);
-        prefs.setString('userId', userIdController.text);
-        prefs.setString('password', passwordController.text);
-      },
-    );
-    setState(() {
-      isChecked = value;
-    });
   }
 }

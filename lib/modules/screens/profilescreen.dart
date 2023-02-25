@@ -123,30 +123,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildFoodTimes() => SizedBox(
-        width: double.infinity,
-        child: Card(
-          margin: kCardMargin,
-          elevation: 5,
-          child: Padding(
-            padding: kCardPadding,
-            child: ListTile(
-              trailing: const Icon(Icons.fastfood),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: Text(
-                tr('profile.foodTimes'),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
+  Widget buildFoodTimes() {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        margin: kCardMargin,
+        elevation: 5,
+        child: Padding(
+          padding: kCardPadding,
+          child: ListTile(
+            trailing: const Icon(Icons.fastfood),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            title: Text(
+              tr('profile.foodTimes'),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
               ),
-              subtitle: buildUserFood(widget.appUser.food!),
             ),
+            subtitle: buildUserFood(widget.appUser.food!),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Widget buildIdIcon() {
     return Column(
@@ -180,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildUserFood(List food) {
+  Widget buildUserFood(List food) {
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 10),
       child: SafeArea(
@@ -288,32 +290,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildUserProgram() => SizedBox(
-        child: Card(
-          margin: kCardMargin,
-          elevation: 5,
-          child: Padding(
-            padding: kCardPadding,
-            child: ListTile(
-              trailing: const Icon(Icons.calendar_view_day),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: Text(
-                tr('profile.yourProgram'),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
+  Widget buildUserProgram() {
+    return SizedBox(
+      child: Card(
+        margin: kCardMargin,
+        elevation: 5,
+        child: Padding(
+          padding: kCardPadding,
+          child: ListTile(
+            trailing: const Icon(Icons.calendar_view_day),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            title: Text(
+              tr('profile.yourProgram'),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
               ),
-              subtitle: Container(
-                padding: const EdgeInsets.only(top: 2, left: 10),
-                child: buildUsersProgram(widget.appUser.scheduling!),
-              ),
+            ),
+            subtitle: Container(
+              padding: const EdgeInsets.only(top: 2, left: 10),
+              child: buildUsersProgram(widget.appUser.scheduling!),
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Widget buildUsersProgram(List<Scheduling> schedule) {
     initializeDateFormatting('da_DK', null);
@@ -348,8 +352,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   String messagesFromFastaval() {
-    return widget.appUser.messages == ''
-        ? tr('noMessagesRightNow')
-        : widget.appUser.messages!;
+    return widget.appUser.messages ?? tr('profile.noMessagesRightNow');
   }
 }
