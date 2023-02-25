@@ -26,7 +26,6 @@ void main() async {
   print(fcmToken);
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
   NotificationSettings settings = await firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
