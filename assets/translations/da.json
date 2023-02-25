@@ -1,10 +1,139 @@
 {
   "app": {
-    "title": "Fastaval App"
+    "title": "Fastaval"
   },
   "appbar": {
     "barcode": {
       "show": "Vis stregkode"
+    },
+    "map": {
+      "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
+  },
+  "bottomNavigation": {
+    "information": "Information",
+    "login": "Log ind",
+    "profil": "Profil",
+    "program": "Program"
+  },
+  "info": {
+    "fastaWear": {
+      "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval.",
+      "title": "Fasta-Wear"
+    },
+    "lostAndFound": {
+      "text": "Har du mistet eller fundet noget?\nGå til Informationen for at få hjælp!",
+      "title": "Glemte Sager"
+    },
+    "openHours": {
+      "bar": {
+        "day1": "Ons-Søn",
+        "title": "Baren"
+      },
+      "boardGames": {
+        "day1": "Ons-Lør",
+        "day2": "Søndag",
+        "title": "Brætspilscaféen"
+      },
+      "coffeeCafe": {
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "day3": "Søndag",
+        "title": "Otto's Kaffekro"
+      },
+      "information": {
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "day3": "Søndag",
+        "title": "Informationen"
+      },
+      "kiosk": {
+        "day1": "Ons-Lør",
+        "day2": "Søndag",
+        "title": "Kiosken"
+      },
+      "oasis": {
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "title": "Oasen"
+      },
+      "title": "Åbningstider"
+    },
+    "safe": {
+      "dutyGeneral": "Vagthavende general",
+      "heroForce": "Heltestyrken",
+      "safetyHost": "Tryghedsvært",
+      "safetyMail": "Safe-mail",
+      "title": "Tryg Fastaval"
+    },
+    "stores": {
+      "store1": {
+        "day1": {
+          "text": "Onsdag:",
+          "value": "kl. 16:00 - 23:00"
+        },
+        "day2": {
+          "text": "Tor-Lør:",
+          "value": "kl. 10:00 - 23:00"
+        },
+        "day3": {
+          "text": "Søndag:",
+          "value": "kl. 10:00 - 15:00"
+        },
+        "title": "Epic Panda i B45"
+      },
+      "store2": {
+        "day1": {
+          "text": "Ons-Søn",
+          "value": "kl. 10:00 - 22:00"
+        },
+        "title": "Tier1MTG i A07"
+      },
+      "store3": {
+        "day1": {
+          "text": "Fre-Søn",
+          "value": "kl. 10:00 - 16:00"
+        },
+        "title": "Corra Design i fællesområdet"
+      },
+      "title": "Butikker"
+    },
+    "transportAndParking": {
+      "taxi2": "Hobro Taxa",
+      "taxi1": "Kajs Taxi",
+      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
+      "title": "Transport & Parkering"
+    },
+    "wifi": {
+      "title": "WiFi",
+      "networkName": "Netværk",
+      "networkUser": "Brugernavn",
+      "networkCode": "Kode"
+    }
+  },
+  "login": {
+    "enterParticipantNumber": "Indtast deltager nummer",
+    "enterPassword": "Indtast kodeord",
+    "forgotPassword": "Glemt kodeord?",
+    "participantNumber": "Deltager nummer",
+    "password": "Kodeord",
+    "signIn": "Log ind"
+  },
+  "profile": {
+    "foodTimes": "Mad tider",
+    "messagesFromFastaval": "Beskeder Fra Fastaval",
+    "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
+    "participantNumber": "Deltager nummer",
+    "what": "Hvad",
+    "when": "Hvornår",
+    "where": "Hvor",
+    "yourProgram": "Dit Program"
+  },
+  "program": {
+    "friday": "Fre",
+    "saturday": "Lør",
+    "sunday": "Søn",
+    "thursday": "Tor",
+    "wednesday": "Ons"
   }
 }

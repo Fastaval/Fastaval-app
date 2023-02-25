@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
 import 'package:fastaval_app/modules/screens/home_page_view.dart';
 import 'package:fastaval_app/utils/services/rest_api_service.dart';
@@ -15,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+/*   @override
+  _LoginScreenState createState() => _LoginScreenState(); */
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -59,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const Text(
-                        'Sign In',
-                        style: TextStyle(
+                      Text(
+                        tr('login.signIn'),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'OpenSans',
                           fontSize: 30.0,
@@ -75,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
-                      // _buildRememberMeCheckbox(),
+                      _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                     ],
                   ),
@@ -88,17 +91,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildRememberMeCheckbox() {
+    return Container();
+    // TODO: Reenable when we know how this works
+  }
+
   Widget _buildForgotPasswordBtn() {
-    return Container(
+    return Container();
+    // TODO: Reenable when we know how this works
+    /* return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
-        child: const Text(
-          'Forgot Password?',
+        child: Text(
+          tr('login.forgotPassword'),
           style: kLabelStyle,
         ),
       ),
-    );
+    ); */
   }
 
   Widget _buildLoginBtn() {
@@ -112,9 +122,9 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => login(userIdController.text, passwordController.text).then((value) => scheduleMicrotask(() {
               LoginNotification(loggedIn: true, user: value).dispatch(context);
             })),
-        child: const Text(
-          'LOGIN',
-          style: TextStyle(
+        child: Text(
+          tr('login.signIn'),
+          style: const TextStyle(
             color: Colors.deepOrange,
             letterSpacing: 1.5,
             fontSize: 18.0,
@@ -130,8 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
-          'Password',
+        Text(
+          tr('login.password'),
           style: kLabelStyle,
         ),
         const SizedBox(height: 10.0),
@@ -147,14 +157,14 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
+              contentPadding: const EdgeInsets.only(top: 14.0),
+              prefixIcon: const Icon(
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Password',
+              hintText: tr('login.enterPassword'),
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -167,8 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
-          'Deltager nummer',
+        Text(
+          tr('login.participantNumber'),
           style: kLabelStyle,
         ),
         const SizedBox(height: 10.0),
@@ -183,14 +193,14 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
+              contentPadding: const EdgeInsets.only(top: 14.0),
+              prefixIcon: const Icon(
                 Icons.portrait,
                 color: Colors.white,
               ),
-              hintText: 'Indtast deltager nummer',
+              hintText: tr('login.enterParticipantNumber'),
               hintStyle: kHintTextStyle,
             ),
           ),

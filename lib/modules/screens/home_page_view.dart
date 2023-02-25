@@ -13,33 +13,29 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../notifications/login_notification.dart';
 
 List<BottomNavigationBarItem> loggedInBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.person,
-      ),
-      label: 'Profil'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
+  BottomNavigationBarItem(
+      icon: const Icon(Icons.person), label: tr('bottomNavigation.profil')),
+  BottomNavigationBarItem(
+      icon: const Icon(Icons.info), label: tr('bottomNavigation.information')),
+  BottomNavigationBarItem(
+      icon: const Icon(Icons.calendar_view_day),
+      label: tr('bottomNavigation.program'))
 ];
 
 List<BottomNavigationBarItem> notLoggedInNavBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
+  BottomNavigationBarItem(
+      icon: const Icon(
         Icons.login,
       ),
-      label: 'Login'),
-  const BottomNavigationBarItem(
-      icon: Icon(
+      label: tr('bottomNavigation.login')),
+  BottomNavigationBarItem(
+      icon: const Icon(
         Icons.info,
       ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
+      label: tr('bottomNavigation.information')),
+  BottomNavigationBarItem(
+      icon: const Icon(Icons.calendar_view_day),
+      label: tr('bottomNavigation.program')),
 ];
 
 class HomePageState extends State<HomePageView> {
@@ -63,7 +59,7 @@ class HomePageState extends State<HomePageView> {
         appBar: AppBar(
           title: Text(
             tr('app.title'),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             Row(
@@ -86,8 +82,8 @@ class HomePageState extends State<HomePageView> {
                                       child: RotatedBox(
                                         quarterTurns: 1,
                                         child: BarcodeWidget(
-                                          barcode: Barcode
-                                              .ean8(), // Barcode type and settings
+                                          barcode: Barcode.ean8(),
+                                          // Barcode type and settings
                                           data: user.barcode.toString(),
                                         ),
                                       ),
@@ -103,7 +99,8 @@ class HomePageState extends State<HomePageView> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Fluttertoast.showToast(msg: 'No map for you');
+                    Fluttertoast.showToast(
+                        msg: tr('appbar.map.noMapAvailable'));
                   },
                 ),
               ],
