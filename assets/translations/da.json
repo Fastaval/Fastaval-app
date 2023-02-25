@@ -99,16 +99,16 @@
       "title": "Butikker"
     },
     "transportAndParking": {
-      "taxi2": "Hobro Taxa",
       "taxi1": "Kajs Taxi",
+      "taxi2": "Hobro Taxa",
       "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
       "title": "Transport & Parkering"
     },
     "wifi": {
-      "title": "WiFi",
+      "networkCode": "Kode",
       "networkName": "Netværk",
       "networkUser": "Brugernavn",
-      "networkCode": "Kode"
+      "title": "WiFi"
     }
   },
   "login": {
@@ -117,6 +117,7 @@
     "forgotPassword": "Glemt kodeord?",
     "participantNumber": "Deltager nummer",
     "password": "Kodeord",
+    "rememberMe": "Husk mit login",
     "signIn": "Log ind"
   },
   "profile": {

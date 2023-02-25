@@ -105,10 +105,10 @@
       "title": "Transportation & Parking"
     },
     "wifi": {
-      "title": "WiFi",
+      "networkCode": "Code",
       "networkName": "Network",
       "networkUser": "User name",
-      "networkCode": "Code"
+      "title": "WiFi"
     }
   },
   "login": {
@@ -117,6 +117,7 @@
     "forgotPassword": "Forgot password?",
     "participantNumber": "Participant number",
     "password": "Password",
+    "rememberMe": "Remember my login",
     "signIn": "Sign in"
   },
   "profile": {
