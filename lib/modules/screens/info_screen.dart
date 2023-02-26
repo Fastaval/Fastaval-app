@@ -250,7 +250,7 @@ Widget _buildOpenHoursCard() {
     ),
   ); */
 
-/*   return textAndIconCard(
+  return textAndIconCard(
       tr('info.openHours.title'),
       Icons.access_time,
       Column(
@@ -258,28 +258,21 @@ Widget _buildOpenHoursCard() {
           const SizedBox(height: 10),
           textRowHeader(tr('info.openHours.information.title')),
           sideBySideTextRow(tr('info.openHours.information.day1'),
-              kStoreOpeningHours["information"]!["day1"]!,
+              kServiceOpeningHours["information"]!["day1"]!,
               sidePadding: true),
-          sideBySideTextRow(tr('info.openHours.information.day1'),
-              kStoreOpeningHours["information"]!["day1"]!,
+          sideBySideTextRow(tr('info.openHours.information.day2'),
+              kServiceOpeningHours["information"]!["day2"]!,
               sidePadding: true),
-          sideBySideTextRow(tr('info.openHours.information.day1'),
-              kStoreOpeningHours["information"]!["day1"]!,
-              sidePadding: true),
-          const SizedBox(height: 10),
-          textRowHeader(tr('info.openHours.store3.title')),
-          sideBySideTextRow(tr('info.openHours.store3.day1'),
-              kStoreOpeningHours["store3"]!["day1"]!,
+          sideBySideTextRow(tr('info.openHours.information.day3'),
+              kServiceOpeningHours["information"]!["day3"]!,
               sidePadding: true),
           const SizedBox(height: 10),
           textRowHeader(tr('info.openHours.bar.title')),
           sideBySideTextRow(tr('info.openHours.bar.day1'),
-              kStoreOpeningHours["store1"]!["day1"]!,
+              kServiceOpeningHours["bar"]!["day1"]!,
               sidePadding: true),
         ],
-      )); */
-
-  return const SizedBox();
+      ));
 }
 
 Widget _buildStoresCard() {
