@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+
+import 'package:fastaval_app/constants/app_constants.dart';
+import 'package:http/http.dart' as http;
 
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
@@ -25,9 +29,18 @@ class UserService {
   removeUser() {
     storageService.deleteString(kUserKey);
   }
+}
 
-  //Future<bool?> hasBarcode() async {
-  //  User user = await getUser();
-  //  return user.barcode?.isNotEmpty;
-  // }
+Future<User> checkUserLogin(String userId, String password) async {
+  var response =
+      await http.get(Uri.parse('$baseUrl/v3/user/$userId?pass=$password'));
+
+  inspect(response);
+
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  }
+
+  throw Exception('Failed to load login');
+  //TODO: Vis fejl hvis login fejler
 }
