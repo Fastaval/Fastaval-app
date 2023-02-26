@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "376786705258",
-    "project_id": "fastaval-app",
-    "storage_bucket": "fastaval-app.appspot.com"
+    "project_number": "998751652413",
+    "project_id": "fastaval-it",
+    "storage_bucket": "fastaval-it.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:376786705258:android:139875110529187548a313",
+        "mobilesdk_app_id": "1:998751652413:android:eeb224c27a4fc564e67854",
         "android_client_info": {
           "package_name": "dk.alea.fastaval.fastaval_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "376786705258-thh56prjvc4qrmf81mti6s9rggvmccso.apps.googleusercontent.com",
+          "client_id": "998751652413-fqvef537ejdlousegtd8ujtv092uoj3a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLYe1-XsFpz9xi_b4JG_qnR98DLcuNYrI"
+          "current_key": "AIzaSyBEkmeEFlapNnW_VEvNzhCzrmZ9RSGcDk4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "376786705258-thh56prjvc4qrmf81mti6s9rggvmccso.apps.googleusercontent.com",
+              "client_id": "998751652413-fqvef537ejdlousegtd8ujtv092uoj3a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
