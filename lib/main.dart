@@ -34,6 +34,7 @@ void main() async {
     provisional: false,
     sound: true,
   );
+  print('User granted permission: ${settings.authorizationStatus}');
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(
     EasyLocalization(
