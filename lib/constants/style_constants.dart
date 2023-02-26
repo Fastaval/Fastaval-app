@@ -11,7 +11,7 @@ const kLabelStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
-final kBoxDecorationStyle = BoxDecoration(
+final kTextBoxDecorationStyle = BoxDecoration(
   color: const Color(0xFFFFA726),
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: const [
@@ -42,3 +42,16 @@ const kCardHeaderStyle = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     fontFamily: 'OpenSans');
+const backgroundBoxDecorationStyle = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xFFFF9800),
+      Color(0xFFFB8c00),
+      Color(0xFFF57C00),
+      Color(0xFFEF6c00),
+    ],
+    stops: [0.1, 0.4, 0.7, 0.9],
+  ),
+);

@@ -34,19 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFFF9800),
-                      Color(0xFFFB8c00),
-                      Color(0xFFF57C00),
-                      Color(0xFFEF6c00),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
+                decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
                 height: double.infinity,
@@ -114,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
   /* TODO: Reenable when we know how this works
   Widget _buildForgotPasswordBtn() {
     return Container();
-    
+
      return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
@@ -124,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: kLabelStyle,
         ),
       ),
-    ); 
+    );
   }*/
 
   Widget _buildLoginButton() {
@@ -165,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: passwordController,
@@ -193,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: userIdController,
