@@ -250,7 +250,7 @@ Widget _buildOpenHoursCard() {
     ),
   ); */
 
-  return textAndIconCard(
+/*   return textAndIconCard(
       tr('info.openHours.title'),
       Icons.access_time,
       Column(
@@ -277,7 +277,9 @@ Widget _buildOpenHoursCard() {
               kStoreOpeningHours["store1"]!["day1"]!,
               sidePadding: true),
         ],
-      ));
+      )); */
+
+  return const SizedBox();
 }
 
 Widget _buildStoresCard() {
