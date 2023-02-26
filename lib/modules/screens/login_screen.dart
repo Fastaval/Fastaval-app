@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
-import 'package:fastaval_app/modules/screens/home_page_view.dart';
-import 'package:fastaval_app/utils/services/rest_api_service.dart';
+import 'package:fastaval_app/modules/screens/home_page.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

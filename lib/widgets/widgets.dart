@@ -11,3 +11,7 @@ Widget textAndIconCard(String title, IconData icon, content) {
         Padding(padding: kCardContentPadding, child: content)
       ]));
 }
+
+Widget textRowHeader(String text) {
+  return Row(children: [Text(text, style: kNormalTextBoldStyle)]);
+}

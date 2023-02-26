@@ -1,3 +1,5 @@
+const baseUrl = 'https://infosys-test.fastaval.dk/api';
+
 const kWifiNetworkName = 'Undervisning';
 const kWifiUser = 'mfg-guest@mf-gym.dk';
 const kWifiPassword = 'Teleskop2022';
@@ -7,7 +9,23 @@ const kHeroForcePhoneNumber = "+4561409263";
 const kDutyGeneralPhoneNumber = "+4561409065";
 const kSafetyHostPhoneNumber = "+4561409264";
 const kSafeFastavalMail = "safe@fastaval.dk";
-const kOpeningHours = {
+const kServiceOpeningHours = {
+  "oasis": {"day1": "15.00 - 02.00", "day2": "12.00 - 02.00"},
+  "information": {
+    "day1": "15.00 - 20.30",
+    "day2": "09:30 - 20.30",
+    "day3": "09:30 - 17:00"
+  },
+  "bar": {"day1": "17.00 - 02.00"},
+  "boardGames": {"day1": "09.00 - 02.00", "day2": "09.00 - 15.00"},
+  "coffeeCafe": {
+    "day1": "11.30 - 01.00",
+    "day2": "09:00 - 01.00",
+    "day3": "09:00 - 15:00"
+  },
+  "kiosk": {"day1": "08.00 - 00.00", "day2": "08:00 - 16.00"},
+};
+const kStoreOpeningHours = {
   "store1": {
     "day1": "16:00 - 23:00",
     "day2": "10:00 - 23:00",

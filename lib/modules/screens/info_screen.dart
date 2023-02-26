@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget textRowHeader(String text) {
-  return Row(children: [Text(text, style: kNormalTextBoldStyle)]);
-}
-
 Widget sideBySideTextRow(String textLeft, String textRight,
     {bool selectable = false, bool sidePadding = false}) {
   return Padding(
@@ -71,95 +67,54 @@ Widget buildSideBySideTextWithUrlAction(String title, String link, Uri url) {
   );
 }
 
-Widget _buildFastaWearCard() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.person),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: Text(
-            tr('info.fastaWear.title'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tr('info.fastaWear.text'),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+Widget _buildSafeFastavalCard() {
+  return textAndIconCard(
+      tr('info.safe.title'),
+      Icons.phone,
+      Column(
+        children: [
+          buildSideBySideTextWithUrlAction(
+              tr('info.safe.dutyGeneral'),
+              kDutyGeneralPhoneNumber,
+              Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber)),
+          const SizedBox(height: 10),
+          buildSideBySideTextWithUrlAction(
+              tr('info.safe.heroForce'),
+              kHeroForcePhoneNumber,
+              Uri(scheme: 'tel', path: kHeroForcePhoneNumber)),
+          const SizedBox(height: 10),
+          buildSideBySideTextWithUrlAction(
+              tr('info.safe.safetyHost'),
+              kSafetyHostPhoneNumber,
+              Uri(scheme: 'tel', path: kSafetyHostPhoneNumber)),
+          const SizedBox(height: 10),
+          buildSideBySideTextWithUrlAction(
+              tr('info.safe.safetyMail'),
+              kSafeFastavalMail,
+              Uri(scheme: 'mailto', path: kSafeFastavalMail)),
+        ],
+      ));
 }
 
-Widget _buildLostFoundCard() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.move_to_inbox),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: Text(
-            tr('info.lostAndFound.title'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tr('info.lostAndFound.text'),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+Widget _buildWifiCard() {
+  return textAndIconCard(
+      tr('info.wifi.title'),
+      Icons.wifi,
+      Column(
+        children: [
+          sideBySideTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
+          const SizedBox(height: 10),
+          sideBySideTextRow(tr('info.wifi.networkUser'), kWifiUser,
+              selectable: true),
+          const SizedBox(height: 10),
+          sideBySideTextRow(tr('info.wifi.networkCode'), kWifiPassword,
+              selectable: true)
+        ],
+      ));
 }
 
 Widget _buildOpenHoursCard() {
-  return SizedBox(
+/*   return SizedBox(
     width: double.infinity,
     child: Card(
       margin: kCardMargin,
@@ -280,11 +235,11 @@ Widget _buildOpenHoursCard() {
                       fontWeight: FontWeight.bold),
                 ),
                 Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.oasis.day1'), "15.00 - 02.00"),
-                    sideBySideTextRow(
-                        tr('info.openHours.oasis.day2'), "12.00 - 02.00"),
+                  children: [
+                    sideBySideTextRow(tr('info.openHours.oasis.day1'),
+                        kServiceOpeningHours["oasis"]!["day1"]!),
+                    sideBySideTextRow(tr('info.openHours.oasis.day2'),
+                        kServiceOpeningHours["oasis"]!["day2"]!),
                   ],
                 ),
               ],
@@ -293,34 +248,33 @@ Widget _buildOpenHoursCard() {
         ),
       ),
     ),
-  );
-}
+  ); */
 
-Widget _buildSafeFastavalCard() {
   return textAndIconCard(
-      tr('info.safe.title'),
-      Icons.phone,
+      tr('info.openHours.title'),
+      Icons.access_time,
       Column(
         children: [
-          buildSideBySideTextWithUrlAction(
-              tr('info.safe.dutyGeneral'),
-              kDutyGeneralPhoneNumber,
-              Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber)),
+          textRowHeader(tr('info.stores.store1.title')),
+          sideBySideTextRow(tr('info.stores.store1.day1'),
+              kStoreOpeningHours["store1"]!["day1"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.stores.store1.day2'),
+              kStoreOpeningHours["store1"]!["day2"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.stores.store1.day3'),
+              kStoreOpeningHours["store1"]!["day3"]!,
+              sidePadding: true),
           const SizedBox(height: 10),
-          buildSideBySideTextWithUrlAction(
-              tr('info.safe.heroForce'),
-              kHeroForcePhoneNumber,
-              Uri(scheme: 'tel', path: kHeroForcePhoneNumber)),
+          textRowHeader(tr('info.stores.store2.title')),
+          sideBySideTextRow(tr('info.stores.store2.day1'),
+              kStoreOpeningHours["store2"]!["day1"]!,
+              sidePadding: true),
           const SizedBox(height: 10),
-          buildSideBySideTextWithUrlAction(
-              tr('info.safe.safetyHost'),
-              kSafetyHostPhoneNumber,
-              Uri(scheme: 'tel', path: kSafetyHostPhoneNumber)),
-          const SizedBox(height: 10),
-          buildSideBySideTextWithUrlAction(
-              tr('info.safe.safetyMail'),
-              kSafeFastavalMail,
-              Uri(scheme: 'mailto', path: kSafeFastavalMail)),
+          textRowHeader(tr('info.stores.store3.title')),
+          sideBySideTextRow(tr('info.stores.store3.day1'),
+              kStoreOpeningHours["store3"]!["day1"]!,
+              sidePadding: true)
         ],
       ));
 }
@@ -332,27 +286,114 @@ Widget _buildStoresCard() {
       Column(
         children: [
           textRowHeader(tr('info.stores.store1.title')),
-          sideBySideTextRow(
-              tr('info.stores.store1.day1'), kOpeningHours["store1"]!["day1"]!,
+          sideBySideTextRow(tr('info.stores.store1.day1'),
+              kStoreOpeningHours["store1"]!["day1"]!,
               sidePadding: true),
-          sideBySideTextRow(
-              tr('info.stores.store1.day2'), kOpeningHours["store1"]!["day2"]!,
+          sideBySideTextRow(tr('info.stores.store1.day2'),
+              kStoreOpeningHours["store1"]!["day2"]!,
               sidePadding: true),
-          sideBySideTextRow(
-              tr('info.stores.store1.day3'), kOpeningHours["store1"]!["day3"]!,
+          sideBySideTextRow(tr('info.stores.store1.day3'),
+              kStoreOpeningHours["store1"]!["day3"]!,
               sidePadding: true),
           const SizedBox(height: 10),
           textRowHeader(tr('info.stores.store2.title')),
-          sideBySideTextRow(
-              tr('info.stores.store2.day1'), kOpeningHours["store2"]!["day1"]!,
+          sideBySideTextRow(tr('info.stores.store2.day1'),
+              kStoreOpeningHours["store2"]!["day1"]!,
               sidePadding: true),
           const SizedBox(height: 10),
           textRowHeader(tr('info.stores.store3.title')),
-          sideBySideTextRow(
-              tr('info.stores.store3.day1'), kOpeningHours["store3"]!["day1"]!,
+          sideBySideTextRow(tr('info.stores.store3.day1'),
+              kStoreOpeningHours["store3"]!["day1"]!,
               sidePadding: true)
         ],
       ));
+}
+
+Widget _buildFastaWearCard() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: kCardMargin,
+      elevation: 5,
+      child: Padding(
+        padding: kCardPadding,
+        child: ListTile(
+          trailing: const Icon(Icons.person),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+          title: Text(
+            tr('info.fastaWear.title'),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+          subtitle: Container(
+            padding: const EdgeInsets.only(top: 2, left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  tr('info.fastaWear.text'),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildLostFoundCard() {
+  return SizedBox(
+    width: double.infinity,
+    child: Card(
+      margin: kCardMargin,
+      elevation: 5,
+      child: Padding(
+        padding: kCardPadding,
+        child: ListTile(
+          trailing: const Icon(Icons.move_to_inbox),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+          title: Text(
+            tr('info.lostAndFound.title'),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+          subtitle: Container(
+            padding: const EdgeInsets.only(top: 2, left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  tr('info.lostAndFound.text'),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 Widget _buildTransportCard() {
@@ -368,23 +409,6 @@ Widget _buildTransportCard() {
           const SizedBox(height: 20),
           buildSideBySideTextWithUrlAction(tr('info.transportAndParking.taxi2'),
               kTaxi2PhoneNumber, Uri(scheme: 'tel', path: kTaxi2PhoneNumber))
-        ],
-      ));
-}
-
-Widget _buildWifiCard() {
-  return textAndIconCard(
-      tr('info.wifi.title'),
-      Icons.wifi,
-      Column(
-        children: [
-          sideBySideTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
-          const SizedBox(height: 10),
-          sideBySideTextRow(tr('info.wifi.networkUser'), kWifiUser,
-              selectable: true),
-          const SizedBox(height: 10),
-          sideBySideTextRow(tr('info.wifi.networkCode'), kWifiPassword,
-              selectable: true)
         ],
       ));
 }

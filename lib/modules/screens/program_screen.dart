@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/activity_item.dart';
 import 'package:fastaval_app/config/models/activity_run.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,6 @@ Future<List<ActivityItem>> getDay(String isoDate) async {
   } else {
     throw Exception('Failed to download programs');
   }
-}
-
-DateTime unixtodatetime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
 
 class Programscreen extends StatefulWidget {

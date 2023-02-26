@@ -1,10 +1,10 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/modules/screens/infoscreen.dart';
-import 'package:fastaval_app/modules/screens/loginscreen.dart';
-import 'package:fastaval_app/modules/screens/profilescreen.dart';
-import 'package:fastaval_app/modules/screens/programscreen.dart';
+import 'package:fastaval_app/modules/screens/info_screen.dart';
+import 'package:fastaval_app/modules/screens/login_screen.dart';
+import 'package:fastaval_app/modules/screens/profile_screen.dart';
+import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

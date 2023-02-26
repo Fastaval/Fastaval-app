@@ -13,3 +13,7 @@ String formatTime(int? time) {
 DateTime formatTimestampToDateTime(int timeInUnixTime) {
   return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
+
+DateTime unixtodatetime(int timeInUnixTime) {
+  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime);
+}
