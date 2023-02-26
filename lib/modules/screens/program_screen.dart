@@ -88,7 +88,8 @@ class _ProgramscreenState extends State<Programscreen> {
                           children: <Widget>[
                             //when
                             timeBox(
-                                timestamp: unixtodatetime(item.start),
+                                timestamp:
+                                    formatTimestampToDateTime(item.start),
                                 color:
                                     colorMap[activityMap[item.activity]!.type]
                                         as Color),
