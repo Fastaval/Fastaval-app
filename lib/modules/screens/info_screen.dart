@@ -255,26 +255,20 @@ Widget _buildOpenHoursCard() {
       Icons.access_time,
       Column(
         children: [
-          textRowHeader(tr('info.stores.store1.title')),
-          sideBySideTextRow(tr('info.stores.store1.day1'),
-              kStoreOpeningHours["store1"]!["day1"]!,
-              sidePadding: true),
-          sideBySideTextRow(tr('info.stores.store1.day2'),
-              kStoreOpeningHours["store1"]!["day2"]!,
-              sidePadding: true),
-          sideBySideTextRow(tr('info.stores.store1.day3'),
-              kStoreOpeningHours["store1"]!["day3"]!,
-              sidePadding: true),
           const SizedBox(height: 10),
-          textRowHeader(tr('info.stores.store2.title')),
-          sideBySideTextRow(tr('info.stores.store2.day1'),
+          textRowHeader(tr('info.openHours.store2.title')),
+          sideBySideTextRow(tr('info.openHours.store2.day1'),
               kStoreOpeningHours["store2"]!["day1"]!,
               sidePadding: true),
           const SizedBox(height: 10),
-          textRowHeader(tr('info.stores.store3.title')),
-          sideBySideTextRow(tr('info.stores.store3.day1'),
+          textRowHeader(tr('info.openHours.store3.title')),
+          sideBySideTextRow(tr('info.openHours.store3.day1'),
               kStoreOpeningHours["store3"]!["day1"]!,
-              sidePadding: true)
+              sidePadding: true),
+          textRowHeader(tr('info.openHours.bar.title')),
+          sideBySideTextRow(tr('info.openHours.bar.day1'),
+              kStoreOpeningHours["store1"]!["day1"]!,
+              sidePadding: true),
         ],
       ));
 }
@@ -428,19 +422,7 @@ class InfoScreen extends StatelessWidget {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFFF9800),
-                      Color(0xFFFB8c00),
-                      Color(0xFFF57C00),
-                      Color(0xFFEF6c00),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
+                decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
                 height: double.infinity,
