@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
-import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:fastaval_app/config/models/program.dart';
 import 'package:fastaval_app/config/models/user.dart';
 
