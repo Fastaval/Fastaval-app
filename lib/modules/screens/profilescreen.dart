@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/constants/styleconstants.dart';
+import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/notifications/login_notification.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -54,21 +55,6 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
   );
 }
 
-Widget buildUserProgramRow(Scheduling item, context) {
-  var lang = 'en'; //context.locale.toString();
-  var day = DateFormat.E(lang == 'en' ? 'en_UK' : 'da_DK')
-      .format(unixToDateTime(item.start!));
-  var time = DateFormat.Hm().format(unixToDateTime(item.start!));
-  var title = lang == 'en' ? item.titleEn! : item.titleDa!;
-  var room = lang == 'en' ? item.roomEn! : item.roomDa!;
-
-  return buildThreeSideBySideTexts("$day $time", title, room);
-}
-
-DateTime unixToDateTime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
-}
-
 class ProfileScreen extends StatefulWidget {
   final User appUser;
   const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
@@ -115,8 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
-                          //if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
-                          buildFoodTimes(),
+                          buildFoodTimesCard(),
                           const SizedBox(height: 30.0),
                           buildLogoutBtn(),
                           const SizedBox(height: 30.0),
@@ -129,75 +114,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  Widget buildFoodTimes() {
-    return SizedBox(
-        width: double.infinity,
-        child: Card(
-            margin: newkCardMargin,
-            elevation: 10,
-            child: Column(children: [
-              ListTile(
-                trailing: const Icon(Icons.fastfood),
-                title: Text(
-                  tr('profile.foodTimes'),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ),
-              buildFoodList(widget.appUser.food)
-            ])));
-  }
-
-  Widget buildFoodList(List<Food>? food) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Column(
-          children: [
-            ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: food!.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 10);
-                },
-                itemBuilder: (context, index) {
-                  Food item = food[index];
-                  return Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                            '${DateFormat.Hm().format(unixToDateTime(item.time!))} - ${DateFormat.Hm().format(unixToDateTime(item.timeEnd!))}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontFamily: 'OpenSans',
-                            )),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Text(
-                          context.locale.toString() == 'en'
-                              ? item.titleEn!
-                              : item.titleDa!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontFamily: 'OpenSans',
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                })
-          ],
-        ));
   }
 
   Widget buildIdIcon() {
@@ -265,7 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          messagesFromFastaval(),
+                          widget.appUser.messages ??
+                              tr('profile.noMessagesRightNow'),
                           style: const TextStyle(
                             color: Colors.black,
                             fontFamily: 'OpenSans',
@@ -291,16 +208,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SizedBox(
       child: Card(
         margin: kCardMargin,
-        elevation: 5,
+        elevation: kCardElevation,
         child: ListTile(
           title: Text(
             tr('profile.yourProgram'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
+            style: kCardHeaderStyle,
           ),
           subtitle: Container(
             child: buildUsersProgram(widget.appUser.scheduling!, context),
@@ -328,15 +240,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           itemBuilder: (buildContext, index) {
             Scheduling item = schedule[index];
-            return buildUserProgramRow(item, context);
+            return buildUserProgramRow(item);
           },
         )
       ],
     );
   }
 
-  String messagesFromFastaval() {
-    return widget.appUser.messages ?? tr('profile.noMessagesRightNow');
+  Widget buildUserProgramRow(Scheduling item) {
+    var title =
+        context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
+    var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
+
+    return buildThreeSideBySideTexts(
+        "${formatDay(item.start, context)} ${formatTime(item.start)}",
+        title,
+        room);
+  }
+
+  Widget buildFoodTimesCard() {
+    return SizedBox(
+        width: double.infinity,
+        child: Card(
+            margin: kCardMargin,
+            elevation: kCardElevation,
+            child: Column(children: [
+              ListTile(
+                trailing: const Icon(Icons.fastfood),
+                title: Text(
+                  tr('profile.foodTimes'),
+                  style: kCardHeaderStyle,
+                ),
+              ),
+              buildFoodListRows(widget.appUser.food)
+            ])));
+  }
+
+  Widget buildFoodListRows(List<Food>? food) {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          children: [
+            ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: food!.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  Food item = food[index];
+                  return Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                            '${formatTime(item.time)} - ${formatTime(item.timeEnd)}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontFamily: 'OpenSans',
+                            )),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Text(
+                          context.locale.toString() == 'en'
+                              ? item.titleEn!
+                              : item.titleDa!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                })
+          ],
+        ));
   }
 
   Widget buildLogoutBtn() {

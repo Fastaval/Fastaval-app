@@ -25,9 +25,4 @@ class UserService {
   removeUser() {
     storageService.deleteString(kUserKey);
   }
-
-  //Future<bool?> hasBarcode() async {
-  //  User user = await getUser();
-  //  return user.barcode?.isNotEmpty;
-  // }
 }

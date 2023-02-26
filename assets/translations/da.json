@@ -68,32 +68,17 @@
     },
     "stores": {
       "store1": {
-        "day1": {
-          "text": "Onsdag:",
-          "value": "kl. 16:00 - 23:00"
-        },
-        "day2": {
-          "text": "Tor-Lør:",
-          "value": "kl. 10:00 - 23:00"
-        },
-        "day3": {
-          "text": "Søndag:",
-          "value": "kl. 10:00 - 15:00"
-        },
+        "day1": "Onsdag",
+        "day2": "Tor-Lør",
+        "day3": "Søndag",
         "title": "Epic Panda i B45"
       },
       "store2": {
-        "day1": {
-          "text": "Ons-Søn",
-          "value": "kl. 10:00 - 22:00"
-        },
+        "day1": "Ons-Søn",
         "title": "Tier1MTG i A07"
       },
       "store3": {
-        "day1": {
-          "text": "Fre-Søn",
-          "value": "kl. 10:00 - 16:00"
-        },
+        "day1": "Fre-Søn",
         "title": "Corra Design i fællesområdet"
       },
       "title": "Butikker"
@@ -101,7 +86,7 @@
     "transportAndParking": {
       "taxi1": "Kajs Taxi",
       "taxi2": "Hobro Taxa",
-      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.\n",
+      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\nHobro togstation er ca. 2,5km fra Fastaval.",
       "title": "Transport & Parkering"
     },
     "wifi": {
