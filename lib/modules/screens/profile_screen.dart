@@ -6,6 +6,7 @@ import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/notifications/login_notification.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,40 +17,16 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
     children: <Widget>[
       Expanded(
         flex: 2,
-        child: Text(
-          left,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-        ),
+        child: Text(left, textAlign: TextAlign.center, style: kNormalTextStyle),
       ),
       Expanded(
-        flex: 5,
-        child: Text(
-          center,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
+          flex: 5,
+          child:
+              Text(center, textAlign: TextAlign.left, style: kNormalTextStyle)),
       Expanded(
         flex: 4,
-        child: Text(
-          right,
-          textAlign: TextAlign.right,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontFamily: 'OpenSans',
-          ),
-          maxLines: 4,
-        ),
+        child: Text(right,
+            textAlign: TextAlign.right, style: kNormalTextStyle, maxLines: 4),
       ),
     ],
   );
@@ -87,11 +64,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           const SizedBox(height: 10.0),
                           buildIdIcon(),
-                          buildUserMessages(),
-                          buildUserProgram(),
-                          buildFoodTimesCard(),
+                          buildUserMessagesCard(),
+                          buildUserProgramCard(),
+                          buildUserFoodTimesCard(),
                           const SizedBox(height: 30.0),
-                          buildLogoutBtn(),
+                          buildLogoutButton(),
                           const SizedBox(height: 30.0),
                         ],
                       ),
@@ -136,78 +113,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildUserMessages() {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        margin: kCardMargin,
-        elevation: 5,
-        child: Padding(
-          padding: kCardPadding,
-          child: ListTile(
-            trailing: const Icon(Icons.speaker_notes),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-            title: Text(
-              tr('profile.messagesFromFastaval'),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
-            ),
-            subtitle: Container(
-              padding: const EdgeInsets.only(top: 2, left: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          widget.appUser.messages ??
-                              tr('profile.noMessagesRightNow'),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'OpenSans',
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+  Widget buildUserMessagesCard() {
+    return textAndIconCard(
+        tr('profile.messagesFromFastaval'),
+        Icons.speaker_notes,
+        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'),
+            style: kNormalTextStyle));
   }
 
-  Widget buildUserProgram() {
-    return SizedBox(
-      child: Card(
-        margin: kCardMargin,
-        elevation: kCardElevation,
-        child: ListTile(
-          title: Text(
-            tr('profile.yourProgram'),
-            style: kCardHeaderStyle,
-          ),
-          subtitle: Container(
-            child: buildUsersProgram(widget.appUser.scheduling!, context),
-          ),
-        ),
-      ),
-    );
+  Widget buildUserProgramCard() {
+    return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
+        buildUsersProgram(widget.appUser.scheduling!, context));
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
@@ -246,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         room);
   }
 
-  Widget buildFoodTimesCard() {
+  Widget buildUserFoodTimesCard() {
     return SizedBox(
         width: double.infinity,
         child: Card(
@@ -255,10 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(children: [
               ListTile(
                 trailing: const Icon(Icons.fastfood),
-                title: Text(
-                  tr('profile.foodTimes'),
-                  style: kCardHeaderStyle,
-                ),
+                title: Text(tr('profile.foodTimes'), style: kCardHeaderStyle),
               ),
               buildFoodListRows(widget.appUser.food)
             ])));
@@ -284,24 +197,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         flex: 4,
                         child: Text(
                             '${formatTime(item.time)} - ${formatTime(item.timeEnd)}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontFamily: 'OpenSans',
-                            )),
+                            style: kNormalTextStyle),
                       ),
                       Expanded(
                         flex: 6,
                         child: Text(
-                          context.locale.toString() == 'en'
-                              ? item.titleEn!
-                              : item.titleDa!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontFamily: 'OpenSans',
-                          ),
-                        ),
+                            context.locale.toString() == 'en'
+                                ? item.titleEn!
+                                : item.titleDa!,
+                            style: kNormalTextStyle),
                       ),
                     ],
                   );
@@ -310,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ));
   }
 
-  Widget buildLogoutBtn() {
+  Widget buildLogoutButton() {
     return Padding(
         padding: const EdgeInsets.all(40),
         child: SizedBox(

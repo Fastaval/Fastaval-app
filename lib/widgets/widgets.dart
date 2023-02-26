@@ -8,10 +8,14 @@ Widget textAndIconCard(String title, IconData icon, content) {
       child: Column(children: [
         ListTile(
             trailing: Icon(icon), title: Text(title, style: kCardHeaderStyle)),
-        Padding(padding: kCardContentPadding, child: content)
+        Row(children: [
+          Expanded(child: Padding(padding: kCardContentPadding, child: content))
+        ])
       ]));
 }
 
 Widget textRowHeader(String text) {
-  return Row(children: [Text(text, style: kNormalTextBoldStyle)]);
+  return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [Text(text, style: kNormalTextBoldStyle)]);
 }
