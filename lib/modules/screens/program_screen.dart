@@ -1,12 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/activity_item.dart';
 import 'package:fastaval_app/config/models/activity_run.dart';
 import 'package:fastaval_app/utils/services/activities_service.dart';
 import 'package:flutter/material.dart';
-
-DateTime unixtodatetime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
-}
 
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
@@ -32,6 +29,7 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
+            //TODO: make it so days are pulled from api
             buildday("2023-04-05"),
             buildday("2023-04-06"),
             buildday("2023-04-07"),
