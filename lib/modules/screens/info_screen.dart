@@ -114,147 +114,39 @@ Widget _buildWifiCard() {
 }
 
 Widget _buildOpenHoursCard() {
-/*   return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.access_time),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: Text(
-            tr('info.openHours.title'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tr('info.openHours.information.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.information.day1'), "15.00 - 20.30"),
-                    sideBySideTextRow(
-                        tr('info.openHours.information.day2'), "09.30 - 20.30"),
-                    sideBySideTextRow(
-                        tr('info.openHours.information.day3'), "09.30 - 17.00"),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  tr('info.openHours.coffeeCafe.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.coffeeCafe.day1'), "11.30 - 01.00"),
-                    sideBySideTextRow(
-                        tr('info.openHours.coffeeCafe.day2'), "09.00 - 01.00"),
-                    sideBySideTextRow(
-                        tr('info.openHours.coffeeCafe.day3'), "09.00 - 15.00"),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  tr('info.openHours.boardGames.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.boardGames.day1'), "09.00 - 02.00"),
-                    sideBySideTextRow(
-                        tr('info.openHours.boardGames.day2'), "09.00 - 15.00"),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  tr('info.openHours.kiosk.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.kiosk.day1'), "08.00 - 00.00"),
-                    sideBySideTextRow(
-                        tr('info.openHours.kiosk.day2'), "08.00 - 16.00"),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  tr('info.openHours.bar.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: <Widget>[
-                    sideBySideTextRow(
-                        tr('info.openHours.bar.day1'), "17.00 - 02.00"),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  tr('info.openHours.oasis.title'),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: [
-                    sideBySideTextRow(tr('info.openHours.oasis.day1'),
-                        kServiceOpeningHours["oasis"]!["day1"]!),
-                    sideBySideTextRow(tr('info.openHours.oasis.day2'),
-                        kServiceOpeningHours["oasis"]!["day2"]!),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  ); */
-
   return textAndIconCard(
       tr('info.openHours.title'),
       Icons.access_time,
       Column(
         children: [
+          textRowHeader(tr('info.openHours.bar.title')),
+          sideBySideTextRow(tr('info.openHours.bar.day1'),
+              kServiceOpeningHours["bar"]!["day1"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.boardGames.title')),
+          sideBySideTextRow(tr('info.openHours.boardGames.day1'),
+              kServiceOpeningHours["boardGames"]!["day1"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.openHours.boardGames.day2'),
+              kServiceOpeningHours["boardGames"]!["day2"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.kiosk.title')),
+          sideBySideTextRow(tr('info.openHours.kiosk.day1'),
+              kServiceOpeningHours["kiosk"]!["day1"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.openHours.kiosk.day2'),
+              kServiceOpeningHours["kiosk"]!["day2"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.oasis.title')),
+          sideBySideTextRow(tr('info.openHours.oasis.day1'),
+              kServiceOpeningHours["oasis"]!["day1"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.openHours.oasis.day2'),
+              kServiceOpeningHours["oasis"]!["day2"]!,
+              sidePadding: true),
           const SizedBox(height: 10),
           textRowHeader(tr('info.openHours.information.title')),
           sideBySideTextRow(tr('info.openHours.information.day1'),
@@ -267,9 +159,15 @@ Widget _buildOpenHoursCard() {
               kServiceOpeningHours["information"]!["day3"]!,
               sidePadding: true),
           const SizedBox(height: 10),
-          textRowHeader(tr('info.openHours.bar.title')),
-          sideBySideTextRow(tr('info.openHours.bar.day1'),
-              kServiceOpeningHours["bar"]!["day1"]!,
+          textRowHeader(tr('info.openHours.coffeeCafe.title')),
+          sideBySideTextRow(tr('info.openHours.coffeeCafe.day1'),
+              kServiceOpeningHours["coffeeCafe"]!["day1"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.openHours.coffeeCafe.day2'),
+              kServiceOpeningHours["coffeeCafe"]!["day2"]!,
+              sidePadding: true),
+          sideBySideTextRow(tr('info.openHours.coffeeCafe.day3'),
+              kServiceOpeningHours["coffeeCafe"]!["day3"]!,
               sidePadding: true),
         ],
       ));
@@ -306,89 +204,18 @@ Widget _buildStoresCard() {
 }
 
 Widget _buildFastaWearCard() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.person),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: Text(
-            tr('info.fastaWear.title'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tr('info.fastaWear.text'),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
+  return textAndIconCard(
+    tr('info.fastaWear.title'),
+    Icons.person,
+    Text(tr('info.fastaWear.text'), style: kNormalTextStyle),
   );
 }
 
 Widget _buildLostFoundCard() {
-  return SizedBox(
-    width: double.infinity,
-    child: Card(
-      margin: kCardMargin,
-      elevation: 5,
-      child: Padding(
-        padding: kCardPadding,
-        child: ListTile(
-          trailing: const Icon(Icons.move_to_inbox),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-          title: Text(
-            tr('info.lostAndFound.title'),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-          subtitle: Container(
-            padding: const EdgeInsets.only(top: 2, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tr('info.lostAndFound.text'),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
+  return textAndIconCard(
+    tr('info.lostAndFound.title'),
+    Icons.move_to_inbox,
+    Text(tr('info.lostAndFound.text'), style: kNormalTextStyle),
   );
 }
 
@@ -399,7 +226,7 @@ Widget _buildTransportCard() {
       Column(
         children: [
           Text(tr('info.transportAndParking.text'), style: kNormalTextStyle),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           buildSideBySideTextWithUrlAction(tr('info.transportAndParking.taxi1'),
               kTaxi1PhoneNumber, Uri(scheme: 'tel', path: kTaxi1PhoneNumber)),
           const SizedBox(height: 20),
@@ -431,7 +258,7 @@ class InfoScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       _buildSafeFastavalCard(),
                       _buildWifiCard(),

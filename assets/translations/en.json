@@ -22,7 +22,7 @@
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "text": "Have you lost or found something?\nGo to The Information for help!",
+      "text": "Have you lost or found something? Go to The Information for help!",
       "title": "Lost & Found"
     },
     "openHours": {
@@ -86,7 +86,7 @@
     "transportAndParking": {
       "taxi1": "Hobro Taxi",
       "taxi2": "Kajs Taxi",
-      "text": "You can park at the school or sports center parking lot.\nHobro train station is approx. 2.5 km from Fastaval.",
+      "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.",
       "title": "Transportation & Parking"
     },
     "wifi": {

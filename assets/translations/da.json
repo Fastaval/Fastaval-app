@@ -22,7 +22,7 @@
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
-      "text": "Har du mistet eller fundet noget?\nGå til Informationen for at få hjælp!",
+      "text": "Har du mistet eller fundet noget? Gå til Informationen for at få hjælp!",
       "title": "Glemte Sager"
     },
     "openHours": {
@@ -86,7 +86,7 @@
     "transportAndParking": {
       "taxi1": "Kajs Taxi",
       "taxi2": "Hobro Taxa",
-      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\nHobro togstation er ca. 2,5km fra Fastaval.",
+      "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.",
       "title": "Transport & Parkering"
     },
     "wifi": {
