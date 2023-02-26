@@ -1,10 +1,141 @@
 {
   "app": {
-    "title": "Fastaval App"
+    "title": "Fastaval"
   },
   "appbar": {
     "barcode": {
-      "show": "Show barcode"
+      "show": "Display barcode"
+    },
+    "map": {
+      "noMapAvailable": "There is no map available right now"
     }
+  },
+  "bottomNavigation": {
+    "information": "Information",
+    "login": "Log in",
+    "profil": "Profile",
+    "program": "Program"
+  },
+  "info": {
+    "fastaWear": {
+      "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.\n\nThis year, all registered participants will receive a name tag. It can be collected in the Information during Fastaval.",
+      "title": "Fasta-Wear"
+    },
+    "lostAndFound": {
+      "text": "Have you lost or found something?\nGo to The Information for help!",
+      "title": "Lost & Found"
+    },
+    "openHours": {
+      "bar": {
+        "day1": "Wed-Sun",
+        "title": "The Bar"
+      },
+      "boardGames": {
+        "day1": "Wed-Sat",
+        "day2": "Sunday",
+        "title": "The Board Game Café"
+      },
+      "coffeeCafe": {
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "day3": "Sun",
+        "title": "Otto's Coffee Inn"
+      },
+      "information": {
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "day3": "Sunday",
+        "title": "The Information"
+      },
+      "kiosk": {
+        "day1": "Wed-Sat",
+        "day2": "Sunday",
+        "title": "The Kiosk"
+      },
+      "oasis": {
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "title": "The Oasis"
+      },
+      "title": "Opening Hours"
+    },
+    "safe": {
+      "dutyGeneral": "General on duty",
+      "heroForce": "Hero Force",
+      "safetyHost": "Safety host",
+      "safetyMail": "Safety mail",
+      "title": "Safe Fastaval"
+    },
+    "stores": {
+      "store1": {
+        "day1": {
+          "text": "Wednesday:",
+          "value": "at 16:00 - 23:00"
+        },
+        "day2": {
+          "text": "Thu-Sat:",
+          "value": "at 10:00 - 23:00"
+        },
+        "day3": {
+          "text": "Sunday:",
+          "value": "at 10:00 - 15:00"
+        },
+        "title": "Epic Panda in B45"
+      },
+      "store2": {
+        "day1": {
+          "text": "Wed-Sun:",
+          "value": "at 10:00 - 22:00"
+        },
+        "title": "Tier1MTG in A07"
+      },
+      "store3": {
+        "day1": {
+          "text": "Fri-Sun:",
+          "value": "at 10:00 - 16:00"
+        },
+        "title": "Corra Design in the common area"
+      },
+      "title": "Shops"
+    },
+    "transportAndParking": {
+      "taxi1": "Hobro Taxi",
+      "taxi2": "Kajs Taxi",
+      "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
+      "title": "Transportation & Parking"
+    },
+    "wifi": {
+      "networkCode": "Code",
+      "networkName": "Network",
+      "networkUser": "User name",
+      "title": "WiFi"
+    }
+  },
+  "login": {
+    "enterParticipantNumber": "Enter participant number",
+    "enterPassword": "Enter password",
+    "forgotPassword": "Forgot password?",
+    "participantNumber": "Participant number",
+    "password": "Password",
+    "rememberMe": "Remember my login",
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  },
+  "profile": {
+    "foodTimes": "Food Times",
+    "messagesFromFastaval": "Messages From Fastaval",
+    "noMessagesRightNow": "Fastaval has no messages from you right now",
+    "participantNumber": "Participant number",
+    "what": "What",
+    "when": "When",
+    "where": "Where",
+    "yourProgram": "Your Program"
+  },
+  "program": {
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun",
+    "thursday": "Thu",
+    "wednesday": "Wed"
   }
 }

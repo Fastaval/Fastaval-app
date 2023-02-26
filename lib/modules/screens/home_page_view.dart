@@ -12,42 +12,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
 
-List<BottomNavigationBarItem> loggedInBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.person,
-      ),
-      label: 'Profil'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
-];
-
-List<BottomNavigationBarItem> notLoggedInNavBars = [
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.login,
-      ),
-      label: 'Login'),
-  const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.info,
-      ),
-      label: 'Information'),
-  const BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_view_day), label: 'Program'),
-];
-
 class HomePageState extends State<HomePageView> {
   UserService userService = UserService();
-  late User user;
-  int _currentIndex = 1;
-
+  late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
+  late User? _user;
   bool _loggedIn = false;
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +25,8 @@ class HomePageState extends State<HomePageView> {
       onNotification: (notification) {
         setState(() {
           _loggedIn = notification.loggedIn;
-          user = notification.user;
+          _user = notification.user;
+          _bottomNavList = _bottomNavItems();
         });
         return false;
       },
@@ -63,7 +34,7 @@ class HomePageState extends State<HomePageView> {
         appBar: AppBar(
           title: Text(
             tr('app.title'),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             Row(
@@ -86,8 +57,8 @@ class HomePageState extends State<HomePageView> {
                                       child: RotatedBox(
                                         quarterTurns: 1,
                                         child: BarcodeWidget(
-                                          barcode: Barcode
-                                              .ean8(), // Barcode type and settings
+                                          barcode: Barcode.ean8(),
+                                          // Barcode type and settings
                                           data: user.barcode.toString(),
                                         ),
                                       ),
@@ -103,44 +74,58 @@ class HomePageState extends State<HomePageView> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Fluttertoast.showToast(msg: 'No map for you');
+                    Fluttertoast.showToast(
+                        msg: tr('appbar.map.noMapAvailable'));
                   },
                 ),
               ],
             ),
           ],
         ),
-        body: _loggedIn
-            ? loggedInWidgets()[_currentIndex]
-            : notLoggedInWidgets()[_currentIndex],
+        body: _screens()[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: onTabTapped,
-          items: _loggedIn ? loggedInBars : notLoggedInNavBars,
+          items: _bottomNavList,
         ),
       ),
     );
   }
 
   @override
-  void initState() {
+  initState() {
     super.initState();
+    _fetchUser();
   }
 
-  List<Widget> loggedInWidgets() {
-    return <Widget>[
-      ProfileScreen(
-        appUser: user,
-      ),
-      const InfoScreen(),
-      const Programscreen(),
+  List<BottomNavigationBarItem> _bottomNavItems() {
+    return <BottomNavigationBarItem>[
+      _loggedIn
+          ? BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: tr('bottomNavigation.profil'))
+          : BottomNavigationBarItem(
+              icon: const Icon(
+                Icons.login,
+              ),
+              label: tr('bottomNavigation.login')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: tr('bottomNavigation.information')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.calendar_view_day),
+          label: tr('bottomNavigation.program'))
     ];
   }
 
-  List<Widget> notLoggedInWidgets() {
+  List<Widget> _screens() {
     return <Widget>[
-      LoginScreen(this),
+      _loggedIn && _user != null
+          ? ProfileScreen(
+              appUser: _user!,
+            )
+          : LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -149,6 +134,16 @@ class HomePageState extends State<HomePageView> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+    });
+  }
+
+  Future _fetchUser() async {
+    await userService
+        .getUser()
+        .then((newUser) => {_user = newUser, _loggedIn = true});
+
+    setState(() {
+      _bottomNavList = _bottomNavItems();
     });
   }
 }

@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/styleconstants.dart';
+import 'package:fastaval_app/modules/notifications/login_notification.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
 Widget buildThreeSideBySideTexts(String left, String center, String right) {
   return Row(
@@ -106,12 +108,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Center(
                       child: Column(
                         children: <Widget>[
-                          const SizedBox(height: 40.0),
+                          const SizedBox(height: 10.0),
                           buildIdIcon(),
                           buildUserMessages(),
                           buildUserProgram(),
                           if (widget.appUser.food!.isNotEmpty) buildFoodTimes(),
-                          const SizedBox(height: 80.0),
+                          const SizedBox(height: 30.0),
+                          buildLogoutBtn(),
+                          const SizedBox(height: 30.0),
                         ],
                       ),
                     )),
@@ -123,30 +127,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildFoodTimes() => SizedBox(
-        width: double.infinity,
-        child: Card(
-          margin: kCardMargin,
-          elevation: 5,
-          child: Padding(
-            padding: kCardPadding,
-            child: ListTile(
-              trailing: const Icon(Icons.fastfood),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: const Text(
-                'Mad tider',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
+  Widget buildFoodTimes() {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        margin: kCardMargin,
+        elevation: 5,
+        child: Padding(
+          padding: kCardPadding,
+          child: ListTile(
+            trailing: const Icon(Icons.fastfood),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            title: Text(
+              tr('profile.foodTimes'),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
               ),
-              subtitle: buildUserFood(widget.appUser.food!),
             ),
+            subtitle: buildUserFood(widget.appUser.food!),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Widget buildIdIcon() {
     return Column(
@@ -167,9 +173,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        const Text(
-          'Deltager nummer',
-          style: TextStyle(
+        Text(
+          tr('profile.participantNumber'),
+          style: const TextStyle(
             color: Colors.white,
             fontFamily: 'OpenSans',
             fontSize: 20.0,
@@ -180,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildUserFood(List food) {
+  Widget buildUserFood(List food) {
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 10),
       child: SafeArea(
@@ -244,9 +250,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: ListTile(
             trailing: const Icon(Icons.speaker_notes),
             contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-            title: const Text(
-              'Beskeder Fra Fastaval',
-              style: TextStyle(
+            title: Text(
+              tr('profile.messagesFromFastaval'),
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -288,32 +294,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildUserProgram() => SizedBox(
-        child: Card(
-          margin: kCardMargin,
-          elevation: 5,
-          child: Padding(
-            padding: kCardPadding,
-            child: ListTile(
-              trailing: const Icon(Icons.calendar_view_day),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              title: const Text(
-                'Dit Program',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
+  Widget buildUserProgram() {
+    return SizedBox(
+      child: Card(
+        margin: kCardMargin,
+        elevation: 5,
+        child: Padding(
+          padding: kCardPadding,
+          child: ListTile(
+            trailing: const Icon(Icons.calendar_view_day),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            title: Text(
+              tr('profile.yourProgram'),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
               ),
-              subtitle: Container(
-                padding: const EdgeInsets.only(top: 2, left: 10),
-                child: buildUsersProgram(widget.appUser.scheduling!),
-              ),
+            ),
+            subtitle: Container(
+              padding: const EdgeInsets.only(top: 2, left: 10),
+              child: buildUsersProgram(widget.appUser.scheduling!),
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Widget buildUsersProgram(List<Scheduling> schedule) {
     initializeDateFormatting('da_DK', null);
@@ -324,7 +332,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(
             height: 10,
           ),
-          buildThreeSideBySideTexts('Hvornår', 'Hvad', 'Hvor'),
+          buildThreeSideBySideTexts(
+              tr('profile.when'), tr('profile.what'), tr('profile.where')),
           const Divider(
             height: 10,
             thickness: 2,
@@ -347,10 +356,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   String messagesFromFastaval() {
-    if (widget.appUser.messages == '') {
-      return 'Fastaval har ingen beskeder til dig i nu';
-    } else {
-      return widget.appUser.messages!;
-    }
+    return widget.appUser.messages ?? tr('profile.noMessagesRightNow');
+  }
+
+  Widget buildLogoutBtn() {
+    return Padding(
+        padding: const EdgeInsets.all(40),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            onPressed: () => {
+              UserService().removeUser(),
+              LoginNotification(loggedIn: false, user: null).dispatch(context)
+            },
+            child: Text(
+              tr('login.signOut'),
+              style: const TextStyle(
+                color: Colors.deepOrange,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+          ),
+        ));
   }
 }

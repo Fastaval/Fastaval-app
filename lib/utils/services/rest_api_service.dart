@@ -24,21 +24,16 @@ Future<Program> fetchProgram() async {
   }
 }
 
-Future<User> login(String userId, String password) async {
-  final UserService userService = UserService();
-
+Future<User> checkUserLogin(String userId, String password) async {
   var url = Uri.parse('$baseUrl/v3/user/$userId?pass=$password');
   final response = await http.get(url);
   inspect(response);
 
   if (response.statusCode == 200) {
     var user = User.fromJson(jsonDecode(response.body));
-
-    userService.setUser(user);
-
     return user;
   } else {
     throw Exception('Failed to load login');
-    //TODO:fix fejl
+    //TODO: Vis fejl hvis login fejler
   }
 }
