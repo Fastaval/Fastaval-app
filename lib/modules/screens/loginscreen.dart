@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
   /* TODO: Reenable when we know how this works
   Widget _buildForgotPasswordBtn() {
     return Container();
-    
+
      return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: kLabelStyle,
         ),
       ),
-    ); 
+    );
   }*/
 
   Widget _buildLoginBtn() {

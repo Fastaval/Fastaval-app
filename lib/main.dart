@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'firebase_options.dart';
 import 'modules/screens/home_page_view.dart';
@@ -20,8 +20,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -30,7 +28,6 @@ void main() async {
   print(fcmToken);
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
   NotificationSettings settings = await firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
