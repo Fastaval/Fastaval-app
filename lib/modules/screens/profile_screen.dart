@@ -20,9 +20,9 @@ Widget buildThreeSideBySideTexts(String left, String center, String right) {
         child: Text(left, textAlign: TextAlign.center, style: kNormalTextStyle),
       ),
       Expanded(
-          flex: 5,
-          child:
-              Text(center, textAlign: TextAlign.left, style: kNormalTextStyle)),
+        flex: 5,
+        child: Text(center, textAlign: TextAlign.left, style: kNormalTextStyle),
+      ),
       Expanded(
         flex: 4,
         child: Text(right,
@@ -86,10 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
+          decoration:
+              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
             widget.appUser.id.toString(),
             textAlign: TextAlign.center,
@@ -130,8 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     initializeDateFormatting('da_DK', null);
 
     return Column(
-      children: <Widget>[
-        const SizedBox(height: 10),
+      children: [
         buildThreeSideBySideTexts(
             tr('profile.when'), tr('profile.what'), tr('profile.where')),
         const Divider(height: 10, thickness: 2),
