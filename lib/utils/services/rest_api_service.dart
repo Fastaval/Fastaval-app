@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
-import '../../config/models/program.dart';
-import '../../config/models/user.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/config/models/program.dart';
+import 'package:fastaval_app/config/models/user.dart';
 
 const String baseUrl = 'https://infosys-test.fastaval.dk/api';
 
