@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: fastaBoxDecoration,
+                decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
                 height: double.infinity,
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: passwordController,
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: userIdController,

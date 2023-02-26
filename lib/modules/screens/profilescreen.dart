@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: fastaBoxDecoration,
+                decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
                 height: double.infinity,
