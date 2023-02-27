@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatefulWidget {
   final User appUser;
+
   const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
 
   @override
@@ -60,40 +61,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildFoodListRows(List<Food>? food) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Column(
-          children: [
-            ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: food!.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 10);
-                },
-                itemBuilder: (context, index) {
-                  Food item = food[index];
-                  return Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                            '${formatTime(item.time)} - ${formatTime(item.timeEnd)}',
-                            style: kNormalTextStyle),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Text(
-                            context.locale.toString() == 'en'
-                                ? item.titleEn!
-                                : item.titleDa!,
-                            style: kNormalTextStyle),
-                      ),
-                    ],
-                  );
-                })
-          ],
-        ));
+    return Column(children: [
+      ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: food!.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(height: 10);
+          },
+          itemBuilder: (context, index) {
+            Food item = food[index];
+            return Row(
+              children: <Widget>[
+                Expanded(flex: 2, child: Text(formatDay(item.time, context), style: kNormalTextBoldStyle)),
+                Expanded(
+                  flex: 7,
+                  child: Text('${formatTime(item.time)} - ${formatTime(item.timeEnd)}', style: kNormalTextStyle),
+                ),
+                Expanded(
+                  flex: 10,
+                  child:
+                      Text(context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!, style: kNormalTextStyle),
+                ),
+              ],
+            );
+          })
+    ]);
   }
 
   Widget buildIdIcon() {
@@ -101,26 +94,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration:
-              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
             widget.appUser.id.toString(),
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 58,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
+            style: const TextStyle(fontSize: 58, fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
           ),
         ),
         Text(
           tr('profile.participantNumber'),
-          style: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
+          style:
+              const TextStyle(color: Colors.white, fontFamily: 'OpenSans', fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -132,48 +116,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () => {
-              UserService().removeUser(),
-              LoginNotification(loggedIn: false, user: null).dispatch(context)
-            },
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
+            onPressed: () =>
+                {UserService().removeUser(), LoginNotification(loggedIn: false, user: null).dispatch(context)},
             child: Text(
               tr('login.signOut'),
               style: const TextStyle(
-                color: Colors.deepOrange,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
+                  color: Colors.deepOrange,
+                  letterSpacing: 1.5,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans'),
             ),
           ),
         ));
   }
 
   Widget buildUserFoodTimesCard() {
-    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        buildFoodListRows(widget.appUser.food));
+    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood, buildFoodListRows(widget.appUser.food));
   }
 
   Widget buildUserMessagesCard() {
-    return textAndIconCard(
-        tr('profile.messagesFromFastaval'),
-        Icons.speaker_notes,
-        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'),
-            style: kNormalTextStyle));
+    return textAndIconCard(tr('profile.messagesFromFastaval'), Icons.speaker_notes,
+        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'), style: kNormalTextStyle));
   }
 
   Widget buildUserProgramCard() {
-    return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
-        buildUsersProgram(widget.appUser.scheduling!, context));
+    return textAndIconCard(
+        tr('profile.yourProgram'), Icons.date_range, buildUsersProgram(widget.appUser.scheduling!, context));
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
-    //initializeDateFormatting('da_DK', null);
-
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -188,24 +161,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget userProgramItem(Scheduling item) {
-    var title =
-        context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
+    var title = context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
 
     return Column(children: [
       Row(children: [
-        Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
-            style: kNormalTextBoldStyle),
-        Expanded(
-            child: Text(" @ $room",
-                style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
+        Text("${formatDay(item.start, context)} ${formatTime(item.start)}", style: kNormalTextBoldStyle),
+        Expanded(child: Text(" @ $room", style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
       ]),
       Row(children: [oneTextRow(title, sidePadding: true)])
     ]);
-
-/*     return threeSideBySideTextRow(
-        "${formatDay(item.start, context)} ${formatTime(item.start)}",
-        title,
-        room); */
   }
 }
