@@ -9,28 +9,6 @@ import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
-Widget buildThreeSideBySideTexts(String left, String center, String right) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Expanded(
-        flex: 2,
-        child: Text(left, textAlign: TextAlign.center, style: kNormalTextStyle),
-      ),
-      Expanded(
-        flex: 5,
-        child: Text(center, textAlign: TextAlign.left, style: kNormalTextStyle),
-      ),
-      Expanded(
-        flex: 4,
-        child: Text(right,
-            textAlign: TextAlign.right, style: kNormalTextStyle, maxLines: 4),
-      ),
-    ],
-  );
-}
 
 class ProfileScreen extends StatefulWidget {
   final User appUser;
@@ -81,99 +59,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildIdIcon() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration:
-              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: Text(
-            widget.appUser.id.toString(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 58,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-          ),
-        ),
-        Text(
-          tr('profile.participantNumber'),
-          style: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildUserMessagesCard() {
-    return textAndIconCard(
-        tr('profile.messagesFromFastaval'),
-        Icons.speaker_notes,
-        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'),
-            style: kNormalTextStyle));
-  }
-
-  Widget buildUserProgramCard() {
-    return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
-        buildUsersProgram(widget.appUser.scheduling!, context));
-  }
-
-  Widget buildUsersProgram(List<Scheduling> schedule, context) {
-    initializeDateFormatting('da_DK', null);
-
-    return Column(
-      children: [
-        buildThreeSideBySideTexts(
-            tr('profile.when'), tr('profile.what'), tr('profile.where')),
-        const Divider(height: 10, thickness: 2),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: schedule.length,
-          separatorBuilder: (context, int index) {
-            return const SizedBox(height: 10);
-          },
-          itemBuilder: (buildContext, index) {
-            Scheduling item = schedule[index];
-            return buildUserProgramRow(item);
-          },
-        )
-      ],
-    );
-  }
-
-  Widget buildUserProgramRow(Scheduling item) {
-    var title =
-        context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
-    var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
-
-    return buildThreeSideBySideTexts(
-        "${formatDay(item.start, context)} ${formatTime(item.start)}",
-        title,
-        room);
-  }
-
-  Widget buildUserFoodTimesCard() {
-    return SizedBox(
-        width: double.infinity,
-        child: Card(
-            margin: kCardMargin,
-            elevation: kCardElevation,
-            child: Column(children: [
-              ListTile(
-                trailing: const Icon(Icons.fastfood),
-                title: Text(tr('profile.foodTimes'), style: kCardHeaderStyle),
-              ),
-              buildFoodListRows(widget.appUser.food)
-            ])));
-  }
-
   Widget buildFoodListRows(List<Food>? food) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -211,6 +96,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ));
   }
 
+  Widget buildIdIcon() {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration:
+              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          child: Text(
+            widget.appUser.id.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 58,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+        Text(
+          tr('profile.participantNumber'),
+          style: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'OpenSans',
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget buildLogoutButton() {
     return Padding(
         padding: const EdgeInsets.all(40),
@@ -236,5 +151,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ));
+  }
+
+  Widget buildUserFoodTimesCard() {
+    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
+        buildFoodListRows(widget.appUser.food));
+  }
+
+  Widget buildUserMessagesCard() {
+    return textAndIconCard(
+        tr('profile.messagesFromFastaval'),
+        Icons.speaker_notes,
+        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'),
+            style: kNormalTextStyle));
+  }
+
+  Widget buildUserProgramCard() {
+    return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
+        buildUsersProgram(widget.appUser.scheduling!, context));
+  }
+
+  Widget buildUsersProgram(List<Scheduling> schedule, context) {
+    //initializeDateFormatting('da_DK', null);
+
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: schedule.length,
+      separatorBuilder: (context, int index) {
+        return const SizedBox(height: 10);
+      },
+      itemBuilder: (buildContext, index) {
+        return userProgramItem(schedule[index]);
+      },
+    );
+  }
+
+  Widget userProgramItem(Scheduling item) {
+    var title =
+        context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
+    var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
+
+    return Column(children: [
+      Row(children: [
+        Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
+            style: kNormalTextBoldStyle),
+        Expanded(
+            child: Text(" @ $room",
+                style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
+      ]),
+      Row(children: [oneTextRow(title, sidePadding: true)])
+    ]);
+
+/*     return threeSideBySideTextRow(
+        "${formatDay(item.start, context)} ${formatTime(item.start)}",
+        title,
+        room); */
   }
 }

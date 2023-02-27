@@ -99,6 +99,12 @@ class HomePageState extends State<HomePageView> {
     _fetchUser();
   }
 
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
       _loggedIn
@@ -119,6 +125,16 @@ class HomePageState extends State<HomePageView> {
     ];
   }
 
+  Future _fetchUser() async {
+    await userService
+        .getUser()
+        .then((newUser) => {_user = newUser, _loggedIn = true});
+
+    setState(() {
+      _bottomNavList = _bottomNavItems();
+    });
+  }
+
   List<Widget> _screens() {
     return <Widget>[
       _loggedIn && _user != null
@@ -129,22 +145,6 @@ class HomePageState extends State<HomePageView> {
       const InfoScreen(),
       const Programscreen(),
     ];
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  Future _fetchUser() async {
-    await userService
-        .getUser()
-        .then((newUser) => {_user = newUser, _loggedIn = true});
-
-    setState(() {
-      _bottomNavList = _bottomNavItems();
-    });
   }
 }
 
