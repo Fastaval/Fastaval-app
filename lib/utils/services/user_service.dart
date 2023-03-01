@@ -29,6 +29,8 @@ class UserService {
   removeUser() {
     storageService.deleteString(kUserKey);
   }
+
+  setFCMToken(String token) {}
 }
 
 Future<User> checkUserLogin(String userId, String password) async {
@@ -41,6 +43,25 @@ Future<User> checkUserLogin(String userId, String password) async {
     return User.fromJson(jsonDecode(response.body));
   }
 
+  throw Exception('Failed to load login');
+  //TODO: Vis fejl hvis login fejler
+}
+
+Future sendFCMTokenToInfosys(String userId, String token) async {
+  var response = await http.post(Uri.parse('$baseUrl/v3/user/$userId/register'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'gcm_id': token,
+      }));
+
+  inspect(response);
+
+  if (response.statusCode == 200) {
+    print(response);
+    return;
+  }
   throw Exception('Failed to load login');
   //TODO: Vis fejl hvis login fejler
 }

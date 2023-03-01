@@ -21,8 +21,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await EasyLocalization.ensureInitialized();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print(fcmToken);
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   NotificationSettings settings = await firebaseMessaging.requestPermission(
