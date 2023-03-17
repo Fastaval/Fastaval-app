@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'constants/app_constants.dart';
 import 'firebase_options.dart';
@@ -16,8 +15,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
 }
 
 void main() async {
@@ -52,36 +49,4 @@ class MyApp extends StatelessWidget {
       home: const HomePageView(),
     );
   }
-}
-
-Future<void> sendFCMTokenToInfosys(String userId) async {
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await firebaseMessaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  print('User granted permission: ${settings.authorizationStatus}');
-  var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'gcm_id': fcmToken!,
-      }));
-
-  inspect(response);
-
-  if (response.statusCode == 200) {
-    print(response.body);
-    return;
-  }
-  throw Exception('Failed to register app with infosys');
-  //TODO: Vis fejl hvis registering ikke lykkesede
 }
