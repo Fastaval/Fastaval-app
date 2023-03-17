@@ -6,10 +6,11 @@ import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../notifications/login_notification.dart';
 
 class HomePageState extends State<HomePageView> {
@@ -18,6 +19,37 @@ class HomePageState extends State<HomePageView> {
   late User? _user;
   bool _loggedIn = false;
   int _currentIndex = 1;
+
+  init() async {
+    String deviceToken = await getDeviceToken();
+    print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
+    print(deviceToken);
+    print("############################################################");
+
+    // listen for user to click on notification
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
+      String? title = remoteMessage.notification!.title;
+      String? description = remoteMessage.notification!.body;
+
+      //im gonna have an alertdialog when clicking from push notification
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: title, // title from push notification data
+        desc: description, // description from push notifcation data
+        buttons: [
+          DialogButton(
+            child: Text(
+              "COOL",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +177,15 @@ class HomePageState extends State<HomePageView> {
       const InfoScreen(),
       const Programscreen(),
     ];
+  }
+
+  //get device token to use for push notification
+  Future getDeviceToken() async {
+    //request user permission for push notification
+    FirebaseMessaging.instance.requestPermission();
+    FirebaseMessaging _firebaseMessage = FirebaseMessaging.instance;
+    String? deviceToken = await _firebaseMessage.getToken();
+    return (deviceToken == null) ? "" : deviceToken;
   }
 }
 
