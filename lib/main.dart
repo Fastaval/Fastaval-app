@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'constants/app_constants.dart';
 import 'firebase_options.dart';
 import 'modules/screens/home_page.dart';
 
@@ -22,17 +27,16 @@ void main() async {
   );
   await EasyLocalization.ensureInitialized();
 
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await firebaseMessaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  print('User granted permission: ${settings.authorizationStatus}');
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  });
+
+  sendFCMTokenToInfosys("1");
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(
     EasyLocalization(
@@ -58,4 +62,36 @@ class MyApp extends StatelessWidget {
       home: const HomePageView(),
     );
   }
+}
+
+Future<void> sendFCMTokenToInfosys(String userId) async {
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await firebaseMessaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  print('User granted permission: ${settings.authorizationStatus}');
+  var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'gcm_id': fcmToken!,
+      }));
+
+  inspect(response);
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    return;
+  }
+  throw Exception('Failed to register app with infosys');
+  //TODO: Vis fejl hvis registering ikke lykkesede
 }

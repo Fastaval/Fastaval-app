@@ -29,8 +29,6 @@ class UserService {
   removeUser() {
     storageService.deleteString(kUserKey);
   }
-
-  setFCMToken(String token) {}
 }
 
 Future<User> checkUserLogin(String userId, String password) async {
