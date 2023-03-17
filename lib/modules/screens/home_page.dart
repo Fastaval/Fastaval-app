@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
 import '../notifications/login_notification.dart';
 
 class HomePageState extends State<HomePageView> {
@@ -39,12 +40,12 @@ class HomePageState extends State<HomePageView> {
         desc: description, // description from push notifcation data
         buttons: [
           DialogButton(
-            child: Text(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child: const Text(
               "COOL",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            onPressed: () => Navigator.pop(context),
-            width: 120,
           )
         ],
       ).show();
