@@ -1,4 +1,4 @@
-const baseUrl = 'https://infosys-test.fastaval.dk/api';
+const baseUrl = 'https://infosys.fastaval.dk/api';
 
 const kWifiNetworkName = 'Undervisning';
 const kWifiUser = 'mfg-guest@mf-gym.dk';

@@ -220,14 +220,14 @@ class _LoginScreenState extends State<LoginScreen> {
             content: Text(description, textScaleFactor: 1),
             actions: <Widget>[
               TextButton(
+                  child: Text(tr('login.alert.dialogNo')),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              ElevatedButton(
                   child: Text(tr('login.alert.dialogYes')),
                   onPressed: () {
                     sendFCMTokenToInfosys(user.id!);
-                    Navigator.of(context).pop();
-                  }),
-              TextButton(
-                  child: Text(tr('login.alert.dialogNo')),
-                  onPressed: () {
                     Navigator.of(context).pop();
                   }),
             ],

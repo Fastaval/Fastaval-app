@@ -107,7 +107,7 @@
     "signOut": "Log ud",
     "alert": {
       "title": "Beskeder fra Fastaval",
-      "description": "Du kan få kun få notifikationer fra Fastaval via APP eller SMS, ikke begge dele. Ønsker du at få det via APP?",
+      "description": "Du kan kun få notifikationer fra Fastaval via APP eller SMS, ikke begge dele. Ønsker du at få det via APP?",
       "dialogYes": "Ja tak, via APP",
       "dialogNo": "Nej tak, via SMS"
     }
