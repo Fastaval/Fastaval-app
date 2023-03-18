@@ -10,7 +10,7 @@ import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:fastaval_app/constants/style_constants.dart';
 import '../notifications/login_notification.dart';
 
 class HomePageState extends State<HomePageView> {
@@ -19,6 +19,15 @@ class HomePageState extends State<HomePageView> {
   late User? _user;
   bool _loggedIn = false;
   int _currentIndex = 1;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState!.openEndDrawer();
+  }
+
+  void _closeDrawer() {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,64 +41,15 @@ class HomePageState extends State<HomePageView> {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            tr('app.title'),
-            style: const TextStyle(color: Colors.white),
-          ),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (_loggedIn)
-                  IconButton(
-                    icon: const Icon(
-                      CupertinoIcons.barcode,
-                      color: Colors.white,
-                    ),
-                    tooltip: tr('appbar.barcode.show'),
-                    onPressed: () {
-                      userService.getUser().then((user) => {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Center(
-                                      child: RotatedBox(
-                                        quarterTurns: 1,
-                                        child: BarcodeWidget(
-                                          barcode: Barcode.ean8(),
-                                          // Barcode type and settings
-                                          data: user.barcode.toString(),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                })
-                          });
-                    },
-                  ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.map,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Fluttertoast.showToast(
-                        msg: tr('appbar.map.noMapAvailable'));
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-        body: _screens()[_currentIndex],
+        key: _scaffoldKey,
+        body: SafeArea(child: _screens()[_currentIndex]),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           items: _bottomNavList,
         ),
+        endDrawer: drawMenu(context),
       ),
     );
   }
@@ -102,6 +62,11 @@ class HomePageState extends State<HomePageView> {
   }
 
   void onTabTapped(int index) {
+    if (index == 3) {
+      print('menue');
+      _openDrawer();
+      return;
+    }
     setState(() {
       _currentIndex = index;
     });
@@ -123,7 +88,9 @@ class HomePageState extends State<HomePageView> {
           label: tr('bottomNavigation.information')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.calendar_view_day),
-          label: tr('bottomNavigation.program'))
+          label: tr('bottomNavigation.program')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.menu'))
     ];
   }
 
@@ -147,6 +114,128 @@ class HomePageState extends State<HomePageView> {
       const InfoScreen(),
       const Programscreen(),
     ];
+  }
+
+  Drawer drawMenu(BuildContext context) {
+    return Drawer(
+      elevation: 10.0,
+      child: ListView(
+        children: <Widget>[
+          DrawerHeader(
+            decoration: backgroundBoxDecorationStyle,
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    buildIdIcon(),
+                    Row(
+                      children: [
+                        if (_loggedIn)
+                          IconButton(
+                            icon: const Icon(
+                              CupertinoIcons.barcode,
+                              color: Colors.white,
+                            ),
+                            tooltip: tr('appbar.barcode.show'),
+                            onPressed: () {
+                              userService
+                                  .getUser()
+                                  .then((user) => {barcode(context, user)});
+                            },
+                          ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.map,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                                msg: tr('appbar.map.noMapAvailable'));
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          //Here you place your menu items
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text(tr('bottomNavigation.profil'),
+                style: TextStyle(fontSize: 18)),
+            onTap: () {
+              // Here you can give your route to navigate
+            },
+          ),
+          Divider(height: 3.0),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings', style: TextStyle(fontSize: 18)),
+            onTap: () {
+              // Here you can give your route to navigate
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.close),
+            title: Text('Close Drawer', style: TextStyle(fontSize: 18)),
+            onTap: () {
+              // Here you can give your route to navigate
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<dynamic> barcode(BuildContext context, User user) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Center(
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: BarcodeWidget(
+                  barcode: Barcode.ean8(),
+                  // Barcode type and settings
+                  data: user.barcode.toString(),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget buildIdIcon() {
+    String text;
+    if (_loggedIn) {
+      text = _user!.id.toString();
+    } else {
+      text = "";
+    }
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration:
+              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontSize: 58,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans'),
+          ),
+        ),
+      ],
+    );
   }
 }
 
