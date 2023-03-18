@@ -1,30 +1,9 @@
-import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/activity_item.dart';
 import 'package:fastaval_app/config/models/activity_run.dart';
+import 'package:fastaval_app/utils/services/activities_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-const String baseUrl = 'https://infosys-test.fastaval.dk/api';
-
-Future<List<ActivityItem>> getDay(String isoDate) async {
-  var url = Uri.parse('$baseUrl/app/v3/activities/$isoDate');
-
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    return (jsonDecode(response.body) as List)
-        .map((item) => ActivityItem.fromJson(item))
-        .toList();
-  } else {
-    throw Exception('Failed to download programs');
-  }
-}
-
-DateTime unixtodatetime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
-}
 
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
@@ -50,6 +29,7 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
+            //TODO: make it so days are pulled from api
             buildday("2023-04-05"),
             buildday("2023-04-06"),
             buildday("2023-04-07"),
@@ -70,7 +50,10 @@ class _ProgramscreenState extends State<Programscreen> {
         if (activity.type != 'system') {
           activityMap.putIfAbsent(activity.id, () => activity);
           for (ActivityRun run in activity.runs) {
-            if (unixtodatetime(run.start).toString().substring(0, 10) == day) {
+            if (formatTimestampToDateTime(run.start)
+                    .toString()
+                    .substring(0, 10) ==
+                day) {
               runlist.add(run);
             }
           }
@@ -97,33 +80,42 @@ class _ProgramscreenState extends State<Programscreen> {
                 itemBuilder: (context, index) {
                   ActivityRun item = runlist[index];
 
-                  return Container(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            //when
-                            timeBox(
-                                timestamp: unixtodatetime(item.start),
-                                color:
-                                    colorMap[activityMap[item.activity]!.type]
-                                        as Color),
-                            const Padding(padding: EdgeInsets.only(left: 20)),
+                  return InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              //when
+                              timeBox(
+                                  timestamp:
+                                      formatTimestampToDateTime(item.start),
+                                  color:
+                                      colorMap[activityMap[item.activity]!.type]
+                                          as Color),
+                              const Padding(padding: EdgeInsets.only(left: 20)),
 
-                            //what
-                            Flexible(
-                                child: Text(
-                              context.locale.toString() == 'en'
-                                  ? activityMap[item.activity]!.enTitle
-                                  : activityMap[item.activity]!.daTitle,
-                              style: const TextStyle(fontSize: 18),
-                            )),
-                          ],
-                        ),
-                        const Padding(padding: EdgeInsets.only(bottom: 10))
-                      ],
+                              //what
+                              Flexible(
+                                  child: Text(
+                                context.locale.toString() == 'en'
+                                    ? activityMap[item.activity]!.enTitle
+                                    : activityMap[item.activity]!.daTitle,
+                                style: const TextStyle(fontSize: 18),
+                              )),
+                            ],
+                          ),
+                          const Padding(padding: EdgeInsets.only(bottom: 10))
+                        ],
+                      ),
                     ),
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: activtyDialog,
+                        routeSettings: RouteSettings(
+                          arguments: activityMap[item.activity],
+                        )),
                   );
                 },
               )),
@@ -145,4 +137,15 @@ class _ProgramscreenState extends State<Programscreen> {
           style: const TextStyle(fontSize: 18),
         ),
       );
+
+  Widget activtyDialog(BuildContext context) {
+    final activity = ModalRoute.of(context)!.settings.arguments as ActivityItem;
+
+    return AlertDialog(
+      content: Text(
+        context.locale.toString() == 'en' ? activity.enTitle : activity.daTitle,
+        style: const TextStyle(fontSize: 18),
+      ),
+    );
+  }
 }

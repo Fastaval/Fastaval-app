@@ -12,7 +12,7 @@
   },
   "bottomNavigation": {
     "information": "Information",
-    "login": "Log in",
+    "login": "Sign in",
     "profil": "Profile",
     "program": "Program"
   },
@@ -68,32 +68,17 @@
     },
     "stores": {
       "store1": {
-        "day1": {
-          "text": "Wednesday:",
-          "value": "at 16:00 - 23:00"
-        },
-        "day2": {
-          "text": "Thu-Sat:",
-          "value": "at 10:00 - 23:00"
-        },
-        "day3": {
-          "text": "Sunday:",
-          "value": "at 10:00 - 15:00"
-        },
+        "day1": "Wednesday",
+        "day2": "Thu-Sat",
+        "day3": "Sunday",
         "title": "Epic Panda in B45"
       },
       "store2": {
-        "day1": {
-          "text": "Wed-Sun:",
-          "value": "at 10:00 - 22:00"
-        },
+        "day1": "Wed-Sun",
         "title": "Tier1MTG in A07"
       },
       "store3": {
-        "day1": {
-          "text": "Fri-Sun:",
-          "value": "at 10:00 - 16:00"
-        },
+        "day1": "Fri-Sun",
         "title": "Corra Design in the common area"
       },
       "title": "Shops"
@@ -101,7 +86,7 @@
     "transportAndParking": {
       "taxi1": "Hobro Taxi",
       "taxi2": "Kajs Taxi",
-      "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.\n",
+      "text": "You can park at the school or sports center parking lot.\n\nHobro train station is approx. 2.5 km from Fastaval.",
       "title": "Transportation & Parking"
     },
     "wifi": {
@@ -119,7 +104,13 @@
     "password": "Password",
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "alert": {
+      "title": "Messages from Fastaval",
+      "description": "You can only get notifications from Fastaval via APP or SMS, not both. Do you want to get it via APP?",
+      "dialogYes": "Yes please, via APP",
+      "dialogNo": "No thanks, via SMS"
+    }
   },
   "profile": {
     "foodTimes": "Food Times",
