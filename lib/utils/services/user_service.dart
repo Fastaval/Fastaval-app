@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fastaval_app/constants/app_constants.dart';
+import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
+
+final String baseUrl = ConfigService().getUrlFromConfig();
 
 class UserService {
   static const String kUserKey = 'USER_KEY';

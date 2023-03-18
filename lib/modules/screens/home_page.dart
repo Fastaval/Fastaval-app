@@ -5,6 +5,7 @@ import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
+import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,9 @@ class HomePageState extends State<HomePageView> {
 
   @override
   initState() {
-    super.initState();
+    ConfigService().initConfig();
     _fetchUser();
+    super.initState();
   }
 
   void onTabTapped(int index) {
