@@ -80,34 +80,42 @@ class _ProgramscreenState extends State<Programscreen> {
                 itemBuilder: (context, index) {
                   ActivityRun item = runlist[index];
 
-                  return Container(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            //when
-                            timeBox(
-                                timestamp:
-                                    formatTimestampToDateTime(item.start),
-                                color:
-                                    colorMap[activityMap[item.activity]!.type]
-                                        as Color),
-                            const Padding(padding: EdgeInsets.only(left: 20)),
+                  return InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              //when
+                              timeBox(
+                                  timestamp:
+                                      formatTimestampToDateTime(item.start),
+                                  color:
+                                      colorMap[activityMap[item.activity]!.type]
+                                          as Color),
+                              const Padding(padding: EdgeInsets.only(left: 20)),
 
-                            //what
-                            Flexible(
-                                child: Text(
-                              context.locale.toString() == 'en'
-                                  ? activityMap[item.activity]!.enTitle
-                                  : activityMap[item.activity]!.daTitle,
-                              style: const TextStyle(fontSize: 18),
-                            )),
-                          ],
-                        ),
-                        const Padding(padding: EdgeInsets.only(bottom: 10))
-                      ],
+                              //what
+                              Flexible(
+                                  child: Text(
+                                context.locale.toString() == 'en'
+                                    ? activityMap[item.activity]!.enTitle
+                                    : activityMap[item.activity]!.daTitle,
+                                style: const TextStyle(fontSize: 18),
+                              )),
+                            ],
+                          ),
+                          const Padding(padding: EdgeInsets.only(bottom: 10))
+                        ],
+                      ),
                     ),
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: activtyDialog,
+                        routeSettings: RouteSettings(
+                          arguments: activityMap[item.activity],
+                        )),
                   );
                 },
               )),
@@ -129,4 +137,15 @@ class _ProgramscreenState extends State<Programscreen> {
           style: const TextStyle(fontSize: 18),
         ),
       );
+
+  Widget activtyDialog(BuildContext context) {
+    final activity = ModalRoute.of(context)!.settings.arguments as ActivityItem;
+
+    return AlertDialog(
+      content: Text(
+        context.locale.toString() == 'en' ? activity.enTitle : activity.daTitle,
+        style: const TextStyle(fontSize: 18),
+      ),
+    );
+  }
 }

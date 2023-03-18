@@ -104,7 +104,13 @@
     "password": "Password",
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "alert": {
+      "title": "Messages from Fastaval",
+      "description": "You can only get notifications from Fastaval via APP or SMS, not both. Do you want to get it via APP?",
+      "dialogYes": "Yes please, via APP",
+      "dialogNo": "No thanks, via SMS"
+    }
   },
   "profile": {
     "foodTimes": "Food Times",
