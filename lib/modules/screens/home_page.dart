@@ -6,7 +6,6 @@ import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

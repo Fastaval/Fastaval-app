@@ -29,7 +29,6 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
-            //TODO: make it so days are pulled from api
             buildday("2023-04-05"),
             buildday("2023-04-06"),
             buildday("2023-04-07"),

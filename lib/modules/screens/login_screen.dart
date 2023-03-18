@@ -99,22 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
     ]);
   }
 
-  /* TODO: Reenable when we know how this works
-  Widget _buildForgotPasswordBtn() {
-    return Container();
-
-     return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        child: Text(
-          tr('login.forgotPassword'),
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }*/
-
   Widget _buildLoginButton() {
     return SizedBox(
       width: double.infinity,

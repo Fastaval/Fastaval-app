@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
@@ -12,9 +11,10 @@ import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/notifications/login_notification.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
   final User appUser;
@@ -263,7 +263,7 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
 Future<String> getDeviceToken() async {
   //request user permission for push notification
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await firebaseMessaging.requestPermission(
+  await firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
