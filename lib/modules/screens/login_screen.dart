@@ -7,6 +7,7 @@ import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/home_page.dart';
+import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -194,6 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> sendFCMTokenToInfosys(int userId) async {
     String token = await getDeviceToken();
+    final String baseUrl = ConfigService().getUrlFromConfig();
     var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
         body: jsonEncode({'gcm_id': token}));
