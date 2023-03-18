@@ -1,18 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/home_page.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 import '../notifications/login_notification.dart';
 
@@ -118,8 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (_rememberMe == true) {
                         UserService().setUser(user);
                       }
-
-                      registerAppToInfosys(user);
+                      UserService().registerToInfosys(context, user);
 
                       LoginNotification(loggedIn: true, user: user)
                           .dispatch(context);
@@ -191,66 +183,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
     );
-  }
-
-  Future<void> sendFCMTokenToInfosys(int userId) async {
-    String token = await getDeviceToken();
-    final String baseUrl = ConfigService().getUrlFromConfig();
-    var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
-        headers: {'Content-Type': 'application/json; charset=UTF-8'},
-        body: jsonEncode({'gcm_id': token}));
-
-    inspect(response);
-
-    if (response.statusCode == 200) {
-      print(response.body);
-      return;
-    }
-    throw Exception('Failed to register app with infosys');
-    //TODO: Vis fejl hvis registering ikke lykkesede
-  }
-
-  Future<void> registerAppToInfosys(User user) async {
-    String? title = tr('login.alert.title');
-    String? description = tr('login.alert.description');
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title, textScaleFactor: 1),
-            content: Text(description, textScaleFactor: 1),
-            actions: <Widget>[
-              TextButton(
-                  child: Text(tr('login.alert.dialogNo')),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-              ElevatedButton(
-                  child: Text(tr('login.alert.dialogYes')),
-                  onPressed: () {
-                    sendFCMTokenToInfosys(user.id!);
-                    Navigator.of(context).pop();
-                  }),
-            ],
-          );
-        });
-  }
-
-  //get device token to use for push notification
-  Future<String> getDeviceToken() async {
-    //request user permission for push notification
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    await firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    String? deviceToken = await firebaseMessaging.getToken();
-    return (deviceToken == null) ? "" : deviceToken;
   }
 }
