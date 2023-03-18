@@ -1,6 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/user.dart';
+import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
@@ -10,11 +11,10 @@ import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fastaval_app/constants/style_constants.dart';
+
 import '../notifications/login_notification.dart';
 
 class HomePageState extends State<HomePageView> {
-  UserService userService = UserService();
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   bool _loggedIn = false;
@@ -23,10 +23,6 @@ class HomePageState extends State<HomePageView> {
 
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
-  }
-
-  void _closeDrawer() {
-    Navigator.of(context).pop();
   }
 
   @override
@@ -63,7 +59,6 @@ class HomePageState extends State<HomePageView> {
 
   void onTabTapped(int index) {
     if (index == 3) {
-      print('menue');
       _openDrawer();
       return;
     }
@@ -79,9 +74,7 @@ class HomePageState extends State<HomePageView> {
               icon: const Icon(Icons.person),
               label: tr('bottomNavigation.profil'))
           : BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.login,
-              ),
+              icon: const Icon(Icons.login),
               label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.info),
@@ -90,12 +83,12 @@ class HomePageState extends State<HomePageView> {
           icon: const Icon(Icons.calendar_view_day),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.menu'))
+          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.more'))
     ];
   }
 
   Future _fetchUser() async {
-    await userService
+    await UserService()
         .getUser()
         .then((newUser) => {_user = newUser, _loggedIn = true});
 
@@ -123,7 +116,7 @@ class HomePageState extends State<HomePageView> {
         children: <Widget>[
           DrawerHeader(
             decoration: backgroundBoxDecorationStyle,
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -140,7 +133,7 @@ class HomePageState extends State<HomePageView> {
                             ),
                             tooltip: tr('appbar.barcode.show'),
                             onPressed: () {
-                              userService
+                              UserService()
                                   .getUser()
                                   .then((user) => {barcode(context, user)});
                             },
@@ -165,24 +158,24 @@ class HomePageState extends State<HomePageView> {
 
           //Here you place your menu items
           ListTile(
-            leading: Icon(Icons.person),
+            leading: const Icon(Icons.person),
             title: Text(tr('bottomNavigation.profil'),
-                style: TextStyle(fontSize: 18)),
+                style: const TextStyle(fontSize: 18)),
             onTap: () {
               // Here you can give your route to navigate
             },
           ),
-          Divider(height: 3.0),
+          const Divider(height: 3.0),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings', style: TextStyle(fontSize: 18)),
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings', style: TextStyle(fontSize: 18)),
             onTap: () {
               // Here you can give your route to navigate
             },
           ),
           ListTile(
-            leading: Icon(Icons.close),
-            title: Text('Close Drawer', style: TextStyle(fontSize: 18)),
+            leading: const Icon(Icons.close),
+            title: const Text('Close Drawer', style: TextStyle(fontSize: 18)),
             onTap: () {
               // Here you can give your route to navigate
               Navigator.of(context).pop();

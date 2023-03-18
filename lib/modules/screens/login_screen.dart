@@ -106,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
         onPressed: () =>
-            checkUserLogin(userIdController.text, passwordController.text)
-                .then((user) => scheduleMicrotask(() async {
+            fetchUser(userIdController.text, passwordController.text)
+                .then((user) => scheduleMicrotask(() {
                       if (_rememberMe == true) {
                         UserService().setUser(user);
                       }

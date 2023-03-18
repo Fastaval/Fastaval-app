@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
@@ -20,6 +22,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late Future<List<String>> futureNumbersList;
+
   @override
   Widget build(context) {
     return Scaffold(
@@ -35,24 +39,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(height: 10.0),
-                          buildIdIcon(),
-                          buildUserMessagesCard(),
-                          buildUserProgramCard(),
-                          buildUserFoodTimesCard(),
-                          const SizedBox(height: 30.0),
-                          buildLogoutButton(),
-                          const SizedBox(height: 30.0),
-                        ],
-                      ),
-                    )),
-              )
+                  height: double.infinity,
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      //await Future.delayed(Duration(milliseconds: 1500));
+                      await UserService().refreshUser();
+                    },
+                    child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: Center(
+                          child: Column(
+                            children: <Widget>[
+                              const SizedBox(height: 10.0),
+                              buildIdIcon(),
+                              buildUserMessagesCard(),
+                              buildUserProgramCard(),
+                              if (widget.appUser.food!.isNotEmpty)
+                                buildUserFoodTimesCard(),
+                              const SizedBox(height: 30.0),
+                              buildLogoutButton(),
+                              const SizedBox(height: 30.0),
+                            ],
+                          ),
+                        )),
+                  ))
             ],
           ),
         ),
@@ -157,11 +167,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserMessagesCard() {
-    return textAndIconCard(
-        tr('profile.messagesFromFastaval'),
-        Icons.speaker_notes,
-        Text(widget.appUser.messages ?? tr('profile.noMessagesRightNow'),
-            style: kNormalTextStyle));
+    String message = tr('profile.noMessagesRightNow');
+    if (widget.appUser.messages!.isNotEmpty) message = widget.appUser.messages!;
+    return textAndIconCard(tr('profile.messagesFromFastaval'),
+        Icons.speaker_notes, Text(message, style: kNormalTextStyle));
   }
 
   Widget buildUserProgramCard() {
@@ -199,4 +208,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Row(children: [oneTextRow(title, sidePadding: true)])
     ]);
   }
+}
+
+class NumberGenerator {
+  Future<List<String>> slowNumbers() async {
+    return Future.delayed(
+      const Duration(milliseconds: 1000),
+      () => numbers,
+    );
+  }
+
+  List<String> get numbers => List.generate(5, (index) => number);
+
+  String get number => Random().nextInt(99999).toString();
 }

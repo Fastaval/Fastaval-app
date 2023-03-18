@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
@@ -11,7 +10,7 @@ import 'package:http/http.dart' as http;
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
 
-final String baseUrl = ConfigService().getUrlFromConfig();
+final String baseUrl = ConfigService().getRemoteConfig('API');
 
 class UserService {
   static const String kUserKey = 'USER_KEY';
@@ -29,6 +28,10 @@ class UserService {
   setUser(User user) {
     String userString = jsonEncode(user);
     storageService.setString(kUserKey, userString);
+  }
+
+  refreshUser() {
+    print('refreshing user');
   }
 
   removeUser() {
@@ -67,11 +70,9 @@ Future<void> registerAppToInfosys(BuildContext context, User user) async {
       });
 }
 
-Future<User> checkUserLogin(String userId, String password) async {
+Future<User> fetchUser(String userId, String password) async {
   var response =
       await http.get(Uri.parse('$baseUrl/v3/user/$userId?pass=$password'));
-
-  inspect(response);
 
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
@@ -87,19 +88,13 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode({'gcm_id': token}));
 
-  inspect(response);
-
-  if (response.statusCode == 200) {
-    print(response.body);
-    return;
+  if (response.statusCode != 200) {
+    throw Exception('Failed to register app with infosys');
+    //TODO: Vis fejl hvis registering ikke lykkesede
   }
-  throw Exception('Failed to register app with infosys');
-  //TODO: Vis fejl hvis registering ikke lykkesede
 }
 
-//get device token to use for push notification
 Future<String> getDeviceToken() async {
-  //request user permission for push notification
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   await firebaseMessaging.requestPermission(
     alert: true,

@@ -12,6 +12,10 @@ A Flutter project for Alea's Fastaval
 | `flutter build appbundle --no-tree-shake-icons --release` | Builds a release bundle of android                     |
 | `flutter build ipa`                                       | Builds a release file for iOS                          |
 
+## Deploy to iOS
+
+When you want to deploy the app, build it using the above command, open the app "Transporter" and upload it through there.
+
 ## Flutter Documentation
 
 For help getting started with Flutter, view our [online documentation](https://flutter.dev/docs),
