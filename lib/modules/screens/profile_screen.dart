@@ -28,6 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(context) {
+    Future.delayed(Duration.zero, () => registerAppToInfosys());
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -206,51 +207,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
-  Future<Alert> registerAppToInfosys() async {
+  Future<void> registerAppToInfosys() async {
     String? title = tr('profile.messagesFromFastaval');
     String? description = tr('profile.messagesFromFastaval');
-    return Alert(
-      context: context,
-      type: AlertType.error,
-      title: title, // title from push notification data
-      desc: description, // description from push notifcation data
-      buttons: [
-        DialogButton(
-          onPressed: () => () {
-            Navigator.pop(context);
-            sendFCMTokenToInfosys("1");
-          },
-          width: 120,
-          child: const Text(
-            "COOL",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ],
-    );
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title, textScaleFactor: 5),
+            content: Text(description, textScaleFactor: 5),
+            actions: <Widget>[
+              TextButton(
+                  child: Text(tr("profile.yesNotifications")),
+                  onPressed: () {
+                    sendFCMTokenToInfosys(getCurentUserId()!);
+                    Navigator.of(context).pop();
+                  }),
+              TextButton(
+                  child: Text(tr("profile.noNotifications")),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        });
+  }
+
+  int? getCurentUserId() {
+    return widget.appUser.id;
   }
 }
 
-Future<void> sendFCMTokenToInfosys(String userId) async {
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await firebaseMessaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  print('User granted permission: ${settings.authorizationStatus}');
+Future<void> sendFCMTokenToInfosys(int userId) async {
+  String token = await getDeviceToken();
   var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'gcm_id': fcmToken!,
+        'gcm_id': token,
       }));
 
   inspect(response);
@@ -261,4 +257,21 @@ Future<void> sendFCMTokenToInfosys(String userId) async {
   }
   throw Exception('Failed to register app with infosys');
   //TODO: Vis fejl hvis registering ikke lykkesede
+}
+
+//get device token to use for push notification
+Future<String> getDeviceToken() async {
+  //request user permission for push notification
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await firebaseMessaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  String? deviceToken = await firebaseMessaging.getToken();
+  return (deviceToken == null) ? "" : deviceToken;
 }
