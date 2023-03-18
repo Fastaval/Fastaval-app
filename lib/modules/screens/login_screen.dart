@@ -195,12 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> sendFCMTokenToInfosys(int userId) async {
     String token = await getDeviceToken();
     var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'gcm_id': token,
-        }));
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: jsonEncode({'gcm_id': token}));
 
     inspect(response);
 
@@ -213,24 +209,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> registerAppToInfosys(User user) async {
-    String? title = tr('profile.messagesFromFastaval');
-    String? description = tr('profile.messagesFromFastaval');
+    String? title = tr('login.alert.title');
+    String? description = tr('login.alert.description');
     return showDialog<void>(
         context: context,
-        barrierDismissible: false, // user must tap button!
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(title, textScaleFactor: 5),
-            content: Text(description, textScaleFactor: 5),
+            title: Text(title, textScaleFactor: 1),
+            content: Text(description, textScaleFactor: 1),
             actions: <Widget>[
               TextButton(
-                  child: Text(tr("profile.yesNotifications")),
+                  child: Text(tr('login.alert.dialogYes')),
                   onPressed: () {
                     sendFCMTokenToInfosys(user.id!);
                     Navigator.of(context).pop();
                   }),
               TextButton(
-                  child: Text(tr("profile.noNotifications")),
+                  child: Text(tr('login.alert.dialogNo')),
                   onPressed: () {
                     Navigator.of(context).pop();
                   }),
