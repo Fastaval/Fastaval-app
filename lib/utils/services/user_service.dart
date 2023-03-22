@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/utils/dialogs/customTrackingDialog.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -43,32 +44,30 @@ class UserService {
   }
 }
 
-Future<void> registerAppToInfosys(BuildContext context, User user) async {
-  String? title = tr('login.alert.title');
-  String? description = tr('login.alert.description');
-  return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title, textScaleFactor: 1),
-          content: Text(description, textScaleFactor: 1),
-          actions: <Widget>[
-            TextButton(
-                child: Text(tr('login.alert.dialogNo')),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-            ElevatedButton(
-                child: Text(tr('login.alert.dialogYes')),
-                onPressed: () {
-                  sendFCMTokenToInfosys(user.id!);
-                  Navigator.of(context).pop();
-                }),
-          ],
-        );
-      });
-}
+Future<void> registerAppToInfosys(BuildContext context, User user) async =>
+    await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(tr('login.alert.title')),
+            content: Text(tr('login.alert.description')),
+            actions: <Widget>[
+              TextButton(
+                  child: Text(tr('login.alert.dialogNo')),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              ElevatedButton(
+                  child: Text(tr('login.alert.dialogYes')),
+                  onPressed: () {
+                    sendFCMTokenToInfosys(user.id!);
+                    askForTrackingPermission(context);
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        });
 
 Future<User> fetchUser(String userId, String password) async {
   var response =

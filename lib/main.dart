@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     return MaterialApp(
       onGenerateTitle: (context) => tr('app.title'),
       localizationsDelegates: context.localizationDelegates,

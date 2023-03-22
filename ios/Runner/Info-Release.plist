@@ -38,6 +38,8 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized messages to you.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
