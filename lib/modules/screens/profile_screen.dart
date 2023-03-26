@@ -162,8 +162,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserFoodTimesCard() {
-    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        buildFoodListRows(widget.appUser.food));
+    return (Column(children: [
+      ListTile(
+          title: Text(tr('profile.foodTimes'),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+              ))),
+      Card(
+          margin: kCardMargin,
+          elevation: kCardElevation,
+          child: Column(children: [
+            Row(children: const [
+              Expanded(
+                  child:
+                      Padding(padding: kCardContentPadding, child: Text('Hej')))
+            ])
+          ]))
+    ]));
+
+    /* return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
+        buildFoodListRows(widget.appUser.food)); */
   }
 
   Widget buildUserMessagesCard() {
