@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
@@ -129,8 +128,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserFoodTimesCard() {
-    return textAndIconCard(
-        tr('profile.foodTimes'), Icons.fastfood, Text('hej'));
+    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
+        foodTickets(widget.user.food ?? []));
   }
 
   Widget buildUserMessagesCard() {
@@ -175,36 +174,111 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
+  Widget foodTickets(List<Food> food) {
+    food[1].received = 1;
+    food[0].received = 1;
+
+    return Column(
+      children: [
+        Text(
+          tr('program.explainer'),
+          style: kNormalTextSubdued,
+        ),
+        const SizedBox(height: 10),
+        for (var item in food)
+          Card(
+              color: getBackgroundColor(item),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                child: Row(children: [
+                  Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                        Text(
+                            context.locale.toString() == 'en'
+                                ? item.titleEn
+                                : item.titleDa,
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextBoldStyle),
+                        Text(
+                            "${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextSubdued),
+                      ])),
+                  InkWell(
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: foodDialog,
+                        routeSettings: RouteSettings(arguments: item)),
+                    child: Row(
+                      children: [
+                        Text('Madbillet',
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextStyle),
+                        const SizedBox(width: 5),
+                        Icon(
+                          Icons.info_outline,
+                          color: item.received == 1
+                              ? Colors.black26
+                              : Colors.black87,
+                        )
+                      ],
+                    ),
+                  )
+                ]),
+              ))
+      ],
+    );
+  }
+
   getFoodImage(Food item) {
-    if (item.titleEn!.contains('Dinner')) {
+    if (item.titleEn.contains('Dinner')) {
       return 'assets/images/dinner.jpg';
     }
-    if (item.titleEn!.contains('Breakfast')) {
+    if (item.titleEn.contains('Breakfast')) {
       return 'assets/images/breakfast.jpg';
     }
     return 'assets/images/lunch.jpg';
   }
 
   Color getBackgroundColor(Food item) {
-    if (item.titleEn!.contains('Dinner')) {
-      return const Color(0xFFFFE8D1);
-    }
-    if (item.titleEn!.contains('Breakfast')) {
-      return const Color(0xFFEFB695);
-    }
+    if (item.received == 1) return const Color(0xFFDFE0DF);
+    if (item.titleEn.contains('Dinner')) return const Color(0xFF00BBE2);
+    if (item.titleEn.contains('Breakfast')) return const Color(0xFF00D3B3);
     return const Color(0xFF63BAAB);
   }
-}
 
-class NumberGenerator {
-  Future<List<String>> slowNumbers() async {
-    return Future.delayed(
-      const Duration(milliseconds: 1000),
-      () => numbers,
+  Widget foodDialog(BuildContext context) {
+    final item = ModalRoute.of(context)!.settings.arguments as Food;
+
+    return AlertDialog(
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(tr('common.close')))
+      ],
+      titlePadding: const EdgeInsets.all(0),
+      title: Column(children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+            image: DecorationImage(
+                image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
+          ),
+          height: 100,
+        ),
+        const SizedBox(height: 5),
+        Text(context.locale.toString() == 'en' ? item.titleEn : item.titleDa)
+      ]),
+      content: Text(
+        item.textDa,
+        style: kNormalTextStyle,
+      ),
     );
   }
-
-  List<String> get numbers => List.generate(5, (index) => number);
-
-  String get number => Random().nextInt(99999).toString();
 }

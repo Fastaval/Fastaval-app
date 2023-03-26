@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Luk"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -124,10 +127,11 @@
     "yourProgram": "Dit Program"
   },
   "program": {
-    "friday": "Fre",
-    "saturday": "Lør",
-    "sunday": "Søn",
-    "thursday": "Tor",
-    "wednesday": "Ons"
+    "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
+    "friday": { "short": "Fre", "long": "Fredag" },
+    "saturday": { "short": "Lør", "long": "Lørdag" },
+    "sunday": { "short": "Søn", "long": "Søndag" },
+    "thursday": { "short": "Tor", "long": "Torsdag" },
+    "wednesday": { "short": "Ons", "long": "Onsdag" }
   }
 }

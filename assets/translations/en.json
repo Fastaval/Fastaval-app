@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Close"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -124,10 +127,11 @@
     "yourProgram": "Your Program"
   },
   "program": {
-    "friday": "Fri",
-    "saturday": "Sat",
-    "sunday": "Sun",
-    "thursday": "Thu",
-    "wednesday": "Wed"
+    "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
+    "friday": { "short": "Fri", "long": "Friday" },
+    "saturday": { "short": "Sat", "long": "Saturday" },
+    "sunday": { "short": "Sun", "long": "Sunday" },
+    "thursday": { "short": "Thu", "long": "Thursday" },
+    "wednesday": { "short": "Wed", "long": "Wednesday" }
   }
 }

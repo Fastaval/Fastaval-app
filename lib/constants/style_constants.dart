@@ -26,6 +26,10 @@ const kCardHeaderStyle = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     fontFamily: 'OpenSans');
+const kNormalTextSubdued =
+    TextStyle(color: Colors.black54, fontSize: 12, fontFamily: 'OpenSans');
+const kNormalTextDisabled =
+    TextStyle(color: Colors.black26, fontSize: 12, fontFamily: 'OpenSans');
 const backgroundBoxDecorationStyle = BoxDecoration(
   gradient: LinearGradient(
     begin: Alignment.topCenter,
