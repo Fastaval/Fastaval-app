@@ -108,12 +108,13 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () =>
             fetchUser(userIdController.text, passwordController.text)
                 .then((user) => scheduleMicrotask(() {
+                      user.password = passwordController.text;
                       if (_rememberMe == true) {
                         UserService().setUser(user);
                       }
                       UserService().registerToInfosys(context, user);
 
-                      LoginNotification(loggedIn: true, user: user)
+                      UserNotification(loggedIn: true, user: user)
                           .dispatch(context);
                     })),
         child: Text(

@@ -31,10 +31,6 @@ class UserService {
     storageService.setString(kUserKey, userString);
   }
 
-  refreshUser() {
-    print('refreshing user');
-  }
-
   removeUser() {
     storageService.deleteString(kUserKey);
   }

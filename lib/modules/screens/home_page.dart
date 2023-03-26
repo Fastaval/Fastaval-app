@@ -27,7 +27,7 @@ class HomePageState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<LoginNotification>(
+    return NotificationListener<UserNotification>(
       onNotification: (notification) {
         setState(() {
           _loggedIn = notification.loggedIn;
@@ -101,7 +101,7 @@ class HomePageState extends State<HomePageView> {
     return <Widget>[
       _loggedIn && _user != null
           ? ProfileScreen(
-              appUser: _user!,
+              user: _user!,
             )
           : LoginScreen(this),
       const InfoScreen(),

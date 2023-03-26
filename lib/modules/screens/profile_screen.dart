@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -13,9 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final User appUser;
+  final User user;
 
-  const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
+  const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -42,8 +43,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: double.infinity,
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      //await Future.delayed(Duration(milliseconds: 1500));
-                      await UserService().refreshUser();
+                      fetchUser(widget.user.id.toString(),
+                              widget.user.password.toString())
+                          .then((newUser) => scheduleMicrotask(() {
+                                UserNotification(loggedIn: true, user: newUser)
+                                    .dispatch(context);
+                              }));
                     },
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -53,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           buildIdIcon(),
                           buildUserMessagesCard(),
                           buildUserProgramCard(),
-                          if (widget.appUser.food!.isNotEmpty)
+                          if (widget.user.food!.isNotEmpty)
                             buildUserFoodTimesCard(),
                           const SizedBox(height: 30.0),
                           buildLogoutButton(),
@@ -69,58 +74,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildFoodListRows(List<Food>? food) {
-    return Column(children: [
-      ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: food!.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 10);
-          },
-          itemBuilder: (context, index) {
-            Food item = food[index];
-            return Card(
-                color: getBackgroundColor(item),
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                elevation: kCardElevation,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
-                            getFoodImage(item),
-                            height: 48.0,
-                            width: 48.0,
-                          ),
-                        )),
-                    Column(
-                      children: [
-                        Row(children: [
-                          Text(
-                            context.locale.toString() == 'en'
-                                ? item.titleEn!
-                                : item.titleDa!,
-                            style: TextStyle(backgroundColor: Colors.red),
-                          )
-                        ]),
-                        Row(children: const [
-                          Text(
-                            'test2',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(backgroundColor: Colors.red),
-                          )
-                        ])
-                      ],
-                    ),
-                  ],
-                ));
-          })
-    ]);
-  }
-
   Widget buildIdIcon() {
     return Column(
       children: [
@@ -129,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
-            widget.appUser.id.toString(),
+            widget.user.id.toString(),
             textAlign: TextAlign.center,
             style: const TextStyle(
                 fontSize: 58,
@@ -160,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     MaterialStateProperty.all<Color>(Colors.white)),
             onPressed: () => {
               UserService().removeUser(),
-              LoginNotification(loggedIn: false, user: null).dispatch(context)
+              UserNotification(loggedIn: false, user: null).dispatch(context)
             },
             child: Text(
               tr('login.signOut'),
@@ -176,32 +129,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserFoodTimesCard() {
-    return (Column(children: [
-      ListTile(
-          title: Text(tr('profile.foodTimes'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-              ))),
-      buildFoodListRows(widget.appUser.food)
-    ]));
-
-    /* return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        buildFoodListRows(widget.appUser.food)); */
+    return textAndIconCard(
+        tr('profile.foodTimes'), Icons.fastfood, Text('hej'));
   }
 
   Widget buildUserMessagesCard() {
     String message = tr('profile.noMessagesRightNow');
-    if (widget.appUser.messages!.isNotEmpty) message = widget.appUser.messages!;
+    if (widget.user.messages!.isNotEmpty) message = widget.user.messages!;
     return textAndIconCard(tr('profile.messagesFromFastaval'),
         Icons.speaker_notes, Text(message, style: kNormalTextStyle));
   }
 
   Widget buildUserProgramCard() {
     return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
-        buildUsersProgram(widget.appUser.scheduling!, context));
+        buildUsersProgram(widget.user.scheduling!, context));
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
@@ -234,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
-  String getFoodImage(Food item) {
+  getFoodImage(Food item) {
     if (item.titleEn!.contains('Dinner')) {
       return 'assets/images/dinner.jpg';
     }
