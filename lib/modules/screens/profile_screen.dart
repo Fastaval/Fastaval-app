@@ -46,22 +46,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       await UserService().refreshUser();
                     },
                     child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(height: 10.0),
-                              buildIdIcon(),
-                              buildUserMessagesCard(),
-                              buildUserProgramCard(),
-                              if (widget.appUser.food!.isNotEmpty)
-                                buildUserFoodTimesCard(),
-                              const SizedBox(height: 30.0),
-                              buildLogoutButton(),
-                              const SizedBox(height: 30.0),
-                            ],
-                          ),
-                        )),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 10.0),
+                          buildIdIcon(),
+                          buildUserMessagesCard(),
+                          buildUserProgramCard(),
+                          if (widget.appUser.food!.isNotEmpty)
+                            buildUserFoodTimesCard(),
+                          const SizedBox(height: 30.0),
+                          buildLogoutButton(),
+                          const SizedBox(height: 30.0),
+                        ],
+                      ),
+                    ),
                   ))
             ],
           ),
@@ -81,28 +80,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           itemBuilder: (context, index) {
             Food item = food[index];
-            return Row(
-              children: <Widget>[
-                Expanded(
-                    flex: 2,
-                    child: Text(formatDay(item.time, context),
-                        style: kNormalTextBoldStyle)),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                      '${formatTime(item.time)} - ${formatTime(item.timeEnd)}',
-                      style: kNormalTextStyle),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: Text(
-                      context.locale.toString() == 'en'
-                          ? item.titleEn!
-                          : item.titleDa!,
-                      style: kNormalTextStyle),
-                ),
-              ],
-            );
+            return Card(
+                color: getBackgroundColor(item),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                elevation: kCardElevation,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.network(
+                            getFoodImage(item),
+                            height: 48.0,
+                            width: 48.0,
+                          ),
+                        )),
+                    Column(
+                      children: [
+                        Row(children: [
+                          Text(
+                            context.locale.toString() == 'en'
+                                ? item.titleEn!
+                                : item.titleDa!,
+                            style: TextStyle(backgroundColor: Colors.red),
+                          )
+                        ]),
+                        Row(children: const [
+                          Text(
+                            'test2',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(backgroundColor: Colors.red),
+                          )
+                        ])
+                      ],
+                    ),
+                  ],
+                ));
           })
     ]);
   }
@@ -171,16 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontFamily: 'OpenSans',
                 fontWeight: FontWeight.bold,
               ))),
-      Card(
-          margin: kCardMargin,
-          elevation: kCardElevation,
-          child: Column(children: [
-            Row(children: const [
-              Expanded(
-                  child:
-                      Padding(padding: kCardContentPadding, child: Text('Hej')))
-            ])
-          ]))
+      buildFoodListRows(widget.appUser.food)
     ]));
 
     /* return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
@@ -222,12 +227,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Expanded(
-            child: Text(" @ $room",
-                style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
+        Text(" @ $room",
+            style: kNormalTextStyle, overflow: TextOverflow.ellipsis)
       ]),
       Row(children: [oneTextRow(title, sidePadding: true)])
     ]);
+  }
+
+  String getFoodImage(Food item) {
+    if (item.titleEn!.contains('Dinner')) {
+      return 'assets/images/dinner.jpg';
+    }
+    if (item.titleEn!.contains('Breakfast')) {
+      return 'assets/images/breakfast.jpg';
+    }
+    return 'assets/images/lunch.jpg';
+  }
+
+  Color getBackgroundColor(Food item) {
+    if (item.titleEn!.contains('Dinner')) {
+      return const Color(0xFFFFE8D1);
+    }
+    if (item.titleEn!.contains('Breakfast')) {
+      return const Color(0xFFEFB695);
+    }
+    return const Color(0xFF63BAAB);
   }
 }
 
