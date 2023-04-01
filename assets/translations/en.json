@@ -109,9 +109,9 @@
     "signOut": "Sign out",
     "alert": {
       "title": "Messages from Fastaval",
-      "description": "You can only get notifications from Fastaval via APP or SMS, not both. Do you want to get it via APP?",
-      "dialogYes": "Yes please, via APP",
-      "dialogNo": "No thanks, via SMS"
+      "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",
+      "dialogYes": "Yes please",
+      "dialogNo": "No thanks"
     }
   },
   "profile": {
@@ -127,7 +127,15 @@
     "handout": "Handed out",
     "foodHandedOut": "The food has been handed out",
     "foodTicket": "Meal ticket",
-    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr"
+    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
+    "activityType": {
+      "rolle": "Player",
+      "spilleder": "Game Master",
+      "gds": "Hefo Force",
+      "braet": "Boardgame",
+      "junior": "Junior",
+      "ottoviteter": ""
+    }
   },
   "program": {
     "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",

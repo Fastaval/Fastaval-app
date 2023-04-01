@@ -146,6 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
+    schedule[0].activityType = 'gds';
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -163,22 +164,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var title =
         context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
+    var activityType =
+        item.activityType != null && item.activityType != 'ottoviteter'
+            ? "${tr('profile.activityType.${item.activityType}')}: "
+            : '';
 
     return Column(children: [
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Text(" @ $room",
-            style: kNormalTextStyle, overflow: TextOverflow.ellipsis)
+        Text(" @ $room", style: kNormalTextSubdued)
       ]),
-      Row(children: [
-        Flexible(
-          child: Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(title, overflow: TextOverflow.ellipsis),
-          ),
-        ),
-      ])
+      Container(
+        padding: const EdgeInsets.only(left: 10),
+        child: Expanded(
+            child: Row(children: [
+          Text(activityType, style: kNormalTextBoldStyle),
+          Expanded(
+              child: Text(title,
+                  overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
+        ])),
+      ),
     ]);
   }
 

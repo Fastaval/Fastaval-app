@@ -109,9 +109,9 @@
     "signOut": "Log ud",
     "alert": {
       "title": "Beskeder fra Fastaval",
-      "description": "Du kan kun få notifikationer fra Fastaval via APP eller SMS, ikke begge dele. Ønsker du at få det via APP?",
-      "dialogYes": "Ja tak, via APP",
-      "dialogNo": "Nej tak, via SMS"
+      "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",
+      "dialogYes": "Ja tak",
+      "dialogNo": "Nej tak"
     }
   },
   "profile": {
@@ -127,7 +127,15 @@
     "handout": "Udleveres",
     "foodHandedOut": "Maden er udleveret",
     "foodTicket": "Madbillet",
-    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr"
+    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
+    "activityType": {
+      "rolle": "Spiller",
+      "spilleder": "Spilleder",
+      "gds": "Heltestyrke",
+      "braet": "Brætspil",
+      "junior": "Junior",
+      "ottoviteter": ""
+    }
   },
   "program": {
     "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",

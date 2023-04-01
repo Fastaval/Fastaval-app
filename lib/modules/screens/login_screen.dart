@@ -59,8 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 30.0),
                       _buildPasswordInput(),
                       // _buildForgotPasswordBtn(),
-                      const SizedBox(height: 10.0),
-                      _buildRememberMeCheckbox(),
                       const SizedBox(height: 30.0),
                       _buildLoginButton(),
                     ],
@@ -109,11 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
             fetchUser(userIdController.text, passwordController.text)
                 .then((user) => scheduleMicrotask(() {
                       user.password = passwordController.text;
-                      if (_rememberMe == true) {
-                        UserService().setUser(user);
-                      }
+                      UserService().setUser(user);
                       UserService().registerToInfosys(context, user);
-
                       UserNotification(loggedIn: true, user: user)
                           .dispatch(context);
                     })),

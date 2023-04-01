@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/utils/dialogs/customTrackingDialog.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -102,4 +102,13 @@ Future<String> getDeviceToken() async {
   );
   String? deviceToken = await firebaseMessaging.getToken();
   return (deviceToken == null) ? "" : deviceToken;
+}
+
+Future<void> askForTrackingPermission(BuildContext context) async {
+  final TrackingStatus status =
+      await AppTrackingTransparency.trackingAuthorizationStatus;
+  if (status == TrackingStatus.notDetermined) {
+    await Future.delayed(const Duration(milliseconds: 200));
+    await AppTrackingTransparency.requestTrackingAuthorization();
+  }
 }
