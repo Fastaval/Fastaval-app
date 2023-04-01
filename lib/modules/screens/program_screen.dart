@@ -20,11 +20,11 @@ class _ProgramscreenState extends State<Programscreen> {
       child: Scaffold(
         appBar: TabBar(
           tabs: [
-            Tab(text: tr('program.wednesday')),
-            Tab(text: tr('program.thursday')),
-            Tab(text: tr('program.friday')),
-            Tab(text: tr('program.saturday')),
-            Tab(text: tr('program.sunday')),
+            Tab(text: tr('program.wednesday.short')),
+            Tab(text: tr('program.thursday.short')),
+            Tab(text: tr('program.friday.short')),
+            Tab(text: tr('program.saturday.short')),
+            Tab(text: tr('program.sunday.short')),
           ],
         ),
         body: TabBarView(
