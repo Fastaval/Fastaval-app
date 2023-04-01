@@ -72,18 +72,16 @@
     },
     "stores": {
       "store1": {
-        "day1": "Onsdag",
-        "day2": "Tor-Lør",
-        "day3": "Søndag",
-        "title": "Epic Panda i B45"
+        "day1": "Ons-Søn",
+        "title": "Epic Panda @ B45"
       },
       "store2": {
         "day1": "Ons-Søn",
-        "title": "Tier1MTG i A07"
+        "title": "Bunkern Esbjerg @ Magic lokalet"
       },
       "store3": {
-        "day1": "Fre-Søn",
-        "title": "Corra Design i fællesområdet"
+        "day1": "Lørdag",
+        "title": "Artist Alley popup shops @ Fællesområdet"
       },
       "title": "Butikker"
     },

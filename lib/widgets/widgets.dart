@@ -24,9 +24,11 @@ Widget textAndIconCard(String title, IconData icon, content) {
 }
 
 Widget textRowHeader(String text) {
-  return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [Text(text, style: kNormalTextBoldStyle)]);
+  return Row(mainAxisSize: MainAxisSize.max, children: [
+    Expanded(
+        child: Text(text,
+            style: kNormalTextBoldStyle, overflow: TextOverflow.ellipsis))
+  ]);
 }
 
 Widget threeTextRow(String leftText, String centerText, String rightText) {

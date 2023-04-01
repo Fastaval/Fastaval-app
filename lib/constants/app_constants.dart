@@ -11,7 +11,7 @@ const kServiceOpeningHours = {
   "bar": {"day1": "17:00 - 02:00"},
   "boardGames": {"day1": "09:00 - 02:00", "day2": "09:00 - 15:00"},
   "coffeeCafe": {
-    "day1": "11:30 - 01:00",
+    "day1": "12:30 - 01:00",
     "day2": "09:00 - 01:00",
     "day3": "09:00 - 15:00"
   },
@@ -24,11 +24,7 @@ const kServiceOpeningHours = {
   "oasis": {"day1": "15:00 - 02:00", "day2": "12:00 - 02:00"},
 };
 const kStoreOpeningHours = {
-  "store1": {
-    "day1": "16:00 - 23:00",
-    "day2": "10:00 - 23:00",
-    "day3": "10:00 - 15:00"
-  },
+  "store1": {"day1": "10:00 - 00:00"},
   "store2": {"day1": "10:00 - 22:00"},
-  "store3": {"day1": "10:00 - 16:00"}
+  "store3": {"day1": "12:30 - 18:00"}
 };
