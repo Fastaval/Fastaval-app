@@ -8,7 +8,6 @@ import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -116,7 +115,7 @@ class HomePageState extends State<HomePageView> {
         children: <Widget>[
           DrawerHeader(
             decoration: backgroundBoxDecorationStyle,
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.all(0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -125,24 +124,8 @@ class HomePageState extends State<HomePageView> {
                     buildIdIcon(),
                     Row(
                       children: [
-                        if (_loggedIn)
-                          IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.barcode,
-                              color: Colors.white,
-                            ),
-                            tooltip: tr('appbar.barcode.show'),
-                            onPressed: () {
-                              UserService()
-                                  .getUser()
-                                  .then((user) => {barcode(context, user)});
-                            },
-                          ),
                         IconButton(
-                          icon: const Icon(
-                            Icons.map,
-                            color: Colors.white,
-                          ),
+                          icon: const Icon(Icons.map, color: Colors.white),
                           onPressed: () {
                             Fluttertoast.showToast(
                                 msg: tr('appbar.map.noMapAvailable'));
@@ -155,32 +138,21 @@ class HomePageState extends State<HomePageView> {
               ],
             ),
           ),
-
-          //Here you place your menu items
           ListTile(
-            leading: const Icon(Icons.person),
-            title: Text(tr('bottomNavigation.profil'),
-                style: const TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-            },
-          ),
+              leading: const Icon(Icons.mail),
+              title: Text(tr('drawer.messages'),
+                  style: const TextStyle(fontSize: 18))),
           const Divider(height: 3.0),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings', style: TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-            },
-          ),
+              leading: const Icon(Icons.settings),
+              title: Text(tr('drawer.settings'),
+                  style: const TextStyle(fontSize: 18))),
+          const SizedBox(height: 30),
           ListTile(
-            leading: const Icon(Icons.close),
-            title: const Text('Close Drawer', style: TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-              Navigator.of(context).pop();
-            },
-          ),
+              leading: const Icon(Icons.close),
+              title: Text(tr('drawer.close'),
+                  style: const TextStyle(fontSize: 18)),
+              onTap: () => Navigator.of(context).pop()),
         ],
       ),
     );
