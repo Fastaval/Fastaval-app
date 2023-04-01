@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
@@ -170,14 +171,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(" @ $room",
             style: kNormalTextStyle, overflow: TextOverflow.ellipsis)
       ]),
-      Row(children: [oneTextRow(title, sidePadding: true)])
+      Row(children: [
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(title, overflow: TextOverflow.ellipsis),
+          ),
+        ),
+      ])
     ]);
   }
 
   Widget foodTickets(List<Food> food) {
-    food[1].received = 1;
-    food[0].received = 1;
-
     return Column(
       children: [
         Text(
@@ -215,17 +220,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         routeSettings: RouteSettings(arguments: item)),
                     child: Row(
                       children: [
-                        Text('Madbillet',
+                        Text(tr('profile.foodTicket'),
                             style: item.received == 1
                                 ? kNormalTextDisabled
                                 : kNormalTextStyle),
                         const SizedBox(width: 5),
-                        Icon(
-                          Icons.info_outline,
-                          color: item.received == 1
-                              ? Colors.black26
-                              : Colors.black87,
-                        )
+                        Icon(Icons.info_outline,
+                            color: item.received == 1
+                                ? Colors.black26
+                                : Colors.black87)
                       ],
                     ),
                   )
@@ -254,31 +257,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget foodDialog(BuildContext context) {
     final item = ModalRoute.of(context)!.settings.arguments as Food;
+    bool foodAvailable = item.received == 1 ? false : true;
 
     return AlertDialog(
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(tr('common.close')))
-      ],
-      titlePadding: const EdgeInsets.all(0),
-      title: Column(children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(4), topRight: Radius.circular(4)),
-            image: DecorationImage(
-                image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
-          ),
-          height: 100,
-        ),
-        const SizedBox(height: 5),
-        Text(context.locale.toString() == 'en' ? item.titleEn : item.titleDa)
-      ]),
-      content: Text(
-        item.textDa,
-        style: kNormalTextStyle,
-      ),
-    );
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(tr('common.close')))
+        ],
+        titlePadding: const EdgeInsets.all(0),
+        title: Column(children: [
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                image: DecorationImage(
+                    image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
+              ),
+              height: 100),
+          const SizedBox(height: 5),
+          Text(context.locale.toString() == 'en' ? item.titleEn : item.titleDa)
+        ]),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          Text(context.locale.toString() == 'en' ? item.textEn : item.textDa,
+              style: kNormalTextStyle),
+          if (item.titleEn.contains('Breakfast'))
+            Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
+          const SizedBox(height: 10),
+          if (foodAvailable == false)
+            Text(tr('profile.foodHandedOut'), style: kNormalTextSubdued),
+          if (foodAvailable)
+            Text(
+                "${tr('profile.handout')}: ${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                style: kNormalTextSubdued),
+          if (foodAvailable) const SizedBox(height: 10),
+          if (foodAvailable)
+            BarcodeWidget(
+                barcode: Barcode.ean8(), data: widget.user.barcode.toString()),
+          if (foodAvailable) const SizedBox(height: 30),
+          if (foodAvailable)
+            Text(tr('profile.scanBarcode'), style: kNormalTextSubdued)
+        ]));
   }
 }

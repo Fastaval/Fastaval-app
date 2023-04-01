@@ -117,14 +117,19 @@
     }
   },
   "profile": {
-    "foodTimes": "Mad Tider",
+    "foodTimes": "Madtider",
     "messagesFromFastaval": "Beskeder Fra Fastaval",
     "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
     "participantNumber": "Deltager nummer",
     "what": "Hvad",
     "when": "Hvornår",
     "where": "Hvor",
-    "yourProgram": "Dit Program"
+    "yourProgram": "Dit Program",
+    "scanBarcode": "Vis stregkoden når du skal have udleveret mad",
+    "handout": "Udleveres",
+    "foodHandedOut": "Maden er udleveret",
+    "foodTicket": "Madbillet",
+    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr"
   },
   "program": {
     "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
