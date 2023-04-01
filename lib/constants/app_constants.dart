@@ -3,9 +3,9 @@ const kWifiUser = 'mfg-guest@mf-gym.dk';
 const kWifiPassword = 'Fjernvarme2022';
 const kTaxi1PhoneNumber = "+4598525354";
 const kTaxi2PhoneNumber = "+4598512300";
-const kHeroForcePhoneNumber = "+4561409263";
-const kDutyGeneralPhoneNumber = "+4561409065";
-const kSafetyHostPhoneNumber = "+4561409264";
+const kHeroForcePhoneNumber = "+4593899062";
+const kDutyGeneralPhoneNumber = "+4593899065";
+const kSafetyHostPhoneNumber = "+4593899064";
 const kSafeFastavalMail = "safe@fastaval.dk";
 const kServiceOpeningHours = {
   "bar": {"day1": "17:00 - 02:00"},
