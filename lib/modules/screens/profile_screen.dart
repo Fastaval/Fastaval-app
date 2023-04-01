@@ -185,10 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget foodTickets(List<Food> food) {
     return Column(
       children: [
-        Text(
-          tr('program.explainer'),
-          style: kNormalTextSubdued,
-        ),
+        Text(tr('program.explainer'), style: kNormalTextSubdued),
         const SizedBox(height: 10),
         for (var item in food)
           Card(
