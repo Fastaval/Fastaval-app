@@ -13,6 +13,11 @@
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
   },
+  "drawer": {
+    "settings": "Indstillinger",
+    "messages": "Beskeder",
+    "close": "Luk"
+  },
   "bottomNavigation": {
     "information": "Information",
     "login": "Log ind",

@@ -13,6 +13,11 @@
       "noMapAvailable": "There is no map available right now"
     }
   },
+  "drawer": {
+    "settings": "Settings",
+    "messages": "Messages",
+    "close": "Close"
+  },
   "bottomNavigation": {
     "information": "Information",
     "login": "Sign in",

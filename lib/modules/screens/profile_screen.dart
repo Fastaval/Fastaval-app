@@ -173,17 +173,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Text(" @ $room", style: kNormalTextSubdued)
+        Text(" @ $room", style: kNormalTextStyle)
       ]),
       Container(
         padding: const EdgeInsets.only(left: 10),
-        child: Expanded(
-            child: Row(children: [
+        child: Row(children: [
           Text(activityType, style: kNormalTextBoldStyle),
           Expanded(
               child: Text(title,
                   overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
-        ])),
+        ]),
       ),
     ]);
   }
