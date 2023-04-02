@@ -46,6 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fetchUser(widget.user.id.toString(),
                               widget.user.password.toString())
                           .then((newUser) => scheduleMicrotask(() {
+                                newUser.password =
+                                    widget.user.password.toString();
+
                                 UserNotification(loggedIn: true, user: newUser)
                                     .dispatch(context);
                               }));
@@ -146,7 +149,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
-    schedule[0].activityType = 'gds';
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -166,19 +168,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
     var activityType =
         item.activityType != null && item.activityType != 'ottoviteter'
-            ? "${tr('profile.activityType.${item.activityType}')}: "
+            ? "- ${tr('profile.activityType.${item.activityType}')}"
             : '';
 
     return Column(children: [
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Text(" @ $room", style: kNormalTextStyle)
+        Text(" @ $room $activityType", style: kNormalTextStyle)
       ]),
       Container(
         padding: const EdgeInsets.only(left: 10),
         child: Row(children: [
-          Text(activityType, style: kNormalTextBoldStyle),
           Expanded(
               child: Text(title,
                   overflow: TextOverflow.ellipsis, style: kNormalTextStyle))

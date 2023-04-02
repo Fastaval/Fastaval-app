@@ -136,10 +136,9 @@
     "activityType": {
       "rolle": "Player",
       "spilleder": "Game Master",
-      "gds": "Hefo Force",
+      "gds": "Hero Force",
       "braet": "Boardgame",
-      "junior": "Junior",
-      "ottoviteter": ""
+      "junior": "Junior"
     }
   },
   "program": {
