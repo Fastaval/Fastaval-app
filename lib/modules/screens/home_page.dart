@@ -142,11 +142,6 @@ class HomePageState extends State<HomePageView> {
               leading: const Icon(Icons.mail),
               title: Text(tr('drawer.messages'),
                   style: const TextStyle(fontSize: 18))),
-          const Divider(height: 3.0),
-          ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text(tr('drawer.settings'),
-                  style: const TextStyle(fontSize: 18))),
           const SizedBox(height: 30),
           ListTile(
               leading: const Icon(Icons.close),
