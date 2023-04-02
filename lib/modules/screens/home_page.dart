@@ -178,26 +178,22 @@ class HomePageState extends State<HomePageView> {
   }
 
   Widget buildIdIcon() {
-    String text;
-    if (_loggedIn) {
-      text = _user!.id.toString();
-    } else {
-      text = "";
-    }
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(20),
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans'),
-          ),
+          child: _user?.id == null
+              ? Image.asset('assets/images/penguin_logo.jpg', height: 68)
+              : Text(
+                  "${_user?.id}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 58,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans'),
+                ),
         ),
       ],
     );
