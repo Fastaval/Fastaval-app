@@ -1,5 +1,6 @@
-import 'dart:math';
+import 'dart:async';
 
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
@@ -13,9 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final User appUser;
+  final User user;
 
-  const ProfileScreen({Key? key, required this.appUser}) : super(key: key);
+  const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -42,69 +43,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: double.infinity,
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      //await Future.delayed(Duration(milliseconds: 1500));
-                      await UserService().refreshUser();
+                      fetchUser(widget.user.id.toString(),
+                              widget.user.password.toString())
+                          .then((newUser) => scheduleMicrotask(() {
+                                UserNotification(loggedIn: true, user: newUser)
+                                    .dispatch(context);
+                              }));
                     },
                     child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(height: 10.0),
-                              buildIdIcon(),
-                              buildUserMessagesCard(),
-                              buildUserProgramCard(),
-                              if (widget.appUser.food!.isNotEmpty)
-                                buildUserFoodTimesCard(),
-                              const SizedBox(height: 30.0),
-                              buildLogoutButton(),
-                              const SizedBox(height: 30.0),
-                            ],
-                          ),
-                        )),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 10.0),
+                          buildIdIcon(),
+                          buildUserMessagesCard(),
+                          buildUserProgramCard(),
+                          if (widget.user.food!.isNotEmpty)
+                            buildUserFoodTimesCard(),
+                          const SizedBox(height: 30.0),
+                          buildLogoutButton(),
+                          const SizedBox(height: 30.0),
+                        ],
+                      ),
+                    ),
                   ))
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget buildFoodListRows(List<Food>? food) {
-    return Column(children: [
-      ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: food!.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 10);
-          },
-          itemBuilder: (context, index) {
-            Food item = food[index];
-            return Row(
-              children: <Widget>[
-                Expanded(
-                    flex: 2,
-                    child: Text(formatDay(item.time, context),
-                        style: kNormalTextBoldStyle)),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                      '${formatTime(item.time)} - ${formatTime(item.timeEnd)}',
-                      style: kNormalTextStyle),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: Text(
-                      context.locale.toString() == 'en'
-                          ? item.titleEn!
-                          : item.titleDa!,
-                      style: kNormalTextStyle),
-                ),
-              ],
-            );
-          })
-    ]);
   }
 
   Widget buildIdIcon() {
@@ -115,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
-            widget.appUser.id.toString(),
+            widget.user.id.toString(),
             textAlign: TextAlign.center,
             style: const TextStyle(
                 fontSize: 58,
@@ -146,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     MaterialStateProperty.all<Color>(Colors.white)),
             onPressed: () => {
               UserService().removeUser(),
-              LoginNotification(loggedIn: false, user: null).dispatch(context)
+              UserNotification(loggedIn: false, user: null).dispatch(context)
             },
             child: Text(
               tr('login.signOut'),
@@ -163,19 +130,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildUserFoodTimesCard() {
     return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        buildFoodListRows(widget.appUser.food));
+        foodTickets(widget.user.food ?? []));
   }
 
   Widget buildUserMessagesCard() {
     String message = tr('profile.noMessagesRightNow');
-    if (widget.appUser.messages!.isNotEmpty) message = widget.appUser.messages!;
+    if (widget.user.messages!.isNotEmpty) message = widget.user.messages!;
     return textAndIconCard(tr('profile.messagesFromFastaval'),
         Icons.speaker_notes, Text(message, style: kNormalTextStyle));
   }
 
   Widget buildUserProgramCard() {
     return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
-        buildUsersProgram(widget.appUser.scheduling!, context));
+        buildUsersProgram(widget.user.scheduling!, context));
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
@@ -201,24 +168,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Expanded(
-            child: Text(" @ $room",
-                style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
+        Text(" @ $room",
+            style: kNormalTextStyle, overflow: TextOverflow.ellipsis)
       ]),
-      Row(children: [oneTextRow(title, sidePadding: true)])
+      Row(children: [
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(title, overflow: TextOverflow.ellipsis),
+          ),
+        ),
+      ])
     ]);
   }
-}
 
-class NumberGenerator {
-  Future<List<String>> slowNumbers() async {
-    return Future.delayed(
-      const Duration(milliseconds: 1000),
-      () => numbers,
+  Widget foodTickets(List<Food> food) {
+    return Column(
+      children: [
+        Text(tr('program.explainer'), style: kNormalTextSubdued),
+        const SizedBox(height: 10),
+        for (var item in food)
+          Card(
+              color: getBackgroundColor(item),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                child: Row(children: [
+                  Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                        Text(
+                            context.locale.toString() == 'en'
+                                ? item.titleEn
+                                : item.titleDa,
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextBoldStyle),
+                        Text(
+                            "${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextSubdued),
+                      ])),
+                  InkWell(
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: foodDialog,
+                        routeSettings: RouteSettings(arguments: item)),
+                    child: Row(
+                      children: [
+                        Text(tr('profile.foodTicket'),
+                            style: item.received == 1
+                                ? kNormalTextDisabled
+                                : kNormalTextStyle),
+                        const SizedBox(width: 5),
+                        Icon(Icons.info_outline,
+                            color: item.received == 1
+                                ? Colors.black26
+                                : Colors.black87)
+                      ],
+                    ),
+                  )
+                ]),
+              ))
+      ],
     );
   }
 
-  List<String> get numbers => List.generate(5, (index) => number);
+  getFoodImage(Food item) {
+    if (item.titleEn.contains('Dinner')) {
+      return 'assets/images/dinner.jpg';
+    }
+    if (item.titleEn.contains('Breakfast')) {
+      return 'assets/images/breakfast.jpg';
+    }
+    return 'assets/images/lunch.jpg';
+  }
 
-  String get number => Random().nextInt(99999).toString();
+  Color getBackgroundColor(Food item) {
+    if (item.received == 1) return const Color(0xFFDFE0DF);
+    if (item.titleEn.contains('Dinner')) return const Color(0xFF00BBE2);
+    if (item.titleEn.contains('Breakfast')) return const Color(0xFF00D3B3);
+    return const Color(0xFF63BAAB);
+  }
+
+  Widget foodDialog(BuildContext context) {
+    final item = ModalRoute.of(context)!.settings.arguments as Food;
+    bool foodAvailable = item.received == 1 ? false : true;
+
+    return AlertDialog(
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(tr('common.close')))
+        ],
+        titlePadding: const EdgeInsets.all(0),
+        title: Column(children: [
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                image: DecorationImage(
+                    image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
+              ),
+              height: 100),
+          const SizedBox(height: 5),
+          Text(context.locale.toString() == 'en' ? item.titleEn : item.titleDa)
+        ]),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          Text(context.locale.toString() == 'en' ? item.textEn : item.textDa,
+              style: kNormalTextStyle),
+          if (item.titleEn.contains('Breakfast'))
+            Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
+          const SizedBox(height: 10),
+          if (foodAvailable == false)
+            Text(tr('profile.foodHandedOut'), style: kNormalTextSubdued),
+          if (foodAvailable)
+            Text(
+                "${tr('profile.handout')}: ${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                style: kNormalTextSubdued),
+          if (foodAvailable) const SizedBox(height: 10),
+          if (foodAvailable)
+            BarcodeWidget(
+                barcode: Barcode.ean8(), data: widget.user.barcode.toString()),
+          if (foodAvailable) const SizedBox(height: 30),
+          if (foodAvailable)
+            Text(tr('profile.scanBarcode'), style: kNormalTextSubdued)
+        ]));
+  }
 }

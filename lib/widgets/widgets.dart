@@ -5,7 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 Widget oneTextRow(String text, {bool sidePadding = false}) {
   return Padding(
       padding: EdgeInsets.symmetric(horizontal: sidePadding ? 16 : 0),
-      child: Text(text, style: kNormalTextStyle));
+      child: Expanded(
+          child: Text(text,
+              style: kNormalTextStyle, overflow: TextOverflow.ellipsis)));
 }
 
 Widget textAndIconCard(String title, IconData icon, content) {

@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Close"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -112,20 +115,26 @@
     }
   },
   "profile": {
-    "foodTimes": "Food Times",
+    "foodTimes": "Meal Times",
     "messagesFromFastaval": "Messages From Fastaval",
     "noMessagesRightNow": "Fastaval has no messages for you right now",
     "participantNumber": "Participant number",
     "what": "What",
     "when": "When",
     "where": "Where",
-    "yourProgram": "Your Program"
+    "yourProgram": "Your Program",
+    "scanBarcode": "Show the barcode when you go to collect your food",
+    "handout": "Handed out",
+    "foodHandedOut": "The food has been handed out",
+    "foodTicket": "Meal ticket",
+    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr"
   },
   "program": {
-    "friday": "Fri",
-    "saturday": "Sat",
-    "sunday": "Sun",
-    "thursday": "Thu",
-    "wednesday": "Wed"
+    "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
+    "friday": { "short": "Fri", "long": "Friday" },
+    "saturday": { "short": "Sat", "long": "Saturday" },
+    "sunday": { "short": "Sun", "long": "Sunday" },
+    "thursday": { "short": "Thu", "long": "Thursday" },
+    "wednesday": { "short": "Wed", "long": "Wednesday" }
   }
 }

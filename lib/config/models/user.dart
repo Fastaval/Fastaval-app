@@ -7,6 +7,7 @@ import 'wear.dart';
 
 class User {
   int? id;
+  String? password;
   String? name;
   bool? hasCheckedIn;
   String? messages;
@@ -20,6 +21,7 @@ class User {
 
   User(
       {this.id,
+      this.password,
       this.name,
       this.hasCheckedIn,
       this.messages,
@@ -33,6 +35,7 @@ class User {
 
   User.fromJson(dynamic json) {
     id = json['id'];
+    password = json['password'];
     name = json['name'];
     hasCheckedIn = json['checked_in'] != 0;
     messages = json['messages'] ?? '';
@@ -47,7 +50,8 @@ class User {
     wear = wearArray.map((item) => Wear.fromJson(item)).toList();
 
     var schedulingArray = json['scheduling'] as List;
-    scheduling = schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
+    scheduling =
+        schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
 
     var ottoPartyArray = json['otto_party'] as List;
     ottoParty = ottoPartyArray.map((item) => OttoParty.fromJson(item)).toList();
@@ -55,6 +59,7 @@ class User {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'password': password,
         'name': name,
         'checked_in': hasCheckedIn,
         'messages': messages,
