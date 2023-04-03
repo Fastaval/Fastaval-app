@@ -174,7 +174,7 @@ class HomePageState extends State<HomePageView> {
                     style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'OpenSans',
-                        fontSize: 20.0,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                 ])
@@ -224,7 +224,7 @@ class HomePageState extends State<HomePageView> {
                         const AssetImage(
                             'assets/images/Hobro_Idraetscenter_kort_23.png'))
                   }),
-          const SizedBox(height: 30),
+          const SizedBox(height: 60),
           ListTile(
               leading: const Icon(CupertinoIcons.barcode),
               title: Text(tr('drawer.barcode'),
