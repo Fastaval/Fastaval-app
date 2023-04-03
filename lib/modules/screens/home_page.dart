@@ -155,24 +155,22 @@ class HomePageState extends State<HomePageView> {
     return Drawer(
       elevation: 10.0,
       child: ListView(
-        children: <Widget>[
+        children: [
           DrawerHeader(
             decoration: backgroundBoxDecorationStyle,
             padding: const EdgeInsetsDirectional.all(0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+              children: [
                 Column(
-                  children: <Widget>[
+                  children: [
                     buildIdIcon(),
                     Row(
                       children: [
                         if (_loggedIn)
                           IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.barcode,
-                              color: Colors.white,
-                            ),
+                            icon: const Icon(CupertinoIcons.barcode,
+                                color: Colors.white),
                             tooltip: tr('appbar.barcode.show'),
                             onPressed: () {
                               UserService()
@@ -181,10 +179,7 @@ class HomePageState extends State<HomePageView> {
                             },
                           ),
                         IconButton(
-                          icon: const Icon(
-                            Icons.map,
-                            color: Colors.white,
-                          ),
+                          icon: const Icon(Icons.map, color: Colors.white),
                           tooltip: tr('appbar.map.show'),
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -252,10 +247,27 @@ class HomePageState extends State<HomePageView> {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return PhotoView(
-            imageProvider: const AssetImage(
-                'assets/images/Hobro_Idraetscenter_kort_23.png'),
-          );
+          return Stack(children: [
+            PhotoView(
+              imageProvider: const AssetImage(
+                  'assets/images/Hobro_Idraetscenter_kort_23.png'),
+            ),
+            Positioned(
+                right: 10,
+                top: 10,
+                child: Material(
+                  color: Colors.transparent,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.orange,
+                    radius: 20,
+                    child: IconButton(
+                      icon: const Icon(Icons.close),
+                      color: Colors.black,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                ))
+          ]);
         });
   }
 
