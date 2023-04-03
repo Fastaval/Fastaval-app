@@ -144,6 +144,7 @@ class HomePageState extends State<HomePageView> {
                             color: Colors.white,
                           ),
                           onPressed: () {
+                            showDialog(context: context, builder: builder);
                             Fluttertoast.showToast(
                                 msg: tr('appbar.map.noMapAvailable'));
                           },
@@ -230,6 +231,16 @@ class HomePageState extends State<HomePageView> {
       ],
     );
   }
+}
+
+SimpleDialog fastaMap() {
+  return SimpleDialog(
+    children: [
+      Column(
+        children: [Text('hej')],
+      )
+    ],
+  );
 }
 
 class HomePageView extends StatefulWidget {
