@@ -7,7 +7,6 @@ import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Message>> fetchMessages() async {
-  print('fetching messages');
   User user = await UserService().getUser();
   var response = await http
       .get(Uri.parse('$baseUrl/messages/${user.id}?pass=${user.password}'));

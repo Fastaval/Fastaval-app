@@ -1,4 +1,7 @@
 {
+  "error": {
+    "login": "Error in participant number or password"
+  },
   "common": {
     "close": "Close"
   },

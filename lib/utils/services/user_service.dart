@@ -72,7 +72,6 @@ Future<User> fetchUser(String userId, String password) async {
   }
 
   throw Exception('Failed to load login');
-  //TODO: Vis fejl hvis login fejler
 }
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
@@ -89,7 +88,7 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
 
 Future<String> getDeviceToken() async {
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await firebaseMessaging.requestPermission(
+  await firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -98,7 +97,6 @@ Future<String> getDeviceToken() async {
     provisional: false,
     sound: true,
   );
-  print('User granted permission: ${settings.authorizationStatus}');
   String? deviceToken = await firebaseMessaging.getToken();
   return (deviceToken == null) ? "" : deviceToken;
 }

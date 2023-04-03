@@ -7,10 +7,8 @@ final String mapUrl = ConfigService().getRemoteConfig('MAP_URL');
 const String assetName = 'assets/svg/Hobro_Idraetscenter_kort_23.svg';
 
 class MapService {
-  final Widget svg = SvgPicture.asset(
-    assetName,
-    colorBlendMode: BlendMode.clear,
-  );
+  final Widget svg =
+      SvgPicture.asset(assetName, colorBlendMode: BlendMode.clear);
 
   final Widget networkSvg = SvgPicture.network(
     'https://site-that-takes-a-while.com/image.svg',

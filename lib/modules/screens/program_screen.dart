@@ -29,7 +29,6 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
-            //TODO: make it so days are pulled from api
             buildday("2023-04-05"),
             buildday("2023-04-06"),
             buildday("2023-04-07"),
@@ -46,12 +45,16 @@ class _ProgramscreenState extends State<Programscreen> {
     Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
     Map<String, Color> colorMap = <String, Color>{};
 
-    final Future<List<ActivityItem>> _list = getDay(day).then((List<ActivityItem> list) {
+    final Future<List<ActivityItem>> activityList =
+        getDay(day).then((List<ActivityItem> list) {
       for (ActivityItem activity in list) {
         if (activity.type != 'system') {
           activityMap.putIfAbsent(activity.id, () => activity);
           for (ActivityRun run in activity.runs) {
-            if (formatTimestampToDateTime(run.start).toString().substring(0, 10) == day) {
+            if (formatTimestampToDateTime(run.start)
+                    .toString()
+                    .substring(0, 10) ==
+                day) {
               runlist.add(run);
             }
           }
@@ -71,7 +74,7 @@ class _ProgramscreenState extends State<Programscreen> {
     colorMap.putIfAbsent('figur', () => Colors.red.shade300);
 
     return FutureBuilder(
-        future: _list,
+        future: activityList,
         builder: (context, programSnap) {
           List<Widget> children;
           if (programSnap.hasData) {
@@ -92,9 +95,13 @@ class _ProgramscreenState extends State<Programscreen> {
                                 children: <Widget>[
                                   //when
                                   timeBox(
-                                      timestamp: formatTimestampToDateTime(item.start),
-                                      color: colorMap[activityMap[item.activity]!.type] as Color),
-                                  const Padding(padding: EdgeInsets.only(left: 20)),
+                                      timestamp:
+                                          formatTimestampToDateTime(item.start),
+                                      color: colorMap[
+                                              activityMap[item.activity]!.type]
+                                          as Color),
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 20)),
 
                                   //what
                                   Flexible(
@@ -106,7 +113,8 @@ class _ProgramscreenState extends State<Programscreen> {
                                   )),
                                 ],
                               ),
-                              const Padding(padding: EdgeInsets.only(bottom: 10))
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 10))
                             ],
                           ),
                         ),
@@ -141,7 +149,8 @@ class _ProgramscreenState extends State<Programscreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(tr('program.loading'), style: const TextStyle(fontSize: 18)),
+                child: Text(tr('program.loading'),
+                    style: const TextStyle(fontSize: 18)),
               ),
             ];
           }
@@ -154,7 +163,8 @@ class _ProgramscreenState extends State<Programscreen> {
         });
   }
 
-  Widget timeBox({required DateTime timestamp, required Color color}) => Container(
+  Widget timeBox({required DateTime timestamp, required Color color}) =>
+      Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,
@@ -175,7 +185,9 @@ class _ProgramscreenState extends State<Programscreen> {
         style: const TextStyle(fontSize: 18),
       ),
       content: Text(
-        context.locale.toString() == 'en' ? activity.daDescription : activity.daDescription,
+        context.locale.toString() == 'en'
+            ? activity.daDescription
+            : activity.daDescription,
         style: const TextStyle(fontSize: 18),
       ),
     );

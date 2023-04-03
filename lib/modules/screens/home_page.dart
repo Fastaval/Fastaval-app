@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
-import 'package:fastaval_app/modules/notifications/message_notification.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/messages_screen.dart';
@@ -38,17 +37,21 @@ class HomePageState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.onMessage.listen((event) {
-      print('incomign event');
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        setState(() {
+          _waitingMessages = 1;
+          _bottomNavList = _bottomNavItems();
+        });
+      }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data.toString()}');
-
       if (message.notification != null) {
-        print(
-            'Message also contained a notification: ${message.notification?.body}');
+        setState(() {
+          _waitingMessages = 1;
+          _bottomNavList = _bottomNavItems();
+        });
       }
     });
 
@@ -63,9 +66,6 @@ class HomePageState extends State<HomePageView> {
             _user = notification.user;
             _bottomNavList = _bottomNavItems();
           });
-        }
-        if (notification is MessageNotification) {
-          print('someone sent messages');
         }
         return false;
       },
@@ -200,20 +200,23 @@ class HomePageState extends State<HomePageView> {
           ),
           if (_loggedIn)
             ListTile(
-              leading: const Icon(Icons.mail),
+              leading: badges.Badge(
+                  showBadge: _waitingMessages > 0,
+                  badgeContent: Text("$_waitingMessages"),
+                  child: const Icon(Icons.mail)),
               title: Text(tr('drawer.messages'),
                   style: const TextStyle(fontSize: 18)),
-              onTap: () => {
-                setState(() {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MessagesScreen(messages: _messages),
-                    ),
-                  );
-                })
-              },
+              onTap: () => setState(() {
+                Navigator.of(context).pop();
+                _waitingMessages = 0;
+                _bottomNavList = _bottomNavItems();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MessagesScreen(messages: _messages),
+                  ),
+                );
+              }),
             ),
           const SizedBox(height: 30),
           ListTile(

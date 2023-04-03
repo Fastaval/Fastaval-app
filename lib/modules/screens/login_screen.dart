@@ -6,6 +6,7 @@ import 'package:fastaval_app/modules/screens/home_page.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
 
@@ -85,7 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       UserService().registerToInfosys(context, newUser);
                       UserNotification(loggedIn: true, user: newUser)
                           .dispatch(context);
-                    })),
+                    }))
+                .onError((error, stackTrace) =>
+                    Fluttertoast.showToast(msg: tr('error.login'))),
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(

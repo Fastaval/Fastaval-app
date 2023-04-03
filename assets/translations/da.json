@@ -1,4 +1,7 @@
 {
+  "error": {
+    "login": "Fejl i brugernavn eller password"
+  },
   "common": {
     "close": "Luk"
   },
