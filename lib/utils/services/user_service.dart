@@ -120,7 +120,7 @@ showCustomTrackingDialog(BuildContext context) async => await showDialog(
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Continue'),
+            child: Text(tr('common.close')),
           ),
         ],
       ),

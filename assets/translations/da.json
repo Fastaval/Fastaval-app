@@ -124,7 +124,7 @@
     "signOut": "Log ud",
     "permissionsWarning": {
       "title": "Kære bruger",
-      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Denne app anmoder kun om sporingstilladelser, fordi vi bruger en tredjepart til at hjælpe med at kommunikere med dig gennem notifikationer i appen. Du kan være sikker på, at din data ikke bruges til andet end det."
+      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer."
     },
     "alert": {
       "title": "Beskeder fra Fastaval",
