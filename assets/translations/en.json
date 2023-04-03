@@ -20,6 +20,9 @@
   "drawer": {
     "settings": "Settings",
     "messages": "Notifications",
+    "barcode": "Vis stregkode",
+    "mapSchool": "Show map of school",
+    "mapGym": "Show map of sportscentre",
     "close": "Close"
   },
   "notifications": {

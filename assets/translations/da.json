@@ -20,6 +20,9 @@
   "drawer": {
     "settings": "Indstillinger",
     "messages": "Notifikationer",
+    "barcode": "Vis stregkode",
+    "mapSchool": "Vis kort over skolen",
+    "mapGym": "Vis kort over idrætshallen",
     "close": "Luk"
   },
   "notifications": {

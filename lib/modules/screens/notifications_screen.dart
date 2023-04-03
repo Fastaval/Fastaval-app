@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
-import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,23 +37,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
-                  height: double.infinity,
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      fetchMessages()
-                          .then((messages) => scheduleMicrotask(() {}));
-                    },
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(height: 10),
-                          buildMessages(),
-                          const SizedBox(height: 30),
-                        ],
-                      ),
-                    ),
-                  ))
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 10),
+                      buildMessages(),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
