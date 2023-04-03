@@ -20,6 +20,9 @@
   "drawer": {
     "settings": "Settings",
     "messages": "Notifications",
+    "barcode": "Vis stregkode",
+    "mapSchool": "Show map of school",
+    "mapGym": "Show map of sportscentre",
     "close": "Close"
   },
   "notifications": {
@@ -119,6 +122,10 @@
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
     "signOut": "Sign out",
+    "permissionsWarning": {
+      "title": "Dear user",
+      "description": "We care about your privacy and data security. Please rest assured that the tracking this app uses is only for allowing us to send you notifications."
+    },
     "alert": {
       "title": "Messages from Fastaval",
       "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",

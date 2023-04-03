@@ -187,56 +187,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget foodTickets(List<Food> food) {
-    return Column(
-      children: [
-        Text(tr('program.explainer'), style: kNormalTextSubdued),
-        const SizedBox(height: 10),
-        for (var item in food)
-          Card(
-              color: getBackgroundColor(item),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                child: Row(children: [
-                  Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                        Text(
-                            context.locale.toString() == 'en'
-                                ? item.titleEn
-                                : item.titleDa,
-                            style: item.received == 1
-                                ? kNormalTextDisabled
-                                : kNormalTextBoldStyle),
-                        Text(
-                            "${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
-                            style: item.received == 1
-                                ? kNormalTextDisabled
-                                : kNormalTextSubdued),
-                      ])),
-                  InkWell(
-                    onTap: () => showDialog(
-                        context: context,
-                        builder: foodDialog,
-                        routeSettings: RouteSettings(arguments: item)),
-                    child: Row(
-                      children: [
-                        Text(tr('profile.foodTicket'),
-                            style: item.received == 1
-                                ? kNormalTextDisabled
-                                : kNormalTextStyle),
-                        const SizedBox(width: 5),
-                        Icon(Icons.info_outline,
-                            color: item.received == 1
-                                ? Colors.black26
-                                : Colors.black87)
-                      ],
-                    ),
-                  )
-                ]),
-              ))
-      ],
-    );
+    return Column(children: [
+      Text(tr('program.explainer'), style: kNormalTextSubdued),
+      const SizedBox(height: 10),
+      for (var item in food)
+        InkWell(
+          onTap: () => showDialog(
+              context: context,
+              builder: foodDialog,
+              routeSettings: RouteSettings(arguments: item)),
+          child: Card(
+            color: getBackgroundColor(item),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+              child: Row(children: [
+                Expanded(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      Text(
+                          context.locale.toString() == 'en'
+                              ? item.titleEn
+                              : item.titleDa,
+                          style: item.received == 1
+                              ? kNormalTextDisabled
+                              : kNormalTextBoldStyle),
+                      Text(
+                          "${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                          style: item.received == 1
+                              ? kNormalTextDisabled
+                              : kNormalTextSubdued),
+                    ])),
+                Row(
+                  children: [
+                    Text(tr('profile.foodTicket'),
+                        style: item.received == 1
+                            ? kNormalTextDisabled
+                            : kNormalTextStyle),
+                    const SizedBox(width: 5),
+                    Icon(Icons.info_outline,
+                        color: item.received == 1
+                            ? Colors.black26
+                            : Colors.black87)
+                  ],
+                ),
+              ]),
+            ),
+          ),
+        )
+    ]);
   }
 
   getFoodImage(Food item) {

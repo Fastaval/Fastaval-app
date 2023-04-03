@@ -52,7 +52,7 @@ class Scheduling {
         'activity_type': activityType,
         'id': id,
         'schedule_id': scheduleId,
-        'title_da': titleEn,
+        'title_da': titleDa,
         'title_en': titleEn,
         'room_da': roomDa,
         'room_en': roomEn,

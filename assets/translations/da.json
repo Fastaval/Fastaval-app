@@ -20,6 +20,9 @@
   "drawer": {
     "settings": "Indstillinger",
     "messages": "Notifikationer",
+    "barcode": "Vis stregkode",
+    "mapSchool": "Vis kort over skolen",
+    "mapGym": "Vis kort over idrætshallen",
     "close": "Luk"
   },
   "notifications": {
@@ -119,6 +122,10 @@
     "rememberMe": "Husk mit login",
     "signIn": "Log ind",
     "signOut": "Log ud",
+    "permissionsWarning": {
+      "title": "Kære bruger",
+      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer."
+    },
     "alert": {
       "title": "Beskeder fra Fastaval",
       "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",

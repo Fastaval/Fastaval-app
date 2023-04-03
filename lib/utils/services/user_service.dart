@@ -105,7 +105,23 @@ Future<void> askForTrackingPermission(BuildContext context) async {
   final TrackingStatus status =
       await AppTrackingTransparency.trackingAuthorizationStatus;
   if (status == TrackingStatus.notDetermined) {
+    // ignore: use_build_context_synchronously
+    await showCustomTrackingDialog(context);
     await Future.delayed(const Duration(milliseconds: 200));
     await AppTrackingTransparency.requestTrackingAuthorization();
   }
 }
+
+showCustomTrackingDialog(BuildContext context) async => await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(tr('login.permissionsWarning.title')),
+        content: Text(tr('login.permissionsWarning.description')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(tr('common.close')),
+          ),
+        ],
+      ),
+    );
