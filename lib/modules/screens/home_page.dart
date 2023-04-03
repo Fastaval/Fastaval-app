@@ -1,12 +1,15 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
+import 'package:fastaval_app/modules/screens/messages_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +19,7 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
+  late List<Message> _messages;
   bool _loggedIn = false;
   int _currentIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,7 +56,7 @@ class HomePageState extends State<HomePageView> {
   @override
   initState() {
     ConfigService().initConfig();
-    _fetchUser();
+    _getUser();
     super.initState();
   }
 
@@ -68,13 +72,13 @@ class HomePageState extends State<HomePageView> {
 
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
-      _loggedIn
-          ? BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: tr('bottomNavigation.profil'))
-          : BottomNavigationBarItem(
-              icon: const Icon(Icons.login),
-              label: tr('bottomNavigation.login')),
+      if (_loggedIn == true)
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.person),
+            label: tr('bottomNavigation.profil')),
+      if (_loggedIn == false)
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.info),
           label: tr('bottomNavigation.information')),
@@ -86,10 +90,12 @@ class HomePageState extends State<HomePageView> {
     ];
   }
 
-  Future _fetchUser() async {
+  Future _getUser() async {
     await UserService()
         .getUser()
         .then((newUser) => {_user = newUser, _loggedIn = true});
+
+    await fetchMessages().then((messages) => _messages = messages);
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -98,11 +104,8 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> _screens() {
     return <Widget>[
-      _loggedIn && _user != null
-          ? ProfileScreen(
-              user: _user!,
-            )
-          : LoginScreen(this),
+      if (_loggedIn && _user != null) ProfileScreen(user: _user!),
+      if (!_loggedIn) LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -138,10 +141,23 @@ class HomePageState extends State<HomePageView> {
               ],
             ),
           ),
-          ListTile(
+          if (_loggedIn)
+            ListTile(
               leading: const Icon(Icons.mail),
               title: Text(tr('drawer.messages'),
-                  style: const TextStyle(fontSize: 18))),
+                  style: const TextStyle(fontSize: 18)),
+              onTap: () => {
+                setState(() {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MessagesScreen(messages: _messages),
+                    ),
+                  );
+                })
+              },
+            ),
           const SizedBox(height: 30),
           ListTile(
               leading: const Icon(Icons.close),

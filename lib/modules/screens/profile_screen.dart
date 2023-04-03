@@ -23,8 +23,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<List<String>> futureNumbersList;
-
   @override
   Widget build(context) {
     return Scaffold(
