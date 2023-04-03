@@ -23,8 +23,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<List<String>> futureNumbersList;
-
   @override
   Widget build(context) {
     return Scaffold(
@@ -46,6 +44,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fetchUser(widget.user.id.toString(),
                               widget.user.password.toString())
                           .then((newUser) => scheduleMicrotask(() {
+                                newUser.password =
+                                    widget.user.password.toString();
+
                                 UserNotification(loggedIn: true, user: newUser)
                                     .dispatch(context);
                               }));
@@ -163,22 +164,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var title =
         context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
+    var activityType =
+        item.activityType != null && item.activityType != 'ottoviteter'
+            ? "- ${tr('profile.activityType.${item.activityType}')}"
+            : '';
 
     return Column(children: [
       Row(children: [
         Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
             style: kNormalTextBoldStyle),
-        Text(" @ $room",
-            style: kNormalTextStyle, overflow: TextOverflow.ellipsis)
+        Text(" @ $room $activityType", style: kNormalTextStyle)
       ]),
-      Row(children: [
-        Flexible(
-          child: Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(title, overflow: TextOverflow.ellipsis),
-          ),
-        ),
-      ])
+      Container(
+        padding: const EdgeInsets.only(left: 10),
+        child: Row(children: [
+          Expanded(
+              child: Text(title,
+                  overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
+        ]),
+      ),
     ]);
   }
 

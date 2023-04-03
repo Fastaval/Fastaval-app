@@ -1,17 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/utils/dialogs/customTrackingDialog.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
-
-final String baseUrl = ConfigService().getRemoteConfig('API');
 
 class UserService {
   static const String kUserKey = 'USER_KEY';
@@ -41,7 +39,7 @@ class UserService {
 }
 
 Future<void> registerAppToInfosys(BuildContext context, User user) async =>
-    await showDialog<void>(
+    await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
@@ -74,7 +72,6 @@ Future<User> fetchUser(String userId, String password) async {
   }
 
   throw Exception('Failed to load login');
-  //TODO: Vis fejl hvis login fejler
 }
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
@@ -102,4 +99,13 @@ Future<String> getDeviceToken() async {
   );
   String? deviceToken = await firebaseMessaging.getToken();
   return (deviceToken == null) ? "" : deviceToken;
+}
+
+Future<void> askForTrackingPermission(BuildContext context) async {
+  final TrackingStatus status =
+      await AppTrackingTransparency.trackingAuthorizationStatus;
+  if (status == TrackingStatus.notDetermined) {
+    await Future.delayed(const Duration(milliseconds: 200));
+    await AppTrackingTransparency.requestTrackingAuthorization();
+  }
 }

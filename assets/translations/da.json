@@ -1,4 +1,7 @@
 {
+  "error": {
+    "login": "Fejl i brugernavn eller password"
+  },
   "common": {
     "close": "Luk"
   },
@@ -10,8 +13,17 @@
       "show": "Vis stregkode"
     },
     "map": {
+      "show": "Vis kort",
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
+  },
+  "drawer": {
+    "settings": "Indstillinger",
+    "messages": "Notifikationer",
+    "close": "Luk"
+  },
+  "notifications": {
+    "title": "Notifikationer fra Fastaval"
   },
   "bottomNavigation": {
     "information": "Information",
@@ -109,9 +121,9 @@
     "signOut": "Log ud",
     "alert": {
       "title": "Beskeder fra Fastaval",
-      "description": "Du kan kun få notifikationer fra Fastaval via APP eller SMS, ikke begge dele. Ønsker du at få det via APP?",
-      "dialogYes": "Ja tak, via APP",
-      "dialogNo": "Nej tak, via SMS"
+      "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",
+      "dialogYes": "Ja tak",
+      "dialogNo": "Nej tak"
     }
   },
   "profile": {
@@ -127,14 +139,37 @@
     "handout": "Udleveres",
     "foodHandedOut": "Maden er udleveret",
     "foodTicket": "Madbillet",
-    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr"
+    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
+    "activityType": {
+      "rolle": "Spiller",
+      "spilleder": "Spilleder",
+      "gds": "Heltestyrke",
+      "braet": "Brætspil",
+      "junior": "Junior"
+    }
   },
   "program": {
     "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
-    "friday": { "short": "Fre", "long": "Fredag" },
-    "saturday": { "short": "Lør", "long": "Lørdag" },
-    "sunday": { "short": "Søn", "long": "Søndag" },
-    "thursday": { "short": "Tor", "long": "Torsdag" },
-    "wednesday": { "short": "Ons", "long": "Onsdag" }
+    "friday": {
+      "short": "Fre",
+      "long": "Fredag"
+    },
+    "saturday": {
+      "short": "Lør",
+      "long": "Lørdag"
+    },
+    "sunday": {
+      "short": "Søn",
+      "long": "Søndag"
+    },
+    "thursday": {
+      "short": "Tor",
+      "long": "Torsdag"
+    },
+    "wednesday": {
+      "short": "Ons",
+      "long": "Onsdag"
+    },
+    "loading": "Henter program"
   }
 }

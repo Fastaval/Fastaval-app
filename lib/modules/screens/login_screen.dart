@@ -6,6 +6,7 @@ import 'package:fastaval_app/modules/screens/home_page.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../notifications/login_notification.dart';
 
@@ -20,7 +21,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool _rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 30.0),
                       _buildPasswordInput(),
                       // _buildForgotPasswordBtn(),
-                      const SizedBox(height: 10.0),
-                      _buildRememberMeCheckbox(),
                       const SizedBox(height: 30.0),
                       _buildLoginButton(),
                     ],
@@ -74,31 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildRememberMeCheckbox() {
-    Color getColor(Set<MaterialState> states) {
-      return Colors.orange;
-    }
-
-    return Row(children: [
-      Transform.scale(
-          scale: 1.3,
-          child: Checkbox(
-              checkColor: Colors.white,
-              fillColor: MaterialStateProperty.resolveWith(getColor),
-              shape: const CircleBorder(),
-              value: _rememberMe,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              })),
-      Text(
-        tr('login.rememberMe'),
-        style: kLabelStyle,
-      ),
-    ]);
-  }
-
   Widget _buildLoginButton() {
     return SizedBox(
       width: double.infinity,
@@ -107,16 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
         onPressed: () =>
             fetchUser(userIdController.text, passwordController.text)
-                .then((user) => scheduleMicrotask(() {
-                      user.password = passwordController.text;
-                      if (_rememberMe == true) {
-                        UserService().setUser(user);
-                      }
-                      UserService().registerToInfosys(context, user);
-
-                      UserNotification(loggedIn: true, user: user)
+                .then((newUser) => scheduleMicrotask(() {
+                      newUser.password = passwordController.text;
+                      UserService().setUser(newUser);
+                      UserService().registerToInfosys(context, newUser);
+                      UserNotification(loggedIn: true, user: newUser)
                           .dispatch(context);
-                    })),
+                    }))
+                .onError((error, stackTrace) =>
+                    Fluttertoast.showToast(msg: tr('error.login'))),
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(

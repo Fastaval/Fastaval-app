@@ -4,8 +4,5 @@ import 'package:flutter/widgets.dart';
 class UserNotification extends Notification {
   bool loggedIn = false;
   User? user;
-  UserNotification({
-    required this.loggedIn,
-    required this.user,
-  });
+  UserNotification({required this.loggedIn, required this.user});
 }

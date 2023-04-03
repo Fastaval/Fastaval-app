@@ -1,39 +1,72 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
+import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../notifications/login_notification.dart';
 
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
+  late List<Message> _messages;
   bool _loggedIn = false;
   int _currentIndex = 1;
+  int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final List mapImgList = [
+    Image.asset('assets/images/Mariagerfjord_kort_23.png'),
+    Image.asset('assets/images/Hobro_Idraetscenter_kort_23.png'),
+  ];
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<UserNotification>(
-      onNotification: (notification) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
         setState(() {
-          _loggedIn = notification.loggedIn;
-          _user = notification.user;
+          _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        setState(() {
+          _waitingMessages = 1;
+          _bottomNavList = _bottomNavItems();
+        });
+      }
+    });
+
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is UserNotification) {
+          setState(() {
+            if (_loggedIn == false && notification.loggedIn == true) {
+              _getMessages();
+            }
+            _loggedIn = notification.loggedIn;
+            _user = notification.user;
+            _bottomNavList = _bottomNavItems();
+          });
+        }
         return false;
       },
       child: Scaffold(
@@ -53,7 +86,8 @@ class HomePageState extends State<HomePageView> {
   @override
   initState() {
     ConfigService().initConfig();
-    _fetchUser();
+    _getUser();
+    _getMessages();
     super.initState();
   }
 
@@ -69,13 +103,13 @@ class HomePageState extends State<HomePageView> {
 
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
-      _loggedIn
-          ? BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: tr('bottomNavigation.profil'))
-          : BottomNavigationBarItem(
-              icon: const Icon(Icons.login),
-              label: tr('bottomNavigation.login')),
+      if (_loggedIn == true)
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.person),
+            label: tr('bottomNavigation.profil')),
+      if (_loggedIn == false)
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.info),
           label: tr('bottomNavigation.information')),
@@ -83,11 +117,22 @@ class HomePageState extends State<HomePageView> {
           icon: const Icon(Icons.calendar_view_day),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.more'))
+          icon: badges.Badge(
+              showBadge: _waitingMessages > 0,
+              badgeContent: Text("$_waitingMessages"),
+              child: const Icon(Icons.menu_open)),
+          label: tr('bottomNavigation.more'))
     ];
   }
 
-  Future _fetchUser() async {
+  Future _getMessages() async {
+    await fetchMessages().then((messages) => {
+          _messages = messages,
+          _waitingMessages = messages.length - _messages.length
+        });
+  }
+
+  Future _getUser() async {
     await UserService()
         .getUser()
         .then((newUser) => {_user = newUser, _loggedIn = true});
@@ -99,11 +144,8 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> _screens() {
     return <Widget>[
-      _loggedIn && _user != null
-          ? ProfileScreen(
-              user: _user!,
-            )
-          : LoginScreen(this),
+      if (_loggedIn && _user != null) ProfileScreen(user: _user!),
+      if (!_loggedIn) LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
     ];
@@ -113,24 +155,22 @@ class HomePageState extends State<HomePageView> {
     return Drawer(
       elevation: 10.0,
       child: ListView(
-        children: <Widget>[
+        children: [
           DrawerHeader(
             decoration: backgroundBoxDecorationStyle,
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.all(0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+              children: [
                 Column(
-                  children: <Widget>[
+                  children: [
                     buildIdIcon(),
                     Row(
                       children: [
                         if (_loggedIn)
                           IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.barcode,
-                              color: Colors.white,
-                            ),
+                            icon: const Icon(CupertinoIcons.barcode,
+                                color: Colors.white),
                             tooltip: tr('appbar.barcode.show'),
                             onPressed: () {
                               UserService()
@@ -139,13 +179,11 @@ class HomePageState extends State<HomePageView> {
                             },
                           ),
                         IconButton(
-                          icon: const Icon(
-                            Icons.map,
-                            color: Colors.white,
-                          ),
+                          icon: const Icon(Icons.map, color: Colors.white),
+                          tooltip: tr('appbar.map.show'),
                           onPressed: () {
-                            Fluttertoast.showToast(
-                                msg: tr('appbar.map.noMapAvailable'));
+                            Navigator.of(context).pop();
+                            fastaMap(context);
                           },
                         ),
                       ],
@@ -155,32 +193,33 @@ class HomePageState extends State<HomePageView> {
               ],
             ),
           ),
-
-          //Here you place your menu items
+          if (_loggedIn)
+            ListTile(
+              leading: badges.Badge(
+                  showBadge: _waitingMessages > 0,
+                  badgeContent: Text("$_waitingMessages"),
+                  child: const Icon(Icons.mail)),
+              title: Text(tr('drawer.messages'),
+                  style: const TextStyle(fontSize: 18)),
+              onTap: () => setState(() {
+                Navigator.of(context).pop();
+                _waitingMessages = 0;
+                _bottomNavList = _bottomNavItems();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NotificationsScreen(messages: _messages),
+                  ),
+                );
+              }),
+            ),
+          const SizedBox(height: 30),
           ListTile(
-            leading: const Icon(Icons.person),
-            title: Text(tr('bottomNavigation.profil'),
-                style: const TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-            },
-          ),
-          const Divider(height: 3.0),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings', style: TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.close),
-            title: const Text('Close Drawer', style: TextStyle(fontSize: 18)),
-            onTap: () {
-              // Here you can give your route to navigate
-              Navigator.of(context).pop();
-            },
-          ),
+              leading: const Icon(Icons.close),
+              title: Text(tr('drawer.close'),
+                  style: const TextStyle(fontSize: 18)),
+              onTap: () => Navigator.of(context).pop()),
         ],
       ),
     );
@@ -196,7 +235,6 @@ class HomePageState extends State<HomePageView> {
                 quarterTurns: 1,
                 child: BarcodeWidget(
                   barcode: Barcode.ean8(),
-                  // Barcode type and settings
                   data: user.barcode.toString(),
                 ),
               ),
@@ -205,27 +243,51 @@ class HomePageState extends State<HomePageView> {
         });
   }
 
+  Future fastaMap(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Stack(children: [
+            PhotoView(
+              imageProvider: const AssetImage(
+                  'assets/images/Hobro_Idraetscenter_kort_23.png'),
+            ),
+            Positioned(
+                right: 10,
+                top: 10,
+                child: Material(
+                  color: Colors.transparent,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.orange,
+                    radius: 20,
+                    child: IconButton(
+                      icon: const Icon(Icons.close),
+                      color: Colors.black,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                ))
+          ]);
+        });
+  }
+
   Widget buildIdIcon() {
-    String text;
-    if (_loggedIn) {
-      text = _user!.id.toString();
-    } else {
-      text = "";
-    }
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(20),
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans'),
-          ),
+          child: !_loggedIn
+              ? Image.asset('assets/images/penguin_logo.jpg', height: 68)
+              : Text(
+                  "${_user?.id}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 58,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans'),
+                ),
         ),
       ],
     );
