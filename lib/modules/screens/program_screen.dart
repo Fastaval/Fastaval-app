@@ -41,11 +41,6 @@ class _ProgramscreenState extends State<Programscreen> {
     );
   }
 
-  final Future<String> _calculation = Future<String>.delayed(
-    const Duration(seconds: 2),
-    () => 'Data Loaded',
-  );
-
   Widget buildday(String day) {
     List<ActivityRun>? runlist = [];
     Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
