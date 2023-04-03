@@ -136,6 +136,7 @@ class HomePageState extends State<HomePageView> {
                           ),
                           tooltip: tr('appbar.map.show'),
                           onPressed: () {
+                            Navigator.of(context).pop();
                             fastaMap(context);
                             Fluttertoast.showToast(msg: tr('appbar.map.noMapAvailable'));
                           },
@@ -202,7 +203,7 @@ class HomePageState extends State<HomePageView> {
         builder: (BuildContext context) {
           return PhotoView(
             imageProvider: AssetImage('assets/images/Hobro_Idraetscenter_kort_23.png'),
-            backgroundDecoration: BoxDecoration(color: Colors.white),
+            //backgroundDecoration: BoxDecoration(color: Colors.white),
           );
         });
   }
