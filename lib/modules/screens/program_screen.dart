@@ -45,22 +45,22 @@ class _ProgramscreenState extends State<Programscreen> {
     List<ActivityRun>? runlist = [];
     Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
     Map<String, Color> colorMap = <String, Color>{};
-    getDay(day).then((List<ActivityItem> list) {
+
+    final Future<List<ActivityItem>> _list = getDay(day).then((List<ActivityItem> list) {
       for (ActivityItem activity in list) {
         if (activity.type != 'system') {
           activityMap.putIfAbsent(activity.id, () => activity);
           for (ActivityRun run in activity.runs) {
-            if (formatTimestampToDateTime(run.start)
-                    .toString()
-                    .substring(0, 10) ==
-                day) {
+            if (formatTimestampToDateTime(run.start).toString().substring(0, 10) == day) {
               runlist.add(run);
             }
           }
         }
       }
       runlist.sort((a, b) => a.start - b.start);
+      return list;
     });
+
     colorMap.putIfAbsent('rolle', () => Colors.lightGreen.shade300);
     colorMap.putIfAbsent('braet', () => Colors.blue.shade300);
     colorMap.putIfAbsent('live', () => Colors.teal.shade400);
@@ -69,63 +69,92 @@ class _ProgramscreenState extends State<Programscreen> {
     colorMap.putIfAbsent('magic', () => Colors.purpleAccent.shade100);
     colorMap.putIfAbsent('workshop', () => Colors.amberAccent.shade200);
     colorMap.putIfAbsent('figur', () => Colors.red.shade300);
+
     return FutureBuilder(
-      builder: (context, programSnap) {
-        return SizedBox(
-          child: Container(
-              padding: const EdgeInsets.only(top: 20),
-              alignment: Alignment.topCenter,
-              child: ListView.builder(
-                itemCount: runlist.length,
-                itemBuilder: (context, index) {
-                  ActivityRun item = runlist[index];
-
-                  return InkWell(
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
+        future: _list,
+        builder: (context, programSnap) {
+          List<Widget> children;
+          if (programSnap.hasData) {
+            return SizedBox(
+              child: Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  alignment: Alignment.topCenter,
+                  child: ListView.builder(
+                    itemCount: runlist.length,
+                    itemBuilder: (context, index) {
+                      ActivityRun item = runlist[index];
+                      return InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Column(
                             children: <Widget>[
-                              //when
-                              timeBox(
-                                  timestamp:
-                                      formatTimestampToDateTime(item.start),
-                                  color:
-                                      colorMap[activityMap[item.activity]!.type]
-                                          as Color),
-                              const Padding(padding: EdgeInsets.only(left: 20)),
+                              Row(
+                                children: <Widget>[
+                                  //when
+                                  timeBox(
+                                      timestamp: formatTimestampToDateTime(item.start),
+                                      color: colorMap[activityMap[item.activity]!.type] as Color),
+                                  const Padding(padding: EdgeInsets.only(left: 20)),
 
-                              //what
-                              Flexible(
-                                  child: Text(
-                                context.locale.toString() == 'en'
-                                    ? activityMap[item.activity]!.enTitle
-                                    : activityMap[item.activity]!.daTitle,
-                                style: const TextStyle(fontSize: 18),
-                              )),
+                                  //what
+                                  Flexible(
+                                      child: Text(
+                                    context.locale.toString() == 'en'
+                                        ? activityMap[item.activity]!.enTitle
+                                        : activityMap[item.activity]!.daTitle,
+                                    style: const TextStyle(fontSize: 18),
+                                  )),
+                                ],
+                              ),
+                              const Padding(padding: EdgeInsets.only(bottom: 10))
                             ],
                           ),
-                          const Padding(padding: EdgeInsets.only(bottom: 10))
-                        ],
-                      ),
-                    ),
-                    onTap: () => showDialog(
-                        context: context,
-                        builder: activtyDialog,
-                        routeSettings: RouteSettings(
-                          arguments: activityMap[item.activity],
-                        )),
-                  );
-                },
-              )),
-        );
-      },
-    );
+                        ),
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: activtyDialog,
+                            routeSettings: RouteSettings(
+                              arguments: activityMap[item.activity],
+                            )),
+                      );
+                    },
+                  )),
+            );
+          } else if (programSnap.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${programSnap.error}'),
+              ),
+            ];
+          } else {
+            children = <Widget>[
+              const SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(tr('program.loading'), style: const TextStyle(fontSize: 18)),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        });
   }
 
-  Widget timeBox({required DateTime timestamp, required Color color}) =>
-      Container(
+  Widget timeBox({required DateTime timestamp, required Color color}) => Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,
@@ -140,10 +169,13 @@ class _ProgramscreenState extends State<Programscreen> {
 
   Widget activtyDialog(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as ActivityItem;
-
     return AlertDialog(
-      content: Text(
+      title: Text(
         context.locale.toString() == 'en' ? activity.enTitle : activity.daTitle,
+        style: const TextStyle(fontSize: 18),
+      ),
+      content: Text(
+        context.locale.toString() == 'en' ? activity.daDescription : activity.daDescription,
         style: const TextStyle(fontSize: 18),
       ),
     );

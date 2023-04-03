@@ -11,8 +11,10 @@ import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../notifications/login_notification.dart';
 
@@ -23,7 +25,10 @@ class HomePageState extends State<HomePageView> {
   bool _loggedIn = false;
   int _currentIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final List mapImgList = [
+    Image.asset('assets/images/Mariagerfjord_kort_23.png'),
+    Image.asset('assets/images/Hobro_Idraetscenter_kort_23.png'),
+  ];
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
@@ -127,9 +132,28 @@ class HomePageState extends State<HomePageView> {
                     buildIdIcon(),
                     Row(
                       children: [
+                        if (_loggedIn)
+                          IconButton(
+                            icon: const Icon(
+                              CupertinoIcons.barcode,
+                              color: Colors.white,
+                            ),
+                            tooltip: tr('appbar.barcode.show'),
+                            onPressed: () {
+                              UserService()
+                                  .getUser()
+                                  .then((user) => {barcode(context, user)});
+                            },
+                          ),
                         IconButton(
-                          icon: const Icon(Icons.map, color: Colors.white),
+                          icon: const Icon(
+                            Icons.map,
+                            color: Colors.white,
+                          ),
+                          tooltip: tr('appbar.map.show'),
                           onPressed: () {
+                            Navigator.of(context).pop();
+                            fastaMap(context);
                             Fluttertoast.showToast(
                                 msg: tr('appbar.map.noMapAvailable'));
                           },
@@ -179,11 +203,21 @@ class HomePageState extends State<HomePageView> {
                 quarterTurns: 1,
                 child: BarcodeWidget(
                   barcode: Barcode.ean8(),
-                  // Barcode type and settings
                   data: user.barcode.toString(),
                 ),
               ),
             ),
+          );
+        });
+  }
+
+  Future fastaMap(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return PhotoView(
+            imageProvider: const AssetImage(
+                'assets/images/Hobro_Idraetscenter_kort_23.png'),
           );
         });
   }
