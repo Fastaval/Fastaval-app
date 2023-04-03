@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
@@ -8,20 +9,22 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MessagesScreen extends StatefulWidget {
+class NotificationsScreen extends StatefulWidget {
   final List<Message> messages;
 
-  const MessagesScreen({Key? key, required this.messages}) : super(key: key);
+  const NotificationsScreen({Key? key, required this.messages})
+      : super(key: key);
 
   @override
-  State<MessagesScreen> createState() => _MessagesScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _MessagesScreenState extends State<MessagesScreen> {
+class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: const BackButton(),
         title: Text(tr('drawer.messages')),
       ),
@@ -62,8 +65,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   Widget buildMessages() {
-    return textAndIconCard(tr('profile.messagesFromFastaval'),
-        Icons.speaker_notes, messageList(widget.messages, context));
+    return textAndIconCard(tr('notifications.title'), Icons.speaker_notes,
+        messageList(widget.messages.reversed.toList(), context));
   }
 
   Widget messageList(List<Message> messages, context) {
@@ -72,7 +75,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
       shrinkWrap: true,
       itemCount: messages.length,
       separatorBuilder: (context, int index) {
-        return const SizedBox(height: 10);
+        return const Divider(
+          height: 20,
+          color: Colors.grey,
+        );
       },
       itemBuilder: (buildContext, index) {
         return userProgramItem(messages[index]);
@@ -81,6 +87,23 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   Widget userProgramItem(Message message) {
-    return Text(message.da);
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  formatDay(message.sendTime, context),
+                  style: kNormalTextBoldStyle,
+                ),
+                Text(formatTime(message.sendTime +
+                    7200)) // + 2 hours, to compensate for UTC => UTC+2
+              ])),
+      Expanded(
+          child:
+              Text(context.locale.toString() == 'en' ? message.en : message.da))
+    ]);
   }
 }

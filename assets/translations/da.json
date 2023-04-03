@@ -19,8 +19,11 @@
   },
   "drawer": {
     "settings": "Indstillinger",
-    "messages": "Beskeder",
+    "messages": "Notifikationer",
     "close": "Luk"
+  },
+  "notifications": {
+    "title": "Notifikationer fra Fastaval"
   },
   "bottomNavigation": {
     "information": "Information",

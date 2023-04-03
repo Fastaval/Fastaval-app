@@ -19,8 +19,11 @@
   },
   "drawer": {
     "settings": "Settings",
-    "messages": "Messages",
+    "messages": "Notifications",
     "close": "Close"
+  },
+  "notifications": {
+    "title": "Notifications from Fastaval"
   },
   "bottomNavigation": {
     "information": "Information",

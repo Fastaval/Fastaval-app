@@ -6,7 +6,7 @@ import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
-import 'package:fastaval_app/modules/screens/messages_screen.dart';
+import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
@@ -213,7 +213,8 @@ class HomePageState extends State<HomePageView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MessagesScreen(messages: _messages),
+                    builder: (context) =>
+                        NotificationsScreen(messages: _messages),
                   ),
                 );
               }),
