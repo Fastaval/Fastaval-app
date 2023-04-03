@@ -122,6 +122,10 @@
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
     "signOut": "Sign out",
+    "permissionsWarning": {
+      "title": "Dear user",
+      "description": "We care about your privacy and data security. This app only requests tracking permissions because we utilize a third party to help communicate with you through the notifications in the app. Please rest assured that no data is used for anything other than that."
+    },
     "alert": {
       "title": "Messages from Fastaval",
       "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",

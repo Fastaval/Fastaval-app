@@ -115,12 +115,8 @@ Future<void> askForTrackingPermission(BuildContext context) async {
 showCustomTrackingDialog(BuildContext context) async => await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Dear User'),
-        content: const Text(
-          'We care about your privacy and data security. We keep this app free by showing ads. '
-          'Can we continue to use your data to tailor ads for you?\n\nYou can change your choice anytime in the app settings. '
-          'Our partners will collect data and use a unique identifier on your device to show you ads.',
-        ),
+        title: Text(tr('login.permissionsWarning.title')),
+        content: Text(tr('login.permissionsWarning.description')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
