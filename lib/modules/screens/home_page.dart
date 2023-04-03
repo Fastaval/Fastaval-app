@@ -7,12 +7,13 @@ import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/utils/services/map_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../notifications/login_notification.dart';
+import 'package:photo_view/photo_view.dart';
 
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
@@ -20,7 +21,10 @@ class HomePageState extends State<HomePageView> {
   bool _loggedIn = false;
   int _currentIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final List mapImgList = [
+    Image.asset('assets/images/Mariagerfjord_kort_23.png'),
+    Image.asset('assets/images/Hobro_Idraetscenter_kort_23.png'),
+  ];
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
@@ -70,27 +74,16 @@ class HomePageState extends State<HomePageView> {
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
       _loggedIn
-          ? BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: tr('bottomNavigation.profil'))
-          : BottomNavigationBarItem(
-              icon: const Icon(Icons.login),
-              label: tr('bottomNavigation.login')),
-      BottomNavigationBarItem(
-          icon: const Icon(Icons.info),
-          label: tr('bottomNavigation.information')),
-      BottomNavigationBarItem(
-          icon: const Icon(Icons.calendar_view_day),
-          label: tr('bottomNavigation.program')),
-      BottomNavigationBarItem(
-          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.more'))
+          ? BottomNavigationBarItem(icon: const Icon(Icons.person), label: tr('bottomNavigation.profil'))
+          : BottomNavigationBarItem(icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
+      BottomNavigationBarItem(icon: const Icon(Icons.info), label: tr('bottomNavigation.information')),
+      BottomNavigationBarItem(icon: const Icon(Icons.calendar_view_day), label: tr('bottomNavigation.program')),
+      BottomNavigationBarItem(icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.more'))
     ];
   }
 
   Future _fetchUser() async {
-    await UserService()
-        .getUser()
-        .then((newUser) => {_user = newUser, _loggedIn = true});
+    await UserService().getUser().then((newUser) => {_user = newUser, _loggedIn = true});
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -133,9 +126,7 @@ class HomePageState extends State<HomePageView> {
                             ),
                             tooltip: tr('appbar.barcode.show'),
                             onPressed: () {
-                              UserService()
-                                  .getUser()
-                                  .then((user) => {barcode(context, user)});
+                              UserService().getUser().then((user) => {barcode(context, user)});
                             },
                           ),
                         IconButton(
@@ -143,10 +134,10 @@ class HomePageState extends State<HomePageView> {
                             Icons.map,
                             color: Colors.white,
                           ),
+                          tooltip: tr('appbar.map.show'),
                           onPressed: () {
-                            showDialog(context: context, builder: builder);
-                            Fluttertoast.showToast(
-                                msg: tr('appbar.map.noMapAvailable'));
+                            fastaMap(context);
+                            Fluttertoast.showToast(msg: tr('appbar.map.noMapAvailable'));
                           },
                         ),
                       ],
@@ -160,8 +151,7 @@ class HomePageState extends State<HomePageView> {
           //Here you place your menu items
           ListTile(
             leading: const Icon(Icons.person),
-            title: Text(tr('bottomNavigation.profil'),
-                style: const TextStyle(fontSize: 18)),
+            title: Text(tr('bottomNavigation.profil'), style: const TextStyle(fontSize: 18)),
             onTap: () {
               // Here you can give your route to navigate
             },
@@ -206,6 +196,17 @@ class HomePageState extends State<HomePageView> {
         });
   }
 
+  Future fastaMap(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return PhotoView(
+            imageProvider: AssetImage('assets/images/Hobro_Idraetscenter_kort_23.png'),
+            backgroundDecoration: BoxDecoration(color: Colors.white),
+          );
+        });
+  }
+
   Widget buildIdIcon() {
     String text;
     if (_loggedIn) {
@@ -217,30 +218,16 @@ class HomePageState extends State<HomePageView> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration:
-              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans'),
+            style: const TextStyle(fontSize: 58, fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
           ),
         ),
       ],
     );
   }
-}
-
-SimpleDialog fastaMap() {
-  return SimpleDialog(
-    children: [
-      Column(
-        children: [Text('hej')],
-      )
-    ],
-  );
 }
 
 class HomePageView extends StatefulWidget {
