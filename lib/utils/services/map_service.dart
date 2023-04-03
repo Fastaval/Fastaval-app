@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:fastaval_app/utils/services/config_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 
 final String mapUrl = ConfigService().getRemoteConfig('MAP_URL');
 const String assetName = 'assets/svg/Hobro_Idraetscenter_kort_23.svg';
@@ -17,8 +15,9 @@ class MapService {
   final Widget networkSvg = SvgPicture.network(
     'https://site-that-takes-a-while.com/image.svg',
     semanticsLabel: 'A shark?!',
-    placeholderBuilder: (BuildContext context) =>
-        Container(padding: const EdgeInsets.all(30.0), child: const CircularProgressIndicator()),
+    placeholderBuilder: (BuildContext context) => Container(
+        padding: const EdgeInsets.all(30.0),
+        child: const CircularProgressIndicator()),
   );
 
   Future<dynamic> getMaps() async {

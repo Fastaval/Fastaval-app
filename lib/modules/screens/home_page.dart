@@ -100,7 +100,8 @@ class HomePageState extends State<HomePageView> {
         .getUser()
         .then((newUser) => {_user = newUser, _loggedIn = true});
 
-    await fetchMessages().then((messages) => _messages = messages);
+    await fetchMessages().then((messages) =>
+        {_messages = messages, print('messages: ${messages.toString()}')});
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -229,7 +230,7 @@ class HomePageState extends State<HomePageView> {
           padding: const EdgeInsets.all(20),
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: _user?.id == null
+          child: !_loggedIn
               ? Image.asset('assets/images/penguin_logo.jpg', height: 68)
               : Text(
                   "${_user?.id}",
