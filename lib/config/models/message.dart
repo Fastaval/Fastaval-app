@@ -14,24 +14,17 @@ class Message {
   int sendTime;
   String en;
   String da;
-  int read;
 
-  Message(
-      {required this.sendTime,
-      required this.en,
-      required this.da,
-      this.read = 0});
+  Message({required this.sendTime, required this.en, required this.da});
 
   Message.fromJson(dynamic json)
       : sendTime = json['send_time'],
         en = json['en'],
-        da = json['da'],
-        read = json['read'] ?? 0;
+        da = json['da'];
 
   Map<String, dynamic> toJson() => {
         'send_time': sendTime,
         'en': en,
         'da': da,
-        'read': read,
       };
 }

@@ -10,6 +10,7 @@
       "show": "Display barcode"
     },
     "map": {
+      "show": "Show map",
       "noMapAvailable": "There is no map available right now"
     }
   },

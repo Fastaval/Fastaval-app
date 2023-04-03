@@ -89,7 +89,7 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
 
 Future<String> getDeviceToken() async {
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  await firebaseMessaging.requestPermission(
+  NotificationSettings settings = await firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -98,6 +98,7 @@ Future<String> getDeviceToken() async {
     provisional: false,
     sound: true,
   );
+  print('User granted permission: ${settings.authorizationStatus}');
   String? deviceToken = await firebaseMessaging.getToken();
   return (deviceToken == null) ? "" : deviceToken;
 }

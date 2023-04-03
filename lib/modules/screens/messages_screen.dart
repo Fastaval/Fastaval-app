@@ -47,9 +47,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: <Widget>[
-                          const SizedBox(height: 10.0),
+                          const SizedBox(height: 10),
                           buildMessages(),
-                          const SizedBox(height: 30.0),
+                          const SizedBox(height: 30),
                         ],
                       ),
                     ),

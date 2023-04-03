@@ -1,8 +1,10 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
+import 'package:fastaval_app/modules/notifications/message_notification.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/messages_screen.dart';
@@ -11,9 +13,9 @@ import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../notifications/login_notification.dart';
@@ -24,6 +26,7 @@ class HomePageState extends State<HomePageView> {
   late List<Message> _messages;
   bool _loggedIn = false;
   int _currentIndex = 1;
+  int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List mapImgList = [
     Image.asset('assets/images/Mariagerfjord_kort_23.png'),
@@ -35,13 +38,35 @@ class HomePageState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<UserNotification>(
+    FirebaseMessaging.onMessage.listen((event) {
+      print('incomign event');
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data.toString()}');
+
+      if (message.notification != null) {
+        print(
+            'Message also contained a notification: ${message.notification?.body}');
+      }
+    });
+
+    return NotificationListener(
       onNotification: (notification) {
-        setState(() {
-          _loggedIn = notification.loggedIn;
-          _user = notification.user;
-          _bottomNavList = _bottomNavItems();
-        });
+        if (notification is UserNotification) {
+          setState(() {
+            if (_loggedIn == false && notification.loggedIn == true) {
+              _getMessages();
+            }
+            _loggedIn = notification.loggedIn;
+            _user = notification.user;
+            _bottomNavList = _bottomNavItems();
+          });
+        }
+        if (notification is MessageNotification) {
+          print('someone sent messages');
+        }
         return false;
       },
       child: Scaffold(
@@ -62,6 +87,7 @@ class HomePageState extends State<HomePageView> {
   initState() {
     ConfigService().initConfig();
     _getUser();
+    _getMessages();
     super.initState();
   }
 
@@ -91,17 +117,25 @@ class HomePageState extends State<HomePageView> {
           icon: const Icon(Icons.calendar_view_day),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.menu_open), label: tr('bottomNavigation.more'))
+          icon: badges.Badge(
+              showBadge: _waitingMessages > 0,
+              badgeContent: Text("$_waitingMessages"),
+              child: const Icon(Icons.menu_open)),
+          label: tr('bottomNavigation.more'))
     ];
+  }
+
+  Future _getMessages() async {
+    await fetchMessages().then((messages) => {
+          _messages = messages,
+          _waitingMessages = messages.length - _messages.length
+        });
   }
 
   Future _getUser() async {
     await UserService()
         .getUser()
         .then((newUser) => {_user = newUser, _loggedIn = true});
-
-    await fetchMessages().then((messages) =>
-        {_messages = messages, print('messages: ${messages.toString()}')});
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -155,8 +189,6 @@ class HomePageState extends State<HomePageView> {
                           onPressed: () {
                             Navigator.of(context).pop();
                             fastaMap(context);
-                            Fluttertoast.showToast(
-                                msg: tr('appbar.map.noMapAvailable'));
                           },
                         ),
                       ],

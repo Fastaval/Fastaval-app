@@ -10,6 +10,7 @@
       "show": "Vis stregkode"
     },
     "map": {
+      "show": "Vis kort",
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
   },
