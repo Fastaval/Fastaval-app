@@ -5,15 +5,19 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class BoardGamePage extends StatefulWidget {
-  final List<BoardGame> boardgames;
-  const BoardGamePage({Key? key, required this.boardgames}) : super(key: key);
+  late List<BoardGame> boardgames = List.empty(growable: true);
+
+  BoardGamePage({Key? key}) : super(key: key);
 
   @override
   State<BoardGamePage> createState() => _BoardGamePageState();
 }
 
 class _BoardGamePageState extends State<BoardGamePage> {
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +42,24 @@ class _BoardGamePageState extends State<BoardGamePage> {
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
-                    children: <Widget>[
-                      const SizedBox(height: 10),
+                    children: [
+                      Padding(
+                          padding: kCardMargin,
+                          child: TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: tr("boardgames.search"),
+                              suffixIcon: IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () => _searchController.clear(),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                          )),
                       buildBoardGames(),
                       const SizedBox(height: 30),
                     ],
@@ -54,41 +74,28 @@ class _BoardGamePageState extends State<BoardGamePage> {
   }
 
   Widget buildBoardGames() {
-    return textAndIconCard(tr('notifications.title'), Icons.list_alt,
-        buildGame(widget.boardgames.reversed.toList(), context));
+    return textAndIconCard(
+        tr('boardgames.title'), Icons.list_alt, buildGame(context));
   }
 
-  Widget buildGame(List<BoardGame> games, BuildContext context) {
+  Widget buildGame(BuildContext context) {
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: games.length,
+      itemCount: widget.boardgames.length,
       separatorBuilder: (context, int index) {
-        return const Divider(
-          height: 20,
-          color: Colors.grey,
-        );
+        return const Divider(height: 20, color: Colors.grey);
       },
       itemBuilder: (buildContext, index) {
-        return boardGameItem(games[index]);
+        return boardGameItem(widget.boardgames[index]);
       },
     );
   }
 
   Widget boardGameItem(BoardGame game) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Text(
-              game.name as String,
-              style: kNormalTextBoldStyle,
-            ),
-            Text(game.fastavalGame as bool
-                ? "Fastaval spil"
-                : "") // fastaval spil
-          ])),
-      Expanded(child: Text(game.available as bool ? "Ledig" : "ikke ledig"))
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(game.name as String, style: kNormalTextBoldStyle),
+      Text(tr("boardgames.gameAvailable.${game.available}"))
     ]);
   }
 }

@@ -176,11 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "${formatDay(item.start, context)} ${formatTime(item.start)}-${formatTime(item.stop)}",
             style: kNormalTextBoldStyle),
         Flexible(
-            child: Text(
-          " @ $room $activityType",
-          style: kNormalTextStyle,
-          overflow: TextOverflow.ellipsis,
-        ))
+            child: Text(" @ $room $activityType",
+                style: kNormalTextStyle, overflow: TextOverflow.ellipsis))
       ]),
       Container(
         padding: const EdgeInsets.only(left: 10),

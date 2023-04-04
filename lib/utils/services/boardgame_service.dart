@@ -5,6 +5,7 @@ import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<BoardGame>> fetchBoardGames() async {
+  print("fetching boardgames");
   var response = await http.get(Uri.parse('$baseUrl/v1/boardgames'));
 
   if (response.statusCode == 200) {

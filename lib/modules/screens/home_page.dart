@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/models/boardgame.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
@@ -11,7 +10,6 @@ import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
-import 'package:fastaval_app/utils/services/boardgame_service.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
@@ -26,7 +24,6 @@ class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   late List<Message> _messages;
-  late List<BoardGame> _boardGames;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
@@ -97,7 +94,6 @@ class HomePageState extends State<HomePageView> {
     ConfigService().initConfig();
     _getUser();
     _getMessages();
-    _getBoardGames();
     super.initState();
   }
 
@@ -139,13 +135,6 @@ class HomePageState extends State<HomePageView> {
     var messages = await fetchMessages();
     setState(() {
       _messages = messages;
-    });
-  }
-
-  Future _getBoardGames() async {
-    var boardGames = await fetchBoardGames();
-    setState(() {
-      _boardGames = boardGames;
     });
   }
 
@@ -220,12 +209,8 @@ class HomePageState extends State<HomePageView> {
                   style: const TextStyle(fontSize: 18)),
               onTap: () => setState(() {
                 Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          BoardGamePage(boardgames: _boardGames),
-                    ));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BoardGamePage()));
               }),
             ),
             ListTile(

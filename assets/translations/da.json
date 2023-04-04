@@ -17,6 +17,11 @@
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
   },
+  "boardgames": {
+    "title": "Brætspil",
+    "search": "Søg...",
+    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" }
+  },
   "drawer": {
     "settings": "Indstillinger",
     "messages": "Notifikationer",

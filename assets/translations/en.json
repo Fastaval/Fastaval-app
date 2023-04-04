@@ -17,6 +17,11 @@
       "noMapAvailable": "There is no map available right now"
     }
   },
+  "boardgames": {
+    "title": "Boardgames",
+    "search": "Search...",
+    "gameAvailable": { "true": "Available", "false": "Not available" }
+  },
   "drawer": {
     "settings": "Settings",
     "messages": "Notifications",
