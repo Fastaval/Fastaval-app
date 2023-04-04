@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -116,11 +114,18 @@ class HomePageState extends State<HomePageView> {
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
       if (_loggedIn == true)
-        BottomNavigationBarItem(icon: const Icon(Icons.person), label: tr('bottomNavigation.profil')),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.person),
+            label: tr('bottomNavigation.profil')),
       if (_loggedIn == false)
-        BottomNavigationBarItem(icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
-      BottomNavigationBarItem(icon: const Icon(Icons.info), label: tr('bottomNavigation.information')),
-      BottomNavigationBarItem(icon: const Icon(Icons.calendar_view_day), label: tr('bottomNavigation.program')),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: tr('bottomNavigation.information')),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.calendar_view_day),
+          label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
           icon: badges.Badge(
               showBadge: _waitingMessages > 0,
@@ -145,7 +150,9 @@ class HomePageState extends State<HomePageView> {
   }
 
   Future _getUser() async {
-    await UserService().getUser().then((newUser) => {_user = newUser, _loggedIn = true});
+    await UserService()
+        .getUser()
+        .then((newUser) => {_user = newUser, _loggedIn = true});
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -178,7 +185,10 @@ class HomePageState extends State<HomePageView> {
                     Text(
                       tr('profile.participantNumber'),
                       style: const TextStyle(
-                          color: Colors.white, fontFamily: 'OpenSans', fontSize: 20, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ])
                 ],
@@ -186,8 +196,11 @@ class HomePageState extends State<HomePageView> {
             ),
             if (_loggedIn)
               ListTile(
-                leading: badges.Badge(showBadge: _waitingMessages > 0, child: const Icon(Icons.mail)),
-                title: Text(tr('drawer.messages'), style: const TextStyle(fontSize: 18)),
+                leading: badges.Badge(
+                    showBadge: _waitingMessages > 0,
+                    child: const Icon(Icons.mail)),
+                title: Text(tr('drawer.messages'),
+                    style: const TextStyle(fontSize: 18)),
                 onTap: () => setState(() {
                   Navigator.of(context).pop();
                   _waitingMessages = 0;
@@ -195,54 +208,65 @@ class HomePageState extends State<HomePageView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NotificationsScreen(messages: _messages),
+                      builder: (context) =>
+                          NotificationsScreen(messages: _messages),
                     ),
                   );
                 }),
               ),
             ListTile(
+              leading: const Icon(Icons.sports_esports),
+              title: Text(tr('drawer.boardgames'),
+                  style: const TextStyle(fontSize: 18)),
+              onTap: () => setState(() {
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BoardGamePage(boardgames: _boardGames),
+                    ));
+              }),
+            ),
+            ListTile(
                 leading: const Icon(Icons.school),
-                title: Text(tr('drawer.mapSchool'), style: const TextStyle(fontSize: 18)),
+                title: Text(tr('drawer.mapSchool'),
+                    style: const TextStyle(fontSize: 18)),
                 onTap: () => {
                       Navigator.of(context).pop(),
                       fastaMap(
                         context,
-                        const AssetImage('assets/images/Mariagerfjord_kort_23.png'),
+                        const AssetImage(
+                            'assets/images/Mariagerfjord_kort_23.png'),
                       )
                     }),
             ListTile(
                 leading: const Icon(Icons.sports_tennis),
-                title: Text(tr('drawer.mapGym'), style: const TextStyle(fontSize: 18)),
+                title: Text(tr('drawer.mapGym'),
+                    style: const TextStyle(fontSize: 18)),
                 onTap: () => {
                       Navigator.of(context).pop(),
-                      fastaMap(context, const AssetImage('assets/images/Hobro_Idraetscenter_kort_23.png'))
+                      fastaMap(
+                          context,
+                          const AssetImage(
+                              'assets/images/Hobro_Idraetscenter_kort_23.png'))
                     }),
-            ListTile(
-              leading: badges.Badge(showBadge: _waitingMessages > 0, child: const Icon(Icons.mail)),
-              title: Text(tr('drawer.boardGames'), style: const TextStyle(fontSize: 18)),
-              onTap: () => setState(() {
-                Navigator.of(context).pop();
-                _waitingMessages = 0;
-                _bottomNavList = _bottomNavItems();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BoardGamePage(
-                        boardgames: _boardGames,
-                      ),
-                    ));
-              }),
-            ),
             const SizedBox(height: 60),
             if (_loggedIn)
               ListTile(
                   leading: const Icon(CupertinoIcons.barcode),
-                  title: Text(tr('drawer.barcode'), style: const TextStyle(fontSize: 18)),
-                  onTap: () =>
-                      {Navigator.of(context).pop(), UserService().getUser().then((user) => barcode(context, user))}),
+                  title: Text(tr('drawer.barcode'),
+                      style: const TextStyle(fontSize: 18)),
+                  onTap: () => {
+                        Navigator.of(context).pop(),
+                        UserService()
+                            .getUser()
+                            .then((user) => barcode(context, user))
+                      }),
             ListTile(
                 leading: const Icon(Icons.close),
-                title: Text(tr('drawer.close'), style: const TextStyle(fontSize: 18)),
+                title: Text(tr('drawer.close'),
+                    style: const TextStyle(fontSize: 18)),
                 onTap: () => Navigator.of(context).pop()),
           ],
         ),
@@ -300,13 +324,17 @@ class HomePageState extends State<HomePageView> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          decoration:
+              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: !_loggedIn
               ? Image.asset('assets/images/penguin_logo.jpg', height: 68)
               : Text(
                   "${_user?.id}",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 58, fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
+                  style: const TextStyle(
+                      fontSize: 58,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans'),
                 ),
         ),
       ],

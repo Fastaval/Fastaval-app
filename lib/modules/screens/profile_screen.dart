@@ -164,16 +164,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var title =
         context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
-    var activityType =
-        item.activityType != null && item.activityType != 'ottoviteter'
-            ? "- ${tr('profile.activityType.${item.activityType}')}"
-            : '';
+    var activityType = item.activityType != null &&
+            (item.activityType == 'ottoviteter' ||
+                item.activityType == 'system')
+        ? ''
+        : "- ${tr('profile.activityType.${item.activityType}')}";
 
     return Column(children: [
       Row(children: [
-        Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
+        Text(
+            "${formatDay(item.start, context)} ${formatTime(item.start)}-${formatTime(item.stop)}",
             style: kNormalTextBoldStyle),
-        Text(" @ $room $activityType", style: kNormalTextStyle)
+        Flexible(
+            child: Text(
+          " @ $room $activityType",
+          style: kNormalTextStyle,
+          overflow: TextOverflow.ellipsis,
+        ))
       ]),
       Container(
         padding: const EdgeInsets.only(left: 10),

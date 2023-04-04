@@ -20,7 +20,7 @@ class _BoardGamePageState extends State<BoardGamePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: const BackButton(),
-        title: Text(tr('drawer.boardGame')),
+        title: Text(tr('drawer.boardgames')),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -54,8 +54,8 @@ class _BoardGamePageState extends State<BoardGamePage> {
   }
 
   Widget buildBoardGames() {
-    return textAndIconCard(
-        tr('notifications.title'), Icons.list_alt, buildGame(widget.boardgames.reversed.toList(), context));
+    return textAndIconCard(tr('notifications.title'), Icons.list_alt,
+        buildGame(widget.boardgames.reversed.toList(), context));
   }
 
   Widget buildGame(List<BoardGame> games, BuildContext context) {
@@ -84,7 +84,9 @@ class _BoardGamePageState extends State<BoardGamePage> {
               game.name as String,
               style: kNormalTextBoldStyle,
             ),
-            Text(game.fastavalGame as bool ? "Fastaval spil" : "") // fastaval spil
+            Text(game.fastavalGame as bool
+                ? "Fastaval spil"
+                : "") // fastaval spil
           ])),
       Expanded(child: Text(game.available as bool ? "Ledig" : "ikke ledig"))
     ]);
