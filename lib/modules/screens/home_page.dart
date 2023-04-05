@@ -5,12 +5,13 @@ import 'package:fastaval_app/config/models/boardgame.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
-import 'package:fastaval_app/modules/screens/boardgames_page.dart';
+import 'package:fastaval_app/modules/screens/boardgame_screen.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
+import 'package:fastaval_app/utils/services/boardgame_service.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
@@ -25,7 +26,8 @@ class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   late List<Message> _messages;
-  late List<BoardGame> _boardgames;
+  late List<Boardgame> _boardgames;
+  late int _boardgameFetchTime;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
@@ -62,6 +64,10 @@ class HomePageState extends State<HomePageView> {
 
     return NotificationListener(
       onNotification: (notification) {
+        if (notification is UserScrollNotification) return false;
+        if (notification is OverscrollNotification) return false;
+        if (notification is OverscrollIndicatorNotification) return false;
+
         if (notification is UserNotification) {
           setState(() {
             if (_loggedIn == false && notification.loggedIn == true) {
@@ -75,6 +81,7 @@ class HomePageState extends State<HomePageView> {
             _bottomNavList = _bottomNavItems();
           });
         }
+
         return false;
       },
       child: Scaffold(
@@ -96,6 +103,7 @@ class HomePageState extends State<HomePageView> {
     ConfigService().initConfig();
     _getUser();
     _getMessages();
+    _getBoardgames();
     super.initState();
   }
 
@@ -137,6 +145,15 @@ class HomePageState extends State<HomePageView> {
     var messages = await fetchMessages();
     setState(() {
       _messages = messages;
+    });
+  }
+
+  Future _getBoardgames() async {
+    var boardgames = await fetchBoardgames();
+    setState(() {
+      _boardgameFetchTime =
+          (DateTime.now().millisecondsSinceEpoch / 1000).round();
+      _boardgames = List.from(boardgames);
     });
   }
 
@@ -209,15 +226,17 @@ class HomePageState extends State<HomePageView> {
               leading: const Icon(Icons.sports_esports),
               title: Text(tr('drawer.boardgames'),
                   style: const TextStyle(fontSize: 18)),
-              onTap: () => setState(() {
+              onTap: () {
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          BoardGamePage(boardgames: _boardgames)),
+                      builder: (context) => BoardgameScreen(
+                            boardgames: _boardgames,
+                            updateTime: _boardgameFetchTime,
+                          )),
                 );
-              }),
+              },
             ),
             ListTile(
                 leading: const Icon(Icons.school),

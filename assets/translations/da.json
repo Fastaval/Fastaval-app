@@ -3,7 +3,8 @@
     "login": "Fejl i brugernavn eller password"
   },
   "common": {
-    "close": "Luk"
+    "close": "Luk",
+    "updated": "Opdateret"
   },
   "app": {
     "title": "Fastaval"
@@ -56,7 +57,7 @@
         "title": "Baren"
       },
       "boardGames": {
-        "day1": "Ons-Lør",
+        "day1": "Tor-Lør",
         "day2": "Søndag",
         "title": "Brætspilscaféen"
       },

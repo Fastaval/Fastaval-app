@@ -3,7 +3,8 @@
     "login": "Error in participant number or password"
   },
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "updated": "Updated"
   },
   "app": {
     "title": "Fastaval"
@@ -56,14 +57,14 @@
         "title": "The Bar"
       },
       "boardGames": {
-        "day1": "Wed-Sat",
+        "day1": "Thu-Sat",
         "day2": "Sunday",
         "title": "The Board Game Café"
       },
       "coffeeCafe": {
         "day1": "Wednesday",
         "day2": "Thu-Sat",
-        "day3": "Sun",
+        "day3": "Sunday",
         "title": "Otto's Coffee Inn"
       },
       "information": {
