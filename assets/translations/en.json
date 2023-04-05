@@ -3,7 +3,11 @@
     "login": "Error in participant number or password"
   },
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "updated": "Updated",
+    "time": "Time",
+    "place": "Place",
+    "type": "Type"
   },
   "app": {
     "title": "Fastaval"
@@ -17,16 +21,23 @@
       "noMapAvailable": "There is no map available right now"
     }
   },
+  "boardgames": {
+    "title": "Board games",
+    "search": "Search...",
+    "gameAvailable": { "true": "Available", "false": "Not available" },
+    "fastavalGame": "is a Fastaval game"
+  },
   "drawer": {
     "settings": "Settings",
     "messages": "Notifications",
-    "barcode": "Vis stregkode",
+    "barcode": "Show Barcode",
+    "boardgames": "Board games",
     "mapSchool": "Show map of school",
     "mapGym": "Show map of sportscentre",
     "close": "Close"
   },
   "notifications": {
-    "title": "Notifications from Fastaval"
+    "title": "Notifications"
   },
   "bottomNavigation": {
     "information": "Information",
@@ -50,14 +61,14 @@
         "title": "The Bar"
       },
       "boardGames": {
-        "day1": "Wed-Sat",
+        "day1": "Thu-Sat",
         "day2": "Sunday",
         "title": "The Board Game Café"
       },
       "coffeeCafe": {
         "day1": "Wednesday",
         "day2": "Thu-Sat",
-        "day3": "Sun",
+        "day3": "Sunday",
         "title": "Otto's Coffee Inn"
       },
       "information": {
@@ -152,7 +163,9 @@
       "spilleder": "Game Master",
       "gds": "Hero Force",
       "braet": "Boardgame",
-      "junior": "Junior"
+      "junior": "Junior",
+      "ottoviteter": "Ottotivity",
+      "system": "Fastativity"
     }
   },
   "program": {

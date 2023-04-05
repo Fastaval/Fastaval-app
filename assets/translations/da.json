@@ -3,7 +3,11 @@
     "login": "Fejl i brugernavn eller password"
   },
   "common": {
-    "close": "Luk"
+    "close": "Luk",
+    "updated": "Opdateret",
+    "time": "Tidspunkt",
+    "place": "Sted",
+    "type": "Type"
   },
   "app": {
     "title": "Fastaval"
@@ -17,16 +21,23 @@
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
   },
+  "boardgames": {
+    "title": "Brætspil",
+    "search": "Søg...",
+    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" },
+    "fastavalGame": "Er et Fastaval spil"
+  },
   "drawer": {
     "settings": "Indstillinger",
     "messages": "Notifikationer",
     "barcode": "Vis stregkode",
+    "boardgames": "Brætspil",
     "mapSchool": "Vis kort over skolen",
     "mapGym": "Vis kort over idrætshallen",
     "close": "Luk"
   },
   "notifications": {
-    "title": "Notifikationer fra Fastaval"
+    "title": "Notifikationer"
   },
   "bottomNavigation": {
     "information": "Information",
@@ -50,7 +61,7 @@
         "title": "Baren"
       },
       "boardGames": {
-        "day1": "Ons-Lør",
+        "day1": "Tor-Lør",
         "day2": "Søndag",
         "title": "Brætspilscaféen"
       },
@@ -152,7 +163,9 @@
       "spilleder": "Spilleder",
       "gds": "Heltestyrke",
       "braet": "Brætspil",
-      "junior": "Junior"
+      "junior": "Junior",
+      "ottoviteter": "Ottovitet",
+      "system": "Fastavitet"
     }
   },
   "program": {

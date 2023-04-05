@@ -1,14 +1,17 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/models/message.dart';
+import 'package:fastaval_app/config/models/boardgame.dart';
+import 'package:fastaval_app/config/models/notification.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
+import 'package:fastaval_app/modules/screens/boardgame_screen.dart';
 import 'package:fastaval_app/modules/screens/info_screen.dart';
 import 'package:fastaval_app/modules/screens/login_screen.dart';
 import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
+import 'package:fastaval_app/utils/services/boardgame_service.dart';
 import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
@@ -22,15 +25,14 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
-  late List<Message> _messages;
+  late List<InfosysNotification> _notifications;
+  late int __notificationsFetchTime;
+  late List<Boardgame> _boardgames;
+  late int _boardgameFetchTime;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List mapImgList = [
-    Image.asset('assets/images/Mariagerfjord_kort_23.png'),
-    Image.asset('assets/images/Hobro_Idraetscenter_kort_23.png'),
-  ];
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
@@ -59,6 +61,10 @@ class HomePageState extends State<HomePageView> {
 
     return NotificationListener(
       onNotification: (notification) {
+        if (notification is UserScrollNotification) return false;
+        if (notification is OverscrollNotification) return false;
+        if (notification is OverscrollIndicatorNotification) return false;
+
         if (notification is UserNotification) {
           setState(() {
             if (_loggedIn == false && notification.loggedIn == true) {
@@ -72,6 +78,7 @@ class HomePageState extends State<HomePageView> {
             _bottomNavList = _bottomNavItems();
           });
         }
+
         return false;
       },
       child: Scaffold(
@@ -93,6 +100,7 @@ class HomePageState extends State<HomePageView> {
     ConfigService().initConfig();
     _getUser();
     _getMessages();
+    _getBoardgames();
     super.initState();
   }
 
@@ -131,9 +139,20 @@ class HomePageState extends State<HomePageView> {
   }
 
   Future _getMessages() async {
-    var messages = await fetchMessages();
+    var notifications = await fetchMessages();
     setState(() {
-      _messages = messages;
+      __notificationsFetchTime =
+          (DateTime.now().millisecondsSinceEpoch / 1000).round();
+      _notifications = notifications;
+    });
+  }
+
+  Future _getBoardgames() async {
+    var boardgames = await fetchBoardgames();
+    setState(() {
+      _boardgameFetchTime =
+          (DateTime.now().millisecondsSinceEpoch / 1000).round();
+      _boardgames = List.from(boardgames);
     });
   }
 
@@ -159,88 +178,109 @@ class HomePageState extends State<HomePageView> {
   Drawer drawMenu(BuildContext context) {
     return Drawer(
       elevation: 10.0,
-      child: ListView(
-        children: [
-          DrawerHeader(
-            decoration: backgroundBoxDecorationStyle,
-            padding: const EdgeInsetsDirectional.all(0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(children: [
-                  buildIdIcon(),
-                  Text(
-                    tr('profile.participantNumber'),
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'OpenSans',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ])
-              ],
+      child: SafeArea(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: backgroundBoxDecorationStyle,
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(children: [
+                    buildIdIcon(),
+                    Text(
+                      tr('profile.participantNumber'),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ])
+                ],
+              ),
             ),
-          ),
-          if (_loggedIn)
+            if (_loggedIn)
+              ListTile(
+                leading: badges.Badge(
+                    showBadge: _waitingMessages > 0,
+                    child: const Icon(Icons.mail)),
+                title: Text(tr('drawer.messages'),
+                    style: const TextStyle(fontSize: 18)),
+                onTap: () => setState(() {
+                  Navigator.of(context).pop();
+                  _waitingMessages = 0;
+                  _bottomNavList = _bottomNavItems();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationsScreen(
+                        notifications: _notifications,
+                        updateTime: __notificationsFetchTime,
+                      ),
+                    ),
+                  );
+                }),
+              ),
             ListTile(
-              leading: badges.Badge(
-                  showBadge: _waitingMessages > 0,
-                  child: const Icon(Icons.mail)),
-              title: Text(tr('drawer.messages'),
+              leading: const Icon(Icons.sports_esports),
+              title: Text(tr('drawer.boardgames'),
                   style: const TextStyle(fontSize: 18)),
-              onTap: () => setState(() {
+              onTap: () {
                 Navigator.of(context).pop();
-                _waitingMessages = 0;
-                _bottomNavList = _bottomNavItems();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        NotificationsScreen(messages: _messages),
-                  ),
+                      builder: (context) => BoardgameScreen(
+                            boardgames: _boardgames,
+                            updateTime: _boardgameFetchTime,
+                          )),
                 );
-              }),
+              },
             ),
-          ListTile(
-              leading: const Icon(Icons.school),
-              title: Text(tr('drawer.mapSchool'),
-                  style: const TextStyle(fontSize: 18)),
-              onTap: () => {
-                    Navigator.of(context).pop(),
-                    fastaMap(
-                      context,
-                      const AssetImage(
-                          'assets/images/Mariagerfjord_kort_23.png'),
-                    )
-                  }),
-          ListTile(
-              leading: const Icon(Icons.sports_tennis),
-              title: Text(tr('drawer.mapGym'),
-                  style: const TextStyle(fontSize: 18)),
-              onTap: () => {
-                    Navigator.of(context).pop(),
-                    fastaMap(
+            ListTile(
+                leading: const Icon(Icons.school),
+                title: Text(tr('drawer.mapSchool'),
+                    style: const TextStyle(fontSize: 18)),
+                onTap: () => {
+                      Navigator.of(context).pop(),
+                      fastaMap(
                         context,
                         const AssetImage(
-                            'assets/images/Hobro_Idraetscenter_kort_23.png'))
-                  }),
-          const SizedBox(height: 60),
-          ListTile(
-              leading: const Icon(CupertinoIcons.barcode),
-              title: Text(tr('drawer.barcode'),
-                  style: const TextStyle(fontSize: 18)),
-              onTap: () => {
-                    Navigator.of(context).pop(),
-                    UserService()
-                        .getUser()
-                        .then((user) => barcode(context, user))
-                  }),
-          ListTile(
-              leading: const Icon(Icons.close),
-              title: Text(tr('drawer.close'),
-                  style: const TextStyle(fontSize: 18)),
-              onTap: () => Navigator.of(context).pop()),
-        ],
+                            'assets/images/Mariagerfjord_kort_23.jpg'),
+                      )
+                    }),
+            ListTile(
+                leading: const Icon(Icons.sports_tennis),
+                title: Text(tr('drawer.mapGym'),
+                    style: const TextStyle(fontSize: 18)),
+                onTap: () => {
+                      Navigator.of(context).pop(),
+                      fastaMap(
+                          context,
+                          const AssetImage(
+                              'assets/images/Hobro_Idraetscenter_kort_23.jpg'))
+                    }),
+            const SizedBox(height: 60),
+            if (_loggedIn)
+              ListTile(
+                  leading: const Icon(CupertinoIcons.barcode),
+                  title: Text(tr('drawer.barcode'),
+                      style: const TextStyle(fontSize: 18)),
+                  onTap: () => {
+                        Navigator.of(context).pop(),
+                        UserService()
+                            .getUser()
+                            .then((user) => barcode(context, user))
+                      }),
+            ListTile(
+                leading: const Icon(Icons.close),
+                title: Text(tr('drawer.close'),
+                    style: const TextStyle(fontSize: 18)),
+                onTap: () => Navigator.of(context).pop()),
+          ],
+        ),
       ),
     );
   }

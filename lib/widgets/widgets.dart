@@ -23,6 +23,20 @@ Widget textAndIconCard(String title, IconData icon, content) {
       ]));
 }
 
+Widget textAndTextCard(String title, Text secondaryTitle, content) {
+  return Card(
+      margin: kCardMargin,
+      elevation: kCardElevation,
+      child: Column(children: [
+        ListTile(
+            trailing: secondaryTitle,
+            title: Text(title, style: kCardHeaderStyle)),
+        Row(children: [
+          Expanded(child: Padding(padding: kCardContentPadding, child: content))
+        ])
+      ]));
+}
+
 Widget textRowHeader(String text) {
   return Row(mainAxisSize: MainAxisSize.max, children: [
     Expanded(

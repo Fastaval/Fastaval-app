@@ -57,7 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           const SizedBox(height: 10.0),
                           buildIdIcon(),
-                          buildUserMessagesCard(),
+                          if (widget.user.messages!.isNotEmpty)
+                            buildUserMessagesCard(),
                           buildUserProgramCard(),
                           if (widget.user.food!.isNotEmpty)
                             buildUserFoodTimesCard(),
@@ -164,26 +165,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var title =
         context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
     var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
-    var activityType =
-        item.activityType != null && item.activityType != 'ottoviteter'
-            ? "- ${tr('profile.activityType.${item.activityType}')}"
-            : '';
+    var activityType = item.activityType != null &&
+            (item.activityType == 'ottoviteter' ||
+                item.activityType == 'system')
+        ? ''
+        : "- ${tr('profile.activityType.${item.activityType}')}";
 
-    return Column(children: [
-      Row(children: [
-        Text("${formatDay(item.start, context)} ${formatTime(item.start)}",
-            style: kNormalTextBoldStyle),
-        Text(" @ $room $activityType", style: kNormalTextStyle)
-      ]),
-      Container(
-        padding: const EdgeInsets.only(left: 10),
-        child: Row(children: [
-          Expanded(
-              child: Text(title,
-                  overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
-        ]),
-      ),
-    ]);
+    return InkWell(
+        onTap: () => showDialog(
+            context: context,
+            builder: activityDialog,
+            routeSettings: RouteSettings(arguments: item)),
+        child: Column(children: [
+          Row(children: [
+            Text(
+                "${formatDay(item.start, context)} ${formatTime(item.start)}-${formatTime(item.stop)}",
+                style: kNormalTextBoldStyle),
+            Flexible(
+                child: Text(" @ $room $activityType",
+                    style: kNormalTextSubdued, overflow: TextOverflow.ellipsis))
+          ]),
+          Container(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(children: [
+              Flexible(
+                  child: Text(title,
+                      overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
+            ]),
+          ),
+          const SizedBox(height: 10),
+          const Divider(height: 1, color: Colors.grey)
+        ]));
   }
 
   Widget foodTickets(List<Food> food) {
@@ -248,6 +260,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return 'assets/images/lunch.jpg';
   }
 
+  getActivityImage(Scheduling item) {
+    switch (item.activityType) {
+      case 'gds':
+        return 'assets/images/gds.jpg';
+      case 'spilleder':
+        return 'assets/images/gamemaster.jpg';
+      case 'rolle':
+        return 'assets/images/player.jpg';
+      case 'braet':
+        return 'assets/images/boardgame.jpg';
+      case 'junior':
+        return 'assets/images/junior.jpg';
+      default:
+        return 'assets/images/fastaval.jpg';
+    }
+  }
+
   Color getBackgroundColor(Food item) {
     if (item.received == 1) return const Color(0xFFDFE0DF);
     if (item.titleEn.contains('Dinner')) return const Color(0xFF00BBE2);
@@ -298,5 +327,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (foodAvailable)
             Text(tr('profile.scanBarcode'), style: kNormalTextSubdued)
         ]));
+  }
+
+  Widget activityDialog(BuildContext context) {
+    final item = ModalRoute.of(context)!.settings.arguments as Scheduling;
+
+    return AlertDialog(
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(tr('common.close')))
+        ],
+        titlePadding: const EdgeInsets.all(0),
+        title: Column(children: [
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                image: DecorationImage(
+                    image: AssetImage(getActivityImage(item)),
+                    fit: BoxFit.cover),
+              ),
+              height: 100),
+          const SizedBox(height: 5),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Text(context.locale.toString() == 'en'
+                  ? item.titleEn!
+                  : item.titleDa!))
+        ]),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Text('${tr('common.time')}: ', style: kNormalTextBoldStyle),
+                Text(
+                    "${formatDay(item.start, context)} ${formatTime(item.start)} - ${formatTime(item.stop)}")
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
+                Text(context.locale.toString() == 'en'
+                    ? item.roomEn!
+                    : item.roomDa!)
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${tr('common.type')}: ', style: kNormalTextBoldStyle),
+                Flexible(
+                    child:
+                        Text(tr('profile.activityType.${item.activityType}')))
+              ],
+            )
+          ],
+        ));
   }
 }
