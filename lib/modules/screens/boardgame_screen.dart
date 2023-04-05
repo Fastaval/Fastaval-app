@@ -113,10 +113,7 @@ class _BoardgameScreen extends State<BoardgameScreen> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: filteredList.length,
-      prototypeItem: boardGameItem(filteredList.first),
-/*       separatorBuilder: (context, int index) {
-        return const Divider(height: 20, color: Colors.grey);
-      }, */
+      prototypeItem: boardGameItem(boardgameList.first),
       itemBuilder: (buildContext, index) {
         return boardGameItem(filteredList[index]);
       },

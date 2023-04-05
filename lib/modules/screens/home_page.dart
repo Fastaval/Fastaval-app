@@ -2,7 +2,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/models/boardgame.dart';
-import 'package:fastaval_app/config/models/message.dart';
+import 'package:fastaval_app/config/models/notification.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/screens/boardgame_screen.dart';
@@ -25,17 +25,14 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
-  late List<Message> _messages;
+  late List<InfosysNotification> _notifications;
+  late int __notificationsFetchTime;
   late List<Boardgame> _boardgames;
   late int _boardgameFetchTime;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List mapImgList = [
-    Image.asset('assets/images/Mariagerfjord_kort_23.png'),
-    Image.asset('assets/images/Hobro_Idraetscenter_kort_23.png'),
-  ];
   void _openDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
@@ -142,9 +139,11 @@ class HomePageState extends State<HomePageView> {
   }
 
   Future _getMessages() async {
-    var messages = await fetchMessages();
+    var notifications = await fetchMessages();
     setState(() {
-      _messages = messages;
+      __notificationsFetchTime =
+          (DateTime.now().millisecondsSinceEpoch / 1000).round();
+      _notifications = notifications;
     });
   }
 
@@ -216,8 +215,10 @@ class HomePageState extends State<HomePageView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          NotificationsScreen(messages: _messages),
+                      builder: (context) => NotificationsScreen(
+                        notifications: _notifications,
+                        updateTime: __notificationsFetchTime,
+                      ),
                     ),
                   );
                 }),
@@ -247,7 +248,7 @@ class HomePageState extends State<HomePageView> {
                       fastaMap(
                         context,
                         const AssetImage(
-                            'assets/images/Mariagerfjord_kort_23.png'),
+                            'assets/images/Mariagerfjord_kort_23.jpg'),
                       )
                     }),
             ListTile(
@@ -259,7 +260,7 @@ class HomePageState extends State<HomePageView> {
                       fastaMap(
                           context,
                           const AssetImage(
-                              'assets/images/Hobro_Idraetscenter_kort_23.png'))
+                              'assets/images/Hobro_Idraetscenter_kort_23.jpg'))
                     }),
             const SizedBox(height: 60),
             if (_loggedIn)

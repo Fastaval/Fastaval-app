@@ -4,7 +4,10 @@
   },
   "common": {
     "close": "Luk",
-    "updated": "Opdateret"
+    "updated": "Opdateret",
+    "time": "Tidspunkt",
+    "place": "Sted",
+    "type": "Type"
   },
   "app": {
     "title": "Fastaval"
@@ -33,7 +36,7 @@
     "close": "Luk"
   },
   "notifications": {
-    "title": "Notifikationer fra Fastaval"
+    "title": "Notifikationer"
   },
   "bottomNavigation": {
     "information": "Information",
@@ -159,7 +162,8 @@
       "spilleder": "Spilleder",
       "gds": "Heltestyrke",
       "braet": "Brætspil",
-      "junior": "Junior"
+      "junior": "Junior",
+      "ottoviteter": "Ottovitet"
     }
   },
   "program": {

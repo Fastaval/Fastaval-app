@@ -1,15 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/config/helpers/formatting.dart';
-import 'package:fastaval_app/config/models/message.dart';
+import 'package:fastaval_app/config/models/notification.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
+import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  final List<Message> messages;
+  final List<InfosysNotification> notifications;
+  final int updateTime;
 
-  const NotificationsScreen({Key? key, required this.messages})
+  const NotificationsScreen(
+      {Key? key, required this.notifications, required this.updateTime})
       : super(key: key);
 
   @override
@@ -17,6 +20,9 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+  late List<InfosysNotification> notificationList = widget.notifications;
+  late int listUpdatedAt = widget.updateTime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,18 +43,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 decoration: backgroundBoxDecorationStyle,
               ),
               SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(height: 10),
-                      buildMessages(),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              )
+                  height: double.infinity,
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      fetchMessages().then((notificationList) => {
+                            setState(() {
+                              notificationList = notificationList;
+                              listUpdatedAt =
+                                  (DateTime.now().millisecondsSinceEpoch / 1000)
+                                      .round();
+                            }),
+                          });
+                    },
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: [
+                          buildMessages(),
+                          const SizedBox(height: 30),
+                        ],
+                      ),
+                    ),
+                  ))
             ],
           ),
         ),
@@ -57,15 +73,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget buildMessages() {
-    return textAndIconCard(tr('notifications.title'), Icons.speaker_notes,
-        messageList(widget.messages.reversed.toList(), context));
+    return textAndTextCard(
+        tr('notifications.title'),
+        Text(
+          "${tr('common.updated')} ${formatDay(listUpdatedAt, context)} ${formatTime(listUpdatedAt)}",
+          style: kNormalTextSubdued,
+        ),
+        listWidget(widget.notifications.reversed.toList(), context));
   }
 
-  Widget messageList(List<Message> messages, context) {
+  Widget listWidget(List<InfosysNotification> notifications, context) {
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: messages.length,
+      itemCount: notifications.length,
       separatorBuilder: (context, int index) {
         return const Divider(
           height: 20,
@@ -73,12 +94,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         );
       },
       itemBuilder: (buildContext, index) {
-        return userProgramItem(messages[index]);
+        return userProgramItem(notifications[index]);
       },
     );
   }
 
-  Widget userProgramItem(Message message) {
+  Widget userProgramItem(InfosysNotification notification) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
           padding: const EdgeInsets.only(right: 10),
@@ -87,15 +108,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  formatDay(message.sendTime, context),
+                  formatDay(notification.sendTime, context),
                   style: kNormalTextBoldStyle,
                 ),
-                Text(formatTime(message.sendTime +
+                Text(formatTime(notification.sendTime +
                     7200)) // + 2 hours, to compensate for UTC => UTC+2
               ])),
       Expanded(
-          child:
-              Text(context.locale.toString() == 'en' ? message.en : message.da))
+          child: Text(context.locale.toString() == 'en'
+              ? notification.en
+              : notification.da))
     ]);
   }
 }
