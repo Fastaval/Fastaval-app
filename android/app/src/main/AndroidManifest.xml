@@ -2,7 +2,7 @@
     package="dk.alea.fastaval.fastaval_app">
   <uses-permission android:name="android.permission.INTERNET" />
   <application
-        android:label="Fastavappen"
+        android:label="Fastaval"
         android:icon="@mipmap/penguin_logo">
         <activity
             android:name=".MainActivity"
