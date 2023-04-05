@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/config/models/boardgame.dart';
 import 'package:fastaval_app/config/models/message.dart';
 import 'package:fastaval_app/config/models/user.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
@@ -24,6 +25,7 @@ class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   late List<Message> _messages;
+  late List<BoardGame> _boardgames;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
@@ -209,8 +211,12 @@ class HomePageState extends State<HomePageView> {
                   style: const TextStyle(fontSize: 18)),
               onTap: () => setState(() {
                 Navigator.of(context).pop();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BoardGamePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          BoardGamePage(boardgames: _boardgames)),
+                );
               }),
             ),
             ListTile(

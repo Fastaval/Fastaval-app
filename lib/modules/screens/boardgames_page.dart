@@ -5,11 +5,10 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ignore: must_be_immutable
 class BoardGamePage extends StatefulWidget {
-  late List<BoardGame> boardgames = List.empty(growable: true);
+  final List<BoardGame> boardgames;
 
-  BoardGamePage({Key? key}) : super(key: key);
+  const BoardGamePage({Key? key, required this.boardgames}) : super(key: key);
 
   @override
   State<BoardGamePage> createState() => _BoardGamePageState();
