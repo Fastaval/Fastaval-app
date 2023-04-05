@@ -129,7 +129,11 @@ class _BoardgameScreen extends State<BoardgameScreen> {
             style: kNormalTextBoldStyle,
             overflow: TextOverflow.ellipsis,
           ),
-          Text(tr("boardgames.gameAvailable.${game.available}")),
+          Row(children: [
+            Text(tr("boardgames.gameAvailable.${game.available}")),
+            if (game.fastavalGame == true)
+              Text(" - ${tr('boardgames.fastavalGame')}"),
+          ]),
           const SizedBox(height: 10),
           const Divider(height: 1, color: Colors.grey)
         ]));

@@ -24,7 +24,8 @@
   "boardgames": {
     "title": "Brætspil",
     "search": "Søg...",
-    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" }
+    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" },
+    "fastavalGame": "Er et Fastaval spil"
   },
   "drawer": {
     "settings": "Indstillinger",
@@ -163,7 +164,8 @@
       "gds": "Heltestyrke",
       "braet": "Brætspil",
       "junior": "Junior",
-      "ottoviteter": "Ottovitet"
+      "ottoviteter": "Ottovitet",
+      "system": "Fastavitet"
     }
   },
   "program": {

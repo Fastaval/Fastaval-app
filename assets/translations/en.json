@@ -24,7 +24,8 @@
   "boardgames": {
     "title": "Board games",
     "search": "Search...",
-    "gameAvailable": { "true": "Available", "false": "Not available" }
+    "gameAvailable": { "true": "Available", "false": "Not available" },
+    "fastavalGame": "is a Fastaval game"
   },
   "drawer": {
     "settings": "Settings",
@@ -163,7 +164,8 @@
       "gds": "Hero Force",
       "braet": "Boardgame",
       "junior": "Junior",
-      "ottoviteter": "Ottotivity"
+      "ottoviteter": "Ottotivity",
+      "system": "Fastativity"
     }
   },
   "program": {
