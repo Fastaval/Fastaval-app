@@ -1,4 +1,14 @@
 {
+  "error": {
+    "login": "Error in participant number or password"
+  },
+  "common": {
+    "close": "Close",
+    "updated": "Updated",
+    "time": "Time",
+    "place": "Place",
+    "type": "Type"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -7,18 +17,38 @@
       "show": "Display barcode"
     },
     "map": {
+      "show": "Show map",
       "noMapAvailable": "There is no map available right now"
     }
+  },
+  "boardgames": {
+    "title": "Board games",
+    "search": "Search...",
+    "gameAvailable": { "true": "Available", "false": "Not available" },
+    "fastavalGame": "is a Fastaval game"
+  },
+  "drawer": {
+    "settings": "Settings",
+    "messages": "Notifications",
+    "barcode": "Show Barcode",
+    "boardgames": "Board games",
+    "mapSchool": "Show map of school",
+    "mapGym": "Show map of sportscentre",
+    "close": "Close"
+  },
+  "notifications": {
+    "title": "Notifications"
   },
   "bottomNavigation": {
     "information": "Information",
     "login": "Sign in",
     "profil": "Profile",
-    "program": "Program"
+    "program": "Program",
+    "more": "More"
   },
   "info": {
     "fastaWear": {
-      "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.\n\nThis year, all registered participants will receive a name tag. It can be collected in the Information during Fastaval.",
+      "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.",
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
@@ -31,14 +61,14 @@
         "title": "The Bar"
       },
       "boardGames": {
-        "day1": "Wed-Sat",
+        "day1": "Thu-Sat",
         "day2": "Sunday",
         "title": "The Board Game Café"
       },
       "coffeeCafe": {
         "day1": "Wednesday",
         "day2": "Thu-Sat",
-        "day3": "Sun",
+        "day3": "Sunday",
         "title": "Otto's Coffee Inn"
       },
       "information": {
@@ -68,18 +98,16 @@
     },
     "stores": {
       "store1": {
-        "day1": "Wednesday",
-        "day2": "Thu-Sat",
-        "day3": "Sunday",
-        "title": "Epic Panda in B45"
+        "day1": "Wed-Sun",
+        "title": "Epic Panda @ B45"
       },
       "store2": {
         "day1": "Wed-Sun",
-        "title": "Tier1MTG in A07"
+        "title": "Bunkern Esbjerg @ Magic room"
       },
       "store3": {
-        "day1": "Fri-Sun",
-        "title": "Corra Design in the common area"
+        "day1": "Saturday",
+        "title": "Artist Alley popup shops @ Common area"
       },
       "title": "Shops"
     },
@@ -105,28 +133,63 @@
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
     "signOut": "Sign out",
+    "permissionsWarning": {
+      "title": "Dear user",
+      "description": "We care about your privacy and data security. Please rest assured that the tracking this app uses is only for allowing us to send you notifications."
+    },
     "alert": {
       "title": "Messages from Fastaval",
-      "description": "You can only get notifications from Fastaval via APP or SMS, not both. Do you want to get it via APP?",
-      "dialogYes": "Yes please, via APP",
-      "dialogNo": "No thanks, via SMS"
+      "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",
+      "dialogYes": "Yes please",
+      "dialogNo": "No thanks"
     }
   },
   "profile": {
-    "foodTimes": "Food Times",
+    "foodTimes": "Meal Times",
     "messagesFromFastaval": "Messages From Fastaval",
-    "noMessagesRightNow": "Fastaval has no messages from you right now",
+    "noMessagesRightNow": "Fastaval has no messages for you right now",
     "participantNumber": "Participant number",
     "what": "What",
     "when": "When",
     "where": "Where",
-    "yourProgram": "Your Program"
+    "yourProgram": "Your Program",
+    "scanBarcode": "Show the barcode when you go to collect your food",
+    "handout": "Handed out",
+    "foodHandedOut": "The food has been handed out",
+    "foodTicket": "Meal ticket",
+    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
+    "activityType": {
+      "rolle": "Player",
+      "spilleder": "Game Master",
+      "gds": "Hero Force",
+      "braet": "Boardgame",
+      "junior": "Junior",
+      "ottoviteter": "Ottotivity",
+      "system": "Fastativity"
+    }
   },
   "program": {
-    "friday": "Fri",
-    "saturday": "Sat",
-    "sunday": "Sun",
-    "thursday": "Thu",
-    "wednesday": "Wed"
+    "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
+    "friday": {
+      "short": "Fri",
+      "long": "Friday"
+    },
+    "saturday": {
+      "short": "Sat",
+      "long": "Saturday"
+    },
+    "sunday": {
+      "short": "Sun",
+      "long": "Sunday"
+    },
+    "thursday": {
+      "short": "Thu",
+      "long": "Thursday"
+    },
+    "wednesday": {
+      "short": "Wed",
+      "long": "Wednesday"
+    },
+    "loading": "Loading program"
   }
 }

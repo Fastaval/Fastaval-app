@@ -1,17 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/models/user.dart';
 import 'local_storage_service.dart';
-
-final String baseUrl = ConfigService().getUrlFromConfig();
 
 class UserService {
   static const String kUserKey = 'USER_KEY';
@@ -40,45 +38,40 @@ class UserService {
   }
 }
 
-Future<void> registerAppToInfosys(BuildContext context, User user) async {
-  String? title = tr('login.alert.title');
-  String? description = tr('login.alert.description');
-  return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title, textScaleFactor: 1),
-          content: Text(description, textScaleFactor: 1),
-          actions: <Widget>[
-            TextButton(
-                child: Text(tr('login.alert.dialogNo')),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-            ElevatedButton(
-                child: Text(tr('login.alert.dialogYes')),
-                onPressed: () {
-                  sendFCMTokenToInfosys(user.id!);
-                  Navigator.of(context).pop();
-                }),
-          ],
-        );
-      });
-}
+Future<void> registerAppToInfosys(BuildContext context, User user) async =>
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(tr('login.alert.title')),
+            content: Text(tr('login.alert.description')),
+            actions: <Widget>[
+              TextButton(
+                  child: Text(tr('login.alert.dialogNo')),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              ElevatedButton(
+                  child: Text(tr('login.alert.dialogYes')),
+                  onPressed: () {
+                    sendFCMTokenToInfosys(user.id!);
+                    askForTrackingPermission(context);
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        });
 
-Future<User> checkUserLogin(String userId, String password) async {
+Future<User> fetchUser(String userId, String password) async {
   var response =
       await http.get(Uri.parse('$baseUrl/v3/user/$userId?pass=$password'));
-
-  inspect(response);
 
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   }
 
   throw Exception('Failed to load login');
-  //TODO: Vis fejl hvis login fejler
 }
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
@@ -87,19 +80,13 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode({'gcm_id': token}));
 
-  inspect(response);
-
-  if (response.statusCode == 200) {
-    print(response.body);
-    return;
+  if (response.statusCode != 200) {
+    throw Exception('Failed to register app with infosys');
+    //TODO: Vis fejl hvis registering ikke lykkesede
   }
-  throw Exception('Failed to register app with infosys');
-  //TODO: Vis fejl hvis registering ikke lykkesede
 }
 
-//get device token to use for push notification
 Future<String> getDeviceToken() async {
-  //request user permission for push notification
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   await firebaseMessaging.requestPermission(
     alert: true,
@@ -113,3 +100,28 @@ Future<String> getDeviceToken() async {
   String? deviceToken = await firebaseMessaging.getToken();
   return (deviceToken == null) ? "" : deviceToken;
 }
+
+Future<void> askForTrackingPermission(BuildContext context) async {
+  final TrackingStatus status =
+      await AppTrackingTransparency.trackingAuthorizationStatus;
+  if (status == TrackingStatus.notDetermined) {
+    // ignore: use_build_context_synchronously
+    await showCustomTrackingDialog(context);
+    await Future.delayed(const Duration(milliseconds: 200));
+    await AppTrackingTransparency.requestTrackingAuthorization();
+  }
+}
+
+showCustomTrackingDialog(BuildContext context) async => await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(tr('login.permissionsWarning.title')),
+        content: Text(tr('login.permissionsWarning.description')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(tr('common.close')),
+          ),
+        ],
+      ),
+    );

@@ -11,7 +11,7 @@ class ConfigService {
     await _remoteConfig.fetchAndActivate();
   }
 
-  String getUrlFromConfig() {
-    return _remoteConfig.getString("API");
+  String getRemoteConfig(String string) {
+    return _remoteConfig.getString(string);
   }
 }

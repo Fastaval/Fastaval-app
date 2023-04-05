@@ -1,4 +1,14 @@
 {
+  "error": {
+    "login": "Fejl i brugernavn eller password"
+  },
+  "common": {
+    "close": "Luk",
+    "updated": "Opdateret",
+    "time": "Tidspunkt",
+    "place": "Sted",
+    "type": "Type"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -7,18 +17,38 @@
       "show": "Vis stregkode"
     },
     "map": {
+      "show": "Vis kort",
       "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
     }
+  },
+  "boardgames": {
+    "title": "Brætspil",
+    "search": "Søg...",
+    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" },
+    "fastavalGame": "Er et Fastaval spil"
+  },
+  "drawer": {
+    "settings": "Indstillinger",
+    "messages": "Notifikationer",
+    "barcode": "Vis stregkode",
+    "boardgames": "Brætspil",
+    "mapSchool": "Vis kort over skolen",
+    "mapGym": "Vis kort over idrætshallen",
+    "close": "Luk"
+  },
+  "notifications": {
+    "title": "Notifikationer"
   },
   "bottomNavigation": {
     "information": "Information",
     "login": "Log ind",
     "profil": "Profil",
-    "program": "Program"
+    "program": "Program",
+    "more": "Mere"
   },
   "info": {
     "fastaWear": {
-      "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.\n\nI år får alle tilmeldte deltagere et navneskilt. Det kan hentes i Informationen under Fastaval.",
+      "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.",
       "title": "Fasta-Wear"
     },
     "lostAndFound": {
@@ -31,7 +61,7 @@
         "title": "Baren"
       },
       "boardGames": {
-        "day1": "Ons-Lør",
+        "day1": "Tor-Lør",
         "day2": "Søndag",
         "title": "Brætspilscaféen"
       },
@@ -68,18 +98,16 @@
     },
     "stores": {
       "store1": {
-        "day1": "Onsdag",
-        "day2": "Tor-Lør",
-        "day3": "Søndag",
-        "title": "Epic Panda i B45"
+        "day1": "Ons-Søn",
+        "title": "Epic Panda @ B45"
       },
       "store2": {
         "day1": "Ons-Søn",
-        "title": "Tier1MTG i A07"
+        "title": "Bunkern Esbjerg @ Magic lokalet"
       },
       "store3": {
-        "day1": "Fre-Søn",
-        "title": "Corra Design i fællesområdet"
+        "day1": "Lørdag",
+        "title": "Artist Alley popup shops @ Fællesområdet"
       },
       "title": "Butikker"
     },
@@ -105,28 +133,63 @@
     "rememberMe": "Husk mit login",
     "signIn": "Log ind",
     "signOut": "Log ud",
+    "permissionsWarning": {
+      "title": "Kære bruger",
+      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer."
+    },
     "alert": {
       "title": "Beskeder fra Fastaval",
-      "description": "Du kan kun få notifikationer fra Fastaval via APP eller SMS, ikke begge dele. Ønsker du at få det via APP?",
-      "dialogYes": "Ja tak, via APP",
-      "dialogNo": "Nej tak, via SMS"
+      "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",
+      "dialogYes": "Ja tak",
+      "dialogNo": "Nej tak"
     }
   },
   "profile": {
-    "foodTimes": "Mad Tider",
+    "foodTimes": "Madtider",
     "messagesFromFastaval": "Beskeder Fra Fastaval",
     "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
     "participantNumber": "Deltager nummer",
     "what": "Hvad",
     "when": "Hvornår",
     "where": "Hvor",
-    "yourProgram": "Dit Program"
+    "yourProgram": "Dit Program",
+    "scanBarcode": "Vis stregkoden når du skal have udleveret mad",
+    "handout": "Udleveres",
+    "foodHandedOut": "Maden er udleveret",
+    "foodTicket": "Madbillet",
+    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
+    "activityType": {
+      "rolle": "Spiller",
+      "spilleder": "Spilleder",
+      "gds": "Heltestyrke",
+      "braet": "Brætspil",
+      "junior": "Junior",
+      "ottoviteter": "Ottovitet",
+      "system": "Fastavitet"
+    }
   },
   "program": {
-    "friday": "Fre",
-    "saturday": "Lør",
-    "sunday": "Søn",
-    "thursday": "Tor",
-    "wednesday": "Ons"
+    "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
+    "friday": {
+      "short": "Fre",
+      "long": "Fredag"
+    },
+    "saturday": {
+      "short": "Lør",
+      "long": "Lørdag"
+    },
+    "sunday": {
+      "short": "Søn",
+      "long": "Søndag"
+    },
+    "thursday": {
+      "short": "Tor",
+      "long": "Torsdag"
+    },
+    "wednesday": {
+      "short": "Ons",
+      "long": "Onsdag"
+    },
+    "loading": "Henter program"
   }
 }

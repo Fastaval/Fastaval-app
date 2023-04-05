@@ -107,12 +107,6 @@ Widget _buildStoresCard() {
         twoTextRow(tr('info.stores.store1.day1'),
             kStoreOpeningHours["store1"]!["day1"]!,
             sidePadding: true),
-        twoTextRow(tr('info.stores.store1.day2'),
-            kStoreOpeningHours["store1"]!["day2"]!,
-            sidePadding: true),
-        twoTextRow(tr('info.stores.store1.day3'),
-            kStoreOpeningHours["store1"]!["day3"]!,
-            sidePadding: true),
         const SizedBox(height: 10),
         textRowHeader(tr('info.stores.store2.title')),
         twoTextRow(tr('info.stores.store2.day1'),
@@ -122,7 +116,7 @@ Widget _buildStoresCard() {
         textRowHeader(tr('info.stores.store3.title')),
         twoTextRow(tr('info.stores.store3.day1'),
             kStoreOpeningHours["store3"]!["day1"]!,
-            sidePadding: true)
+            sidePadding: true),
       ]));
 }
 

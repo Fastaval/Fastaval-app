@@ -5,7 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 Widget oneTextRow(String text, {bool sidePadding = false}) {
   return Padding(
       padding: EdgeInsets.symmetric(horizontal: sidePadding ? 16 : 0),
-      child: Text(text, style: kNormalTextStyle));
+      child: Expanded(
+          child: Text(text,
+              style: kNormalTextStyle, overflow: TextOverflow.ellipsis)));
 }
 
 Widget textAndIconCard(String title, IconData icon, content) {
@@ -21,10 +23,26 @@ Widget textAndIconCard(String title, IconData icon, content) {
       ]));
 }
 
+Widget textAndTextCard(String title, Text secondaryTitle, content) {
+  return Card(
+      margin: kCardMargin,
+      elevation: kCardElevation,
+      child: Column(children: [
+        ListTile(
+            trailing: secondaryTitle,
+            title: Text(title, style: kCardHeaderStyle)),
+        Row(children: [
+          Expanded(child: Padding(padding: kCardContentPadding, child: content))
+        ])
+      ]));
+}
+
 Widget textRowHeader(String text) {
-  return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [Text(text, style: kNormalTextBoldStyle)]);
+  return Row(mainAxisSize: MainAxisSize.max, children: [
+    Expanded(
+        child: Text(text,
+            style: kNormalTextBoldStyle, overflow: TextOverflow.ellipsis))
+  ]);
 }
 
 Widget threeTextRow(String leftText, String centerText, String rightText) {
