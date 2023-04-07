@@ -12,7 +12,6 @@ import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/boardgame_service.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -97,7 +96,6 @@ class HomePageState extends State<HomePageView> {
 
   @override
   initState() {
-    ConfigService().initConfig();
     _getUser();
     _getMessages();
     _getBoardgames();
