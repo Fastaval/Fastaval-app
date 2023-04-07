@@ -41,7 +41,7 @@ class HomePageState extends State<HomePageView> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getMessages();
+          _getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -51,7 +51,7 @@ class HomePageState extends State<HomePageView> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getMessages();
+          _getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -67,7 +67,7 @@ class HomePageState extends State<HomePageView> {
         if (notification is UserNotification) {
           setState(() {
             if (_loggedIn == false && notification.loggedIn == true) {
-              _getMessages();
+              _getNotifications();
             }
             if (notification.loggedIn == false) {
               _waitingMessages = 0;
@@ -97,7 +97,7 @@ class HomePageState extends State<HomePageView> {
   @override
   initState() {
     _getUser();
-    _getMessages();
+    _getNotifications();
     _getBoardgames();
     super.initState();
   }
@@ -136,8 +136,12 @@ class HomePageState extends State<HomePageView> {
     ];
   }
 
-  Future _getMessages() async {
-    var notifications = await fetchMessages();
+  Future _getNotifications() async {
+    var notifications = await fetchNotifications();
+    _updateNotifications(notifications);
+  }
+
+  _updateNotifications(notifications) {
     setState(() {
       __notificationsFetchTime =
           (DateTime.now().millisecondsSinceEpoch / 1000).round();
@@ -147,6 +151,10 @@ class HomePageState extends State<HomePageView> {
 
   Future _getBoardgames() async {
     var boardgames = await fetchBoardgames();
+    _updateBoardGames(boardgames);
+  }
+
+  _updateBoardGames(boardgames) {
     setState(() {
       _boardgameFetchTime =
           (DateTime.now().millisecondsSinceEpoch / 1000).round();
@@ -216,6 +224,8 @@ class HomePageState extends State<HomePageView> {
                       builder: (context) => NotificationsScreen(
                         notifications: _notifications,
                         updateTime: __notificationsFetchTime,
+                        updateParent: (notifications) =>
+                            _updateNotifications(notifications),
                       ),
                     ),
                   );
@@ -233,6 +243,7 @@ class HomePageState extends State<HomePageView> {
                       builder: (context) => BoardgameScreen(
                             boardgames: _boardgames,
                             updateTime: _boardgameFetchTime,
+                            updateParent: (games) => _updateBoardGames(games),
                           )),
                 );
               },

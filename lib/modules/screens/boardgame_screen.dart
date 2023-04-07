@@ -10,11 +10,13 @@ import 'package:flutter/services.dart';
 class BoardgameScreen extends StatefulWidget {
   final int updateTime;
   final List<Boardgame> boardgames;
+  final Function updateParent;
 
   const BoardgameScreen({
     Key? key,
     required this.boardgames,
     required this.updateTime,
+    required this.updateParent,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class _BoardgameScreen extends State<BoardgameScreen> {
                     onRefresh: () async {
                       fetchBoardgames().then((gamesList) => {
                             setState(() {
+                              widget.updateParent(gamesList);
                               boardgameList = gamesList;
                               listUpdatedAt =
                                   (DateTime.now().millisecondsSinceEpoch / 1000)
@@ -121,18 +124,16 @@ class _BoardgameScreen extends State<BoardgameScreen> {
   }
 
   Widget boardGameItem(Boardgame game) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+    return Container(
+        color: !game.available ? Colors.red[100] : null,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            game.name,
-            style: kNormalTextBoldStyle,
-            overflow: TextOverflow.ellipsis,
-          ),
+          const SizedBox(height: 10),
+          Text(game.name,
+              style: kNormalTextBoldStyle, overflow: TextOverflow.ellipsis),
           Row(children: [
             Text(tr("boardgames.gameAvailable.${game.available}")),
             if (game.fastavalGame == true)
-              Text(" - ${tr('boardgames.fastavalGame')}"),
+              Text(" - ${tr('boardgames.fastavalGame')}")
           ]),
           const SizedBox(height: 10),
           const Divider(height: 1, color: Colors.grey)
