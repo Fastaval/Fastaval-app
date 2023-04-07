@@ -164,7 +164,7 @@ class _BoardgameScreen extends State<BoardgameScreen> {
       if (await canLaunchUrl(url)) {
         await launchUrl(url);
       } else {
-        throw 'Could not launch $url';
+        throw 'Could not launch website';
       }
     }
   }
