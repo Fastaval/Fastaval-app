@@ -158,6 +158,7 @@
     "foodHandedOut": "Maden er udleveret",
     "foodTicket": "Madbillet",
     "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
+    "sleep": { "title": "Overnatning", "mattress": { "0": "Nej", "1": "Ja" } },
     "activityType": {
       "rolle": "Spiller",
       "spilleder": "Spilleder",

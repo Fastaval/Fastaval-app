@@ -60,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if (widget.user.messages!.isNotEmpty)
                             buildUserMessagesCard(),
                           buildUserProgramCard(),
+                          buildUserSleepCard(),
                           if (widget.user.food!.isNotEmpty)
                             buildUserFoodTimesCard(),
                           const SizedBox(height: 30.0),
@@ -250,6 +251,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
+  Widget buildUserSleepCard() {
+    if (widget.user.sleep?.access == 0) {
+      return textAndIconCard((tr('profile.sleep.title')), Icons.bed,
+          Column(children: [oneTextRow('Overnatter ikke på Fastaval')]));
+    }
+
+    return textAndIconCard(
+        tr('profile.sleep.title'),
+        Icons.bed,
+        Column(children: [
+          twoTextRow('Sove lokation', "${widget.user.sleep!.areaName}"),
+          const SizedBox(height: 10),
+          twoTextRow('Lejet madras',
+              tr('profile.sleep.mattress.${widget.user.sleep!.mattress}'))
+        ]));
+  }
+
   getFoodImage(Food item) {
     if (item.titleEn.contains('Dinner')) {
       return 'assets/images/dinner.jpg';
@@ -360,6 +378,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${tr('common.type')}: ', style: kNormalTextBoldStyle),
+                Flexible(
+                    child:
+                        Text(tr('profile.activityType.${item.activityType}')))
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
               children: [
                 Text('${tr('common.time')}: ', style: kNormalTextBoldStyle),
                 Text(
@@ -368,23 +396,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 5),
             Row(
-              children: [
-                Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
-                Text(context.locale.toString() == 'en'
-                    ? item.roomEn!
-                    : item.roomDa!)
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${tr('common.type')}: ', style: kNormalTextBoldStyle),
+                Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
                 Flexible(
-                    child:
-                        Text(tr('profile.activityType.${item.activityType}')))
+                    child: Text(context.locale.toString() == 'en'
+                        ? item.roomEn!
+                        : item.roomDa!))
               ],
-            )
+            ),
           ],
         ));
   }

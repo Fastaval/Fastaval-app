@@ -158,6 +158,7 @@
     "foodHandedOut": "The food has been handed out",
     "foodTicket": "Meal ticket",
     "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
+    "sleep": { "title": "Sleeping" },
     "activityType": {
       "rolle": "Player",
       "spilleder": "Game Master",
