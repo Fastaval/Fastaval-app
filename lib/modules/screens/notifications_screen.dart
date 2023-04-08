@@ -120,9 +120,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     7200)) // + 2 hours, to compensate for UTC => UTC+2
               ])),
       Expanded(
-          child: Text(context.locale.toString() == 'en'
-              ? notification.en
-              : notification.da))
+          child: Text(context.locale.toString() == 'da'
+              ? notification.da
+              : notification.en))
     ]);
   }
 }

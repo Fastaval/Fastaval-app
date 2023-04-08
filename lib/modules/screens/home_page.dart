@@ -24,6 +24,7 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
+  late int _userFetchTime;
   late List<InfosysNotification> _notifications;
   late int __notificationsFetchTime;
   late List<Boardgame> _boardgames;
@@ -74,6 +75,8 @@ class HomePageState extends State<HomePageView> {
             }
             _loggedIn = notification.loggedIn;
             _user = notification.user;
+            _userFetchTime =
+                (DateTime.now().millisecondsSinceEpoch / 1000).round();
             _bottomNavList = _bottomNavItems();
           });
         }
@@ -163,9 +166,12 @@ class HomePageState extends State<HomePageView> {
   }
 
   Future _getUser() async {
-    await UserService()
-        .getUser()
-        .then((newUser) => {_user = newUser, _loggedIn = true});
+    await UserService().getUser().then((newUser) => {
+          _user = newUser,
+          _loggedIn = true,
+          _userFetchTime =
+              (DateTime.now().millisecondsSinceEpoch / 1000).round()
+        });
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -174,7 +180,8 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> _screens() {
     return <Widget>[
-      if (_loggedIn && _user != null) ProfileScreen(user: _user!),
+      if (_loggedIn && _user != null)
+        ProfileScreen(user: _user!, updateTime: _userFetchTime),
       if (!_loggedIn) LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),

@@ -6,6 +6,7 @@ import 'package:fastaval_app/config/helpers/formatting.dart';
 import 'package:fastaval_app/config/models/food.dart';
 import 'package:fastaval_app/config/models/scheduling.dart';
 import 'package:fastaval_app/config/models/user.dart';
+import 'package:fastaval_app/config/models/wear.dart';
 import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:fastaval_app/modules/notifications/login_notification.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
@@ -14,9 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final int updateTime;
   final User user;
 
-  const ProfileScreen({Key? key, required this.user}) : super(key: key);
+  const ProfileScreen({
+    Key? key,
+    required this.user,
+    required this.updateTime,
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -57,11 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           const SizedBox(height: 10.0),
                           buildIdIcon(),
-                          if (widget.user.messages!.isNotEmpty)
+                          if (widget.user.messages.isNotEmpty)
                             buildUserMessagesCard(),
                           buildUserProgramCard(),
+                          buildUserWearCard(),
                           buildUserSleepCard(),
-                          if (widget.user.food!.isNotEmpty)
+                          if (widget.user.food.isNotEmpty)
                             buildUserFoodTimesCard(),
                           const SizedBox(height: 30.0),
                           buildLogoutButton(),
@@ -132,20 +139,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserFoodTimesCard() {
-    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        foodTickets(widget.user.food ?? []));
+    return textAndIconCard(
+        tr('profile.foodTimes'), Icons.fastfood, foodTickets(widget.user.food));
   }
 
   Widget buildUserMessagesCard() {
     String message = tr('profile.noMessagesRightNow');
-    if (widget.user.messages!.isNotEmpty) message = widget.user.messages!;
+    if (widget.user.messages.isNotEmpty) message = widget.user.messages;
     return textAndIconCard(tr('profile.messagesFromFastaval'),
         Icons.speaker_notes, Text(message, style: kNormalTextStyle));
   }
 
   Widget buildUserProgramCard() {
-    return textAndIconCard(tr('profile.yourProgram'), Icons.date_range,
-        buildUsersProgram(widget.user.scheduling!, context));
+    return textAndTextCard(
+        tr('profile.yourProgram'),
+        Text(
+          "${tr('common.updated')} ${formatDay(widget.updateTime, context)} ${formatTime(widget.updateTime)}",
+          style: kNormalTextSubdued,
+        ),
+        buildUsersProgram(widget.user.scheduling, context));
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule, context) {
@@ -164,8 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget userProgramItem(Scheduling item) {
     var title =
-        context.locale.toString() == 'en' ? item.titleEn! : item.titleDa!;
-    var room = context.locale.toString() == 'en' ? item.roomEn! : item.roomDa!;
+        context.locale.toString() == 'da' ? item.titleDa! : item.titleEn!;
+    var room = context.locale.toString() == 'da' ? item.roomDa : item.roomEn;
     var activityType = item.activityType != null &&
             (item.activityType == 'ottoviteter' ||
                 item.activityType == 'system')
@@ -219,9 +231,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                       Text(
-                          context.locale.toString() == 'en'
-                              ? item.titleEn
-                              : item.titleDa,
+                          context.locale.toString() == 'da'
+                              ? item.titleDa
+                              : item.titleEn,
                           style: item.received == 1
                               ? kNormalTextDisabled
                               : kNormalTextBoldStyle),
@@ -251,20 +263,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
+  Widget buildUserWearCard() {
+    if (widget.user.wear.isEmpty) {
+      return textAndIconCard((tr('profile.wear.title')), Icons.bed,
+          oneTextRow(tr('profile.wear.noWear')));
+    }
+
+    return textAndIconCard(
+        tr('profile.wear.title'),
+        Icons.checkroom,
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: widget.user.wear.length,
+          separatorBuilder: (context, int index) {
+            return const SizedBox(height: 10);
+          },
+          itemBuilder: (buildContext, index) {
+            return wearItem(widget.user.wear[index]);
+          },
+        ));
+  }
+
+  Widget wearItem(Wear item) {
+    String title = context.locale.toString() == 'da'
+        ? "${item.amount} stk. ${item.titleDa}"
+        : "${item.amount} pcs. ${item.titleEn}";
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(child: Text(title, style: kNormalTextStyle)),
+        Text(tr('profile.wear.received.${item.received}'),
+            style: kNormalTextBoldStyle)
+      ],
+    );
+  }
+
   Widget buildUserSleepCard() {
-    if (widget.user.sleep?.access == 0) {
+    if (widget.user.sleep.access == 0) {
       return textAndIconCard((tr('profile.sleep.title')), Icons.bed,
-          Column(children: [oneTextRow('Overnatter ikke på Fastaval')]));
+          oneTextRow(tr('profile.sleep.notSleeping')));
     }
 
     return textAndIconCard(
         tr('profile.sleep.title'),
         Icons.bed,
         Column(children: [
-          twoTextRow('Sove lokation', "${widget.user.sleep!.areaName}"),
+          twoTextRow(tr('profile.sleep.location'), widget.user.sleep.areaName),
           const SizedBox(height: 10),
-          twoTextRow('Lejet madras',
-              tr('profile.sleep.mattress.${widget.user.sleep!.mattress}'))
+          twoTextRow(tr('profile.sleep.mattressRented'),
+              tr('profile.sleep.mattress.${widget.user.sleep.mattress}'))
         ]));
   }
 
@@ -323,10 +372,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               height: 100),
           const SizedBox(height: 5),
-          Text(context.locale.toString() == 'en' ? item.titleEn : item.titleDa)
+          Text(context.locale.toString() == 'da' ? item.titleDa : item.titleEn)
         ]),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(context.locale.toString() == 'en' ? item.textEn : item.textDa,
+          Text(context.locale.toString() == 'da' ? item.textDa : item.textEn,
               style: kNormalTextStyle),
           if (item.titleEn.contains('Breakfast'))
             Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
@@ -370,9 +419,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 5),
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Text(context.locale.toString() == 'en'
-                  ? item.titleEn!
-                  : item.titleDa!))
+              child: Text(context.locale.toString() == 'da'
+                  ? item.titleDa!
+                  : item.titleEn!))
         ]),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -400,9 +449,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
                 Flexible(
-                    child: Text(context.locale.toString() == 'en'
-                        ? item.roomEn!
-                        : item.roomDa!))
+                    child: Text(context.locale.toString() == 'da'
+                        ? item.roomDa!
+                        : item.roomEn!))
               ],
             ),
           ],

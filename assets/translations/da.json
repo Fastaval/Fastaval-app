@@ -158,7 +158,18 @@
     "foodHandedOut": "Maden er udleveret",
     "foodTicket": "Madbillet",
     "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
-    "sleep": { "title": "Overnatning", "mattress": { "0": "Nej", "1": "Ja" } },
+    "sleep": {
+      "title": "Overnatning",
+      "mattress": { "0": "Nej", "1": "Ja" },
+      "mattressRented": "Lejet madras",
+      "notSleeping": "Overnatter ikke på Fastaval",
+      "location": "Sove lokation"
+    },
+    "wear": {
+      "title": "Wear",
+      "noWear": "Har ikke bestilt noget wear i år",
+      "received": { "0": "Ikke udleveret", "1": "Udleveret" }
+    },
     "activityType": {
       "rolle": "Spiller",
       "spilleder": "Spilleder",

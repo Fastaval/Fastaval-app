@@ -2,12 +2,8 @@ import 'package:fastaval_app/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget oneTextRow(String text, {bool sidePadding = false}) {
-  return Padding(
-      padding: EdgeInsets.symmetric(horizontal: sidePadding ? 16 : 0),
-      child: Expanded(
-          child: Text(text,
-              style: kNormalTextStyle, overflow: TextOverflow.ellipsis)));
+Widget oneTextRow(String text) {
+  return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
 }
 
 Widget textAndIconCard(String title, IconData icon, content) {
