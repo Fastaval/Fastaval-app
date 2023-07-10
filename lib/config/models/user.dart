@@ -6,56 +6,48 @@ import 'scheduling.dart';
 import 'wear.dart';
 
 class User {
-  int? id;
-  String? password;
-  String? name;
-  bool? hasCheckedIn;
-  String? messages;
-  Sleep? sleep;
-  String? category;
-  List<Food>? food;
-  List<Wear>? wear;
-  List<Scheduling>? scheduling;
-  int? barcode;
-  List<OttoParty>? ottoParty;
+  late int id;
+  late String password;
+  late String name;
+  late bool hasCheckedIn;
+  late String messages;
+  late Sleep sleep;
+  late String category;
+  late List<Food> food;
+  late List<Wear> wear;
+  late List<Scheduling> scheduling;
+  late int barcode;
+  late List<OttoParty> ottoParty;
 
   User(
-      {this.id,
-      this.password,
-      this.name,
-      this.hasCheckedIn,
-      this.messages,
-      this.sleep,
-      this.category,
-      this.food,
-      this.wear,
-      this.scheduling,
-      this.barcode,
-      this.ottoParty});
+      {required this.id,
+      required this.password,
+      required this.name,
+      required this.hasCheckedIn,
+      required this.messages,
+      required this.sleep,
+      required this.category,
+      required this.food,
+      required this.wear,
+      required this.scheduling,
+      required this.barcode,
+      required this.ottoParty});
 
-  User.fromJson(dynamic json) {
-    id = json['id'];
-    password = json['password'];
-    name = json['name'];
-    hasCheckedIn = json['checked_in'] != 0;
-    messages = json['messages'] ?? '';
-    sleep = Sleep.fromJson(json['sleep']);
-    category = json['category'];
-    barcode = json['barcode'];
-
-    var foodArray = json['food'] as List;
-    food = foodArray.map((item) => Food.fromJson(item)).toList();
-
-    var wearArray = json['wear'] as List;
-    wear = wearArray.map((item) => Wear.fromJson(item)).toList();
-
-    var schedulingArray = json['scheduling'] as List;
-    scheduling =
-        schedulingArray.map((item) => Scheduling.fromJson(item)).toList();
-
-    var ottoPartyArray = json['otto_party'] as List;
-    ottoParty = ottoPartyArray.map((item) => OttoParty.fromJson(item)).toList();
-  }
+  User.fromJson(dynamic json)
+      : id = json['id'],
+        password = json['password'] ?? '',
+        name = json['name'],
+        hasCheckedIn = json['checked_in'] != 0,
+        messages = json['messages'] ?? '',
+        sleep = Sleep.fromJson(json['sleep']),
+        category = json['category'],
+        barcode = json['barcode'],
+        food = List<Food>.from(json['food'].map((item) => Food.fromJson(item))),
+        wear = List<Wear>.from(json['wear'].map((item) => Wear.fromJson(item))),
+        scheduling = List<Scheduling>.from(
+            json['scheduling'].map((item) => Scheduling.fromJson(item))),
+        ottoParty = List<OttoParty>.from(
+            json['otto_party'].map((item) => OttoParty.fromJson(item)));
 
   Map<String, dynamic> toJson() => {
         'id': id,

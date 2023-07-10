@@ -12,7 +12,6 @@ import 'package:fastaval_app/modules/screens/notifications_screen.dart';
 import 'package:fastaval_app/modules/screens/profile_screen.dart';
 import 'package:fastaval_app/modules/screens/program_screen.dart';
 import 'package:fastaval_app/utils/services/boardgame_service.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
 import 'package:fastaval_app/utils/services/messages_service.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -25,6 +24,7 @@ import '../notifications/login_notification.dart';
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
+  late int _userFetchTime;
   late List<InfosysNotification> _notifications;
   late int __notificationsFetchTime;
   late List<Boardgame> _boardgames;
@@ -42,7 +42,7 @@ class HomePageState extends State<HomePageView> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getMessages();
+          _getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -52,7 +52,7 @@ class HomePageState extends State<HomePageView> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getMessages();
+          _getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -68,13 +68,15 @@ class HomePageState extends State<HomePageView> {
         if (notification is UserNotification) {
           setState(() {
             if (_loggedIn == false && notification.loggedIn == true) {
-              _getMessages();
+              _getNotifications();
             }
             if (notification.loggedIn == false) {
               _waitingMessages = 0;
             }
             _loggedIn = notification.loggedIn;
             _user = notification.user;
+            _userFetchTime =
+                (DateTime.now().millisecondsSinceEpoch / 1000).round();
             _bottomNavList = _bottomNavItems();
           });
         }
@@ -97,9 +99,8 @@ class HomePageState extends State<HomePageView> {
 
   @override
   initState() {
-    ConfigService().initConfig();
     _getUser();
-    _getMessages();
+    _getNotifications();
     _getBoardgames();
     super.initState();
   }
@@ -138,8 +139,12 @@ class HomePageState extends State<HomePageView> {
     ];
   }
 
-  Future _getMessages() async {
-    var notifications = await fetchMessages();
+  Future _getNotifications() async {
+    var notifications = await fetchNotifications();
+    _updateNotifications(notifications);
+  }
+
+  _updateNotifications(notifications) {
     setState(() {
       __notificationsFetchTime =
           (DateTime.now().millisecondsSinceEpoch / 1000).round();
@@ -149,6 +154,10 @@ class HomePageState extends State<HomePageView> {
 
   Future _getBoardgames() async {
     var boardgames = await fetchBoardgames();
+    _updateBoardGames(boardgames);
+  }
+
+  _updateBoardGames(boardgames) {
     setState(() {
       _boardgameFetchTime =
           (DateTime.now().millisecondsSinceEpoch / 1000).round();
@@ -157,9 +166,12 @@ class HomePageState extends State<HomePageView> {
   }
 
   Future _getUser() async {
-    await UserService()
-        .getUser()
-        .then((newUser) => {_user = newUser, _loggedIn = true});
+    await UserService().getUser().then((newUser) => {
+          _user = newUser,
+          _loggedIn = true,
+          _userFetchTime =
+              (DateTime.now().millisecondsSinceEpoch / 1000).round()
+        });
 
     setState(() {
       _bottomNavList = _bottomNavItems();
@@ -168,7 +180,8 @@ class HomePageState extends State<HomePageView> {
 
   List<Widget> _screens() {
     return <Widget>[
-      if (_loggedIn && _user != null) ProfileScreen(user: _user!),
+      if (_loggedIn && _user != null)
+        ProfileScreen(user: _user!, updateTime: _userFetchTime),
       if (!_loggedIn) LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
@@ -218,6 +231,8 @@ class HomePageState extends State<HomePageView> {
                       builder: (context) => NotificationsScreen(
                         notifications: _notifications,
                         updateTime: __notificationsFetchTime,
+                        updateParent: (notifications) =>
+                            _updateNotifications(notifications),
                       ),
                     ),
                   );
@@ -235,6 +250,7 @@ class HomePageState extends State<HomePageView> {
                       builder: (context) => BoardgameScreen(
                             boardgames: _boardgames,
                             updateTime: _boardgameFetchTime,
+                            updateParent: (games) => _updateBoardGames(games),
                           )),
                 );
               },

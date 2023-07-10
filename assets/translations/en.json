@@ -158,6 +158,18 @@
     "foodHandedOut": "The food has been handed out",
     "foodTicket": "Meal ticket",
     "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
+    "sleep": {
+      "title": "Accomodation",
+      "mattress": { "0": "No", "1": "Yes" },
+      "mattressRented": "Mattress rental",
+      "notSleeping": "Not sleeping at Fastaval",
+      "location": "Sleeping location"
+    },
+    "wear": {
+      "title": "Wear",
+      "noWear": "Haven't oredered wear this year",
+      "received": { "0": "Not picked up", "1": "Picked up" }
+    },
     "activityType": {
       "rolle": "Player",
       "spilleder": "Game Master",

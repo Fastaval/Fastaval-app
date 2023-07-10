@@ -10,9 +10,13 @@ import 'package:flutter/services.dart';
 class NotificationsScreen extends StatefulWidget {
   final List<InfosysNotification> notifications;
   final int updateTime;
+  final Function updateParent;
 
   const NotificationsScreen(
-      {Key? key, required this.notifications, required this.updateTime})
+      {Key? key,
+      required this.notifications,
+      required this.updateTime,
+      required this.updateParent})
       : super(key: key);
 
   @override
@@ -46,8 +50,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   height: double.infinity,
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      fetchMessages().then((notificationList) => {
+                      fetchNotifications().then((notificationList) => {
                             setState(() {
+                              widget.updateParent(notificationList);
                               notificationList = notificationList;
                               listUpdatedAt =
                                   (DateTime.now().millisecondsSinceEpoch / 1000)
@@ -115,9 +120,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     7200)) // + 2 hours, to compensate for UTC => UTC+2
               ])),
       Expanded(
-          child: Text(context.locale.toString() == 'en'
-              ? notification.en
-              : notification.da))
+          child: Text(context.locale.toString() == 'da'
+              ? notification.da
+              : notification.en))
     ]);
   }
 }

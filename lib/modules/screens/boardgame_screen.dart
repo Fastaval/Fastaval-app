@@ -6,15 +6,18 @@ import 'package:fastaval_app/utils/services/boardgame_service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BoardgameScreen extends StatefulWidget {
   final int updateTime;
   final List<Boardgame> boardgames;
+  final Function updateParent;
 
   const BoardgameScreen({
     Key? key,
     required this.boardgames,
     required this.updateTime,
+    required this.updateParent,
   }) : super(key: key);
 
   @override
@@ -52,6 +55,7 @@ class _BoardgameScreen extends State<BoardgameScreen> {
                     onRefresh: () async {
                       fetchBoardgames().then((gamesList) => {
                             setState(() {
+                              widget.updateParent(gamesList);
                               boardgameList = gamesList;
                               listUpdatedAt =
                                   (DateTime.now().millisecondsSinceEpoch / 1000)
@@ -121,25 +125,51 @@ class _BoardgameScreen extends State<BoardgameScreen> {
   }
 
   Widget boardGameItem(Boardgame game) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            game.name,
-            style: kNormalTextBoldStyle,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Row(children: [
-            Text(tr("boardgames.gameAvailable.${game.available}")),
-            if (game.fastavalGame == true)
-              Text(" - ${tr('boardgames.fastavalGame')}"),
-          ]),
+    return Container(
+        color: !game.available ? Colors.red[100] : null,
+        child: Column(children: [
+          const SizedBox(height: 10),
+          InkWell(
+              onTap: () => _launchDDB(game.bbgId),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                          Text(game.name,
+                              style: kNormalTextBoldStyle,
+                              overflow: TextOverflow.ellipsis),
+                          Row(children: [
+                            Text(tr(
+                                "boardgames.gameAvailable.${game.available}")),
+                            if (game.fastavalGame == true)
+                              Text(" - ${tr('boardgames.fastavalGame')}"),
+                          ]),
+                        ])),
+                    if (game.bbgId > 0)
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Icon(Icons.public)),
+                  ])),
           const SizedBox(height: 10),
           const Divider(height: 1, color: Colors.grey)
         ]));
   }
 
-  void applyFilterToList() {
+  _launchDDB(int gameID) async {
+    if (gameID > 0) {
+      final url = Uri.parse('https://boardgamegeek.com/boardgame/$gameID');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else {
+        throw 'Could not launch website';
+      }
+    }
+  }
+
+  applyFilterToList() {
     String enteredKeyword = _searchController.text;
     List<Boardgame> results = [];
     if (enteredKeyword.isEmpty) {

@@ -106,9 +106,9 @@ class _ProgramscreenState extends State<Programscreen> {
                                   //what
                                   Flexible(
                                       child: Text(
-                                    context.locale.toString() == 'en'
-                                        ? activityMap[item.activity]!.enTitle
-                                        : activityMap[item.activity]!.daTitle,
+                                    context.locale.toString() == 'da'
+                                        ? activityMap[item.activity]!.daTitle
+                                        : activityMap[item.activity]!.enTitle,
                                     style: const TextStyle(fontSize: 18),
                                   )),
                                 ],
@@ -120,7 +120,7 @@ class _ProgramscreenState extends State<Programscreen> {
                         ),
                         onTap: () => showDialog(
                             context: context,
-                            builder: activtyDialog,
+                            builder: activityDialog,
                             routeSettings: RouteSettings(
                               arguments: activityMap[item.activity],
                             )),
@@ -177,17 +177,17 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
       );
 
-  Widget activtyDialog(BuildContext context) {
+  Widget activityDialog(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as ActivityItem;
     return AlertDialog(
       title: Text(
-        context.locale.toString() == 'en' ? activity.enTitle : activity.daTitle,
+        context.locale.toString() == 'da' ? activity.daTitle : activity.enTitle,
         style: const TextStyle(fontSize: 18),
       ),
       content: Text(
-        context.locale.toString() == 'en'
+        context.locale.toString() == 'da'
             ? activity.daDescription
-            : activity.daDescription,
+            : activity.enDescription,
         style: const TextStyle(fontSize: 18),
       ),
     );

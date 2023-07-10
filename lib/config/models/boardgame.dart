@@ -17,7 +17,7 @@ class Boardgame {
         name = json['name'],
         available = json['available'],
         fastavalGame = json['fastavalGame'],
-        bbgId = json['bbgId'] ?? 0;
+        bbgId = json['bggId'] ?? 0;
 
   Map<String, dynamic> toJson() => {
         'id': id,

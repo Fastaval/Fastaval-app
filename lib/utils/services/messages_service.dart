@@ -6,7 +6,7 @@ import 'package:fastaval_app/constants/app_constants.dart';
 import 'package:fastaval_app/utils/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<InfosysNotification>> fetchMessages() async {
+Future<List<InfosysNotification>> fetchNotifications() async {
   User user = await UserService().getUser();
   var response = await http
       .get(Uri.parse('$baseUrl/messages/${user.id}?pass=${user.password}'));
