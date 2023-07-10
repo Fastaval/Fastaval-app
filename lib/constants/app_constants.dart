@@ -14,8 +14,16 @@ const kSafeFastavalMail = "safe@fastaval.dk";
 const kServiceOpeningHours = {
   "bar": {"day1": "17:00 - 02:00"},
   "boardGames": {"day1": "09:00 - 02:00", "day2": "09:00 - 15:00"},
-  "coffeeCafe": {"day1": "12:30 - 01:00", "day2": "09:00 - 01:00", "day3": "09:00 - 15:00"},
-  "information": {"day1": "15:00 - 20:30", "day2": "09:30 - 20:30", "day3": "09:30 - 17:00"},
+  "coffeeCafe": {
+    "day1": "12:30 - 01:00",
+    "day2": "09:00 - 01:00",
+    "day3": "09:00 - 15:00"
+  },
+  "information": {
+    "day1": "15:00 - 20:30",
+    "day2": "09:30 - 20:30",
+    "day3": "09:30 - 17:00"
+  },
   "kiosk": {"day1": "08:00 - 00:00", "day2": "08:00 - 16:00"},
   "oasis": {"day1": "15:00 - 02:00", "day2": "12:00 - 02:00"},
 };

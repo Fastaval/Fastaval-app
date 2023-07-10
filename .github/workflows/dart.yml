@@ -7,12 +7,13 @@ name: Dart
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: ["develop"]
   pull_request:
-    branches: [ "develop" ]
+    branches: ["develop"]
 
 jobs:
-  build:
+  prepare:
+    name: Setup and prepare
     runs-on: ubuntu-latest
 
     steps:
@@ -23,14 +24,26 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
-      - name: Verify formatting
+  verify:
+    name: Verify and format
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Format
         run: dart format .
 
-      - name: Analyze project source
+      - name: Analyze
         run: dart analyze .
-      
+
+  build:
+    name: Build
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Build project for Android
-        run: flutter build appbundle --no-tree-shake-icons --release
-        
+        run: flutter build apk
+
       - name: Build project for iOS
         run: flutter build ipa
