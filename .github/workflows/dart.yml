@@ -21,29 +21,50 @@ jobs:
       - uses: subosito/flutter-action@v2
       - uses: dart-lang/setup-dart@v1
 
-      - name: Install dependencies
-        run: dart pub get
-
   verify:
-    name: Verify and format
+    name: Format & Analyze
     needs: prepare
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: dart-lang/setup-dart@v1
+
       - name: Format
         run: dart format .
 
       - name: Analyze
         run: dart analyze .
 
-  build:
-    name: Build
+  build-android:
+    name: Build Android
     needs: prepare
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
       - name: Build project for Android
         run: flutter build apk
+
+  build-ios:
+    name: Build iOS
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
 
       - name: Build project for iOS
         run: flutter build ipa
