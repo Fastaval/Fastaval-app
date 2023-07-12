@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Dart Checklist
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
