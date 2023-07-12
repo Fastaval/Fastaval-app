@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.5"
+          channel: "stable"
       - uses: dart-lang/setup-dart@v1
 
       - name: Format
@@ -36,27 +39,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - uses: dart-lang/setup-dart@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: dart pub get
-
-      - name: Build project for Android
-        run: flutter build apk
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.5"
+          channel: "stable"
+      - run: flutter build apk
 
   build-ios:
     name: Build iOS
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - uses: dart-lang/setup-dart@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: dart pub get
-
-      - name: Build project for iOS
-        run: flutter build ipa
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.5"
+          channel: "stable"
+      - run: flutter build ipa
