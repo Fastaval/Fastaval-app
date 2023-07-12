@@ -12,18 +12,8 @@ on:
     branches: ["develop"]
 
 jobs:
-  prepare:
-    name: Setup and prepare
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - uses: dart-lang/setup-dart@v1
-
   verify:
     name: Format & Analyze
-    needs: prepare
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +29,6 @@ jobs:
 
   build-android:
     name: Build Android
-    needs: prepare
     runs-on: ubuntu-latest
 
     steps:
@@ -55,7 +44,6 @@ jobs:
 
   build-ios:
     name: Build iOS
-    needs: prepare
     runs-on: ubuntu-latest
 
     steps:
