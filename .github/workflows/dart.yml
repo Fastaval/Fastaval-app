@@ -16,8 +16,19 @@ on:
     branches: ["develop"]
 
 jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Format
+        run: dart format .
+
   verify:
-    name: Format & Analyze
+    name: Analyze
     runs-on: ubuntu-latest
 
     steps:
@@ -28,8 +39,8 @@ jobs:
           channel: "stable"
       - uses: dart-lang/setup-dart@v1
 
-      - name: Format
-        run: dart format .
+      - name: Install dependencies
+        run: dart pub get
 
       - name: Analyze
         run: dart analyze .
@@ -47,6 +58,7 @@ jobs:
         with:
           flutter-version: "3.10.5"
           channel: "stable"
+
       - run: flutter build apk
 
   build-ios:
@@ -62,4 +74,7 @@ jobs:
         with:
           flutter-version: "3.10.5"
           channel: "stable"
+
+      - run: pod repo update
+
       - run: flutter build ipa
