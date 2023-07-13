@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart Checklist
+name: Fastaval App Checklist
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -91,4 +91,4 @@ jobs:
         run: pod install
 
       - name: Build iOS app
-        run: flutter build ipa
+        run: flutter build ipa --no-codesign
