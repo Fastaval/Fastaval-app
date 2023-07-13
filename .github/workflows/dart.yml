@@ -33,10 +33,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.10.5"
-          channel: "stable"
       - uses: dart-lang/setup-dart@v1
 
       - name: Install dependencies
@@ -59,7 +55,8 @@ jobs:
           flutter-version: "3.10.5"
           channel: "stable"
 
-      - run: flutter build apk
+      - name: Build Android app
+        run: flutter build appbundle --debug
 
   build-ios:
     name: Build iOS
@@ -75,6 +72,9 @@ jobs:
           flutter-version: "3.10.5"
           channel: "stable"
 
-      - run: pod repo update
+      - name: Update Cocoa Pods
+        working-directory: ./ios
+        run: pod repo update
 
-      - run: flutter build ipa
+      - name: Build iOS app
+        run: flutter build ipa
