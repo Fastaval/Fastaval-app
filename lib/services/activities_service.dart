@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:fastaval_app/config/models/activity_item.dart';
-import 'package:fastaval_app/config/models/program.dart';
-import 'package:fastaval_app/constants/app_constants.dart';
+import 'package:fastaval_app/constants/app.dart';
+import 'package:fastaval_app/models/activity_item.dart';
+import 'package:fastaval_app/models/program.dart';
 import 'package:http/http.dart' as http;
 
 Future<Program> fetchProgram() async {

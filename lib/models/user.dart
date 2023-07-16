@@ -1,4 +1,4 @@
-import 'package:fastaval_app/config/models/sleep.dart';
+import 'package:fastaval_app/models/sleep.dart';
 
 import 'food.dart';
 import 'otto_party.dart';

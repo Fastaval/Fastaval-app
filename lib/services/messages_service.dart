@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:fastaval_app/config/models/notification.dart';
-import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/constants/app_constants.dart';
-import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/models/notification.dart';
+import 'package:fastaval_app/models/user.dart';
+import 'package:fastaval_app/constants/app.dart';
+import 'package:fastaval_app/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<InfosysNotification>> fetchNotifications() async {

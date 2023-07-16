@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/helpers/formatting.dart';
-import 'package:fastaval_app/config/models/activity_item.dart';
-import 'package:fastaval_app/config/models/activity_run.dart';
-import 'package:fastaval_app/utils/services/activities_service.dart';
+import 'package:fastaval_app/helpers/formatting.dart';
+import 'package:fastaval_app/models/activity_item.dart';
+import 'package:fastaval_app/models/activity_run.dart';
+import 'package:fastaval_app/services/activities_service.dart';
 import 'package:flutter/material.dart';
 
 class Programscreen extends StatefulWidget {

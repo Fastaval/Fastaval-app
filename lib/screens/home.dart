@@ -1,25 +1,25 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/models/boardgame.dart';
-import 'package:fastaval_app/config/models/notification.dart';
-import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/constants/style_constants.dart';
-import 'package:fastaval_app/modules/screens/boardgame_screen.dart';
-import 'package:fastaval_app/modules/screens/info_screen.dart';
-import 'package:fastaval_app/modules/screens/login_screen.dart';
-import 'package:fastaval_app/modules/screens/notifications_screen.dart';
-import 'package:fastaval_app/modules/screens/profile_screen.dart';
-import 'package:fastaval_app/modules/screens/program_screen.dart';
-import 'package:fastaval_app/utils/services/boardgame_service.dart';
-import 'package:fastaval_app/utils/services/messages_service.dart';
-import 'package:fastaval_app/utils/services/user_service.dart';
+import 'package:fastaval_app/models/boardgame.dart';
+import 'package:fastaval_app/models/notification.dart';
+import 'package:fastaval_app/models/user.dart';
+import 'package:fastaval_app/constants/styles.dart';
+import 'package:fastaval_app/screens/boardgame.dart';
+import 'package:fastaval_app/screens/info.dart';
+import 'package:fastaval_app/screens/login.dart';
+import 'package:fastaval_app/screens/notifications.dart';
+import 'package:fastaval_app/screens/profile.dart';
+import 'package:fastaval_app/screens/program.dart';
+import 'package:fastaval_app/services/boardgame_service.dart';
+import 'package:fastaval_app/services/messages_service.dart';
+import 'package:fastaval_app/services/user_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../notifications/login_notification.dart';
+import '../helpers/notification.dart';
 
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();

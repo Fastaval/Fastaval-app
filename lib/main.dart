@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/utils/services/config_service.dart';
+import 'package:fastaval_app/services/config_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'firebase_options.dart';
-import 'modules/screens/home_page.dart';
+import 'constants/firebase.dart';
+import 'screens/home.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
