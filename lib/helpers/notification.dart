@@ -1,4 +1,4 @@
-import 'package:fastaval_app/config/models/user.dart';
+import 'package:fastaval_app/models/user.model.dart';
 import 'package:flutter/widgets.dart';
 
 class UserNotification extends Notification {

@@ -1,9 +1,9 @@
-import 'package:fastaval_app/config/models/sleep.dart';
+import 'package:fastaval_app/models/sleep.model.dart';
 
-import 'food.dart';
-import 'otto_party.dart';
-import 'scheduling.dart';
-import 'wear.dart';
+import 'food.model.dart';
+import 'otto_party.model.dart';
+import 'scheduling.model.dart';
+import 'wear.model.dart';
 
 class User {
   late int id;

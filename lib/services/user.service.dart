@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/config/models/user.dart';
-import 'package:fastaval_app/constants/app_constants.dart';
+import 'package:fastaval_app/constants/app.constant.dart';
+import 'package:fastaval_app/models/user.model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'local_storage_service.dart';
+import 'local_storage.service.dart';
 
 class UserService {
   static const String kUserKey = 'USER_KEY';
