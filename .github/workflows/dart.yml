@@ -10,8 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  push:
-    branches: ["develop", "main"]
   pull_request:
     branches: ["develop", "main"]
 
