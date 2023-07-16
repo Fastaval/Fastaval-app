@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/constants/styles.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
-import 'package:fastaval_app/models/notification.dart';
-import 'package:fastaval_app/services/messages_service.dart';
+import 'package:fastaval_app/models/notification.model.dart';
+import 'package:fastaval_app/services/messages.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

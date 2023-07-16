@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/constants/styles.dart';
-import 'package:fastaval_app/screens/home.dart';
-import 'package:fastaval_app/services/user_service.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/screens/home.screen.dart';
+import 'package:fastaval_app/services/user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

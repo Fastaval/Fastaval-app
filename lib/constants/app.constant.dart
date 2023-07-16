@@ -1,4 +1,4 @@
-import 'package:fastaval_app/services/config_service.dart';
+import 'package:fastaval_app/services/config.service.dart';
 
 final String baseUrl = ConfigService().getRemoteConfig('API');
 

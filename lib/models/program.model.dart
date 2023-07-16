@@ -1,4 +1,4 @@
-import 'package:fastaval_app/models/activity.dart';
+import 'package:fastaval_app/models/activity.model.dart';
 
 class Program {
   List<Activity>? activities;

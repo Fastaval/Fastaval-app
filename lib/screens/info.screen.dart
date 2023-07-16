@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/constants/app.dart';
-import 'package:fastaval_app/constants/styles.dart';
+import 'package:fastaval_app/constants/app.constant.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'activity_run.dart';
+import 'activity_run.model.dart';
 
 class ActivityItem {
   final int id;
