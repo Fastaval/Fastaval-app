@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'activity_run.dart';
+import 'activity_run.model.dart';
 
 class ActivityItem {
   final int id;
@@ -42,7 +42,9 @@ class ActivityItem {
 
   ActivityItem.fromJson(Map<String, dynamic> json)
       : id = json['aktivitet_id'],
-        runs = List.from(json['afviklinger']).map((run) => ActivityRun.fromJson(run)).toList(),
+        runs = List.from(json['afviklinger'])
+            .map((run) => ActivityRun.fromJson(run))
+            .toList(),
         daTitle = json['title_da'],
         daText = json['text_da'],
         daDescription = json['description_da'],

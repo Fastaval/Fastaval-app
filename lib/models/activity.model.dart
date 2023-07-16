@@ -1,4 +1,4 @@
-import 'session.dart';
+import 'session.model.dart';
 
 class Activity {
   int? id;
