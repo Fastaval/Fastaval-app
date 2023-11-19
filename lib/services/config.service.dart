@@ -4,8 +4,10 @@ class ConfigService {
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
   void initConfig() async {
-    await _remoteConfig
-        .setDefaults(const {'API': 'https://infosys.fastaval.dk/api'});
+    await _remoteConfig.setDefaults(const {
+      'API': 'https://infosys.fastaval.dk/api',
+      'APItest': 'https://infosys-test.fastaval.dk/api'
+    });
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
       minimumFetchInterval: const Duration(minutes: 10),
@@ -14,6 +16,7 @@ class ConfigService {
   }
 
   String getRemoteConfig(String string) {
+    print(_remoteConfig.getString(string));
     return _remoteConfig.getString(string);
   }
 }

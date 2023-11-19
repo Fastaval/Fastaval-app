@@ -66,7 +66,6 @@ Future<void> registerAppToInfosys(BuildContext context, User user) async =>
 Future<User> fetchUser(String userId, String password) async {
   var response =
       await http.get(Uri.parse('$baseUrl/v3/user/$userId?pass=$password'));
-
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   }
@@ -79,10 +78,9 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
   var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode({'gcm_id': token}));
-
   if (response.statusCode != 200) {
     throw Exception('Failed to register app with infosys');
-    //TODO: Vis fejl hvis registering ikke lykkesede
+    // TODO: Vis fejl hvis registering ikke lykkedes
   }
 }
 
@@ -105,7 +103,6 @@ Future<void> askForTrackingPermission(BuildContext context) async {
   final TrackingStatus status =
       await AppTrackingTransparency.trackingAuthorizationStatus;
   if (status == TrackingStatus.notDetermined) {
-    // ignore: use_build_context_synchronously
     await showCustomTrackingDialog(context);
     await Future.delayed(const Duration(milliseconds: 200));
     await AppTrackingTransparency.requestTrackingAuthorization();
