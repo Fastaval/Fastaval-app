@@ -8,6 +8,7 @@ Widget oneTextRow(String text) {
 
 Widget textAndIconCard(String title, IconData icon, content) {
   return Card(
+      color: Colors.orange,
       margin: kCardMargin,
       elevation: kCardElevation,
       child: Column(children: [
@@ -21,6 +22,7 @@ Widget textAndIconCard(String title, IconData icon, content) {
 
 Widget textAndTextCard(String title, Text secondaryTitle, content) {
   return Card(
+      color: Colors.orange,
       margin: kCardMargin,
       elevation: kCardElevation,
       child: Column(children: [

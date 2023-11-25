@@ -91,6 +91,9 @@ class HomePageState extends State<HomePageView> {
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           items: _bottomNavList,
+          backgroundColor: Colors.orange,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.black38,
         ),
         endDrawer: drawMenu(context),
       ),
@@ -128,13 +131,13 @@ class HomePageState extends State<HomePageView> {
           icon: const Icon(Icons.info),
           label: tr('bottomNavigation.information')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.calendar_view_day),
+          icon: const Icon(Icons.calendar_month),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
           icon: badges.Badge(
               showBadge: _waitingMessages > 0,
               badgeContent: Text("$_waitingMessages"),
-              child: const Icon(Icons.menu_open)),
+              child: const Icon(Icons.more_horiz)),
           label: tr('bottomNavigation.more'))
     ];
   }
