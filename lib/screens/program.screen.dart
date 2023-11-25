@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:fastaval_app/services/activities.service.dart';
+import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Programscreen extends StatefulWidget {
@@ -43,7 +45,6 @@ class _ProgramscreenState extends State<Programscreen> {
   Widget buildday(String day) {
     List<ActivityRun>? runlist = [];
     Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
-    Map<String, Color> colorMap = <String, Color>{};
 
     final Future<List<ActivityItem>> activityList =
         getDay(day).then((List<ActivityItem> list) {
@@ -64,19 +65,10 @@ class _ProgramscreenState extends State<Programscreen> {
       return list;
     });
 
-    colorMap.putIfAbsent('rolle', () => Colors.lightGreen.shade300);
-    colorMap.putIfAbsent('braet', () => Colors.blue.shade300);
-    colorMap.putIfAbsent('live', () => Colors.teal.shade400);
-    colorMap.putIfAbsent('ottoviteter', () => Colors.orangeAccent.shade400);
-    colorMap.putIfAbsent('junior', () => Colors.pink.shade300);
-    colorMap.putIfAbsent('magic', () => Colors.purpleAccent.shade100);
-    colorMap.putIfAbsent('workshop', () => Colors.amberAccent.shade200);
-    colorMap.putIfAbsent('figur', () => Colors.red.shade300);
-
     return FutureBuilder(
         future: activityList,
         builder: (context, programSnap) {
-          List<Widget> children;
+          List<Widget> screenState;
           if (programSnap.hasData) {
             return SizedBox(
               child: Container(
@@ -87,37 +79,8 @@ class _ProgramscreenState extends State<Programscreen> {
                     itemBuilder: (context, index) {
                       ActivityRun item = runlist[index];
                       return InkWell(
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  //when
-                                  timeBox(
-                                      timestamp:
-                                          formatTimestampToDateTime(item.start),
-                                      color: colorMap[
-                                              activityMap[item.activity]!.type]
-                                          as Color),
-                                  const Padding(
-                                      padding: EdgeInsets.only(left: 20)),
-
-                                  //what
-                                  Flexible(
-                                      child: Text(
-                                    context.locale.toString() == 'da'
-                                        ? activityMap[item.activity]!.daTitle
-                                        : activityMap[item.activity]!.enTitle,
-                                    style: const TextStyle(fontSize: 18),
-                                  )),
-                                ],
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.only(bottom: 10))
-                            ],
-                          ),
-                        ),
+                        child: activityCard(activityMap[item.activity]!, item,
+                            getActivityColor(activityMap[item.activity]!.type)),
                         onTap: () => showDialog(
                             context: context,
                             builder: activityDialog,
@@ -129,24 +92,17 @@ class _ProgramscreenState extends State<Programscreen> {
                   )),
             );
           } else if (programSnap.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
+            screenState = [
+              const Icon(Icons.error_outline, color: Colors.red, size: 60),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text('Error: ${programSnap.error}'),
               ),
             ];
           } else {
-            children = <Widget>[
+            screenState = [
               const SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(),
-              ),
+                  width: 60, height: 60, child: CircularProgressIndicator()),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(tr('program.loading'),
@@ -157,7 +113,7 @@ class _ProgramscreenState extends State<Programscreen> {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
+              children: screenState,
             ),
           );
         });
@@ -165,10 +121,9 @@ class _ProgramscreenState extends State<Programscreen> {
 
   Widget timeBox({required DateTime timestamp, required Color color}) =>
       Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
         decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
+          border: Border(left: BorderSide(width: 5, color: color)),
         ),
         child: Text(
           DateFormat.Hm().format(timestamp),
