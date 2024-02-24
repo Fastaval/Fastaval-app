@@ -29,17 +29,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.1.0
+  http: ^1.2.1
   barcode_widget: ^2.0.4
   shared_preferences: ^2.2.2
-  url_launcher: ^6.2.1
-  easy_localization: ^3.0.3
+  url_launcher: ^6.2.5
+  easy_localization: ^3.0.4
   fluttertoast: ^8.2.4
-  flutter_local_notifications: ^16.2.0
-  firebase_core: ^2.22.0
-  firebase_messaging: ^14.7.5
-  firebase_remote_config: ^4.3.5
-  firebase_analytics: ^10.7.1
+  flutter_local_notifications: ^16.3.2
+  firebase_core: ^2.25.4
+  firebase_messaging: ^14.7.16
+  firebase_remote_config: ^4.3.14
+  firebase_analytics: ^10.8.6
   app_tracking_transparency: ^2.0.4
   photo_view: ^0.14.0
   badges: ^3.1.2
