@@ -7,14 +7,6 @@ import 'package:fastaval_app/services/activities.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-wednesdayToSunday(DateTime date) {
-  if (date.weekday == DateTime.wednesday) {
-    return date;
-  } else {
-    return date.subtract(Duration(days: date.weekday - 3));
-  }
-}
-
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
 
@@ -87,7 +79,9 @@ class _ProgramscreenState extends State<Programscreen> {
                     itemBuilder: (context, index) {
                       ActivityRun item = runlist[index];
                       return InkWell(
-                        child: activityCard(activityMap[item.activity]!, item,
+                        child: programListItem(
+                            activityMap[item.activity]!,
+                            item,
                             getActivityColor(activityMap[item.activity]!.type)),
                         onTap: () => showDialog(
                             context: context,
@@ -126,19 +120,6 @@ class _ProgramscreenState extends State<Programscreen> {
           );
         });
   }
-
-  Widget timeBox({required DateTime timestamp, required Color color}) =>
-      Container(
-        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-        decoration: BoxDecoration(
-          border: Border(left: BorderSide(width: 5, color: color)),
-        ),
-        child: Text(
-          DateFormat.Hm().format(timestamp),
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 18),
-        ),
-      );
 
   Widget activityDialog(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as ActivityItem;

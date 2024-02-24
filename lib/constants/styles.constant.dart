@@ -4,7 +4,7 @@ const kHintTextStyle = TextStyle(color: Colors.white54, fontFamily: 'OpenSans');
 const kLabelStyle = TextStyle(
     color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'OpenSans');
 final kTextBoxDecorationStyle = BoxDecoration(
-  color: const Color(0xFFFFA726),
+  color: colorOrange,
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: const [
     BoxShadow(color: Colors.black12, blurRadius: 6.0, offset: Offset(0, 2))
@@ -32,7 +32,7 @@ const kNormalTextDisabled =
     TextStyle(color: Colors.black26, fontSize: 12, fontFamily: 'OpenSans');
 const backgroundBoxDecorationStyle = BoxDecoration(
   image: DecorationImage(
-    image: AssetImage('assets/images/backgrounds/3.jpg'),
+    image: AssetImage('assets/images/backgrounds/background.jpg'),
     fit: BoxFit.cover,
   ),
 );

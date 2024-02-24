@@ -9,13 +9,13 @@ Widget oneTextRow(String text) {
   return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
 }
 
-Widget activityCard(ActivityItem activity, ActivityRun run, Color color) {
+Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
       child: Row(
         children: [
           SizedBox(
-              height: 50,
+              height: 20,
               child: DecoratedBox(
                   decoration: BoxDecoration(
                     border: Border(
@@ -32,13 +32,17 @@ Widget activityCard(ActivityItem activity, ActivityRun run, Color color) {
                                 style: TextStyle(
                                     color: Colors.grey.shade500,
                                     fontFamily: 'OpenSans')),
-                            Text(formatTime(run.stop),
+/*                             Text(formatTime(run.stop),
                                 style: TextStyle(
                                     color: Colors.grey.shade500,
-                                    fontFamily: 'OpenSans'))
+                                    fontFamily: 'OpenSans')) */
                           ])))),
           SizedBox(width: 10),
-          SizedBox(height: 50, child: Text(activity.daTitle)),
+          SizedBox(
+              height: 25,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text(activity.daTitle)])),
         ],
       ));
 }
