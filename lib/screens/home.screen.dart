@@ -21,6 +21,13 @@ import 'package:photo_view/photo_view.dart';
 
 import '../helpers/notification.dart';
 
+class HomePageView extends StatefulWidget {
+  const HomePageView({super.key});
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
 class HomePageState extends State<HomePageView> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
@@ -380,11 +387,4 @@ class HomePageState extends State<HomePageView> {
       ],
     );
   }
-}
-
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
-
-  @override
-  HomePageState createState() => HomePageState();
 }

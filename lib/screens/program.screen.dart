@@ -16,7 +16,7 @@ class Programscreen extends StatefulWidget {
 
 class _ProgramscreenState extends State<Programscreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return DefaultTabController(
       length: 5,
       child: Scaffold(

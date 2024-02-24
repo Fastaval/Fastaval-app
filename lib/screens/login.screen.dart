@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       horizontal: 40.0, vertical: 120.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: [
                       Text(
                         tr('login.signIn'),
                         style: const TextStyle(

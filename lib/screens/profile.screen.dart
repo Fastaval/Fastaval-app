@@ -47,15 +47,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: double.infinity,
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      fetchUser(widget.user.id.toString(),
-                              widget.user.password.toString())
-                          .then((newUser) => scheduleMicrotask(() {
-                                newUser.password =
-                                    widget.user.password.toString();
+                      fetchUser(
+                        widget.user.id.toString(),
+                        widget.user.password.toString(),
+                      ).then((newUser) => scheduleMicrotask(() {
+                            newUser.password = widget.user.password.toString();
 
-                                UserNotification(loggedIn: true, user: newUser)
-                                    .dispatch(context);
-                              }));
+                            UserNotification(loggedIn: true, user: newUser)
+                                .dispatch(context);
+                          }));
                     },
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),

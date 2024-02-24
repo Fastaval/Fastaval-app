@@ -5,6 +5,54 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class InfoScreen extends StatefulWidget {
+  const InfoScreen({super.key});
+
+  @override
+  State<InfoScreen> createState() => _InfoScreen();
+}
+
+class _InfoScreen extends State<InfoScreen> {
+  @override
+  Widget build(context) {
+    return Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: backgroundBoxDecorationStyle,
+              ),
+              SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: <Widget>[
+                      _buildOpenHoursCard(),
+                      _buildStoresCard(),
+                      _buildSafeFastavalCard(),
+                      _buildWifiCard(),
+                      _buildFastaWearCard(),
+                      _buildLostFoundCard(),
+                      _buildTransportCard(),
+                      const Padding(padding: EdgeInsets.only(bottom: 80))
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 Widget _buildFastaWearCard() {
   return textAndIconCard(tr('info.fastaWear.title'), Icons.person,
       Text(tr('info.fastaWear.text'), style: kNormalTextStyle));
@@ -20,6 +68,17 @@ Widget _buildOpenHoursCard() {
       tr('info.openHours.title'),
       Icons.access_time,
       Column(children: [
+        textRowHeader(tr('info.openHours.coffeeCafe.title')),
+        twoTextRow(tr('info.openHours.coffeeCafe.day1'),
+            kServiceOpeningHours["coffeeCafe"]!["day1"]!,
+            sidePadding: true),
+        twoTextRow(tr('info.openHours.coffeeCafe.day2'),
+            kServiceOpeningHours["coffeeCafe"]!["day2"]!,
+            sidePadding: true),
+        twoTextRow(tr('info.openHours.coffeeCafe.day3'),
+            kServiceOpeningHours["coffeeCafe"]!["day3"]!,
+            sidePadding: true),
+        const SizedBox(height: 10),
         textRowHeader(tr('info.openHours.bar.title')),
         twoTextRow(tr('info.openHours.bar.day1'),
             kServiceOpeningHours["bar"]!["day1"]!,
@@ -31,6 +90,17 @@ Widget _buildOpenHoursCard() {
             sidePadding: true),
         twoTextRow(tr('info.openHours.boardGames.day2'),
             kServiceOpeningHours["boardGames"]!["day2"]!,
+            sidePadding: true),
+        const SizedBox(height: 10),
+        textRowHeader(tr('info.openHours.information.title')),
+        twoTextRow(tr('info.openHours.information.day1'),
+            kServiceOpeningHours["information"]!["day1"]!,
+            sidePadding: true),
+        twoTextRow(tr('info.openHours.information.day2'),
+            kServiceOpeningHours["information"]!["day2"]!,
+            sidePadding: true),
+        twoTextRow(tr('info.openHours.information.day3'),
+            kServiceOpeningHours["information"]!["day3"]!,
             sidePadding: true),
         const SizedBox(height: 10),
         textRowHeader(tr('info.openHours.kiosk.title')),
@@ -47,28 +117,6 @@ Widget _buildOpenHoursCard() {
             sidePadding: true),
         twoTextRow(tr('info.openHours.oasis.day2'),
             kServiceOpeningHours["oasis"]!["day2"]!,
-            sidePadding: true),
-        const SizedBox(height: 10),
-        textRowHeader(tr('info.openHours.information.title')),
-        twoTextRow(tr('info.openHours.information.day1'),
-            kServiceOpeningHours["information"]!["day1"]!,
-            sidePadding: true),
-        twoTextRow(tr('info.openHours.information.day2'),
-            kServiceOpeningHours["information"]!["day2"]!,
-            sidePadding: true),
-        twoTextRow(tr('info.openHours.information.day3'),
-            kServiceOpeningHours["information"]!["day3"]!,
-            sidePadding: true),
-        const SizedBox(height: 10),
-        textRowHeader(tr('info.openHours.coffeeCafe.title')),
-        twoTextRow(tr('info.openHours.coffeeCafe.day1'),
-            kServiceOpeningHours["coffeeCafe"]!["day1"]!,
-            sidePadding: true),
-        twoTextRow(tr('info.openHours.coffeeCafe.day2'),
-            kServiceOpeningHours["coffeeCafe"]!["day2"]!,
-            sidePadding: true),
-        twoTextRow(tr('info.openHours.coffeeCafe.day3'),
-            kServiceOpeningHours["coffeeCafe"]!["day3"]!,
             sidePadding: true),
       ]));
 }
@@ -148,46 +196,4 @@ Widget _buildWifiCard() {
         const SizedBox(height: 10),
         twoTextRow(tr('info.wifi.networkCode'), kWifiPassword, selectable: true)
       ]));
-}
-
-class InfoScreen extends StatelessWidget {
-  const InfoScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: backgroundBoxDecorationStyle,
-            ),
-            SizedBox(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                    _buildSafeFastavalCard(),
-                    _buildWifiCard(),
-                    _buildOpenHoursCard(),
-                    _buildStoresCard(),
-                    _buildFastaWearCard(),
-                    _buildLostFoundCard(),
-                    _buildTransportCard(),
-                    const Padding(padding: EdgeInsets.only(bottom: 80))
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
-  }
 }
