@@ -45,9 +45,13 @@ Widget activityCard(ActivityItem activity, ActivityRun run, Color color) {
 
 Widget textAndIconCard(String title, IconData icon, content) {
   return Card(
-      color: Colors.orange,
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
       margin: kCardMargin,
-      elevation: kCardElevation,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: Colors.black12, width: 1)),
+      elevation: 1,
       child: Column(children: [
         ListTile(
             trailing: Icon(icon), title: Text(title, style: kCardHeaderStyle)),
@@ -59,7 +63,8 @@ Widget textAndIconCard(String title, IconData icon, content) {
 
 Widget textAndTextCard(String title, Text secondaryTitle, content) {
   return Card(
-      color: Colors.orange,
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
       margin: kCardMargin,
       elevation: kCardElevation,
       child: Column(children: [

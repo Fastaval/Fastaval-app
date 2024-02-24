@@ -7,6 +7,14 @@ import 'package:fastaval_app/services/activities.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+wednesdayToSunday(DateTime date) {
+  if (date.weekday == DateTime.wednesday) {
+    return date;
+  } else {
+    return date.subtract(Duration(days: date.weekday - 3));
+  }
+}
+
 class Programscreen extends StatefulWidget {
   const Programscreen({Key? key}) : super(key: key);
 
@@ -31,11 +39,11 @@ class _ProgramscreenState extends State<Programscreen> {
         ),
         body: TabBarView(
           children: [
-            buildday("2023-04-05"),
-            buildday("2023-04-06"),
-            buildday("2023-04-07"),
-            buildday("2023-04-08"),
-            buildday("2023-04-09"),
+            buildday("2024-03-27"),
+            buildday("2024-03-28"),
+            buildday("2024-03-29"),
+            buildday("2024-03-30"),
+            buildday("2024-03-31"),
           ],
         ),
       ),

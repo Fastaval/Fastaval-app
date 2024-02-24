@@ -89,11 +89,11 @@ class HomePageState extends State<HomePageView> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
-          onTap: onTabTapped,
+          onTap: onNavClick,
           items: _bottomNavList,
-          backgroundColor: Colors.orange,
+          backgroundColor: colorOrange,
           selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.black38,
+          unselectedItemColor: Colors.white70,
         ),
         endDrawer: drawMenu(context),
       ),
@@ -108,7 +108,7 @@ class HomePageState extends State<HomePageView> {
     super.initState();
   }
 
-  void onTabTapped(int index) {
+  void onNavClick(int index) {
     if (index == 3) {
       _openDrawer();
       return;
@@ -198,7 +198,7 @@ class HomePageState extends State<HomePageView> {
         child: ListView(
           children: [
             DrawerHeader(
-              decoration: backgroundBoxDecorationStyle,
+              decoration: const BoxDecoration(color: colorOrange),
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

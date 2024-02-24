@@ -71,4 +71,5 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/backgrounds/
     - assets/translations/
