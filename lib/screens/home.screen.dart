@@ -373,7 +373,7 @@ class HomePageState extends State<HomePageView> {
 }
 
 class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+  const HomePageView({super.key});
 
   @override
   HomePageState createState() => HomePageState();

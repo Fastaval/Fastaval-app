@@ -8,7 +8,7 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Programscreen extends StatefulWidget {
-  const Programscreen({Key? key}) : super(key: key);
+  const Programscreen({super.key});
 
   @override
   State<Programscreen> createState() => _ProgramscreenState();

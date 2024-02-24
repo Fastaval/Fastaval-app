@@ -14,11 +14,11 @@ class BoardgameScreen extends StatefulWidget {
   final Function updateParent;
 
   const BoardgameScreen({
-    Key? key,
+    super.key,
     required this.boardgames,
     required this.updateTime,
     required this.updateParent,
-  }) : super(key: key);
+  });
 
   @override
   State<BoardgameScreen> createState() => _BoardgameScreen();

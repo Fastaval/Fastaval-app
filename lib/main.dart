@@ -8,6 +8,19 @@ import 'package:flutter/services.dart';
 import 'constants/firebase.constant.dart';
 import 'screens/home.screen.dart';
 
+enum Language { da, en }
+
+Language lang = Language.en;
+
+getLang() {
+  return lang;
+}
+
+setLang(Language newLang) {
+  print('setting language $newLang');
+  lang = newLang;
+}
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -31,7 +44,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +56,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    setLang('en' as Language);
 
     return MaterialApp(
       onGenerateTitle: (context) => tr('app.title'),

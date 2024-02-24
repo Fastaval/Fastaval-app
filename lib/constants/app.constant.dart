@@ -32,3 +32,11 @@ const kStoreOpeningHours = {
   "store2": {"day1": "10:00 - 22:00"},
   "store3": {"day1": "12:30 - 18:00"}
 };
+
+getLang() {
+  return lang;
+}
+
+setLang(Language newLang) {
+  lang = newLang;
+}

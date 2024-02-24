@@ -19,10 +19,10 @@ class ProfileScreen extends StatefulWidget {
   final User user;
 
   const ProfileScreen({
-    Key? key,
+    super.key,
     required this.user,
     required this.updateTime,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();

@@ -12,7 +12,7 @@ import '../helpers/notification.dart';
 
 class LoginScreen extends StatefulWidget {
   final HomePageState parent;
-  const LoginScreen(this.parent, {Key? key}) : super(key: key);
+  const LoginScreen(this.parent, {super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

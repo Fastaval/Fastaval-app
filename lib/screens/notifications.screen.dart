@@ -13,11 +13,10 @@ class NotificationsScreen extends StatefulWidget {
   final Function updateParent;
 
   const NotificationsScreen(
-      {Key? key,
+      {super.key,
       required this.notifications,
       required this.updateTime,
-      required this.updateParent})
-      : super(key: key);
+      required this.updateParent});
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
