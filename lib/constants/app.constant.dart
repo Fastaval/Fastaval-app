@@ -1,6 +1,6 @@
 import 'package:fastaval_app/services/config.service.dart';
 
-final String baseUrl = ConfigService().getRemoteConfig('API');
+final String baseUrl = ConfigService.instance.getRemoteConfig('API');
 
 const kWifiNetworkName = 'SNET';
 const kWifiUser = 'mfg-guest@mf-gym.dk';
@@ -32,11 +32,3 @@ const kStoreOpeningHours = {
   "store2": {"day1": "10:00 - 22:00"},
   "store3": {"day1": "12:30 - 18:00"}
 };
-
-getLang() {
-  return lang;
-}
-
-setLang(Language newLang) {
-  lang = newLang;
-}

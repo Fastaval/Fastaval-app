@@ -294,6 +294,16 @@ class HomePageState extends State<HomePageView> {
                             .then((user) => barcode(context, user))
                       }),
             ListTile(
+              title: Text('Engelsk'),
+              onTap: () =>
+                  {EasyLocalization.of(context)!.setLocale(Locale('en'))},
+            ),
+            ListTile(
+              title: Text('Dansk'),
+              onTap: () =>
+                  {EasyLocalization.of(context)!.setLocale(Locale('da'))},
+            ),
+            ListTile(
                 leading: const Icon(Icons.close),
                 title: Text(tr('drawer.close'),
                     style: const TextStyle(fontSize: 18)),

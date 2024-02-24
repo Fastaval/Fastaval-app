@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/services/config.service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,19 +8,6 @@ import 'package:flutter/services.dart';
 
 import 'constants/firebase.constant.dart';
 import 'screens/home.screen.dart';
-
-enum Language { da, en }
-
-Language lang = Language.en;
-
-getLang() {
-  return lang;
-}
-
-setLang(Language newLang) {
-  print('setting language $newLang');
-  lang = newLang;
-}
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -32,12 +20,14 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  ConfigService().initConfig();
+  ConfigService.instance.initConfig();
 
   runApp(
     EasyLocalization(
+        startLocale: Locale(await ConfigService.instance.getCurrentLang()),
         supportedLocales: const [Locale('da'), Locale('en')],
         path: 'assets/translations',
+        useOnlyLangCode: true,
         fallbackLocale: const Locale('en'),
         child: const MyApp()),
   );
@@ -50,13 +40,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Setting the top bar in system to same color as app
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.orange));
+        const SystemUiOverlayStyle(statusBarColor: colorOrange));
     // Setting app only portrait mode
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    setLang('en' as Language);
 
     return MaterialApp(
       onGenerateTitle: (context) => tr('app.title'),

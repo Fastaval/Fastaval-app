@@ -80,7 +80,6 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
       body: jsonEncode({'gcm_id': token}));
   if (response.statusCode != 200) {
     throw Exception('Failed to register app with infosys');
-    // TODO: Vis fejl hvis registering ikke lykkedes
   }
 }
 

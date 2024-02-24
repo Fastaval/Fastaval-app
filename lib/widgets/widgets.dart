@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
+import 'package:fastaval_app/services/config.service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,40 +11,41 @@ Widget oneTextRow(String text) {
 }
 
 Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
-  print(window.locale);
+  print('whats the lang to look for? ${ConfigService.instance.currLang}');
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
       child: Row(
         children: [
           SizedBox(
-              height: 40,
-              child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border(
-                        left: BorderSide(width: 5, color: color),
-                        right:
-                            BorderSide(width: 1, color: Colors.grey.shade300)),
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(formatTime(run.start),
-                                style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontFamily: 'OpenSans')),
-/*                             Text(formatTime(run.stop),
-                                style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontFamily: 'OpenSans')) */
-                          ])))),
+            height: 40,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(
+                    left: BorderSide(width: 5, color: color),
+                    right: BorderSide(width: 1, color: Colors.grey.shade300)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        formatTime(run.start),
+                        style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontFamily: 'OpenSans'),
+                      ),
+                    ]),
+              ),
+            ),
+          ),
           SizedBox(width: 10),
           SizedBox(
-              height: 25,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text(activity.daTitle)])),
+            height: 25,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text(activity.daTitle)]),
+          ),
         ],
       ));
 }
