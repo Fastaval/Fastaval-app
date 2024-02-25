@@ -39,8 +39,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Setting the top bar in system to same color as app
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: colorOrange));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: colorOrange,
+      statusBarColor: colorOrange,
+      statusBarIconBrightness: Brightness.light,
+    ));
     // Setting app only portrait mode
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
