@@ -167,11 +167,15 @@ Widget _buildTransportCard() {
         children: [
           Text(tr('info.transportAndParking.text'), style: kNormalTextStyle),
           const SizedBox(height: 20),
-          twoTextRowWithTapAction(tr('info.transportAndParking.taxi1'),
-              kTaxi1PhoneNumber, Uri(scheme: 'tel', path: kTaxi1PhoneNumber)),
+          twoTextRowWithTapAction(
+              tr('info.transportAndParking.taxi1'),
+              kTaxi1PhoneNumber['name']!,
+              Uri(scheme: 'tel', path: kTaxi1PhoneNumber['value'])),
           const SizedBox(height: 20),
-          twoTextRowWithTapAction(tr('info.transportAndParking.taxi2'),
-              kTaxi2PhoneNumber, Uri(scheme: 'tel', path: kTaxi2PhoneNumber))
+          twoTextRowWithTapAction(
+              tr('info.transportAndParking.taxi2'),
+              kTaxi2PhoneNumber['name']!,
+              Uri(scheme: 'tel', path: kTaxi2PhoneNumber['value']))
         ],
       ));
 }
