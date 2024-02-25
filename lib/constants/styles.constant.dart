@@ -51,3 +51,4 @@ const colorOrangeLight = Color(0xFFFFD391);
 const colorOrange = Color(0xFFF9AD1B);
 const colorOrangeDark = Color(0xFFFF9700);
 const colorLightBlue = Color(0xFFC9ECFF);
+const colorGrey = Color(0xFFDFE0DF);

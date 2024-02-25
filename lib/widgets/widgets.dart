@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
@@ -11,6 +13,7 @@ Widget oneTextRow(String text) {
 }
 
 Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
+  inspect(activity);
   var currLang = ConfigService.instance.currLang;
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 0, 5),

@@ -1,14 +1,4 @@
 {
-  "error": {
-    "login": "Error in participant number or password"
-  },
-  "common": {
-    "close": "Close",
-    "updated": "Updated",
-    "time": "Time",
-    "place": "Place",
-    "type": "Type"
-  },
   "app": {
     "title": "Fastaval"
   },
@@ -17,34 +7,48 @@
       "show": "Display barcode"
     },
     "map": {
-      "show": "Show map",
-      "noMapAvailable": "There is no map available right now"
+      "noMapAvailable": "There is no map available right now",
+      "show": "Show map"
     }
   },
   "boardgames": {
-    "title": "Board games",
+    "fastavalGame": "is a Fastaval game",
+    "gameAvailable": {
+      "false": "Not available",
+      "true": "Available"
+    },
     "search": "Search...",
-    "gameAvailable": { "true": "Available", "false": "Not available" },
-    "fastavalGame": "is a Fastaval game"
-  },
-  "drawer": {
-    "settings": "Settings",
-    "messages": "Notifications",
-    "barcode": "Show Barcode",
-    "boardgames": "Board games",
-    "mapSchool": "Show map of school",
-    "mapGym": "Show map of sportscentre",
-    "close": "Close"
-  },
-  "notifications": {
-    "title": "Notifications"
+    "title": "Board games"
   },
   "bottomNavigation": {
     "information": "Information",
     "login": "Sign in",
+    "more": "More",
     "profil": "Profile",
-    "program": "Program",
-    "more": "More"
+    "program": "Program"
+  },
+  "common": {
+    "close": "Close",
+    "place": "Place",
+    "runtime": "Runtime",
+    "time": "Time",
+    "type": "Type",
+    "updated": "Updated",
+    "players": "Players",
+    "language": "Language",
+    "description": "Description"
+  },
+  "drawer": {
+    "barcode": "Show Barcode",
+    "boardgames": "Board games",
+    "close": "Close",
+    "mapGym": "Show map of sportscentre",
+    "mapSchool": "Show map of school",
+    "messages": "Notifications",
+    "settings": "Settings"
+  },
+  "error": {
+    "login": "Error in participant number or password"
   },
   "info": {
     "fastaWear": {
@@ -117,83 +121,92 @@
     }
   },
   "login": {
+    "alert": {
+      "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",
+      "dialogNo": "No thanks",
+      "dialogYes": "Yes please",
+      "title": "Messages from Fastaval"
+    },
     "enterParticipantNumber": "Enter participant number",
     "enterPassword": "Enter password",
     "forgotPassword": "Forgot password?",
     "participantNumber": "Participant number",
     "password": "Password",
+    "permissionsWarning": {
+      "description": "We care about your privacy and data security. Please rest assured that the tracking this app uses is only for allowing us to send you notifications.",
+      "title": "Dear user"
+    },
     "rememberMe": "Remember my login",
     "signIn": "Sign in",
-    "signOut": "Sign out",
-    "permissionsWarning": {
-      "title": "Dear user",
-      "description": "We care about your privacy and data security. Please rest assured that the tracking this app uses is only for allowing us to send you notifications."
-    },
-    "alert": {
-      "title": "Messages from Fastaval",
-      "description": "Are you ok with us sending you updates and notifications through this app? It is our only way to ensure that you are kept up to date on changes etc.",
-      "dialogYes": "Yes please",
-      "dialogNo": "No thanks"
-    }
+    "signOut": "Sign out"
+  },
+  "notifications": {
+    "title": "Notifications"
   },
   "profile": {
+    "activityType": {
+      "braet": "Boardgame",
+      "gds": "Hero Force",
+      "junior": "Junior",
+      "ottoviteter": "Ottotivity",
+      "rolle": "Player",
+      "spilleder": "Game Master",
+      "system": "Fastativity"
+    },
+    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
+    "foodHandedOut": "The food has been handed out",
+    "foodTicket": "Meal ticket",
     "foodTimes": "Meal Times",
+    "handout": "Handed out",
     "messagesFromFastaval": "Messages From Fastaval",
     "noMessagesRightNow": "Fastaval has no messages for you right now",
     "participantNumber": "Participant number",
+    "scanBarcode": "Show the barcode when you go to collect your food",
+    "sleep": {
+      "location": "Sleeping location",
+      "mattress": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "mattressRented": "Mattress rental",
+      "notSleeping": "Not sleeping at Fastaval",
+      "title": "Accomodation"
+    },
+    "wear": {
+      "noWear": "Haven't oredered wear this year",
+      "received": {
+        "0": "Not picked up",
+        "1": "Picked up"
+      },
+      "title": "Wear"
+    },
     "what": "What",
     "when": "When",
     "where": "Where",
-    "yourProgram": "Your Program",
-    "scanBarcode": "Show the barcode when you go to collect your food",
-    "handout": "Handed out",
-    "foodHandedOut": "The food has been handed out",
-    "foodTicket": "Meal ticket",
-    "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
-    "sleep": {
-      "title": "Accomodation",
-      "mattress": { "0": "No", "1": "Yes" },
-      "mattressRented": "Mattress rental",
-      "notSleeping": "Not sleeping at Fastaval",
-      "location": "Sleeping location"
-    },
-    "wear": {
-      "title": "Wear",
-      "noWear": "Haven't oredered wear this year",
-      "received": { "0": "Not picked up", "1": "Picked up" }
-    },
-    "activityType": {
-      "rolle": "Player",
-      "spilleder": "Game Master",
-      "gds": "Hero Force",
-      "braet": "Boardgame",
-      "junior": "Junior",
-      "ottoviteter": "Ottotivity",
-      "system": "Fastativity"
-    }
+    "yourProgram": "Your Program"
   },
   "program": {
     "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
     "friday": {
-      "short": "Fri",
-      "long": "Friday"
+      "long": "Friday",
+      "short": "Fri"
     },
+    "loading": "Loading program",
     "saturday": {
-      "short": "Sat",
-      "long": "Saturday"
+      "long": "Saturday",
+      "short": "Sat"
     },
     "sunday": {
-      "short": "Sun",
-      "long": "Sunday"
+      "long": "Sunday",
+      "short": "Sun"
     },
     "thursday": {
-      "short": "Thu",
-      "long": "Thursday"
+      "long": "Thursday",
+      "short": "Thu"
     },
     "wednesday": {
-      "short": "Wed",
-      "long": "Wednesday"
-    },
-    "loading": "Loading program"
+      "long": "Wednesday",
+      "short": "Wed"
+    }
   }
 }

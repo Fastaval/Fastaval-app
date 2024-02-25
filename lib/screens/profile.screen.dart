@@ -345,9 +345,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Color getBackgroundColor(Food item) {
-    if (item.received == 1) return const Color(0xFFDFE0DF);
-    if (item.titleEn.contains('Dinner')) return const Color(0xFF00BBE2);
-    if (item.titleEn.contains('Breakfast')) return const Color(0xFF00D3B3);
+    if (item.received == 1) return colorGrey;
+    if (item.titleEn.contains('Dinner')) return colorOrangeLight;
+    if (item.titleEn.contains('Breakfast')) return colorOrangeLight;
     return const Color(0xFF63BAAB);
   }
 
@@ -361,12 +361,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () => Navigator.pop(context),
               child: Text(tr('common.close')))
         ],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         titlePadding: const EdgeInsets.all(0),
         title: Column(children: [
           Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
               ),
