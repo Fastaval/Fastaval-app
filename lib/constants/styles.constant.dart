@@ -17,6 +17,13 @@ const kCardContentPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
 const double kCardElevation = 5;
 const kNormalTextStyle =
     TextStyle(color: Colors.black, fontSize: 16.0, fontFamily: 'OpenSans');
+const kNormalTextClickableStyle = TextStyle(
+  color: colorBlack,
+  fontSize: 16.0,
+  fontFamily: 'OpenSans',
+  decoration: TextDecoration.underline,
+  decorationColor: Colors.black45,
+);
 const kNormalTextBoldStyle = TextStyle(
     color: Colors.black,
     fontSize: 16.0,

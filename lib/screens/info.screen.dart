@@ -128,18 +128,18 @@ Widget _buildSafeFastavalCard() {
       Column(children: [
         twoTextRowWithTapAction(
             tr('info.safe.dutyGeneral'),
-            kDutyGeneralPhoneNumber,
-            Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber)),
+            kDutyGeneralPhoneNumber["name"]!,
+            Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber["value"])),
         const SizedBox(height: 10),
         twoTextRowWithTapAction(
             tr('info.safe.heroForce'),
-            kHeroForcePhoneNumber,
-            Uri(scheme: 'tel', path: kHeroForcePhoneNumber)),
+            kHeroForcePhoneNumber["name"]!,
+            Uri(scheme: 'tel', path: kHeroForcePhoneNumber["value"])),
         const SizedBox(height: 10),
         twoTextRowWithTapAction(
             tr('info.safe.safetyHost'),
-            kSafetyHostPhoneNumber,
-            Uri(scheme: 'tel', path: kSafetyHostPhoneNumber)),
+            kSafetyHostPhoneNumber["name"]!,
+            Uri(scheme: 'tel', path: kSafetyHostPhoneNumber["value"])),
         const SizedBox(height: 10),
         twoTextRowWithTapAction(tr('info.safe.safetyMail'), kSafeFastavalMail,
             Uri(scheme: 'mailto', path: kSafeFastavalMail)),
@@ -156,15 +156,6 @@ Widget _buildStoresCard() {
             kStoreOpeningHours["store1"]!["day1"]!,
             sidePadding: true),
         const SizedBox(height: 10),
-        textRowHeader(tr('info.stores.store2.title')),
-        twoTextRow(tr('info.stores.store2.day1'),
-            kStoreOpeningHours["store2"]!["day1"]!,
-            sidePadding: true),
-        const SizedBox(height: 10),
-        textRowHeader(tr('info.stores.store3.title')),
-        twoTextRow(tr('info.stores.store3.day1'),
-            kStoreOpeningHours["store3"]!["day1"]!,
-            sidePadding: true),
       ]));
 }
 

@@ -11,7 +11,7 @@ Widget oneTextRow(String text) {
 }
 
 Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
-  print('whats the lang to look for? ${ConfigService.instance.currLang}');
+  var currLang = ConfigService.instance.currLang;
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
       child: Row(
@@ -44,7 +44,9 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
             height: 25,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text(activity.daTitle)]),
+                children: [
+                  Text(currLang == 'da' ? activity.daTitle : activity.enTitle)
+                ]),
           ),
         ],
       ));
@@ -148,8 +150,8 @@ Widget twoTextRowWithTapAction(String title, String link, Uri url) {
                 }
               });
             },
-            child: Text(url.path,
-                textAlign: TextAlign.right, style: kNormalTextStyle)),
+            child: Text(link,
+                textAlign: TextAlign.right, style: kNormalTextClickableStyle)),
       ),
     ],
   );

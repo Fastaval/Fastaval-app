@@ -12,6 +12,7 @@ import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
 import 'package:fastaval_app/services/boardgame.service.dart';
+import 'package:fastaval_app/services/config.service.dart';
 import 'package:fastaval_app/services/messages.service.dart';
 import 'package:fastaval_app/services/user.service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -302,13 +303,17 @@ class HomePageState extends State<HomePageView> {
                       }),
             ListTile(
               title: Text('Engelsk'),
-              onTap: () =>
-                  {EasyLocalization.of(context)!.setLocale(Locale('en'))},
+              onTap: () => {
+                EasyLocalization.of(context)!.setLocale(Locale('en')),
+                ConfigService.instance.currLang = 'en'
+              },
             ),
             ListTile(
               title: Text('Dansk'),
-              onTap: () =>
-                  {EasyLocalization.of(context)!.setLocale(Locale('da'))},
+              onTap: () => {
+                EasyLocalization.of(context)!.setLocale(Locale('da')),
+                ConfigService.instance.currLang = 'da'
+              },
             ),
             ListTile(
                 leading: const Icon(Icons.close),
