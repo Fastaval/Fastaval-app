@@ -118,10 +118,6 @@ class HomePageState extends State<HomePageView> {
   }
 
   void onNavClick(int index) {
-    if (index == 3) {
-      _openDrawer();
-      return;
-    }
     setState(() {
       _currentIndex = index;
     });
@@ -131,23 +127,24 @@ class HomePageState extends State<HomePageView> {
     return <BottomNavigationBarItem>[
       if (_loggedIn == true)
         BottomNavigationBarItem(
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.person_outline),
             label: tr('bottomNavigation.profil')),
       if (_loggedIn == false)
         BottomNavigationBarItem(
-            icon: const Icon(Icons.login), label: tr('bottomNavigation.login')),
+            icon: const Icon(Icons.login_outlined),
+            label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.info),
+          icon: const Icon(Icons.info_outline),
           label: tr('bottomNavigation.information')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.calendar_month),
+          icon: const Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
           icon: badges.Badge(
               showBadge: _waitingMessages > 0,
               badgeContent: Text("$_waitingMessages"),
-              child: const Icon(Icons.more_horiz)),
-          label: tr('bottomNavigation.more'))
+              child: const Icon(Icons.more_horiz_outlined)),
+          label: tr('bottomNavigation.more')),
     ];
   }
 
