@@ -8,6 +8,7 @@ import 'package:fastaval_app/models/user.model.dart';
 import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
+import 'package:fastaval_app/screens/more.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
@@ -196,6 +197,7 @@ class HomePageState extends State<HomePageView> {
       if (!_loggedIn) LoginScreen(this),
       const InfoScreen(),
       const Programscreen(),
+      const MoreScreen()
     ];
   }
 
