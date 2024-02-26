@@ -11,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../helpers/notification.dart';
 
 class LoginScreen extends StatefulWidget {
-  final HomePageState parent;
+  final HomeScreenState parent;
   const LoginScreen(this.parent, {super.key});
 
   @override

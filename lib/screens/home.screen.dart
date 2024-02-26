@@ -23,14 +23,14 @@ import 'package:photo_view/photo_view.dart';
 
 import '../helpers/notification.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  HomePageState createState() => HomePageState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class HomePageState extends State<HomePageView> {
+class HomeScreenState extends State<HomeScreen> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   late int _userFetchTime;
@@ -42,9 +42,6 @@ class HomePageState extends State<HomePageView> {
   int _currentIndex = 1;
   int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  void _openDrawer() {
-    _scaffoldKey.currentState!.openEndDrawer();
-  }
 
   @override
   Widget build(BuildContext context) {

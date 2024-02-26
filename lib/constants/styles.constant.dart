@@ -12,6 +12,7 @@ final kTextBoxDecorationStyle = BoxDecoration(
   ],
 );
 const kCardMargin = EdgeInsets.fromLTRB(16, 16, 16, 0);
+const kMenuCardMargin = EdgeInsets.fromLTRB(16, 8, 16, 0);
 const kCardPadding = EdgeInsets.all(16.0);
 const kCardContentPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
 const double kCardElevation = 5;
@@ -34,6 +35,8 @@ const kCardHeaderStyle = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     fontFamily: 'OpenSans');
+const kMenuCardHeaderStyle = TextStyle(
+    color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'OpenSans');
 const kNormalTextSubdued =
     TextStyle(color: Colors.black54, fontSize: 12, fontFamily: 'OpenSans');
 const kNormalTextDisabled =

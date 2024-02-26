@@ -55,6 +55,27 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
       ));
 }
 
+Widget menuCard(String title, IconData icon, [bool hasSubMenu = false]) {
+  return Card(
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
+      margin: kMenuCardMargin,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: Colors.black12, width: 1)),
+      elevation: 1,
+      child: Column(children: [
+        ListTile(
+            trailing:
+                hasSubMenu ? Icon(Icons.keyboard_arrow_right_outlined) : null,
+            title: Row(children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0), child: Icon(icon)),
+              Text(title, style: kMenuCardHeaderStyle)
+            ])),
+      ]));
+}
+
 Widget textAndIconCard(String title, IconData icon, content) {
   return Card(
       surfaceTintColor: Colors.white,
