@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 String formatDay(int? time, BuildContext context) {
-  return DateFormat.E(context.locale.toString() == 'da' ? 'da_DK' : 'en_UK')
+  return DateFormat.E(context.locale.languageCode == 'da' ? 'da_DK' : 'en_UK')
       .format(formatTimestampToDateTime(time!))
       .capitalize();
 }

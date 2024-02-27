@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:fastaval_app/services/config.service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget oneTextRow(String text) {
@@ -13,7 +12,6 @@ Widget oneTextRow(String text) {
 }
 
 Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
-  inspect(activity);
   var currLang = ConfigService.instance.currLang;
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
@@ -34,9 +32,7 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
                     children: [
                       Text(
                         formatTime(run.start),
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontFamily: 'OpenSans'),
+                        style: TextStyle(color: Colors.grey.shade500),
                       ),
                     ]),
               ),
@@ -48,7 +44,9 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(currLang == 'da' ? activity.daTitle : activity.enTitle)
+                  Text(Get.locale?.languageCode == 'da'
+                      ? activity.daTitle
+                      : activity.enTitle)
                 ]),
           ),
         ],
@@ -66,13 +64,16 @@ Widget menuCard(String title, IconData icon, [bool hasSubMenu = false]) {
       elevation: 1,
       child: Column(children: [
         ListTile(
-            trailing:
-                hasSubMenu ? Icon(Icons.keyboard_arrow_right_outlined) : null,
-            title: Row(children: [
+          trailing:
+              hasSubMenu ? Icon(Icons.keyboard_arrow_right_outlined) : null,
+          title: Row(
+            children: [
               Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 8, 0), child: Icon(icon)),
               Text(title, style: kMenuCardHeaderStyle)
-            ])),
+            ],
+          ),
+        )
       ]));
 }
 

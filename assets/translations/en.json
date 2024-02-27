@@ -29,23 +29,14 @@
   },
   "common": {
     "close": "Close",
+    "description": "Description",
+    "language": "Language",
     "place": "Place",
+    "players": "Players",
     "runtime": "Runtime",
     "time": "Time",
     "type": "Type",
-    "updated": "Updated",
-    "players": "Players",
-    "language": "Language",
-    "description": "Description"
-  },
-  "drawer": {
-    "barcode": "Show Barcode",
-    "boardgames": "Board games",
-    "close": "Close",
-    "mapGym": "Show map of sportscentre",
-    "mapSchool": "Show map of school",
-    "messages": "Notifications",
-    "settings": "Settings"
+    "updated": "Updated"
   },
   "error": {
     "login": "Error in participant number or password"
@@ -140,6 +131,18 @@
     "signIn": "Sign in",
     "signOut": "Sign out"
   },
+  "more": {
+    "barcode": "Show Barcode",
+    "boardgames": "Board games",
+    "close": "Close",
+    "map": {
+      "gym": "Map of sportscentre",
+      "school": "Map of school"
+    },
+    "messages": "Notifications",
+    "settings": "Settings",
+    "title": "More"
+  },
   "notifications": {
     "title": "Notifications"
   },
@@ -208,5 +211,18 @@
       "long": "Wednesday",
       "short": "Wed"
     }
+  },
+  "screenTitle": {
+    "boardgames": "Board games",
+    "info": "Information",
+    "login": "Sign in",
+    "more": "More",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "program": "Program",
+    "settings": "Indstillinger"
+  },
+  "settings": {
+    "title": "Indstillinger"
   }
 }

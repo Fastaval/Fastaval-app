@@ -29,23 +29,14 @@
   },
   "common": {
     "close": "Luk",
+    "description": "Beskrivelse",
+    "language": "Sprog",
     "place": "Sted",
+    "players": "Spillere",
     "runtime": "Tidsforbrug",
     "time": "Tidspunkt",
     "type": "Type",
-    "updated": "Opdateret",
-    "players": "Spillere",
-    "language": "Sprog",
-    "description": "Beskrivelse"
-  },
-  "drawer": {
-    "barcode": "Vis stregkode",
-    "boardgames": "Brætspil",
-    "close": "Luk",
-    "mapGym": "Vis kort over idrætshallen",
-    "mapSchool": "Vis kort over skolen",
-    "messages": "Notifikationer",
-    "settings": "Indstillinger"
+    "updated": "Opdateret"
   },
   "error": {
     "login": "Fejl i brugernavn eller password"
@@ -140,6 +131,18 @@
     "signIn": "Log ind",
     "signOut": "Log ud"
   },
+  "more": {
+    "barcode": "Vis stregkode",
+    "boardgames": "Brætspil",
+    "close": "Luk",
+    "map": {
+      "gym": "Kort over idrætshallen",
+      "school": "Vis kort over skolen"
+    },
+    "messages": "Notifikationer",
+    "settings": "Indstillinger",
+    "title": "Mere"
+  },
   "notifications": {
     "title": "Notifikationer"
   },
@@ -208,5 +211,18 @@
       "long": "Onsdag",
       "short": "Ons"
     }
+  },
+  "screenTitle": {
+    "boardgames": "Brætspil",
+    "info": "Information",
+    "login": "Log ind",
+    "more": "Mere",
+    "notifications": "Notifikationer",
+    "profile": "Profil",
+    "program": "Program",
+    "settings": "Indstillinger"
+  },
+  "settings": {
+    "title": "Indstillinger"
   }
 }

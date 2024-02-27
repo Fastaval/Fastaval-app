@@ -2,24 +2,15 @@ import 'package:badges/badges.dart' as badges;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
-import 'package:fastaval_app/models/boardgame.model.dart';
-import 'package:fastaval_app/models/notification.model.dart';
 import 'package:fastaval_app/models/user.model.dart';
-import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
 import 'package:fastaval_app/screens/more.screen.dart';
-import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
-import 'package:fastaval_app/services/boardgame.service.dart';
-import 'package:fastaval_app/services/config.service.dart';
-import 'package:fastaval_app/services/messages.service.dart';
 import 'package:fastaval_app/services/user.service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 
 import '../helpers/notification.dart';
 
@@ -34,10 +25,6 @@ class HomeScreenState extends State<HomeScreen> {
   late List<BottomNavigationBarItem> _bottomNavList = _bottomNavItems();
   late User? _user;
   late int _userFetchTime;
-  late List<InfosysNotification> _notifications;
-  late int __notificationsFetchTime;
-  late List<Boardgame> _boardgames;
-  late int _boardgameFetchTime;
   bool _loggedIn = false;
   int _currentIndex = 1;
   int _waitingMessages = 0;
@@ -48,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getNotifications();
+          //_getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -58,7 +45,7 @@ class HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         setState(() {
-          _getNotifications();
+          //_getNotifications();
           _waitingMessages = 1;
           _bottomNavList = _bottomNavItems();
         });
@@ -73,12 +60,6 @@ class HomeScreenState extends State<HomeScreen> {
 
         if (notification is UserNotification) {
           setState(() {
-            if (_loggedIn == false && notification.loggedIn == true) {
-              _getNotifications();
-            }
-            if (notification.loggedIn == false) {
-              _waitingMessages = 0;
-            }
             _loggedIn = notification.loggedIn;
             _user = notification.user;
             _userFetchTime =
@@ -97,11 +78,10 @@ class HomeScreenState extends State<HomeScreen> {
           currentIndex: _currentIndex,
           onTap: onNavClick,
           items: _bottomNavList,
-          backgroundColor: colorOrange,
+          backgroundColor: colorOrangeDark,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
         ),
-        endDrawer: drawMenu(context),
       ),
     );
   }
@@ -109,8 +89,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     _getUser();
-    _getNotifications();
-    _getBoardgames();
     super.initState();
   }
 
@@ -145,32 +123,6 @@ class HomeScreenState extends State<HomeScreen> {
     ];
   }
 
-  Future _getNotifications() async {
-    var notifications = await fetchNotifications();
-    _updateNotifications(notifications);
-  }
-
-  _updateNotifications(notifications) {
-    setState(() {
-      __notificationsFetchTime =
-          (DateTime.now().millisecondsSinceEpoch / 1000).round();
-      _notifications = notifications;
-    });
-  }
-
-  Future _getBoardgames() async {
-    var boardgames = await fetchBoardgames();
-    _updateBoardGames(boardgames);
-  }
-
-  _updateBoardGames(boardgames) {
-    setState(() {
-      _boardgameFetchTime =
-          (DateTime.now().millisecondsSinceEpoch / 1000).round();
-      _boardgames = List.from(boardgames);
-    });
-  }
-
   Future _getUser() async {
     await UserService().getUser().then((newUser) => {
           _user = newUser,
@@ -195,133 +147,6 @@ class HomeScreenState extends State<HomeScreen> {
     ];
   }
 
-  Drawer drawMenu(BuildContext context) {
-    return Drawer(
-      elevation: 10.0,
-      child: SafeArea(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(color: colorOrange),
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(children: [
-                    buildIdIcon(),
-                    Text(
-                      tr('profile.participantNumber'),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ])
-                ],
-              ),
-            ),
-            if (_loggedIn)
-              ListTile(
-                leading: badges.Badge(
-                    showBadge: _waitingMessages > 0,
-                    child: const Icon(Icons.mail)),
-                title: Text(tr('drawer.messages'),
-                    style: const TextStyle(fontSize: 18)),
-                onTap: () => setState(() {
-                  Navigator.of(context).pop();
-                  _waitingMessages = 0;
-                  _bottomNavList = _bottomNavItems();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NotificationsScreen(
-                        notifications: _notifications,
-                        updateTime: __notificationsFetchTime,
-                        updateParent: (notifications) =>
-                            _updateNotifications(notifications),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ListTile(
-              leading: const Icon(Icons.sports_esports),
-              title: Text(tr('drawer.boardgames'),
-                  style: const TextStyle(fontSize: 18)),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BoardgameScreen(
-                            boardgames: _boardgames,
-                            updateTime: _boardgameFetchTime,
-                            updateParent: (games) => _updateBoardGames(games),
-                          )),
-                );
-              },
-            ),
-            ListTile(
-                leading: const Icon(Icons.school),
-                title: Text(tr('drawer.mapSchool'),
-                    style: const TextStyle(fontSize: 18)),
-                onTap: () => {
-                      Navigator.of(context).pop(),
-                      fastaMap(
-                        context,
-                        const AssetImage(
-                            'assets/images/Mariagerfjord_kort_23.jpg'),
-                      )
-                    }),
-            ListTile(
-                leading: const Icon(Icons.sports_tennis),
-                title: Text(tr('drawer.mapGym'),
-                    style: const TextStyle(fontSize: 18)),
-                onTap: () => {
-                      Navigator.of(context).pop(),
-                      fastaMap(
-                          context,
-                          const AssetImage(
-                              'assets/images/Hobro_Idraetscenter_kort_23.jpg'))
-                    }),
-            const SizedBox(height: 60),
-            if (_loggedIn)
-              ListTile(
-                  leading: const Icon(CupertinoIcons.barcode),
-                  title: Text(tr('drawer.barcode'),
-                      style: const TextStyle(fontSize: 18)),
-                  onTap: () => {
-                        Navigator.of(context).pop(),
-                        UserService()
-                            .getUser()
-                            .then((user) => barcode(context, user))
-                      }),
-            ListTile(
-              title: Text('Engelsk'),
-              onTap: () => {
-                EasyLocalization.of(context)!.setLocale(Locale('en')),
-                ConfigService.instance.currLang = 'en'
-              },
-            ),
-            ListTile(
-              title: Text('Dansk'),
-              onTap: () => {
-                EasyLocalization.of(context)!.setLocale(Locale('da')),
-                ConfigService.instance.currLang = 'da'
-              },
-            ),
-            ListTile(
-                leading: const Icon(Icons.close),
-                title: Text(tr('drawer.close'),
-                    style: const TextStyle(fontSize: 18)),
-                onTap: () => Navigator.of(context).pop()),
-          ],
-        ),
-      ),
-    );
-  }
-
   Future<dynamic> barcode(BuildContext context, User user) {
     return showDialog(
         context: context,
@@ -340,33 +165,6 @@ class HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  Future fastaMap(BuildContext context, AssetImage image) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Stack(children: [
-            PhotoView(
-              imageProvider: image,
-            ),
-            Positioned(
-                right: 10,
-                top: 10,
-                child: Material(
-                  color: Colors.transparent,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.orange,
-                    radius: 20,
-                    child: IconButton(
-                      icon: const Icon(Icons.close),
-                      color: Colors.black,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
-                ))
-          ]);
-        });
-  }
-
   Widget buildIdIcon() {
     return Column(
       children: [
@@ -380,9 +178,7 @@ class HomeScreenState extends State<HomeScreen> {
                   "${_user?.id}",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 58,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans'),
+                      fontSize: 58, fontWeight: FontWeight.bold),
                 ),
         ),
       ],

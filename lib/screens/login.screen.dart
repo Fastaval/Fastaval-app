@@ -25,6 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 40,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('screenTitle.login')),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -45,15 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        tr('login.signIn'),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       const SizedBox(height: 30.0),
                       _buildUserIdInput(),
                       const SizedBox(height: 30.0),
@@ -96,7 +95,6 @@ class _LoginScreenState extends State<LoginScreen> {
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
           ),
         ),
       ),
@@ -117,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: passwordController,
             keyboardType: TextInputType.number,
             obscureText: true,
-            style: const TextStyle(color: Colors.white, fontFamily: 'OpenSans'),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),
@@ -144,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             controller: userIdController,
             keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.white, fontFamily: 'OpenSans'),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),

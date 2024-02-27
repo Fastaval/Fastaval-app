@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:fastaval_app/services/activities.service.dart';
-import 'package:fastaval_app/services/config.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -18,33 +16,46 @@ class Programscreen extends StatefulWidget {
 }
 
 class _ProgramscreenState extends State<Programscreen> {
-  var currLang = ConfigService.instance.currLang;
-
   @override
   Widget build(context) {
     return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: TabBar(
-          tabs: [
-            Tab(text: tr('program.wednesday.short')),
-            Tab(text: tr('program.thursday.short')),
-            Tab(text: tr('program.friday.short')),
-            Tab(text: tr('program.saturday.short')),
-            Tab(text: tr('program.sunday.short')),
-          ],
-        ),
-        body: TabBarView(
-          children: [
-            buildday("2024-03-27"),
-            buildday("2024-03-28"),
-            buildday("2024-03-29"),
-            buildday("2024-03-30"),
-            buildday("2024-03-31"),
-          ],
-        ),
-      ),
-    );
+        length: 5,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: colorOrangeDark,
+            foregroundColor: colorWhite,
+            toolbarHeight: 40,
+            centerTitle: true,
+            titleTextStyle: kAppBarTextStyle,
+            title: Text(tr('screenTitle.program')),
+            bottom: TabBar(tabs: [
+              Tab(
+                  child: Text(tr('program.wednesday.short'),
+                      style: kTabBarTextStyle)),
+              Tab(
+                  child: Text(tr('program.thursday.short'),
+                      style: kTabBarTextStyle)),
+              Tab(
+                  child: Text(tr('program.friday.short'),
+                      style: kTabBarTextStyle)),
+              Tab(
+                  child: Text(tr('program.saturday.short'),
+                      style: kTabBarTextStyle)),
+              Tab(
+                  child: Text(tr('program.sunday.short'),
+                      style: kTabBarTextStyle)),
+            ]),
+          ),
+          body: TabBarView(
+            children: [
+              buildday("2024-03-27"),
+              buildday("2024-03-28"),
+              buildday("2024-03-29"),
+              buildday("2024-03-30"),
+              buildday("2024-03-31"),
+            ],
+          ),
+        ));
   }
 
   Widget buildday(String day) {
@@ -130,8 +141,8 @@ class _ProgramscreenState extends State<Programscreen> {
   Widget activityDialog(BuildContext context) {
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
-    inspect(item);
-    inspect(details);
+    // inspect(item);
+    // inspect(details);
     return AlertDialog(
         insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -145,7 +156,11 @@ class _ProgramscreenState extends State<Programscreen> {
         titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         title: Column(
           children: [
-            Text(currLang == 'da' ? details.daTitle : details.enTitle),
+            Text(
+              context.locale.languageCode == 'da'
+                  ? details.daTitle
+                  : details.enTitle,
+            ),
             if (details.author.isNotEmpty)
               Text(details.author,
                   style: TextStyle(fontSize: 12, color: Colors.grey))
@@ -175,13 +190,15 @@ class _ProgramscreenState extends State<Programscreen> {
               SizedBox(height: 5),
               Text(tr('common.description'),
                   style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 2),
               SizedBox(
                 height: 250,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Text(
-                    currLang == 'da' ? details.daText : details.enText,
-                    style: TextStyle(fontFamily: 'OpenSans'),
+                    context.locale.languageCode == 'da'
+                        ? details.daText
+                        : details.enText,
                   ),
                 ),
               )

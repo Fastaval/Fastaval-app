@@ -1,38 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/notification.model.dart';
-import 'package:fastaval_app/services/messages.service.dart';
-import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
-class NotificationsScreen extends StatefulWidget {
-  final List<InfosysNotification> notifications;
-  final int updateTime;
-  final Function updateParent;
-
-  const NotificationsScreen(
-      {super.key,
-      required this.notifications,
-      required this.updateTime,
-      required this.updateParent});
-
+class NotificationsScreen extends GetView<NotificationController> {
+  NotificationsScreen({super.key});
+  // late List<InfosysNotification> notificationList = widget.notifications;
+  // late int listUpdatedAt = widget.updateTime;
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
-}
-
-class _NotificationsScreenState extends State<NotificationsScreen> {
-  late List<InfosysNotification> notificationList = widget.notifications;
-  late int listUpdatedAt = widget.updateTime;
+  final controller = Get.put(NotificationController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: const BackButton(),
-        title: Text(tr('drawer.messages')),
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 40,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('screenTitle.notifications')),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -50,13 +41,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   child: RefreshIndicator(
                     onRefresh: () async {
                       fetchNotifications().then((notificationList) => {
-                            setState(() {
+                            /* setState(() {
                               widget.updateParent(notificationList);
                               notificationList = notificationList;
                               listUpdatedAt =
                                   (DateTime.now().millisecondsSinceEpoch / 1000)
                                       .round();
-                            }),
+                            }), */
                           });
                     },
                     child: SingleChildScrollView(
@@ -77,13 +68,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget buildMessages() {
-    return textAndTextCard(
+    return Obx(() => Text('${controller.listUpdatedAt.value}'));
+    /* return textAndTextCard(
         tr('notifications.title'),
         Text(
           "${tr('common.updated')} ${formatDay(listUpdatedAt, context)} ${formatTime(listUpdatedAt)}",
           style: kNormalTextSubdued,
         ),
-        listWidget(widget.notifications.reversed.toList(), context));
+        listWidget(widget.notifications.reversed.toList(), context)); */
   }
 
   Widget listWidget(List<InfosysNotification> notifications, context) {
@@ -111,15 +103,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
+/*                 Text(
                   formatDay(notification.sendTime, context),
                   style: kNormalTextBoldStyle,
-                ),
+                ), */
                 Text(formatTime(notification.sendTime +
                     7200)) // + 2 hours, to compensate for UTC => UTC+2
               ])),
       Expanded(
-          child: Text(context.locale.toString() == 'da'
+          child: Text(Get.locale?.languageCode == 'da'
               ? notification.da
               : notification.en))
     ]);

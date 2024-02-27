@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Setting the top bar in system to same color as app
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: colorOrange,
-      statusBarColor: colorOrange,
+      systemNavigationBarColor: colorOrangeDark,
+      statusBarColor: colorOrangeDark,
       statusBarIconBrightness: Brightness.light,
     ));
     // Setting app only portrait mode
@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.orange),
-      home: const HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'Lato'),
+      home: HomeScreen(),
     );
   }
 }

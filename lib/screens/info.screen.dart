@@ -16,6 +16,14 @@ class _InfoScreen extends State<InfoScreen> {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 40,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('screenTitle.info')),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(

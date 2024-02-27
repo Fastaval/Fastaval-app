@@ -32,6 +32,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 40,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('screenTitle.profile')),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -94,19 +102,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Text(
             widget.user.id.toString(),
             textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans'),
+            style: const TextStyle(fontSize: 58, fontWeight: FontWeight.bold),
           ),
         ),
         Text(
           tr('profile.participantNumber'),
           style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -131,8 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.deepOrange,
                   letterSpacing: 1.5,
                   fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans'),
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ));
@@ -176,8 +177,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget userProgramItem(Scheduling item) {
     var title =
-        context.locale.toString() == 'da' ? item.titleDa! : item.titleEn!;
-    var room = context.locale.toString() == 'da' ? item.roomDa : item.roomEn;
+        context.locale.languageCode == 'da' ? item.titleDa! : item.titleEn!;
+    var room = context.locale.languageCode == 'da' ? item.roomDa : item.roomEn;
     var activityType = item.activityType != null &&
             (item.activityType == 'ottoviteter' ||
                 item.activityType == 'system')
@@ -231,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                       Text(
-                          context.locale.toString() == 'da'
+                          context.locale.languageCode == 'da'
                               ? item.titleDa
                               : item.titleEn,
                           style: item.received == 1
@@ -286,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget wearItem(Wear item) {
-    String title = context.locale.toString() == 'da'
+    String title = context.locale.languageCode == 'da'
         ? "${item.amount} stk. ${item.titleDa}"
         : "${item.amount} pcs. ${item.titleEn}";
 
@@ -374,10 +375,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               height: 100),
           const SizedBox(height: 5),
-          Text(context.locale.toString() == 'da' ? item.titleDa : item.titleEn)
+          Text(
+              context.locale.languageCode == 'da' ? item.titleDa : item.titleEn)
         ]),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(context.locale.toString() == 'da' ? item.textDa : item.textEn,
+          Text(context.locale.languageCode == 'da' ? item.textDa : item.textEn,
               style: kNormalTextStyle),
           if (item.titleEn.contains('Breakfast'))
             Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
@@ -421,7 +423,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 5),
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Text(context.locale.toString() == 'da'
+              child: Text(context.locale.languageCode == 'da'
                   ? item.titleDa!
                   : item.titleEn!))
         ]),
@@ -451,7 +453,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
                 Flexible(
-                    child: Text(context.locale.toString() == 'da'
+                    child: Text(context.locale.languageCode == 'da'
                         ? item.roomDa!
                         : item.roomEn!))
               ],
