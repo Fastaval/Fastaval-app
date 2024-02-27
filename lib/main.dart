@@ -24,7 +24,7 @@ void main() async {
 
   runApp(
     EasyLocalization(
-        startLocale: Locale(await ConfigService.instance.getCurrentLang()),
+        startLocale: Locale('en'),
         supportedLocales: const [Locale('da'), Locale('en')],
         path: 'assets/translations',
         useOnlyLangCode: true,

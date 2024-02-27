@@ -2,7 +2,6 @@ import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
-import 'package:fastaval_app/services/config.service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +11,6 @@ Widget oneTextRow(String text) {
 }
 
 Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
-  var currLang = ConfigService.instance.currLang;
   return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
       child: Row(

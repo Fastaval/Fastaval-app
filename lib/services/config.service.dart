@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:fastaval_app/services/local_storage.service.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
@@ -9,8 +7,6 @@ class ConfigService {
   final LocalStorageService _localStorageService = LocalStorageService();
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   final String _kAppLang = 'APP_LANG';
-
-  String currLang = 'en';
 
   void initConfig() async {
     await _remoteConfig.setDefaults(const {
@@ -27,24 +23,5 @@ class ConfigService {
   String getRemoteConfig(String string) {
     print(_remoteConfig.getString(string));
     return _remoteConfig.getString(string);
-  }
-
-  Future<String> getCurrentLang() async {
-    var langFromStorage = await _localStorageService.getString(_kAppLang);
-    if (langFromStorage != '') {
-      print('getting stored language: $langFromStorage');
-      return langFromStorage;
-    }
-
-    Platform.localeName.startsWith('da')
-        ? setCurrentLang('da')
-        : setCurrentLang('en');
-    print('getting new language: $currLang');
-    return currLang;
-  }
-
-  setCurrentLang(String lang) {
-    currLang = lang;
-    _localStorageService.setString(_kAppLang, lang);
   }
 }
