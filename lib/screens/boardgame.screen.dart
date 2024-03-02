@@ -12,8 +12,6 @@ class BoardgameScreen extends GetView<BoardGameController> {
   late List<Boardgame> filteredList = widget.boardgames;
   late int listUpdatedAt = widget.updateTime; */
   final TextEditingController _searchController = TextEditingController();
-  @override
-  final controller = Get.put(BoardGameController());
 
   BoardgameScreen({super.key});
 

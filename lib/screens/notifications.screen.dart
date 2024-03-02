@@ -11,8 +11,6 @@ class NotificationsScreen extends GetView<NotificationController> {
   NotificationsScreen({super.key});
   // late List<InfosysNotification> notificationList = widget.notifications;
   // late int listUpdatedAt = widget.updateTime;
-  @override
-  final controller = Get.put(NotificationController());
 
   @override
   Widget build(BuildContext context) {

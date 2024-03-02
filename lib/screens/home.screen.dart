@@ -72,15 +72,17 @@ class HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        body: SafeArea(child: _screens()[_currentIndex]),
+        body: _screens()[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: onNavClick,
           items: _bottomNavList,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
           backgroundColor: colorOrangeDark,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
+          selectedItemColor: colorWhite,
+          unselectedItemColor: Colors.white54,
         ),
       ),
     );
