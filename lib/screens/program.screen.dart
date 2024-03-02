@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
@@ -21,30 +20,14 @@ class _ProgramscreenState extends State<Programscreen> {
     return DefaultTabController(
         length: 5,
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: colorOrangeDark,
-            foregroundColor: colorWhite,
-            toolbarHeight: 40,
-            centerTitle: true,
-            titleTextStyle: kAppBarTextStyle,
-            title: Text(tr('screenTitle.program')),
-            bottom: TabBar(tabs: [
-              Tab(
-                  child: Text(tr('program.wednesday.short'),
-                      style: kTabBarTextStyle)),
-              Tab(
-                  child: Text(tr('program.thursday.short'),
-                      style: kTabBarTextStyle)),
-              Tab(
-                  child: Text(tr('program.friday.short'),
-                      style: kTabBarTextStyle)),
-              Tab(
-                  child: Text(tr('program.saturday.short'),
-                      style: kTabBarTextStyle)),
-              Tab(
-                  child: Text(tr('program.sunday.short'),
-                      style: kTabBarTextStyle)),
-            ]),
+          appBar: TabBar(
+            tabs: [
+              Tab(text: tr('program.wednesday.short')),
+              Tab(text: tr('program.thursday.short')),
+              Tab(text: tr('program.friday.short')),
+              Tab(text: tr('program.saturday.short')),
+              Tab(text: tr('program.sunday.short')),
+            ],
           ),
           body: TabBarView(
             children: [

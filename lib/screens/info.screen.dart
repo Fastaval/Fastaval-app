@@ -16,7 +16,7 @@ class _InfoScreen extends State<InfoScreen> {
   @override
   Widget build(context) {
     return Scaffold(
-      /*  appBar: AppBar(
+      /* appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
         toolbarHeight: 40,

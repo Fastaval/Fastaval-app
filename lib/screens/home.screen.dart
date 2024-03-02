@@ -72,7 +72,7 @@ class HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        body: _screens()[_currentIndex],
+        body: SafeArea(child: _screens()[_currentIndex]),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
