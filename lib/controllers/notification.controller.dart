@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:fastaval_app/constants/app.constant.dart';
 import 'package:fastaval_app/models/notification.model.dart';
 import 'package:fastaval_app/models/user.model.dart';
+import 'package:fastaval_app/services/config.service.dart';
 import 'package:fastaval_app/services/user.service.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

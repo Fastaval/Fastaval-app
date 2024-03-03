@@ -13,6 +13,7 @@ import 'package:fastaval_app/services/user.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   final int updateTime;
@@ -76,10 +77,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if (widget.user.messages.isNotEmpty)
                             buildUserMessagesCard(),
                           buildUserProgramCard(),
-                          buildUserWearCard(),
-                          buildUserSleepCard(),
                           if (widget.user.food.isNotEmpty)
                             buildUserFoodTimesCard(),
+                          buildUserSleepCard(),
+                          buildUserWearCard(),
                           const SizedBox(height: 30.0),
                           buildLogoutButton(),
                           const SizedBox(height: 30.0),
@@ -179,13 +180,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget userProgramItem(Scheduling item) {
     var title =
-        context.locale.languageCode == 'da' ? item.titleDa! : item.titleEn!;
-    var room = context.locale.languageCode == 'da' ? item.roomDa : item.roomEn;
+        Get.locale!.languageCode == 'da' ? item.titleDa! : item.titleEn!;
+    var room = Get.locale!.languageCode == 'da' ? item.roomDa : item.roomEn;
     var activityType = item.activityType != null &&
             (item.activityType == 'ottoviteter' ||
                 item.activityType == 'system')
         ? ''
-        : "- ${tr('profile.activityType.${item.activityType}')}";
+        : tr('profile.activityType.${item.activityType}');
 
     return InkWell(
         onTap: () => showDialog(
@@ -198,11 +199,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
                 style: kNormalTextBoldStyle),
             Flexible(
-                child: Text(" @ $room $activityType",
+                child: Text(" - $activityType @ $room",
                     style: kNormalTextSubdued, overflow: TextOverflow.ellipsis))
           ]),
           Container(
-            padding: const EdgeInsets.only(left: 10),
             child: Row(children: [
               Flexible(
                   child: Text(title,
@@ -341,9 +341,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       case 'braet':
         return 'assets/images/boardgame.jpg';
       case 'junior':
-        return 'assets/images/junior.jpg';
+        return 'assets/images/junior.png';
       default:
-        return 'assets/images/fastaval.jpg';
+        return 'assets/images/fastaval.png';
     }
   }
 
@@ -411,6 +411,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () => Navigator.pop(context),
               child: Text(tr('common.close')))
         ],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         titlePadding: const EdgeInsets.all(0),
         title: Column(children: [
           Container(
@@ -431,35 +432,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ]),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${tr('common.type')}: ', style: kNormalTextBoldStyle),
-                Flexible(
-                    child:
-                        Text(tr('profile.activityType.${item.activityType}')))
-              ],
-            ),
+            Row(children: [
+              Text('${tr('common.type')}: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(tr('profile.activityType.${item.activityType}')),
+            ]),
             const SizedBox(height: 5),
-            Row(
-              children: [
-                Text('${tr('common.time')}: ', style: kNormalTextBoldStyle),
-                Text(
-                    "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}")
-              ],
-            ),
+            Row(children: [
+              Text('${tr('common.time')}: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                  "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}"),
+            ]),
             const SizedBox(height: 5),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${tr('common.place')}: ', style: kNormalTextBoldStyle),
-                Flexible(
-                    child: Text(context.locale.languageCode == 'da'
-                        ? item.roomDa!
-                        : item.roomEn!))
-              ],
-            ),
+            Row(children: [
+              Text('${tr('common.place')}: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(context.locale.languageCode == 'da'
+                  ? item.roomDa!
+                  : item.roomEn!),
+            ]),
           ],
         ));
   }

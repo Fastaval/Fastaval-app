@@ -24,7 +24,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  ConfigService.instance.initConfig();
+  await ConfigService.instance.initConfig();
   tz.initializeTimeZones();
 
   Get.put(BoardGameController()).init();

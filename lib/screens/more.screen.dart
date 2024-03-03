@@ -74,14 +74,14 @@ class _MoreScreenState extends State<MoreScreen> {
                               onTap: () => fastaMap(
                                   context,
                                   const AssetImage(
-                                      'assets/images/Mariagerfjord_kort_23.jpg'))),
+                                      'assets/images/school.jpg'))),
                           InkWell(
                               child: menuCard(
                                   tr('more.map.gym'), Icons.sports_tennis),
                               onTap: () => fastaMap(
                                   context,
                                   const AssetImage(
-                                      'assets/images/Hobro_Idraetscenter_kort_23.jpg'))),
+                                      'assets/images/sportscentre.jpg'))),
                           SizedBox(height: 50),
                           InkWell(
                             child: menuCard(

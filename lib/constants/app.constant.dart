@@ -1,7 +1,3 @@
-import 'package:fastaval_app/services/config.service.dart';
-
-final String baseUrl = ConfigService.instance.getRemoteConfig('API');
-
 const kWifiNetworkName = 'SNET';
 const kWifiUser = 'mfg-guest@mf-gym.dk';
 const kWifiPassword = 'Fjernvarme2022';
