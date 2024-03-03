@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'constants/firebase.constant.dart';
 
@@ -24,9 +25,10 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   ConfigService.instance.initConfig();
+  tz.initializeTimeZones();
 
   Get.put(BoardGameController()).init();
-  Get.put(NotificationController());
+  Get.put(NotificationController()).init();
   var startLang = await Get.put(SettingsController()).init();
 
   runApp(

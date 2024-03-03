@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/settings.screen.dart';
@@ -17,6 +18,8 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
+  final notificationController = Get.find<NotificationController>();
+
   @override
   Widget build(context) {
     return Scaffold(
@@ -42,14 +45,20 @@ class _MoreScreenState extends State<MoreScreen> {
               SizedBox(
                   height: double.infinity,
                   child: RefreshIndicator(
+                    backgroundColor: colorWhite,
+                    color: colorOrange,
                     onRefresh: () async {},
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: <Widget>[
                           InkWell(
-                            child: menuCard(tr('notifications.title'),
-                                Icons.notifications_active_outlined, true),
+                            child: menuCard(
+                                tr('notifications.title'),
+                                Icons.notifications_active_outlined,
+                                true,
+                                notificationController
+                                    .notificationsWaiting.value),
                             onTap: () => Get.to(() => NotificationsScreen(),
                                 transition: Transition.rightToLeft),
                           ),
@@ -77,8 +86,12 @@ class _MoreScreenState extends State<MoreScreen> {
                           InkWell(
                             child: menuCard(
                                 tr('more.settings'), Icons.settings, true),
-                            onTap: () => Get.to(() => SettingsScreen(context),
-                                transition: Transition.rightToLeft),
+                            onTap: () => {
+                              NotificationController()
+                                  .clearNotificationsWaiting(),
+                              Get.to(() => SettingsScreen(context),
+                                  transition: Transition.rightToLeft)
+                            },
                           ),
                         ],
                       ),

@@ -141,8 +141,8 @@
     "boardgames": "Board games",
     "close": "Close",
     "map": {
-      "gym": "Map of sportscentre",
-      "school": "Map of school"
+      "gym": "Map of the sportscentre",
+      "school": "Map of the school area"
     },
     "messages": "Notifications",
     "settings": "Settings",

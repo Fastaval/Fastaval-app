@@ -142,7 +142,7 @@
     "close": "Luk",
     "map": {
       "gym": "Kort over idrætshallen",
-      "school": "Vis kort over skolen"
+      "school": "kort over skolen"
     },
     "messages": "Notifikationer",
     "settings": "Indstillinger",

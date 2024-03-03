@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BoardgameScreen extends GetView<BoardGameController> {
   final TextEditingController _searchController = TextEditingController();
-  final store = Get.find<BoardGameController>();
 
   BoardgameScreen({super.key});
 
@@ -40,6 +39,8 @@ class BoardgameScreen extends GetView<BoardGameController> {
               SizedBox(
                   height: double.infinity,
                   child: RefreshIndicator(
+                    backgroundColor: colorWhite,
+                    color: colorOrange,
                     onRefresh: () async {
                       controller.getBoardGames();
                     },
@@ -69,13 +70,13 @@ class BoardgameScreen extends GetView<BoardGameController> {
                                   ),
                                 ),
                               )),
-                          textAndTextCard(
+                          Obx(() => textAndTextCard(
                               tr('boardgames.title'),
                               Text(
-                                "${tr('common.updated')} ${formatDay(controller.listUpdatedAt.value, context)} ${formatTime(store.listUpdatedAt.value)}",
+                                "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
                                 style: kNormalTextSubdued,
                               ),
-                              buildGameList(context)),
+                              buildGameList(context))),
                           const SizedBox(height: 30),
                         ],
                       ),
@@ -89,15 +90,15 @@ class BoardgameScreen extends GetView<BoardGameController> {
   }
 
   Widget buildGameList(BuildContext context) {
-    return Obx(() => ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: controller.filteredList.length,
-          prototypeItem: boardGameItem(controller.boardgameList.first),
-          itemBuilder: (buildContext, index) {
-            return boardGameItem(controller.filteredList[index]);
-          },
-        ));
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: controller.filteredList.length,
+      prototypeItem: boardGameItem(controller.boardgameList.first),
+      itemBuilder: (buildContext, index) {
+        return boardGameItem(controller.filteredList[index]);
+      },
+    );
   }
 
   Widget boardGameItem(Boardgame game) {

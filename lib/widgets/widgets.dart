@@ -52,7 +52,8 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
       ));
 }
 
-Widget menuCard(String title, IconData icon, [bool hasSubMenu = false]) {
+Widget menuCard(String title, IconData icon,
+    [bool hasSubMenu = false, notificationAmount = 0]) {
   return Card(
       surfaceTintColor: Colors.white,
       color: Colors.white,
@@ -69,7 +70,11 @@ Widget menuCard(String title, IconData icon, [bool hasSubMenu = false]) {
             children: [
               Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 8, 0), child: Icon(icon)),
-              Text(title, style: kMenuCardHeaderStyle)
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  child: Text(title, style: kMenuCardHeaderStyle)),
+              if (notificationAmount > 0)
+                Badge(label: Text('$notificationAmount'))
             ],
           ),
         )

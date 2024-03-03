@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/app.constant.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
@@ -13,6 +15,7 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreen extends State<InfoScreen> {
+  final notoficationController = Get.find<NotificationController>();
   @override
   Widget build(context) {
     return Scaffold(
@@ -40,7 +43,18 @@ class _InfoScreen extends State<InfoScreen> {
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
-                    children: <Widget>[
+                    children: [
+                      Card(
+                        child: TextButton(
+                          child: Text('test'),
+                          onPressed: () =>
+                              notoficationController.addNotificationWaiting(),
+                        ),
+                      ),
+                      Card(
+                        child: Obx(() => Text(
+                            '${notoficationController.notificationsWaiting}')),
+                      ),
                       _buildOpenHoursCard(),
                       _buildStoresCard(),
                       _buildSafeFastavalCard(),

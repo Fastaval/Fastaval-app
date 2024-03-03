@@ -3,14 +3,16 @@ import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/notification.model.dart';
+import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:timezone/standalone.dart' as tz;
 
 class NotificationsScreen extends GetView<NotificationController> {
+  final notificationController = Get.find<NotificationController>();
+
   NotificationsScreen({super.key});
-  // late List<InfosysNotification> notificationList = widget.notifications;
-  // late int listUpdatedAt = widget.updateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class NotificationsScreen extends GetView<NotificationController> {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 25,
+        toolbarHeight: 40,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.notifications')),
@@ -37,22 +39,26 @@ class NotificationsScreen extends GetView<NotificationController> {
               SizedBox(
                   height: double.infinity,
                   child: RefreshIndicator(
+                    backgroundColor: colorWhite,
+                    color: colorOrange,
                     onRefresh: () async {
-                      fetchNotifications().then((notificationList) => {
-                            /* setState(() {
-                              widget.updateParent(notificationList);
-                              notificationList = notificationList;
-                              listUpdatedAt =
-                                  (DateTime.now().millisecondsSinceEpoch / 1000)
-                                      .round();
-                            }), */
-                          });
+                      notificationController.getNotifications();
                     },
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
-                          buildMessages(),
+                          Obx(() => textAndTextCard(
+                              tr('notifications.title'),
+                              Text(
+                                "${tr('common.updated')} ${formatDay(notificationController.notificationListUpdatedAt.value)} ${formatTime(notificationController.notificationListUpdatedAt.value)}",
+                                style: kNormalTextSubdued,
+                              ),
+                              listWidget(
+                                  notificationController
+                                      .notificationList.reversed
+                                      .toList(),
+                                  context))),
                           const SizedBox(height: 30),
                         ],
                       ),
@@ -65,18 +71,7 @@ class NotificationsScreen extends GetView<NotificationController> {
     );
   }
 
-  Widget buildMessages() {
-    return Obx(() => Text('${controller.listUpdatedAt.value}'));
-    /* return textAndTextCard(
-        tr('notifications.title'),
-        Text(
-          "${tr('common.updated')} ${formatDay(listUpdatedAt, context)} ${formatTime(listUpdatedAt)}",
-          style: kNormalTextSubdued,
-        ),
-        listWidget(widget.notifications.reversed.toList(), context)); */
-  }
-
-  Widget listWidget(List<InfosysNotification> notifications, context) {
+  Widget listWidget(List<dynamic> notifications, context) {
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -88,12 +83,15 @@ class NotificationsScreen extends GetView<NotificationController> {
         );
       },
       itemBuilder: (buildContext, index) {
-        return userProgramItem(notifications[index]);
+        return notificationItem(notifications[index]);
       },
     );
   }
 
-  Widget userProgramItem(InfosysNotification notification) {
+  Widget notificationItem(InfosysNotification notification) {
+    var tzOffset =
+        (tz.getLocation('Europe/Copenhagen').currentTimeZone.offset / 1000)
+            .round();
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
           padding: const EdgeInsets.only(right: 10),
@@ -101,12 +99,7 @@ class NotificationsScreen extends GetView<NotificationController> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-/*                 Text(
-                  formatDay(notification.sendTime, context),
-                  style: kNormalTextBoldStyle,
-                ), */
-                Text(formatTime(notification.sendTime +
-                    7200)) // + 2 hours, to compensate for UTC => UTC+2
+                Text(formatTime((notification.sendTime + tzOffset)))
               ])),
       Expanded(
           child: Text(Get.locale?.languageCode == 'da'

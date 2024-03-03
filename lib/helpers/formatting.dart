@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-String formatDay(int? time, BuildContext context) {
-  return DateFormat.E(context.locale.languageCode == 'da' ? 'da_DK' : 'en_UK')
-      .format(formatTimestampToDateTime(time!))
-      .capitalize();
+String formatDay(int? time) {
+  return DateFormat.E(Get.locale!.languageCode == 'da' ? 'da_DK' : 'en_UK')
+      .format(formatTimestampToDateTime(time!));
 }
 
 String formatTime(int? time) {

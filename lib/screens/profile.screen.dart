@@ -54,6 +54,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                   height: double.infinity,
                   child: RefreshIndicator(
+                    backgroundColor: colorWhite,
+                    color: colorOrange,
                     onRefresh: () async {
                       fetchUser(
                         widget.user.id.toString(),
@@ -155,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return textAndTextCard(
         tr('profile.yourProgram'),
         Text(
-          "${tr('common.updated')} ${formatDay(widget.updateTime, context)} ${formatTime(widget.updateTime)}",
+          "${tr('common.updated')} ${formatDay(widget.updateTime)} ${formatTime(widget.updateTime)}",
           style: kNormalTextSubdued,
         ),
         buildUsersProgram(widget.user.scheduling, context));
@@ -193,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(children: [
           Row(children: [
             Text(
-                "${formatDay(item.start, context)} ${formatTime(item.start)}-${formatTime(item.stop)}",
+                "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
                 style: kNormalTextBoldStyle),
             Flexible(
                 child: Text(" @ $room $activityType",
@@ -239,7 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ? kNormalTextDisabled
                               : kNormalTextBoldStyle),
                       Text(
-                          "${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                          "${formatDay(item.time)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
                           style: item.received == 1
                               ? kNormalTextDisabled
                               : kNormalTextSubdued),
@@ -388,7 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(tr('profile.foodHandedOut'), style: kNormalTextSubdued),
           if (foodAvailable)
             Text(
-                "${tr('profile.handout')}: ${formatDay(item.time, context)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                "${tr('profile.handout')}: ${formatDay(item.time)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
                 style: kNormalTextSubdued),
           if (foodAvailable) const SizedBox(height: 10),
           if (foodAvailable)
@@ -444,7 +446,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text('${tr('common.time')}: ', style: kNormalTextBoldStyle),
                 Text(
-                    "${formatDay(item.start, context)} ${formatTime(item.start)} - ${formatTime(item.stop)}")
+                    "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}")
               ],
             ),
             const SizedBox(height: 5),

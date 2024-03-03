@@ -8,23 +8,20 @@ import 'package:http/http.dart' as http;
 class BoardGameController extends GetxController {
   RxList boardgameList = [].obs;
   RxList filteredList = [].obs;
-  var listUpdatedAt = 0.obs;
+  var boardgameListUpdatedAt = 0.obs;
 
   init() {
     getBoardGames();
   }
 
   getBoardGames() {
-    fetchBoardgames().then((gamesList) {
-      print('fetched ${gamesList.length} boardgames');
-      _updateBoardgameList(gamesList);
-    });
+    fetchBoardgames().then((gamesList) => _updateBoardgameList(gamesList));
   }
 
   _updateBoardgameList(List<Boardgame> gamesList) {
-    boardgameList.value = gamesList;
-    listUpdatedAt.value =
-        (DateTime.now().millisecondsSinceEpoch / 1000).round();
+    boardgameList.value = RxList(gamesList);
+    boardgameListUpdatedAt =
+        RxInt((DateTime.now().millisecondsSinceEpoch / 1000).round());
     applyFilterToList();
   }
 

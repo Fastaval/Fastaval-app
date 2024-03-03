@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/models/user.model.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
@@ -10,6 +11,7 @@ import 'package:fastaval_app/screens/program.screen.dart';
 import 'package:fastaval_app/services/user.service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../helpers/notification.dart';
 
@@ -26,28 +28,20 @@ class HomeScreenState extends State<HomeScreen> {
   late int _userFetchTime;
   bool _loggedIn = false;
   int _currentIndex = 1;
-  int _waitingMessages = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final notificationController = Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
-        setState(() {
-          //_getNotifications();
-          _waitingMessages = 1;
-          _bottomNavList = _bottomNavItems();
-        });
+        notificationController.addNotificationWaiting();
       }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        setState(() {
-          //_getNotifications();
-          _waitingMessages = 1;
-          _bottomNavList = _bottomNavItems();
-        });
+        notificationController.addNotificationWaiting();
       }
     });
 
@@ -63,7 +57,7 @@ class HomeScreenState extends State<HomeScreen> {
             _user = notification.user;
             _userFetchTime =
                 (DateTime.now().millisecondsSinceEpoch / 1000).round();
-            _bottomNavList = _bottomNavItems();
+            //_bottomNavList = _bottomNavItems();
           });
         }
 
@@ -116,10 +110,12 @@ class HomeScreenState extends State<HomeScreen> {
           icon: const Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
-          icon: badges.Badge(
-              showBadge: _waitingMessages > 0,
-              badgeContent: Text("$_waitingMessages"),
-              child: const Icon(Icons.more_horiz_outlined)),
+          icon: Obx(() => badges.Badge(
+              showBadge:
+                  NotificationController().notificationsWaiting.value > 0,
+              badgeContent: Text(
+                  '${NotificationController().notificationsWaiting.value}'),
+              child: const Icon(Icons.more_horiz_outlined))),
           label: tr('bottomNavigation.more')),
     ];
   }
