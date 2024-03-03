@@ -75,7 +75,6 @@ Future<User> fetchUser(String userId, String password) async {
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
   String token = await getDeviceToken();
-  print('register with Infosys');
   var response = await http.post(Uri.parse('$baseUrl/user/$userId/register'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode({'gcm_id': token}));

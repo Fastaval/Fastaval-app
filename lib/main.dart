@@ -29,7 +29,6 @@ void main() async {
   Get.put(NotificationController());
   var settings = Get.put(SettingsController());
   var startLang = await settings.initLanguage();
-  print('Start language: $startLang');
 
   runApp(
     EasyLocalization(

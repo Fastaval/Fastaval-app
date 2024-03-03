@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart' as badges;
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/models/user.model.dart';
@@ -143,47 +142,9 @@ class HomeScreenState extends State<HomeScreen> {
       if (_loggedIn && _user != null)
         ProfileScreen(user: _user!, updateTime: _userFetchTime),
       if (!_loggedIn) LoginScreen(this),
-      const InfoScreen(),
-      const Programscreen(),
-      const MoreScreen()
+      InfoScreen(),
+      Programscreen(),
+      MoreScreen()
     ];
-  }
-
-  Future<dynamic> barcode(BuildContext context, User user) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Center(
-              child: RotatedBox(
-                quarterTurns: 1,
-                child: BarcodeWidget(
-                  barcode: Barcode.ean8(),
-                  data: user.barcode.toString(),
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-  Widget buildIdIcon() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration:
-              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: !_loggedIn
-              ? Image.asset('assets/images/penguin_logo.jpg', height: 68)
-              : Text(
-                  "${_user?.id}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 58, fontWeight: FontWeight.bold),
-                ),
-        ),
-      ],
-    );
   }
 }

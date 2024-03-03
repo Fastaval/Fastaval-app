@@ -144,8 +144,7 @@ class _ProgramscreenState extends State<Programscreen> {
   Widget programItemDialog(BuildContext context) {
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
-    // inspect(item);
-    // inspect(details);
+
     return AlertDialog(
       insetPadding: EdgeInsets.all(10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

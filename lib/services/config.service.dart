@@ -19,7 +19,6 @@ class ConfigService {
   }
 
   String getRemoteConfig(String string) {
-    print(_remoteConfig.getString(string));
     return _remoteConfig.getString(string);
   }
 }

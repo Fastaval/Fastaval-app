@@ -17,10 +17,10 @@ class SettingsController extends GetxController {
   Future<Locale> initLanguage() async {
     String foundLanguage = await storageService.getString(kLangKey);
     if (foundLanguage.isEmpty) {
-      print('No language found, setting to default: ${language.value}');
-      return Locale(language.value);
+      var defaultLang = Get.deviceLocale!.languageCode;
+      updateLanguage(defaultLang);
+      return Locale(defaultLang);
     }
-    print('Language found: $foundLanguage');
     language(foundLanguage);
     return Locale(foundLanguage);
   }
