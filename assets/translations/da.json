@@ -29,7 +29,12 @@
   },
   "common": {
     "close": "Luk",
+    "danEng": "Dansk/Engelsk",
+    "danish": "Dansk",
     "description": "Beskrivelse",
+    "english": "Engelsk",
+    "hour": "Time",
+    "hours": "Timer",
     "language": "Sprog",
     "place": "Sted",
     "players": "Spillere",

@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 40,
+        toolbarHeight: 25,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.profile')),

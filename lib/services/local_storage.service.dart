@@ -8,13 +8,13 @@ class LocalStorageService {
     return Future.value(valueString ?? '');
   }
 
-  void setString(String key, String value) async {
-    final prefs = await SharedPreferences.getInstance();
+  setString(String key, String value) async {
+    var preferences = await SharedPreferences.getInstance();
 
-    prefs.setString(key, value);
+    preferences.setString(key, value);
   }
 
-  void deleteString(String key) async {
+  deleteString(String key) async {
     var preferences = await SharedPreferences.getInstance();
 
     preferences.remove(key);

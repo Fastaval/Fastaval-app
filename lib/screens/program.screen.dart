@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
@@ -20,14 +21,19 @@ class _ProgramscreenState extends State<Programscreen> {
     return DefaultTabController(
         length: 5,
         child: Scaffold(
-          appBar: TabBar(
-            tabs: [
-              Tab(text: tr('program.wednesday.short')),
-              Tab(text: tr('program.thursday.short')),
-              Tab(text: tr('program.friday.short')),
-              Tab(text: tr('program.saturday.short')),
-              Tab(text: tr('program.sunday.short')),
-            ],
+          appBar: AppBar(
+            backgroundColor: colorOrangeDark,
+            foregroundColor: colorWhite,
+            toolbarHeight: 25,
+            centerTitle: true,
+            titleTextStyle: kAppBarTextStyle,
+            title: Text(tr('screenTitle.program')),
+            bottom: PreferredSize(
+                preferredSize: _tabBar.preferredSize,
+                child: ColoredBox(
+                  color: colorWhite,
+                  child: _tabBar,
+                )),
           ),
           body: TabBarView(
             children: [
@@ -40,6 +46,21 @@ class _ProgramscreenState extends State<Programscreen> {
           ),
         ));
   }
+
+  TabBar get _tabBar => TabBar(
+        labelColor: colorBlack,
+        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorColor: colorOrange,
+        tabs: [
+          Tab(text: tr('program.wednesday.short')),
+          Tab(text: tr('program.thursday.short')),
+          Tab(text: tr('program.friday.short')),
+          Tab(text: tr('program.saturday.short')),
+          Tab(text: tr('program.sunday.short')),
+        ],
+      );
 
   Widget buildday(String day) {
     List<ActivityRun>? runlist = [];
@@ -71,7 +92,6 @@ class _ProgramscreenState extends State<Programscreen> {
           if (programSnap.hasData) {
             return SizedBox(
               child: Container(
-                  padding: const EdgeInsets.only(top: 20),
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
                     itemCount: runlist.length,
@@ -84,7 +104,7 @@ class _ProgramscreenState extends State<Programscreen> {
                             getActivityColor(activityMap[item.activity]!.type)),
                         onTap: () => showDialog(
                           context: context,
-                          builder: activityDialog,
+                          builder: programItemDialog,
                           routeSettings: RouteSettings(
                             arguments: [item, activityMap[item.activity]],
                           ),
@@ -121,70 +141,74 @@ class _ProgramscreenState extends State<Programscreen> {
         });
   }
 
-  Widget activityDialog(BuildContext context) {
+  Widget programItemDialog(BuildContext context) {
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
     // inspect(item);
     // inspect(details);
     return AlertDialog(
-        insetPadding: EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        actionsPadding: EdgeInsets.all(5),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(tr('common.close'))),
+      insetPadding: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      actionsPadding: EdgeInsets.all(5),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(tr('common.close'))),
+      ],
+      titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+      title: Column(
+        children: [
+          Text(
+            context.locale.languageCode == 'da'
+                ? details.daTitle
+                : details.enTitle,
+          ),
+          if (details.author.isNotEmpty)
+            Text(details.author,
+                style: TextStyle(fontSize: 12, color: Colors.grey))
         ],
-        titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-        title: Column(
-          children: [
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Text('${tr('common.runtime')}: ',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('${details.playHours.toInt()} '),
             Text(
-              context.locale.languageCode == 'da'
-                  ? details.daTitle
-                  : details.enTitle,
+                details.playHours == 1 ? tr('common.hour') : tr('common.hours'))
+          ]),
+          SizedBox(height: 5),
+          Row(children: [
+            Text('${tr('common.players')}: ',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('${details.minPlayers} - ${details.maxPlayers}'),
+          ]),
+          SizedBox(height: 5),
+          Row(children: [
+            Text('${tr('common.language')}: ',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(getLanguage(details.language)),
+          ]),
+          SizedBox(height: 5),
+          Text(tr('common.description'),
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 2),
+          SizedBox(
+            height: 250,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Text(
+                context.locale.languageCode == 'da'
+                    ? details.daText
+                    : details.enText,
+              ),
             ),
-            if (details.author.isNotEmpty)
-              Text(details.author,
-                  style: TextStyle(fontSize: 12, color: Colors.grey))
-          ],
-        ),
-        content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Text('${tr('common.runtime')}: ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('${details.playHours.toInt()} timer'),
-              ]),
-              SizedBox(height: 5),
-              Row(children: [
-                Text('${tr('common.players')}: ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('${details.minPlayers} - ${details.maxPlayers}'),
-              ]),
-              SizedBox(height: 5),
-              Row(children: [
-                Text('${tr('common.language')}: ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(details.language),
-              ]),
-              SizedBox(height: 5),
-              Text(tr('common.description'),
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 2),
-              SizedBox(
-                height: 250,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Text(
-                    context.locale.languageCode == 'da'
-                        ? details.daText
-                        : details.enText,
-                  ),
-                ),
-              )
-            ]));
+          )
+        ],
+      ),
+    );
   }
 }

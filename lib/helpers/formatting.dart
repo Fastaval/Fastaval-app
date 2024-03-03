@@ -15,6 +15,19 @@ DateTime formatTimestampToDateTime(int timeInUnixTime) {
   return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
 
+String getLanguage(String language) {
+  switch (language) {
+    case 'dansk':
+      return tr('common.danish');
+    case 'engelsk':
+      return tr('common.english');
+    case 'dansk+engelsk':
+      return tr('common.danEng');
+    default:
+      return '';
+  }
+}
+
 extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";

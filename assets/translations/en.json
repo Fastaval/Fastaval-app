@@ -29,7 +29,12 @@
   },
   "common": {
     "close": "Close",
+    "danEng": "Danish/English",
+    "danish": "Danish",
     "description": "Description",
+    "english": "English",
+    "hour": "Hour",
+    "hours": "Hours",
     "language": "Language",
     "place": "Place",
     "players": "Players",
@@ -220,9 +225,9 @@
     "notifications": "Notifications",
     "profile": "Profile",
     "program": "Program",
-    "settings": "Indstillinger"
+    "settings": "Settings"
   },
   "settings": {
-    "title": "Indstillinger"
+    "title": "Settings"
   }
 }

@@ -23,7 +23,7 @@ class _MoreScreenState extends State<MoreScreen> {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 40,
+        toolbarHeight: 25,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.more')),
@@ -77,7 +77,7 @@ class _MoreScreenState extends State<MoreScreen> {
                           InkWell(
                             child: menuCard(
                                 tr('more.settings'), Icons.settings, true),
-                            onTap: () => Get.to(() => SettingsScreen(),
+                            onTap: () => Get.to(() => SettingsScreen(context),
                                 transition: Transition.rightToLeft),
                           ),
                         ],

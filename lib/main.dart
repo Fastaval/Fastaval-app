@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/boardgame.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/screens/home.screen.dart';
 import 'package:fastaval_app/services/config.service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,9 +25,15 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   ConfigService.instance.initConfig();
 
+  Get.put(BoardGameController());
+  Get.put(NotificationController());
+  var settings = Get.put(SettingsController());
+  var startLang = await settings.initLanguage();
+  print('Start language: $startLang');
+
   runApp(
     EasyLocalization(
-        startLocale: Locale('en'),
+        startLocale: startLang,
         supportedLocales: const [Locale('da'), Locale('en')],
         path: 'assets/translations',
         useOnlyLangCode: true,
@@ -51,9 +58,6 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    Get.put(BoardGameController());
-    Get.put(NotificationController());
 
     return GetMaterialApp(
       onGenerateTitle: (context) => tr('app.title'),

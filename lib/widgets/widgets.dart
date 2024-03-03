@@ -37,15 +37,16 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
             ),
           ),
           SizedBox(width: 10),
-          SizedBox(
-            height: 25,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(Get.locale?.languageCode == 'da'
-                      ? activity.daTitle
-                      : activity.enTitle)
-                ]),
+          Flexible(
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(Get.locale?.languageCode == 'da'
+                          ? activity.daTitle
+                          : activity.enTitle)
+                    ])),
           ),
         ],
       ));
