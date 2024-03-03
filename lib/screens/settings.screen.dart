@@ -78,8 +78,7 @@ class SettingsScreen extends GetView<SettingsController> {
                 Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
                     child: Icon(icon)),
-                Text(title, style: kMenuCardHeaderStyle),
-                Text(' (${store.language.value})')
+                Text(title, style: kMenuCardHeaderStyle)
               ],
             ),
           )

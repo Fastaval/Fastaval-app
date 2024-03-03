@@ -11,25 +11,31 @@ class BoardGameController extends GetxController {
   var listUpdatedAt = 0.obs;
 
   init() {
+    getBoardGames();
+  }
+
+  getBoardGames() {
     fetchBoardgames().then((gamesList) {
-      updateBoardgameList(gamesList);
+      print('fetched ${gamesList.length} boardgames');
+      _updateBoardgameList(gamesList);
     });
   }
 
-  updateBoardgameList(List<Boardgame> gamesList) {
+  _updateBoardgameList(List<Boardgame> gamesList) {
     boardgameList.value = gamesList;
     listUpdatedAt.value =
         (DateTime.now().millisecondsSinceEpoch / 1000).round();
-    //applyFilterToList();
+    applyFilterToList();
   }
 
-/*   void applyFilterToList() {
-    filteredList.value = boardgameList
-        .where((game) => game.name
-            .toLowerCase()
-            .contains(searchController.value.text.toLowerCase()))
-        .toList();
-  } */
+  applyFilterToList([String? filter]) {
+    filteredList.value = filter == null
+        ? boardgameList
+        : boardgameList
+            .where((game) =>
+                game.name.toLowerCase().contains(filter.toLowerCase()))
+            .toList();
+  }
 }
 
 Future<List<Boardgame>> fetchBoardgames() async {

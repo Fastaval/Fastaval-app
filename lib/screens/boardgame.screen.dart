@@ -10,9 +10,6 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BoardgameScreen extends GetView<BoardGameController> {
-/*   late List<Boardgame> boardgameList = widget.boardgames;
-  late List<Boardgame> filteredList = widget.boardgames;
-  late int listUpdatedAt = widget.updateTime; */
   final TextEditingController _searchController = TextEditingController();
   final store = Get.find<BoardGameController>();
 
@@ -44,11 +41,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
                   height: double.infinity,
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      fetchBoardgames().then((gamesList) => {
-                            controller.updateBoardgameList(gamesList)
-                            //widget.updateParent(gamesList);
-                            //applyFilterToList();
-                          });
+                      controller.getBoardGames();
                     },
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -58,7 +51,8 @@ class BoardgameScreen extends GetView<BoardGameController> {
                               padding: kCardMargin,
                               child: TextField(
                                 controller: _searchController,
-                                onChanged: (value) => applyFilterToList(),
+                                onChanged: (value) =>
+                                    controller.applyFilterToList(value),
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -67,7 +61,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
                                     icon: const Icon(Icons.clear),
                                     onPressed: () => {
                                       _searchController.clear(),
-                                      applyFilterToList()
+                                      controller.applyFilterToList()
                                     },
                                   ),
                                   border: OutlineInputBorder(
@@ -75,7 +69,13 @@ class BoardgameScreen extends GetView<BoardGameController> {
                                   ),
                                 ),
                               )),
-                          buildBoardGames(context),
+                          textAndTextCard(
+                              tr('boardgames.title'),
+                              Text(
+                                "${tr('common.updated')} ${formatDay(controller.listUpdatedAt.value, context)} ${formatTime(store.listUpdatedAt.value)}",
+                                style: kNormalTextSubdued,
+                              ),
+                              buildGameList(context)),
                           const SizedBox(height: 30),
                         ],
                       ),
@@ -88,26 +88,16 @@ class BoardgameScreen extends GetView<BoardGameController> {
     );
   }
 
-  Widget buildBoardGames(context) {
-    return Obx(() => textAndTextCard(
-        tr('boardgames.title'),
-        Text(
-          "${tr('common.updated')} ${formatDay(store.listUpdatedAt as int?, context)} ${formatTime(store.listUpdatedAt as int?)}",
-          style: kNormalTextSubdued,
-        ),
-        buildGame(context)));
-  }
-
-  Widget buildGame(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: controller.filteredList.length,
-      prototypeItem: boardGameItem(controller.boardgameList.first),
-      itemBuilder: (buildContext, index) {
-        return boardGameItem(controller.filteredList[index]);
-      },
-    );
+  Widget buildGameList(BuildContext context) {
+    return Obx(() => ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: controller.filteredList.length,
+          prototypeItem: boardGameItem(controller.boardgameList.first),
+          itemBuilder: (buildContext, index) {
+            return boardGameItem(controller.filteredList[index]);
+          },
+        ));
   }
 
   Widget boardGameItem(Boardgame game) {
@@ -152,19 +142,6 @@ class BoardgameScreen extends GetView<BoardGameController> {
       } else {
         throw 'Could not launch website';
       }
-    }
-  }
-
-  applyFilterToList() {
-    String enteredKeyword = _searchController.text;
-    List<dynamic> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = controller.boardgameList.value;
-    } else {
-      results = controller.boardgameList.value
-          .where((element) =>
-              element.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
     }
   }
 }

@@ -124,7 +124,10 @@ class _ProgramscreenState extends State<Programscreen> {
           } else {
             screenState = [
               const SizedBox(
-                  width: 60, height: 60, child: CircularProgressIndicator()),
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(
+                      color: colorWhite, backgroundColor: colorOrange)),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(tr('program.loading'),
