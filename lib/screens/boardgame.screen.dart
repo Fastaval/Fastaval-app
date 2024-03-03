@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/boardgame.controller.dart';
+import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/boardgame.model.dart';
+import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
   late List<Boardgame> filteredList = widget.boardgames;
   late int listUpdatedAt = widget.updateTime; */
   final TextEditingController _searchController = TextEditingController();
+  final store = Get.find<BoardGameController>();
 
   BoardgameScreen({super.key});
 
@@ -72,7 +75,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
                                   ),
                                 ),
                               )),
-                          buildBoardGames(),
+                          buildBoardGames(context),
                           const SizedBox(height: 30),
                         ],
                       ),
@@ -85,15 +88,14 @@ class BoardgameScreen extends GetView<BoardGameController> {
     );
   }
 
-  Widget buildBoardGames() {
-    return Obx(() => Text('${controller.listUpdatedAt.value}'));
-    /* return textAndTextCard(
+  Widget buildBoardGames(context) {
+    return Obx(() => textAndTextCard(
         tr('boardgames.title'),
         Text(
-          "${tr('common.updated')} ${formatDay(listUpdatedAt, context)} ${formatTime(listUpdatedAt)}",
+          "${tr('common.updated')} ${formatDay(store.listUpdatedAt as int?, context)} ${formatTime(store.listUpdatedAt as int?)}",
           style: kNormalTextSubdued,
         ),
-        buildGame(context)); */
+        buildGame(context)));
   }
 
   Widget buildGame(BuildContext context) {

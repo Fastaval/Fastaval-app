@@ -10,7 +10,13 @@ class BoardGameController extends GetxController {
   RxList filteredList = [].obs;
   var listUpdatedAt = 0.obs;
 
-  void updateBoardgameList(List<Boardgame> gamesList) {
+  init() {
+    fetchBoardgames().then((gamesList) {
+      updateBoardgameList(gamesList);
+    });
+  }
+
+  updateBoardgameList(List<Boardgame> gamesList) {
     boardgameList.value = gamesList;
     listUpdatedAt.value =
         (DateTime.now().millisecondsSinceEpoch / 1000).round();

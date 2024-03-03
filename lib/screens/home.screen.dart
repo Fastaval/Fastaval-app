@@ -100,7 +100,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   List<BottomNavigationBarItem> _bottomNavItems() {
-    return <BottomNavigationBarItem>[
+    return [
       if (_loggedIn == true)
         BottomNavigationBarItem(
             icon: const Icon(Icons.person_outline),

@@ -25,10 +25,9 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   ConfigService.instance.initConfig();
 
-  Get.put(BoardGameController());
+  Get.put(BoardGameController()).init();
   Get.put(NotificationController());
-  var settings = Get.put(SettingsController());
-  var startLang = await settings.initLanguage();
+  var startLang = await Get.put(SettingsController()).init();
 
   runApp(
     EasyLocalization(
