@@ -3,9 +3,9 @@ const kWifiUser = 'mfg-guest@mf-gym.dk';
 const kWifiPassword = 'Fjernvarme2022';
 const kTaxi1PhoneNumber = {"value": "+4598525354", "name": "98 52 53 54"};
 const kTaxi2PhoneNumber = {"value": "+4598512300", "name": "98 51 23 00"};
-const kHeroForcePhoneNumber = {"value": "+4593899062", "name": "93 89 90 62"};
-const kDutyGeneralPhoneNumber = {"value": "+4593899065", "name": "93 89 90 65"};
-const kSafetyHostPhoneNumber = {"value": "+4593899064", "name": "93 89 90 64"};
+const kHeroForcePhoneNumber = {"value": "+4593903568", "name": "93 90 35 68"};
+const kDutyGeneralPhoneNumber = {"value": "+4593903569", "name": "93 90 35 69"};
+const kSafetyHostPhoneNumber = {"value": "+4593903567", "name": "93 90 35 67"};
 const kSafeFastavalMail = "safe@fastaval.dk";
 const kServiceOpeningHours = {
   "bar": {"day1": "17:00 - 02:00"},
