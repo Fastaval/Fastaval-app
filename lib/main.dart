@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/boardgame.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/controllers/settings.controller.dart';
@@ -27,13 +28,14 @@ void main() async {
   await ConfigService.instance.initConfig();
   tz.initializeTimeZones();
 
-  Get.put(BoardGameController()).init();
-  Get.put(NotificationController()).init();
-  var startLang = await Get.put(SettingsController()).init();
+  await Get.put(SettingsController()).init();
+  await Get.put(BoardGameController()).init();
+  await Get.put(NotificationController()).init();
+  await Get.put(AppController()).init();
 
   runApp(
     EasyLocalization(
-        startLocale: startLang,
+        startLocale: Locale(Get.find<SettingsController>().language.value),
         supportedLocales: const [Locale('da'), Locale('en')],
         path: 'assets/translations',
         useOnlyLangCode: true,

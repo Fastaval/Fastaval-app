@@ -1,9 +1,8 @@
+import 'package:fastaval_app/models/food.model.dart';
+import 'package:fastaval_app/models/otto_party.model.dart';
+import 'package:fastaval_app/models/scheduling.model.dart';
 import 'package:fastaval_app/models/sleep.model.dart';
-
-import 'food.model.dart';
-import 'otto_party.model.dart';
-import 'scheduling.model.dart';
-import 'wear.model.dart';
+import 'package:fastaval_app/models/wear.model.dart';
 
 class User {
   late int id;
@@ -20,18 +19,19 @@ class User {
   late List<OttoParty> ottoParty;
 
   User(
-      {required this.id,
-      required this.password,
-      required this.name,
-      required this.hasCheckedIn,
-      required this.messages,
-      required this.sleep,
-      required this.category,
-      required this.food,
-      required this.wear,
-      required this.scheduling,
-      required this.barcode,
-      required this.ottoParty});
+      {this.id = 0,
+      this.password = '',
+      this.name = '',
+      this.hasCheckedIn = false,
+      this.messages = '',
+      this.category = '',
+      this.food = const [],
+      this.wear = const [],
+      this.scheduling = const [],
+      this.barcode = 0,
+      this.ottoParty = const []}) {
+    sleep = Sleep(id: 0, access: 0, mattress: 0, areaName: '', areaId: '');
+  }
 
   User.fromJson(dynamic json)
       : id = json['id'],
