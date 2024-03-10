@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) => tr('app.title'),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      locale: Get.locale,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange),
       home: HomeScreen(),
