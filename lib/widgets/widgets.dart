@@ -180,7 +180,7 @@ Widget twoTextRowWithTapAction(String title, String link, Uri url) {
             onTap: () {
               canLaunchUrl(url).then((bool result) async {
                 if (result) {
-                  await launchUrl(url);
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
                 }
               });
             },
