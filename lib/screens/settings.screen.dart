@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class SettingsScreen extends GetView<SettingsController> {
-  SettingsScreen(this.appContext, {super.key});
+class SettingsScreen extends StatelessWidget {
   final store = Get.find<SettingsController>();
-
-  final BuildContext appContext;
 
   @override
   Widget build(context) {
@@ -24,35 +21,31 @@ class SettingsScreen extends GetView<SettingsController> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      settingsCard(
-                          tr('common.language'), Icons.language, appContext)
-                    ],
-                  ),
+        child: Stack(
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: backgroundBoxDecorationStyle,
+            ),
+            SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    settingsCard(tr('common.language'), Icons.language)
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
   }
 
-  Widget settingsCard(String title, IconData icon, BuildContext context) {
+  Widget settingsCard(String title, IconData icon) {
     return Card(
         surfaceTintColor: Colors.white,
         color: Colors.white,
@@ -69,10 +62,8 @@ class SettingsScreen extends GetView<SettingsController> {
                   DropdownMenuItem(value: 'en', child: Text('English')),
                 ],
                 value: store.language.value,
-                onChanged: (Object? value) => {
-                      context.setLocale(Locale(value as String)),
-                      store.updateLanguage(value)
-                    }),
+                onChanged: (Object? value) =>
+                    {store.updateLanguage(value as String)}),
             title: Row(
               children: [
                 Padding(

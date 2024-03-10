@@ -29,18 +29,18 @@ void main() async {
   tz.initializeTimeZones();
 
   await Get.put(SettingsController()).init();
+  await Get.put(AppController()).init();
   await Get.put(BoardGameController()).init();
   await Get.put(NotificationController()).init();
-  await Get.put(AppController()).init();
 
   runApp(
     EasyLocalization(
         startLocale: Locale(Get.find<SettingsController>().language.value),
-        supportedLocales: const [Locale('da'), Locale('en')],
+        supportedLocales: [Locale('da'), Locale('en')],
         path: 'assets/translations',
         useOnlyLangCode: true,
-        fallbackLocale: const Locale('en'),
-        child: const MyApp()),
+        fallbackLocale: Locale('en'),
+        child: MyApp()),
   );
 }
 
@@ -61,11 +61,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
+    Get.find<SettingsController>().setContext(context);
+
     return GetMaterialApp(
-      onGenerateTitle: (context) => tr('app.title'),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: Get.locale,
+      locale: Locale(Get.find<SettingsController>().language.value),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange),
       home: HomeScreen(),

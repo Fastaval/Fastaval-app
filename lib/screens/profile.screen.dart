@@ -1,35 +1,21 @@
-import 'dart:async';
-
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
+import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
-import 'package:fastaval_app/helpers/notification.dart';
 import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
-import 'package:fastaval_app/models/user.model.dart';
 import 'package:fastaval_app/models/wear.model.dart';
-import 'package:fastaval_app/services/user.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatefulWidget {
-  final int updateTime;
-  final User user;
+class ProfileScreen extends StatelessWidget {
+  final appController = Get.find<AppController>();
+  final settingsController = Get.find<SettingsController>();
 
-  const ProfileScreen({
-    super.key,
-    required this.user,
-    required this.updateTime,
-  });
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(context) {
     return Scaffold(
@@ -43,53 +29,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: backgroundBoxDecorationStyle,
+            ),
+            SizedBox(
                 height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
-              ),
-              SizedBox(
-                  height: double.infinity,
-                  child: RefreshIndicator(
-                    backgroundColor: colorWhite,
-                    color: colorOrange,
-                    onRefresh: () async {
-                      fetchUser(
-                        widget.user.id.toString(),
-                        widget.user.password.toString(),
-                      ).then((newUser) => scheduleMicrotask(() {
-                            newUser.password = widget.user.password.toString();
-
-                            UserNotification(loggedIn: true, user: newUser)
-                                .dispatch(context);
-                          }));
-                    },
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(height: 10.0),
-                          buildIdIcon(),
-                          if (widget.user.messages.isNotEmpty)
-                            buildUserMessagesCard(),
-                          buildUserProgramCard(),
-                          if (widget.user.food.isNotEmpty)
-                            buildUserFoodTimesCard(),
-                          buildUserSleepCard(),
-                          buildUserWearCard(),
-                          const SizedBox(height: 30.0),
-                          buildLogoutButton(),
-                          const SizedBox(height: 30.0),
-                        ],
-                      ),
-                    ),
-                  ))
-            ],
-          ),
+                child: RefreshIndicator(
+                  backgroundColor: colorWhite,
+                  color: colorOrange,
+                  onRefresh: () => appController.getUserDetails(),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Obx(() => Column(
+                          children: [
+                            SizedBox(height: 10.0),
+                            buildIdIcon(),
+                            if (appController.user.messages.isNotEmpty)
+                              buildUserMessagesCard(),
+                            buildUserProgramCard(),
+                            if (appController.user.food.isNotEmpty)
+                              buildUserFoodTimesCard(),
+                            buildUserSleepCard(),
+                            buildUserWearCard(),
+                            SizedBox(height: 30.0),
+                            buildLogoutButton(),
+                            SizedBox(height: 30.0),
+                          ],
+                        )),
+                  ),
+                ))
+          ],
         ),
       ),
     );
@@ -99,18 +72,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           decoration:
-              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Text(
-            widget.user.id.toString(),
+            appController.user.id.toString(),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 58, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 58, fontWeight: FontWeight.bold),
           ),
         ),
         Text(
           tr('profile.participantNumber'),
-          style: const TextStyle(
+          style: TextStyle(
               color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ],
@@ -119,20 +92,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildLogoutButton() {
     return Padding(
-        padding: const EdgeInsets.all(40),
+        padding: EdgeInsets.all(40),
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Colors.white)),
-            onPressed: () => {
-              UserService().removeUser(),
-              UserNotification(loggedIn: false, user: null).dispatch(context)
-            },
+            onPressed: () => {appController.logout()},
             child: Text(
               tr('login.signOut'),
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.deepOrange,
                   letterSpacing: 1.5,
                   fontSize: 18.0,
@@ -143,13 +113,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserFoodTimesCard() {
-    return textAndIconCard(
-        tr('profile.foodTimes'), Icons.fastfood, foodTickets(widget.user.food));
+    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
+        foodTickets(appController.user.food));
   }
 
   Widget buildUserMessagesCard() {
     String message = tr('profile.noMessagesRightNow');
-    if (widget.user.messages.isNotEmpty) message = widget.user.messages;
+    if (appController.user.messages.isNotEmpty) {
+      message = appController.user.messages;
+    }
     return textAndIconCard(tr('profile.messagesFromFastaval'),
         Icons.speaker_notes, Text(message, style: kNormalTextStyle));
   }
@@ -158,19 +130,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return textAndTextCard(
         tr('profile.yourProgram'),
         Text(
-          "${tr('common.updated')} ${formatDay(widget.updateTime)} ${formatTime(widget.updateTime)}",
+          "${tr('common.updated')} ${formatDay(appController.userUpdateTime.value)} ${formatTime(appController.userUpdateTime.value)}",
           style: kNormalTextSubdued,
         ),
-        buildUsersProgram(widget.user.scheduling, context));
+        buildUsersProgram(appController.user.scheduling));
   }
 
-  Widget buildUsersProgram(List<Scheduling> schedule, context) {
+  Widget buildUsersProgram(List<Scheduling> schedule) {
     return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: schedule.length,
       separatorBuilder: (context, int index) {
-        return const SizedBox(height: 10);
+        return SizedBox(height: 10);
       },
       itemBuilder: (buildContext, index) {
         return userProgramItem(schedule[index]);
@@ -190,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return InkWell(
         onTap: () => showDialog(
-            context: context,
+            context: settingsController.appContext,
             builder: activityDialog,
             routeSettings: RouteSettings(arguments: item)),
         child: Column(children: [
@@ -209,32 +181,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
             ]),
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: Colors.grey)
+          SizedBox(height: 10),
+          Divider(height: 1, color: Colors.grey)
         ]));
   }
 
   Widget foodTickets(List<Food> food) {
     return Column(children: [
       Text(tr('program.explainer'), style: kNormalTextSubdued),
-      const SizedBox(height: 10),
+      SizedBox(height: 10),
       for (var item in food)
         InkWell(
           onTap: () => showDialog(
-              context: context,
+              context: settingsController.appContext,
               builder: foodDialog,
               routeSettings: RouteSettings(arguments: item)),
           child: Card(
             color: getBackgroundColor(item),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+              padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
               child: Row(children: [
                 Expanded(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                       Text(
-                          context.locale.languageCode == 'da'
+                          settingsController.language.value == 'da'
                               ? item.titleDa
                               : item.titleEn,
                           style: item.received == 1
@@ -252,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: item.received == 1
                             ? kNormalTextDisabled
                             : kNormalTextStyle),
-                    const SizedBox(width: 5),
+                    SizedBox(width: 5),
                     Icon(Icons.info_outline,
                         color: item.received == 1
                             ? Colors.black26
@@ -267,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserWearCard() {
-    if (widget.user.wear.isEmpty) {
+    if (appController.user.wear.isEmpty) {
       return textAndIconCard((tr('profile.wear.title')), Icons.bed,
           oneTextRow(tr('profile.wear.noWear')));
     }
@@ -276,20 +248,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         tr('profile.wear.title'),
         Icons.checkroom,
         ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: widget.user.wear.length,
+          itemCount: appController.user.wear.length,
           separatorBuilder: (context, int index) {
-            return const SizedBox(height: 10);
+            return SizedBox(height: 10);
           },
           itemBuilder: (buildContext, index) {
-            return wearItem(widget.user.wear[index]);
+            return wearItem(appController.user.wear[index]);
           },
         ));
   }
 
   Widget wearItem(Wear item) {
-    String title = context.locale.languageCode == 'da'
+    String title = settingsController.language.value == 'da'
         ? "${item.amount} stk. ${item.titleDa}"
         : "${item.amount} pcs. ${item.titleEn}";
 
@@ -304,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildUserSleepCard() {
-    if (widget.user.sleep.access == 0) {
+    if (appController.user.sleep.access == 0) {
       return textAndIconCard((tr('profile.sleep.title')), Icons.bed,
           oneTextRow(tr('profile.sleep.notSleeping')));
     }
@@ -313,10 +285,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         tr('profile.sleep.title'),
         Icons.bed,
         Column(children: [
-          twoTextRow(tr('profile.sleep.location'), widget.user.sleep.areaName),
-          const SizedBox(height: 10),
+          twoTextRow(
+              tr('profile.sleep.location'), appController.user.sleep.areaName),
+          SizedBox(height: 10),
           twoTextRow(tr('profile.sleep.mattressRented'),
-              tr('profile.sleep.mattress.${widget.user.sleep.mattress}'))
+              tr('profile.sleep.mattress.${appController.user.sleep.mattress}'))
         ]));
   }
 
@@ -351,7 +324,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (item.received == 1) return colorGrey;
     if (item.titleEn.contains('Dinner')) return colorOrangeLight;
     if (item.titleEn.contains('Breakfast')) return colorOrangeLight;
-    return const Color(0xFF63BAAB);
+    return Color(0xFF63BAAB);
   }
 
   Widget foodDialog(BuildContext context) {
@@ -365,18 +338,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Text(tr('common.close')))
         ],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        titlePadding: const EdgeInsets.all(0),
+        titlePadding: EdgeInsets.all(0),
         title: Column(children: [
           Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
               ),
               height: 100),
-          const SizedBox(height: 5),
+          SizedBox(height: 5),
           Text(
               context.locale.languageCode == 'da' ? item.titleDa : item.titleEn)
         ]),
@@ -385,18 +358,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: kNormalTextStyle),
           if (item.titleEn.contains('Breakfast'))
             Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           if (foodAvailable == false)
             Text(tr('profile.foodHandedOut'), style: kNormalTextSubdued),
           if (foodAvailable)
             Text(
                 "${tr('profile.handout')}: ${formatDay(item.time)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
                 style: kNormalTextSubdued),
-          if (foodAvailable) const SizedBox(height: 10),
+          if (foodAvailable) SizedBox(height: 10),
           if (foodAvailable)
             BarcodeWidget(
-                barcode: Barcode.ean8(), data: widget.user.barcode.toString()),
-          if (foodAvailable) const SizedBox(height: 30),
+                barcode: Barcode.ean8(),
+                data: appController.user.barcode.toString()),
+          if (foodAvailable) SizedBox(height: 30),
           if (foodAvailable)
             Text(tr('profile.scanBarcode'), style: kNormalTextSubdued)
         ]));
@@ -412,20 +386,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Text(tr('common.close')))
         ],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        titlePadding: const EdgeInsets.all(0),
+        titlePadding: EdgeInsets.all(0),
         title: Column(children: [
           Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                 image: DecorationImage(
                     image: AssetImage(getActivityImage(item)),
                     fit: BoxFit.cover),
               ),
               height: 100),
-          const SizedBox(height: 5),
+          SizedBox(height: 5),
           Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Text(context.locale.languageCode == 'da'
                   ? item.titleDa!
                   : item.titleEn!))
@@ -439,14 +413,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(tr('profile.activityType.${item.activityType}')),
             ]),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
             Row(children: [
               Text('${tr('common.time')}: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
                   "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}"),
             ]),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
             Row(children: [
               Text('${tr('common.place')}: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),

@@ -136,6 +136,9 @@
     "signIn": "Log ind",
     "signOut": "Log ud"
   },
+  "logout": {
+    "message": "Du er blevet logget ud"
+  },
   "more": {
     "barcode": "Vis stregkode",
     "boardgames": "Brætspil",

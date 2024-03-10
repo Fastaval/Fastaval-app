@@ -136,6 +136,9 @@
     "signIn": "Sign in",
     "signOut": "Sign out"
   },
+  "logout": {
+    "message": "You were logged out"
+  },
   "more": {
     "barcode": "Show Barcode",
     "boardgames": "Board games",

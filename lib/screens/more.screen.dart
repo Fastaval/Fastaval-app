@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
@@ -19,6 +20,7 @@ class MoreScreen extends StatefulWidget {
 
 class _MoreScreenState extends State<MoreScreen> {
   final notificationController = Get.find<NotificationController>();
+  final appController = Get.find<AppController>();
 
   @override
   Widget build(context) {
@@ -33,72 +35,61 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
-              ),
-              SizedBox(
-                  height: double.infinity,
-                  child: RefreshIndicator(
-                    backgroundColor: colorWhite,
-                    color: colorOrange,
-                    onRefresh: () async {},
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: <Widget>[
-                          InkWell(
-                            child: menuCard(
-                                tr('notifications.title'),
-                                Icons.notifications_active_outlined,
-                                true,
-                                notificationController
-                                    .notificationsWaiting.value),
-                            onTap: () => Get.to(() => NotificationsScreen(),
-                                transition: Transition.rightToLeft),
-                          ),
-                          InkWell(
-                            child: menuCard(tr('boardgames.title'),
-                                Icons.sports_esports_outlined, true),
-                            onTap: () => Get.to(() => BoardgameScreen(),
-                                transition: Transition.rightToLeft),
-                          ),
-                          InkWell(
-                              child:
-                                  menuCard(tr('more.map.school'), Icons.school),
-                              onTap: () => fastaMap(
-                                  context,
-                                  const AssetImage(
-                                      'assets/images/school.jpg'))),
-                          InkWell(
-                              child: menuCard(
-                                  tr('more.map.gym'), Icons.sports_tennis),
-                              onTap: () => fastaMap(
-                                  context,
-                                  const AssetImage(
-                                      'assets/images/sportscentre.jpg'))),
-                          SizedBox(height: 50),
-                          InkWell(
-                            child: menuCard(
-                                tr('more.settings'), Icons.settings, true),
-                            onTap: () => {
-                              NotificationController()
-                                  .clearNotificationsWaiting(),
-                              Get.to(() => SettingsScreen(context),
-                                  transition: Transition.rightToLeft)
-                            },
-                          ),
-                        ],
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: backgroundBoxDecorationStyle,
+            ),
+            SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    if (appController.loggedIn.value == true)
+                      InkWell(
+                        child: menuCard(
+                            tr('notifications.title'),
+                            Icons.notifications_active_outlined,
+                            true,
+                            notificationController.notificationsWaiting.value),
+                        onTap: () => Get.to(() => NotificationsScreen(),
+                            transition: Transition.rightToLeft),
                       ),
+                    InkWell(
+                      child: menuCard(tr('boardgames.title'),
+                          Icons.sports_esports_outlined, true),
+                      onTap: () => Get.to(() => BoardgameScreen(),
+                          transition: Transition.rightToLeft),
                     ),
-                  ))
-            ],
-          ),
+                    InkWell(
+                        child: menuCard(tr('more.map.school'), Icons.school),
+                        onTap: () => fastaMap(context,
+                            const AssetImage('assets/images/school.jpg'))),
+                    InkWell(
+                        child:
+                            menuCard(tr('more.map.gym'), Icons.sports_tennis),
+                        onTap: () => fastaMap(
+                            context,
+                            const AssetImage(
+                                'assets/images/sportscentre.jpg'))),
+                    SizedBox(height: 50),
+                    InkWell(
+                      child:
+                          menuCard(tr('more.settings'), Icons.settings, true),
+                      onTap: () => {
+                        NotificationController().clearNotificationsWaiting(),
+                        Get.to(() => SettingsScreen(),
+                            transition: Transition.rightToLeft)
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

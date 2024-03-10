@@ -1,63 +1,47 @@
-import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
-import 'package:fastaval_app/screens/home.screen.dart';
-import 'package:fastaval_app/services/user.service.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
-import '../helpers/notification.dart';
-
-class LoginScreen extends StatefulWidget {
-  final HomeScreenState parent;
-  const LoginScreen(this.parent, {super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController userIdController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class LoginScreen extends StatelessWidget {
+  final TextEditingController userIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final appController = Get.find<AppController>();
 
   @override
   Widget build(context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 120.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30.0),
-                      _buildUserIdInput(),
-                      const SizedBox(height: 30.0),
-                      _buildPasswordInput(),
-                      // _buildForgotPasswordBtn(),
-                      const SizedBox(height: 30.0),
-                      _buildLoginButton(),
-                    ],
-                  ),
+        child: Stack(
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: backgroundBoxDecorationStyle,
+            ),
+            SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0, vertical: 120.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30.0),
+                    _buildUserIdInput(),
+                    const SizedBox(height: 30.0),
+                    _buildPasswordInput(),
+                    const SizedBox(height: 30.0),
+                    _buildLoginButton(),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -70,16 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
         onPressed: () =>
-            fetchUser(userIdController.text, passwordController.text)
-                .then((newUser) => scheduleMicrotask(() {
-                      newUser.password = passwordController.text;
-                      UserService().setUser(newUser);
-                      UserService().registerToInfosys(context, newUser);
-                      UserNotification(loggedIn: true, user: newUser)
-                          .dispatch(context);
-                    }))
-                .onError((error, stackTrace) =>
-                    Fluttertoast.showToast(msg: tr('error.login'))),
+            appController.login(userIdController.text, passwordController.text),
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(
