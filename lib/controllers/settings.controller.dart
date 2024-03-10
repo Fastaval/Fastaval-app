@@ -9,13 +9,15 @@ class SettingsController extends GetxController {
   final LocalStorageService storageService = LocalStorageService();
   final language = 'en'.obs;
   final kLangKey = 'LANG_KEY';
-  late BuildContext appContext;
+  BuildContext? appContext;
 
   updateLanguage(String name) {
     storageService.setString(kLangKey, name);
     language(name);
     Get.updateLocale(Locale(name));
-    appContext.setLocale(Locale(name));
+    if (appContext != null) {
+      appContext!.setLocale(Locale(name));
+    }
   }
 
   init() async {
