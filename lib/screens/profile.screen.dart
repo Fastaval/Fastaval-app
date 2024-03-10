@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
@@ -53,16 +51,6 @@ class ProfileScreen extends StatelessWidget {
                             buildIdIcon(),
                             if (appController.user.messages.isNotEmpty)
                               buildUserMessagesCard(),
-                            Card(
-                              child: TextButton(
-                                child: Text('test'),
-                                onPressed: () => {
-                                  appController.user.password = '1234',
-                                  print('user'),
-                                  inspect(appController.user),
-                                },
-                              ),
-                            ),
                             buildUserProgramCard(),
                             if (appController.user.food.isNotEmpty)
                               buildUserFoodTimesCard(),
