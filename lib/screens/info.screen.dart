@@ -44,8 +44,8 @@ class _InfoScreen extends State<InfoScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
-                      _buildOpenHoursCard(),
                       _buildSafeFastavalCard(),
+                      _buildOpenHoursCard(),
                       _buildWifiCard(),
                       _buildFastaWearCard(),
                       _buildLostFoundCard(),
