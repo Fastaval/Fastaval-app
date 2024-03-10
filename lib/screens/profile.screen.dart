@@ -6,7 +6,6 @@ import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
-import 'package:fastaval_app/models/user.model.dart';
 import 'package:fastaval_app/models/wear.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    User test;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
