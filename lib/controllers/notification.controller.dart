@@ -16,25 +16,30 @@ class NotificationController extends GetxController {
     getNotifications();
   }
 
+  setNotificationsWaiting() {
+    fetchNotifications().then((notificationList) => {
+          _updateNotificationList(notificationList),
+          notificationsWaiting(notificationList.length)
+        });
+  }
+
   getNotifications() {
     fetchNotifications()
         .then((notificationList) => _updateNotificationList(notificationList));
   }
 
   _updateNotificationList(List<InfosysNotification> notifications) {
-    notificationList.value = RxList(notifications);
-    notificationListUpdatedAt =
-        RxInt((DateTime.now().millisecondsSinceEpoch / 1000).round());
+    notificationList(notifications);
+    notificationListUpdatedAt(
+        (DateTime.now().millisecondsSinceEpoch / 1000).round());
   }
 
   addNotificationWaiting() {
-    print('ADDING NOTIFICATION');
     notificationsWaiting++;
   }
 
   clearNotificationsWaiting() {
-    print('CLEARING NOTIFICATIONS');
-    notificationsWaiting = 0.obs;
+    notificationsWaiting(0);
   }
 
   Future<List<InfosysNotification>> fetchNotifications() async {

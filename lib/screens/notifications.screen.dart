@@ -9,13 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:timezone/standalone.dart' as tz;
 
-class NotificationsScreen extends GetView<NotificationController> {
+class NotificationsScreen extends StatelessWidget {
   final notificationController = Get.find<NotificationController>();
-
-  NotificationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    notificationController.clearNotificationsWaiting();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,

@@ -6,6 +6,7 @@ import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
 import 'package:fastaval_app/screens/more.screen.dart';
+import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,7 +28,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
-        notificationController.addNotificationWaiting();
+        Get.to(() => NotificationsScreen(), transition: Transition.rightToLeft);
       }
     });
 

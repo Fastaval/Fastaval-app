@@ -28,27 +28,31 @@ class AppController extends GetxController {
   }
 
   init() async {
-    await getUserDetails();
-  }
-
-  Future getUserDetails() async {
-    await UserService().getUser().then((newUser) => {
+    await UserService().getUserFromStorage().then((newUser) => {
           if (newUser != null) {updateUser(newUser), updateLoggedIn(true)}
         });
   }
 
-  login(String id, String password) {
-    fetchUser(id, password)
-        .then((newUser) => scheduleMicrotask(() {
-              newUser.password = password;
-              updateUser(newUser);
-              updateLoggedIn(true);
-              UserService().setUser(newUser);
-              UserService().registerToInfosys(newUser);
-              updateNavIndex(0);
-            }))
-        .onError((error, stackTrace) =>
-            Fluttertoast.showToast(msg: tr('error.login')));
+  updateUserProfile() async {
+    User newUser = await fetchUser(user.id.toString(), user.password);
+    newUser.password = user.password;
+
+    await UserService().setUser(newUser);
+    updateUser(newUser);
+  }
+
+  Future<void> login(String id, String password) async {
+    try {
+      User newUser = await fetchUser(id, password);
+      newUser.password = password;
+      updateUser(newUser);
+      updateLoggedIn(true);
+      await UserService().setUser(newUser);
+      await UserService().registerToInfosys(newUser);
+      updateNavIndex(0);
+    } catch (error) {
+      Fluttertoast.showToast(msg: tr('error.login'));
+    }
   }
 
   logout() {

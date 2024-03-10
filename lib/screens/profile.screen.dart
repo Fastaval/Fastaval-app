@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
@@ -6,6 +8,7 @@ import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
+import 'package:fastaval_app/models/user.model.dart';
 import 'package:fastaval_app/models/wear.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
+    User test;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
@@ -41,15 +45,24 @@ class ProfileScreen extends StatelessWidget {
                 child: RefreshIndicator(
                   backgroundColor: colorWhite,
                   color: colorOrange,
-                  onRefresh: () => appController.getUserDetails(),
+                  onRefresh: () => appController.updateUserProfile(),
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
                     child: Obx(() => Column(
                           children: [
-                            SizedBox(height: 10.0),
                             buildIdIcon(),
                             if (appController.user.messages.isNotEmpty)
                               buildUserMessagesCard(),
+                            Card(
+                              child: TextButton(
+                                child: Text('test'),
+                                onPressed: () => {
+                                  appController.user.password = '1234',
+                                  print('user'),
+                                  inspect(appController.user),
+                                },
+                              ),
+                            ),
                             buildUserProgramCard(),
                             if (appController.user.food.isNotEmpty)
                               buildUserFoodTimesCard(),
@@ -162,7 +175,7 @@ class ProfileScreen extends StatelessWidget {
 
     return InkWell(
         onTap: () => showDialog(
-            context: settingsController.appContext,
+            context: Get.context!,
             builder: activityDialog,
             routeSettings: RouteSettings(arguments: item)),
         child: Column(children: [
@@ -193,7 +206,7 @@ class ProfileScreen extends StatelessWidget {
       for (var item in food)
         InkWell(
           onTap: () => showDialog(
-              context: settingsController.appContext,
+              context: Get.context!,
               builder: foodDialog,
               routeSettings: RouteSettings(arguments: item)),
           child: Card(

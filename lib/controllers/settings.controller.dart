@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/services/local_storage.service.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,8 +30,6 @@ class SettingsController extends GetxController {
   }
 
   setContext(BuildContext context) {
-    print('Setting context');
-    inspect(context);
     appContext = context;
   }
 }

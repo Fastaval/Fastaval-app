@@ -46,47 +46,53 @@ class _MoreScreenState extends State<MoreScreen> {
               height: double.infinity,
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    if (appController.loggedIn.value == true)
-                      InkWell(
-                        child: menuCard(
-                            tr('notifications.title'),
-                            Icons.notifications_active_outlined,
-                            true,
-                            notificationController.notificationsWaiting.value),
-                        onTap: () => Get.to(() => NotificationsScreen(),
-                            transition: Transition.rightToLeft),
-                      ),
-                    InkWell(
-                      child: menuCard(tr('boardgames.title'),
-                          Icons.sports_esports_outlined, true),
-                      onTap: () => Get.to(() => BoardgameScreen(),
-                          transition: Transition.rightToLeft),
-                    ),
-                    InkWell(
-                        child: menuCard(tr('more.map.school'), Icons.school),
-                        onTap: () => fastaMap(context,
-                            const AssetImage('assets/images/school.jpg'))),
-                    InkWell(
-                        child:
-                            menuCard(tr('more.map.gym'), Icons.sports_tennis),
-                        onTap: () => fastaMap(
-                            context,
-                            const AssetImage(
-                                'assets/images/sportscentre.jpg'))),
-                    SizedBox(height: 50),
-                    InkWell(
-                      child:
-                          menuCard(tr('more.settings'), Icons.settings, true),
-                      onTap: () => {
-                        NotificationController().clearNotificationsWaiting(),
-                        Get.to(() => SettingsScreen(),
-                            transition: Transition.rightToLeft)
-                      },
-                    ),
-                  ],
-                ),
+                child: Obx(() => Column(
+                      children: [
+                        if (appController.loggedIn.value == true)
+                          InkWell(
+                              child: menuCard(
+                                  tr('notifications.title'),
+                                  Icons.notifications_active_outlined,
+                                  true,
+                                  notificationController
+                                      .notificationsWaiting.value),
+                              onTap: () => {
+                                    Get.to(() => NotificationsScreen(),
+                                        transition: Transition.rightToLeft),
+                                    notificationController
+                                        .clearNotificationsWaiting()
+                                  }),
+                        InkWell(
+                          child: menuCard(tr('boardgames.title'),
+                              Icons.sports_esports_outlined, true),
+                          onTap: () => Get.to(() => BoardgameScreen(),
+                              transition: Transition.rightToLeft),
+                        ),
+                        InkWell(
+                            child:
+                                menuCard(tr('more.map.school'), Icons.school),
+                            onTap: () => fastaMap(context,
+                                const AssetImage('assets/images/school.jpg'))),
+                        InkWell(
+                            child: menuCard(
+                                tr('more.map.gym'), Icons.sports_tennis),
+                            onTap: () => fastaMap(
+                                context,
+                                const AssetImage(
+                                    'assets/images/sportscentre.jpg'))),
+                        SizedBox(height: 50),
+                        InkWell(
+                          child: menuCard(
+                              tr('more.settings'), Icons.settings, true),
+                          onTap: () => {
+                            NotificationController()
+                                .clearNotificationsWaiting(),
+                            Get.to(() => SettingsScreen(),
+                                transition: Transition.rightToLeft)
+                          },
+                        ),
+                      ],
+                    )),
               ),
             )
           ],

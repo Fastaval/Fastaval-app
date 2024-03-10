@@ -44,17 +44,6 @@ class _InfoScreen extends State<InfoScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
-                      Card(
-                        child: TextButton(
-                          child: Text('test'),
-                          onPressed: () =>
-                              notoficationController.addNotificationWaiting(),
-                        ),
-                      ),
-                      Card(
-                        child: Obx(() => Text(
-                            '${notoficationController.notificationsWaiting}')),
-                      ),
                       _buildOpenHoursCard(),
                       _buildStoresCard(),
                       _buildSafeFastavalCard(),

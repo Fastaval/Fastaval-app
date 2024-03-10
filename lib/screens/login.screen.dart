@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final appController = Get.find<AppController>();
+  final notificationController = Get.find<NotificationController>();
 
   @override
   Widget build(context) {
@@ -53,8 +55,12 @@ class LoginScreen extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
-        onPressed: () =>
-            appController.login(userIdController.text, passwordController.text),
+        onPressed: () async => {
+          await appController.login(
+              userIdController.text, passwordController.text),
+          if (appController.loggedIn.value == true)
+            notificationController.setNotificationsWaiting(),
+        },
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(

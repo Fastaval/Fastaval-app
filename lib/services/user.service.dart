@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +22,7 @@ class UserService {
   static const String kUserKey = 'USER_KEY';
   final LocalStorageService storageService = LocalStorageService();
 
-  Future<User?> getUser() async {
+  Future<User?> getUserFromStorage() async {
     String userString = await storageService.getString(kUserKey);
     if (userString == '') {
       return null;
@@ -34,6 +35,7 @@ class UserService {
   }
 
   setUser(User user) {
+    inspect(user);
     String userString = jsonEncode(user);
     storageService.setString(kUserKey, userString);
   }
@@ -79,7 +81,7 @@ Future<User> fetchUser(String userId, String password) async {
     return User.fromJson(jsonDecode(response.body));
   }
   appController.logout();
-  throw Exception('Failed to load login');
+  throw Exception('Failed to load login. Logging out');
 }
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
