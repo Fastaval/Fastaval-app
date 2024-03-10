@@ -34,7 +34,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        notificationController.addNotificationWaiting();
+        notificationController.getNotificationsAndSetWaiting();
       }
     });
 
@@ -86,10 +86,9 @@ class HomeScreenState extends State<HomeScreen> {
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
           icon: badges.Badge(
-              showBadge: notificationController.notificationsWaiting.value > 0,
-              badgeAnimation: badges.BadgeAnimation.slide(),
-              badgeContent:
-                  Text('${notificationController.notificationsWaiting.value}'),
+              showBadge: notificationController.notificationsWaiting.value &&
+                  notificationController.notificationList.isNotEmpty,
+              position: badges.BadgePosition.topEnd(top: -2, end: -5),
               child: const Icon(Icons.more_horiz_outlined)),
           label: tr('bottomNavigation.more')),
     ];

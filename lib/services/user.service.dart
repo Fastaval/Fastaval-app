@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -35,7 +34,6 @@ class UserService {
   }
 
   setUser(User user) {
-    inspect(user);
     String userString = jsonEncode(user);
     storageService.setString(kUserKey, userString);
   }

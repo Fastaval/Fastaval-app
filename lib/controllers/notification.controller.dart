@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 
 class NotificationController extends GetxController {
   RxList notificationList = [].obs;
-  RxInt notificationsWaiting = 0.obs;
+  RxInt notificationsOnLastClear = 0.obs;
+  RxBool notificationsWaiting = false.obs;
   RxInt notificationListUpdatedAt = 0.obs;
   final appController = Get.find<AppController>();
 
@@ -16,16 +17,25 @@ class NotificationController extends GetxController {
     getNotifications();
   }
 
-  setNotificationsWaiting() {
-    fetchNotifications().then((notificationList) => {
+  getNotificationsAndSetWaiting() {
+    _fetchNotifications().then((notificationList) => {
           _updateNotificationList(notificationList),
-          notificationsWaiting(notificationList.length)
+          if (notificationList.isNotEmpty) setNotificationWaiting()
         });
   }
 
   getNotifications() {
-    fetchNotifications()
+    _fetchNotifications()
         .then((notificationList) => _updateNotificationList(notificationList));
+  }
+
+  setNotificationWaiting() {
+    notificationsWaiting(true);
+  }
+
+  clearNotificationsWaiting() {
+    notificationsOnLastClear(notificationList.length);
+    notificationsWaiting(false);
   }
 
   _updateNotificationList(List<InfosysNotification> notifications) {
@@ -34,15 +44,7 @@ class NotificationController extends GetxController {
         (DateTime.now().millisecondsSinceEpoch / 1000).round());
   }
 
-  addNotificationWaiting() {
-    notificationsWaiting++;
-  }
-
-  clearNotificationsWaiting() {
-    notificationsWaiting(0);
-  }
-
-  Future<List<InfosysNotification>> fetchNotifications() async {
+  Future<List<InfosysNotification>> _fetchNotifications() async {
     if (appController.user.id == 0) throw Exception('User not logged in');
 
     var response = await http.get(Uri.parse(

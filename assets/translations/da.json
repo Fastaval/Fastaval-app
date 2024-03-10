@@ -49,11 +49,11 @@
   "info": {
     "fastaWear": {
       "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.",
-      "title": "Fasta-Wear"
+      "title": "FastaWear"
     },
     "lostAndFound": {
       "text": "Har du mistet eller fundet noget?\nGå til Informationen for at få hjælp!",
-      "title": "Glemte Sager"
+      "title": "Glemte sager"
     },
     "openHours": {
       "bar": {
@@ -94,7 +94,7 @@
       "heroForce": "Heltestyrken",
       "safetyHost": "Tryghedsværten",
       "safetyMail": "Safe-mail",
-      "title": "Tryg Fastaval"
+      "title": "Tryg fastaval"
     },
     "stores": {
       "store1": {
@@ -107,7 +107,7 @@
       "taxi1": "Kajs Taxi",
       "taxi2": "Hobro Taxa",
       "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.",
-      "title": "Transport & Parkering"
+      "title": "Transport & parkering"
     },
     "wifi": {
       "networkCode": "Kode",

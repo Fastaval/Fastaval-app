@@ -49,7 +49,7 @@
   "info": {
     "fastaWear": {
       "text": "Have you ordered wear?\n\nIt can be retrieved in the Information after you have checked in. State your name and participant number and you will receive your wear.",
-      "title": "Fasta-Wear"
+      "title": "FastaWear"
     },
     "lostAndFound": {
       "text": "Have you lost or found something?\nGo to The Information for help!",
@@ -184,7 +184,7 @@
       "title": "Accomodation"
     },
     "wear": {
-      "noWear": "Haven't oredered wear this year",
+      "noWear": "Haven't ordered wear this year",
       "received": {
         "0": "Not picked up",
         "1": "Picked up"

@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
           await appController.login(
               userIdController.text, passwordController.text),
           if (appController.loggedIn.value == true)
-            notificationController.setNotificationsWaiting(),
+            notificationController.getNotificationsAndSetWaiting(),
         },
         child: Text(
           tr('login.signIn'),

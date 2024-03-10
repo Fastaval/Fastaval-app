@@ -1,10 +1,13 @@
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+final notificationController = Get.find<NotificationController>();
 
 Widget oneTextRow(String text) {
   return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
@@ -53,7 +56,7 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
 }
 
 Widget menuCard(String title, IconData icon,
-    [bool hasSubMenu = false, notificationAmount = 0]) {
+    [bool hasSubMenu = false, showBadge = false]) {
   return Card(
       surfaceTintColor: Colors.white,
       color: Colors.white,
@@ -73,8 +76,10 @@ Widget menuCard(String title, IconData icon,
               Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
                   child: Text(title, style: kMenuCardHeaderStyle)),
-              if (notificationAmount > 0)
-                Badge(label: Text('$notificationAmount'))
+              if (showBadge)
+                Badge(
+                    label: Text(
+                        '${notificationController.notificationList.length - notificationController.notificationsOnLastClear.value}'))
             ],
           ),
         )
