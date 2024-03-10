@@ -3,6 +3,7 @@ import 'package:fastaval_app/constants/app.constant.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,7 @@ class _InfoScreen extends State<InfoScreen> {
 }
 
 Widget _buildFastaWearCard() {
-  return textAndIconCard(tr('info.fastaWear.title'), Icons.person,
+  return textAndIconCard(tr('info.fastaWear.title'), CupertinoIcons.eyeglasses,
       Text(tr('info.fastaWear.text'), style: kNormalTextStyle));
 }
 
