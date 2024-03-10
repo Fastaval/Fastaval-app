@@ -8,7 +8,6 @@ import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
 import 'package:fastaval_app/models/wear.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -240,8 +239,8 @@ class ProfileScreen extends StatelessWidget {
 
   Widget buildUserWearCard() {
     if (appController.user.wear.isEmpty) {
-      return textAndIconCard((tr('profile.wear.title')),
-          CupertinoIcons.eyeglasses, oneTextRow(tr('profile.wear.noWear')));
+      return textAndIconCard((tr('profile.wear.title')), Icons.checkroom,
+          oneTextRow(tr('profile.wear.noWear')));
     }
 
     return textAndIconCard(
