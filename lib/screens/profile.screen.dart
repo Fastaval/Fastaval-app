@@ -239,7 +239,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget buildUserWearCard() {
     if (appController.user.wear.isEmpty) {
-      return textAndIconCard((tr('profile.wear.title')), Icons.bed,
+      return textAndIconCard((tr('profile.wear.title')), Icons.person,
           oneTextRow(tr('profile.wear.noWear')));
     }
 
