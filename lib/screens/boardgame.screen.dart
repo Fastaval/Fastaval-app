@@ -1,42 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/boardgame.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/boardgame.model.dart';
-import 'package:fastaval_app/services/boardgame.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BoardgameScreen extends StatefulWidget {
-  final int updateTime;
-  final List<Boardgame> boardgames;
-  final Function updateParent;
-
-  const BoardgameScreen({
-    Key? key,
-    required this.boardgames,
-    required this.updateTime,
-    required this.updateParent,
-  }) : super(key: key);
-
-  @override
-  State<BoardgameScreen> createState() => _BoardgameScreen();
-}
-
-class _BoardgameScreen extends State<BoardgameScreen> {
-  late List<Boardgame> boardgameList = widget.boardgames;
-  late List<Boardgame> filteredList = widget.boardgames;
-  late int listUpdatedAt = widget.updateTime;
+class BoardgameScreen extends GetView<BoardGameController> {
   final TextEditingController _searchController = TextEditingController();
+
+  BoardgameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: const BackButton(),
-        title: Text(tr('drawer.boardgames')),
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 40,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('boardgames.title')),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -52,17 +39,10 @@ class _BoardgameScreen extends State<BoardgameScreen> {
               SizedBox(
                   height: double.infinity,
                   child: RefreshIndicator(
+                    backgroundColor: colorWhite,
+                    color: colorOrange,
                     onRefresh: () async {
-                      fetchBoardgames().then((gamesList) => {
-                            setState(() {
-                              widget.updateParent(gamesList);
-                              boardgameList = gamesList;
-                              listUpdatedAt =
-                                  (DateTime.now().millisecondsSinceEpoch / 1000)
-                                      .round();
-                              applyFilterToList();
-                            }),
-                          });
+                      controller.getBoardGames();
                     },
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -72,7 +52,8 @@ class _BoardgameScreen extends State<BoardgameScreen> {
                               padding: kCardMargin,
                               child: TextField(
                                 controller: _searchController,
-                                onChanged: (value) => applyFilterToList(),
+                                onChanged: (value) =>
+                                    controller.applyFilterToList(value),
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -81,7 +62,7 @@ class _BoardgameScreen extends State<BoardgameScreen> {
                                     icon: const Icon(Icons.clear),
                                     onPressed: () => {
                                       _searchController.clear(),
-                                      applyFilterToList()
+                                      controller.applyFilterToList()
                                     },
                                   ),
                                   border: OutlineInputBorder(
@@ -89,7 +70,13 @@ class _BoardgameScreen extends State<BoardgameScreen> {
                                   ),
                                 ),
                               )),
-                          buildBoardGames(),
+                          Obx(() => textAndTextCard(
+                              tr('boardgames.title'),
+                              Text(
+                                "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
+                                style: kNormalTextSubdued,
+                              ),
+                              buildGameList(context))),
                           const SizedBox(height: 30),
                         ],
                       ),
@@ -102,24 +89,14 @@ class _BoardgameScreen extends State<BoardgameScreen> {
     );
   }
 
-  Widget buildBoardGames() {
-    return textAndTextCard(
-        tr('boardgames.title'),
-        Text(
-          "${tr('common.updated')} ${formatDay(listUpdatedAt, context)} ${formatTime(listUpdatedAt)}",
-          style: kNormalTextSubdued,
-        ),
-        buildGame(context));
-  }
-
-  Widget buildGame(BuildContext context) {
+  Widget buildGameList(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: filteredList.length,
-      prototypeItem: boardGameItem(boardgameList.first),
+      itemCount: controller.filteredList.length,
+      prototypeItem: boardGameItem(controller.boardgameList.first),
       itemBuilder: (buildContext, index) {
-        return boardGameItem(filteredList[index]);
+        return boardGameItem(controller.filteredList[index]);
       },
     );
   }
@@ -167,22 +144,5 @@ class _BoardgameScreen extends State<BoardgameScreen> {
         throw 'Could not launch website';
       }
     }
-  }
-
-  applyFilterToList() {
-    String enteredKeyword = _searchController.text;
-    List<Boardgame> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = boardgameList;
-    } else {
-      results = boardgameList
-          .where((element) =>
-              element.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
-
-    setState(() {
-      filteredList = results;
-    });
   }
 }

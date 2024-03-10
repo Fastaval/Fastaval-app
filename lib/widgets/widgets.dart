@@ -1,15 +1,100 @@
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/helpers/formatting.dart';
+import 'package:fastaval_app/models/activity_item.model.dart';
+import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+final notificationController = Get.find<NotificationController>();
 
 Widget oneTextRow(String text) {
   return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
 }
 
+Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
+  return Padding(
+      padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 40,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(
+                    left: BorderSide(width: 5, color: color),
+                    right: BorderSide(width: 1, color: Colors.grey.shade300)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        formatTime(run.start),
+                        style: TextStyle(color: Colors.grey.shade500),
+                      ),
+                    ]),
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          Flexible(
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(Get.locale?.languageCode == 'da'
+                          ? activity.daTitle
+                          : activity.enTitle)
+                    ])),
+          ),
+        ],
+      ));
+}
+
+Widget menuCard(String title, IconData icon,
+    [bool hasSubMenu = false, showBadge = false]) {
+  return Card(
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
+      margin: kMenuCardMargin,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: Colors.black12, width: 1)),
+      elevation: 1,
+      child: Column(children: [
+        ListTile(
+          trailing:
+              hasSubMenu ? Icon(Icons.keyboard_arrow_right_outlined) : null,
+          title: Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0), child: Icon(icon)),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  child: Text(title, style: kMenuCardHeaderStyle)),
+              if (showBadge)
+                Badge(
+                    label: Text(
+                        '${notificationController.notificationList.length - notificationController.notificationsOnLastClear.value}'))
+            ],
+          ),
+        )
+      ]));
+}
+
 Widget textAndIconCard(String title, IconData icon, content) {
   return Card(
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
       margin: kCardMargin,
-      elevation: kCardElevation,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: Colors.black12, width: 1)),
+      elevation: 1,
       child: Column(children: [
         ListTile(
             trailing: Icon(icon), title: Text(title, style: kCardHeaderStyle)),
@@ -21,6 +106,8 @@ Widget textAndIconCard(String title, IconData icon, content) {
 
 Widget textAndTextCard(String title, Text secondaryTitle, content) {
   return Card(
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
       margin: kCardMargin,
       elevation: kCardElevation,
       child: Column(children: [
@@ -93,12 +180,12 @@ Widget twoTextRowWithTapAction(String title, String link, Uri url) {
             onTap: () {
               canLaunchUrl(url).then((bool result) async {
                 if (result) {
-                  await launchUrl(url);
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
                 }
               });
             },
-            child: Text(url.path,
-                textAlign: TextAlign.right, style: kNormalTextStyle)),
+            child: Text(link,
+                textAlign: TextAlign.right, style: kNormalTextClickableStyle)),
       ),
     ],
   );

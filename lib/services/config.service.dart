@@ -1,10 +1,15 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
+String baseUrl = ConfigService.instance.getRemoteConfig('API');
+
 class ConfigService {
+  ConfigService._privateConstructor();
+
+  static final ConfigService instance = ConfigService._privateConstructor();
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
-  void initConfig() async {
-    await _remoteConfig.setDefaults(const {
+  initConfig() async {
+    await _remoteConfig.setDefaults({
       'API': 'https://infosys.fastaval.dk/api',
       'APItest': 'https://infosys-test.fastaval.dk/api'
     });
@@ -16,7 +21,6 @@ class ConfigService {
   }
 
   String getRemoteConfig(String string) {
-    print(_remoteConfig.getString(string));
     return _remoteConfig.getString(string);
   }
 }

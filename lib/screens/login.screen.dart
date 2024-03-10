@@ -1,72 +1,49 @@
-import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
-import 'package:fastaval_app/screens/home.screen.dart';
-import 'package:fastaval_app/services/user.service.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
+import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
-import '../helpers/notification.dart';
-
-class LoginScreen extends StatefulWidget {
-  final HomePageState parent;
-  const LoginScreen(this.parent, {Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController userIdController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class LoginScreen extends StatelessWidget {
+  final TextEditingController userIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final appController = Get.find<AppController>();
+  final notificationController = Get.find<NotificationController>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 120.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        tr('login.signIn'),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 30.0),
-                      _buildUserIdInput(),
-                      const SizedBox(height: 30.0),
-                      _buildPasswordInput(),
-                      // _buildForgotPasswordBtn(),
-                      const SizedBox(height: 30.0),
-                      _buildLoginButton(),
-                    ],
-                  ),
+        child: Stack(
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: backgroundBoxDecorationStyle,
+            ),
+            SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0, vertical: 120.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30.0),
+                    _buildUserIdInput(),
+                    const SizedBox(height: 30.0),
+                    _buildPasswordInput(),
+                    const SizedBox(height: 30.0),
+                    _buildLoginButton(),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -78,17 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
-        onPressed: () =>
-            fetchUser(userIdController.text, passwordController.text)
-                .then((newUser) => scheduleMicrotask(() {
-                      newUser.password = passwordController.text;
-                      UserService().setUser(newUser);
-                      UserService().registerToInfosys(context, newUser);
-                      UserNotification(loggedIn: true, user: newUser)
-                          .dispatch(context);
-                    }))
-                .onError((error, stackTrace) =>
-                    Fluttertoast.showToast(msg: tr('error.login'))),
+        onPressed: () async => {
+          await appController.login(
+              userIdController.text, passwordController.text),
+          if (appController.loggedIn.value == true)
+            notificationController.getNotificationsAndSetWaiting(),
+        },
         child: Text(
           tr('login.signIn'),
           style: const TextStyle(
@@ -96,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
           ),
         ),
       ),
@@ -117,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: passwordController,
             keyboardType: TextInputType.number,
             obscureText: true,
-            style: const TextStyle(color: Colors.white, fontFamily: 'OpenSans'),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),
@@ -144,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             controller: userIdController,
             keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.white, fontFamily: 'OpenSans'),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-String formatDay(int? time, BuildContext context) {
-  return DateFormat.E(context.locale.toString() == 'da' ? 'da_DK' : 'en_UK')
+formatDay(int? time) {
+  return DateFormat.E(Get.locale!.languageCode == 'da' ? 'da_DK' : 'en_UK')
       .format(formatTimestampToDateTime(time!))
-      .capitalize();
+      .capitalizeString();
 }
 
 String formatTime(int? time) {
@@ -15,8 +15,21 @@ DateTime formatTimestampToDateTime(int timeInUnixTime) {
   return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 }
 
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+String getLanguage(String language) {
+  switch (language) {
+    case 'dansk':
+      return tr('common.danish');
+    case 'engelsk':
+      return tr('common.english');
+    case 'dansk+engelsk':
+      return tr('common.danEng');
+    default:
+      return '';
+  }
+}
+
+extension StringExtensions on String {
+  String capitalizeString() {
+    return "${this[0].toUpperCase()}${substring(1)}";
   }
 }

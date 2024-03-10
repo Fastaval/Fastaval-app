@@ -3,20 +3,29 @@ import 'dart:convert';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fastaval_app/constants/app.constant.dart';
+import 'package:fastaval_app/controllers/app.controller.dart';
+import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/models/user.model.dart';
+import 'package:fastaval_app/services/config.service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'local_storage.service.dart';
 
+final settingsController = Get.find<SettingsController>();
+final appController = Get.find<AppController>();
+
 class UserService {
-  static const String kUserKey = 'USER_KEY';
+  static const String kUserKey = 'USER_KEY24';
   final LocalStorageService storageService = LocalStorageService();
 
-  Future<User> getUser() async {
+  Future<User?> getUserFromStorage() async {
     String userString = await storageService.getString(kUserKey);
+    if (userString == '') {
+      return null;
+    }
     try {
       return Future.value(User.fromJson(jsonDecode(userString)));
     } catch (error) {
@@ -33,14 +42,12 @@ class UserService {
     storageService.deleteString(kUserKey);
   }
 
-  registerToInfosys(BuildContext context, User user) {
-    registerAppToInfosys(context, user);
+  registerToInfosys(User user) {
+    registerAppToInfosys(user);
   }
-}
 
-Future<void> registerAppToInfosys(BuildContext context, User user) async =>
-    await showDialog(
-        context: context,
+  Future<void> registerAppToInfosys(User user) async => await showDialog(
+        context: Get.context!,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -61,7 +68,9 @@ Future<void> registerAppToInfosys(BuildContext context, User user) async =>
                   }),
             ],
           );
-        });
+        },
+      );
+}
 
 Future<User> fetchUser(String userId, String password) async {
   var response =
@@ -69,8 +78,8 @@ Future<User> fetchUser(String userId, String password) async {
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   }
-
-  throw Exception('Failed to load login');
+  appController.logout();
+  throw Exception('Failed to load login. Logging out');
 }
 
 Future<void> sendFCMTokenToInfosys(int userId) async {
@@ -80,7 +89,6 @@ Future<void> sendFCMTokenToInfosys(int userId) async {
       body: jsonEncode({'gcm_id': token}));
   if (response.statusCode != 200) {
     throw Exception('Failed to register app with infosys');
-    // TODO: Vis fejl hvis registering ikke lykkedes
   }
 }
 

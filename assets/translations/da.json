@@ -1,14 +1,4 @@
 {
-  "error": {
-    "login": "Fejl i brugernavn eller password"
-  },
-  "common": {
-    "close": "Luk",
-    "updated": "Opdateret",
-    "time": "Tidspunkt",
-    "place": "Sted",
-    "type": "Type"
-  },
   "app": {
     "title": "Fastaval"
   },
@@ -17,43 +7,53 @@
       "show": "Vis stregkode"
     },
     "map": {
-      "show": "Vis kort",
-      "noMapAvailable": "Der er intet kort tilgængeligt lige nu"
+      "noMapAvailable": "Der er intet kort tilgængeligt lige nu",
+      "show": "Vis kort"
     }
   },
   "boardgames": {
-    "title": "Brætspil",
+    "fastavalGame": "Er et Fastaval spil",
+    "gameAvailable": {
+      "false": "Ikke ledigt",
+      "true": "Ledigt"
+    },
     "search": "Søg...",
-    "gameAvailable": { "true": "Ledigt", "false": "Ikke ledigt" },
-    "fastavalGame": "Er et Fastaval spil"
-  },
-  "drawer": {
-    "settings": "Indstillinger",
-    "messages": "Notifikationer",
-    "barcode": "Vis stregkode",
-    "boardgames": "Brætspil",
-    "mapSchool": "Vis kort over skolen",
-    "mapGym": "Vis kort over idrætshallen",
-    "close": "Luk"
-  },
-  "notifications": {
-    "title": "Notifikationer"
+    "title": "Brætspil"
   },
   "bottomNavigation": {
     "information": "Information",
     "login": "Log ind",
+    "more": "Mere",
     "profil": "Profil",
-    "program": "Program",
-    "more": "Mere"
+    "program": "Program"
+  },
+  "common": {
+    "close": "Luk",
+    "danEng": "Dansk/Engelsk",
+    "danish": "Dansk",
+    "description": "Beskrivelse",
+    "english": "Engelsk",
+    "hour": "Time",
+    "hours": "Timer",
+    "language": "Sprog",
+    "place": "Sted",
+    "players": "Spillere",
+    "runtime": "Tidsforbrug",
+    "time": "Tidspunkt",
+    "type": "Type",
+    "updated": "Opdateret"
+  },
+  "error": {
+    "login": "Fejl i brugernavn eller password"
   },
   "info": {
     "fastaWear": {
       "text": "Har du bestilt wear?\n\nDet kan hentes i Informationen efter du har tjekket ind. Oplys dit navn og deltagernummer og du vil få udleveret dit wear.",
-      "title": "Fasta-Wear"
+      "title": "FastaWear"
     },
     "lostAndFound": {
       "text": "Har du mistet eller fundet noget?\nGå til Informationen for at få hjælp!",
-      "title": "Glemte Sager"
+      "title": "Glemte sager"
     },
     "openHours": {
       "bar": {
@@ -69,13 +69,13 @@
         "day1": "Onsdag",
         "day2": "Tor-Lør",
         "day3": "Søndag",
-        "title": "Otto's Kaffekro"
+        "title": "Ottos Kaffekro"
       },
       "information": {
         "day1": "Onsdag",
         "day2": "Tor-Lør",
         "day3": "Søndag",
-        "title": "Informationen"
+        "title": "Infoen"
       },
       "kiosk": {
         "day1": "Ons-Lør",
@@ -90,22 +90,14 @@
       "title": "Åbningstider"
     },
     "safe": {
-      "dutyGeneral": "Vagthavende general",
+      "dutyGeneral": "Vagthavende General",
       "heroForce": "Heltestyrken",
-      "safetyHost": "Tryghedsvært",
+      "safetyHost": "Tryghedsværten",
       "safetyMail": "Safe-mail",
-      "title": "Tryg Fastaval"
+      "title": "Tryg fastaval"
     },
     "stores": {
       "store1": {
-        "day1": "Ons-Søn",
-        "title": "Epic Panda @ B45"
-      },
-      "store2": {
-        "day1": "Ons-Søn",
-        "title": "Bunkern Esbjerg @ Magic lokalet"
-      },
-      "store3": {
         "day1": "Lørdag",
         "title": "Artist Alley popup shops @ Fællesområdet"
       },
@@ -115,7 +107,7 @@
       "taxi1": "Kajs Taxi",
       "taxi2": "Hobro Taxa",
       "text": "Der er parkeringspladser tilknyttet gymnasiet og idrætscenteret som du må benytte.\n\nHobro togstation er ca. 2,5km fra Fastaval.",
-      "title": "Transport & Parkering"
+      "title": "Transport & parkering"
     },
     "wifi": {
       "networkCode": "Kode",
@@ -125,83 +117,120 @@
     }
   },
   "login": {
+    "alert": {
+      "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",
+      "dialogNo": "Nej tak",
+      "dialogYes": "Ja tak",
+      "title": "Beskeder fra Fastaval"
+    },
     "enterParticipantNumber": "Indtast deltager nummer",
     "enterPassword": "Indtast kodeord",
     "forgotPassword": "Glemt kodeord?",
     "participantNumber": "Deltager nummer",
     "password": "Kodeord",
+    "permissionsWarning": {
+      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer.",
+      "title": "Kære bruger"
+    },
     "rememberMe": "Husk mit login",
     "signIn": "Log ind",
-    "signOut": "Log ud",
-    "permissionsWarning": {
-      "title": "Kære bruger",
-      "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer."
+    "signOut": "Log ud"
+  },
+  "logout": {
+    "message": "Du er blevet logget ud"
+  },
+  "more": {
+    "barcode": "Vis stregkode",
+    "boardgames": "Brætspil",
+    "close": "Luk",
+    "map": {
+      "gym": "Kort over idrætshallen",
+      "school": "kort over skolen"
     },
-    "alert": {
-      "title": "Beskeder fra Fastaval",
-      "description": "Er du ok med, at vi sender dig opdateringer og meddelelser via denne app? Det er vores eneste måde at sikre, at du holdes opdateret om ændringer m.m.",
-      "dialogYes": "Ja tak",
-      "dialogNo": "Nej tak"
-    }
+    "messages": "Notifikationer",
+    "settings": "Indstillinger",
+    "title": "Mere"
+  },
+  "notifications": {
+    "title": "Notifikationer"
   },
   "profile": {
+    "activityType": {
+      "braet": "Brætspil",
+      "gds": "Heltestyrke",
+      "junior": "Junior",
+      "ottoviteter": "Ottovitet",
+      "rolle": "Spiller",
+      "spilleder": "Spilleder",
+      "system": "Fastavitet"
+    },
+    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
+    "foodHandedOut": "Maden er udleveret",
+    "foodTicket": "Madbillet",
     "foodTimes": "Madtider",
+    "handout": "Udleveres",
     "messagesFromFastaval": "Beskeder Fra Fastaval",
     "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
     "participantNumber": "Deltager nummer",
+    "scanBarcode": "Vis stregkoden når du skal have udleveret mad",
+    "sleep": {
+      "location": "Sove lokation",
+      "mattress": {
+        "0": "Nej",
+        "1": "Ja"
+      },
+      "mattressRented": "Lejet madras",
+      "notSleeping": "Overnatter ikke på Fastaval",
+      "title": "Overnatning"
+    },
+    "wear": {
+      "noWear": "Har ikke bestilt noget wear i år",
+      "received": {
+        "0": "Ikke udleveret",
+        "1": "Udleveret"
+      },
+      "title": "Wear"
+    },
     "what": "Hvad",
     "when": "Hvornår",
     "where": "Hvor",
-    "yourProgram": "Dit Program",
-    "scanBarcode": "Vis stregkoden når du skal have udleveret mad",
-    "handout": "Udleveres",
-    "foodHandedOut": "Maden er udleveret",
-    "foodTicket": "Madbillet",
-    "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
-    "sleep": {
-      "title": "Overnatning",
-      "mattress": { "0": "Nej", "1": "Ja" },
-      "mattressRented": "Lejet madras",
-      "notSleeping": "Overnatter ikke på Fastaval",
-      "location": "Sove lokation"
-    },
-    "wear": {
-      "title": "Wear",
-      "noWear": "Har ikke bestilt noget wear i år",
-      "received": { "0": "Ikke udleveret", "1": "Udleveret" }
-    },
-    "activityType": {
-      "rolle": "Spiller",
-      "spilleder": "Spilleder",
-      "gds": "Heltestyrke",
-      "braet": "Brætspil",
-      "junior": "Junior",
-      "ottoviteter": "Ottovitet",
-      "system": "Fastavitet"
-    }
+    "yourProgram": "Dit Program"
   },
   "program": {
     "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
     "friday": {
-      "short": "Fre",
-      "long": "Fredag"
+      "long": "Fredag",
+      "short": "Fre"
     },
+    "loading": "Henter program",
     "saturday": {
-      "short": "Lør",
-      "long": "Lørdag"
+      "long": "Lørdag",
+      "short": "Lør"
     },
     "sunday": {
-      "short": "Søn",
-      "long": "Søndag"
+      "long": "Søndag",
+      "short": "Søn"
     },
     "thursday": {
-      "short": "Tor",
-      "long": "Torsdag"
+      "long": "Torsdag",
+      "short": "Tor"
     },
     "wednesday": {
-      "short": "Ons",
-      "long": "Onsdag"
-    },
-    "loading": "Henter program"
+      "long": "Onsdag",
+      "short": "Ons"
+    }
+  },
+  "screenTitle": {
+    "boardgames": "Brætspil",
+    "info": "Information",
+    "login": "Log ind",
+    "more": "Mere",
+    "notifications": "Notifikationer",
+    "profile": "Profil",
+    "program": "Program",
+    "settings": "Indstillinger"
+  },
+  "settings": {
+    "title": "Indstillinger"
   }
 }
