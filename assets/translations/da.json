@@ -162,7 +162,7 @@
       "junior": "Junior",
       "ottoviteter": "Ottovitet",
       "rolle": "Spiller",
-      "spilleder": "SL",
+      "spilleder": "Spilleder",
       "system": "Fastavitet"
     },
     "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
@@ -181,7 +181,7 @@
         "1": "Ja"
       },
       "mattressRented": "Lejet madras",
-      "notSleeping": "Overnatter ikke på Fastaval",
+      "notSleeping": "Du overnatter ikke på Fastaval",
       "title": "Overnatning"
     },
     "wear": {
@@ -198,7 +198,10 @@
     "yourProgram": "Dit Program"
   },
   "program": {
-    "explainer": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
+    "food": {
+      "ordered": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
+      "notOrdered": "Du har ikke bestilt mad på Fastaval"
+    },
     "friday": {
       "long": "Fredag",
       "short": "Fre"

@@ -162,7 +162,7 @@
       "junior": "Junior",
       "ottoviteter": "Ottotivity",
       "rolle": "Player",
-      "spilleder": "GM",
+      "spilleder": "Gamemaster",
       "system": "Fastativity"
     },
     "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
@@ -198,7 +198,10 @@
     "yourProgram": "Your Program"
   },
   "program": {
-    "explainer": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
+    "food": {
+      "ordered": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
+      "notOrdered": "You have not ordered food at Fastaval"
+    },
     "friday": {
       "long": "Friday",
       "short": "Fri"

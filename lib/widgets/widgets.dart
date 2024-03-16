@@ -87,20 +87,26 @@ Widget menuCard(String title, IconData icon,
 }
 
 Widget textAndIconCard(String title, IconData icon, content) {
-  return Card(
-      surfaceTintColor: Colors.white,
-      color: Colors.white,
-      margin: kCardMargin,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: const BorderSide(color: Colors.black12, width: 1)),
-      elevation: 1,
+  return Container(
+      margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0.41),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colorWhite, width: 1),
+      ),
       child: Column(children: [
-        ListTile(
-            trailing: Icon(icon), title: Text(title, style: kCardHeaderStyle)),
-        Row(children: [
-          Expanded(child: Padding(padding: kCardContentPadding, child: content))
-        ])
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title,
+                  style: kCardHeaderStyle, overflow: TextOverflow.ellipsis),
+              Icon(icon),
+            ],
+          ),
+        ),
+        content,
       ]));
 }
 

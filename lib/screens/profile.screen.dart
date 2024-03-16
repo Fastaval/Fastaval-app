@@ -50,8 +50,7 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             buildIdIcon(),
                             buildUserProgramCard(),
-                            if (appController.user.food.isNotEmpty)
-                              buildUserFoodTimesCard(),
+                            buildUserFoodTimesCard(),
                             buildUserSleepCard(),
                             buildUserWearCard(),
                             SizedBox(height: 30.0),
@@ -152,11 +151,6 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 
-  Widget buildUserFoodTimesCard() {
-    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood,
-        foodTickets(appController.user.food));
-  }
-
   Widget buildUserProgramCard() {
     return textAndTextCard(
         tr('profile.yourProgram'),
@@ -165,28 +159,38 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget buildUsersProgram(List<Scheduling> schedule) {
-    return ListView.separated(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: schedule.length,
-      separatorBuilder: (context, int index) {
-        return SizedBox(height: 0);
-      },
-      itemBuilder: (buildContext, index) {
-        return userProgramItem(schedule[index]);
-      },
+    return Column(
+      children: [
+        SizedBox(height: 8),
+        ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: schedule.length,
+          separatorBuilder: (context, int index) {
+            return SizedBox(height: 0);
+          },
+          itemBuilder: (buildContext, index) {
+            return userProgramItem(schedule[index]);
+          },
+        ),
+        SizedBox(height: 8)
+      ],
     );
   }
 
   Widget userProgramItem(Scheduling item) {
+    var room = Get.locale!.languageCode == 'da' ? item.roomDa : item.roomEn;
     var title =
         Get.locale!.languageCode == 'da' ? item.titleDa! : item.titleEn!;
-    var room = Get.locale!.languageCode == 'da' ? item.roomDa : item.roomEn;
-    var activityType = item.activityType != null &&
-            (item.activityType == 'ottoviteter' ||
-                item.activityType == 'system')
-        ? ''
-        : tr('profile.activityType.${item.activityType}');
+    var activityType = '';
+    if (item.activityType != null &&
+        (item.activityType == 'ottoviteter' || item.activityType == 'system')) {
+      activityType = '';
+    } else {
+      activityType = tr('profile.activityType.${item.activityType}');
+    }
+    var expired = DateTime.now()
+        .isAfter(DateTime.fromMillisecondsSinceEpoch(item.stop! * 1000));
 
     return InkWell(
       onTap: () => showDialog(
@@ -197,13 +201,14 @@ class ProfileScreen extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 2,
+              color: Colors.grey.withOpacity(0.75),
+              blurRadius: 4,
               offset: Offset(0, 4),
             ),
           ],
-          color: getActivityColor(item.activityType!),
+          color: expired == true
+              ? Color(0xFFD4E9EC)
+              : getActivityColor(item.activityType!),
           borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
@@ -220,18 +225,25 @@ class ProfileScreen extends StatelessWidget {
                           "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
                           style: TextStyle(
                               fontSize: 16,
-                              color: colorBlack,
+                              color: expired ? Colors.black26 : Colors.black,
                               fontWeight: FontWeight.bold)),
+                      SizedBox(width: 8),
                       Flexible(
-                          child: Text("  $activityType @ $room",
-                              style: kNormalTextSubdued,
+                          child: Text("$activityType @ $room",
+                              style: expired
+                                  ? kNormalTextSubduedExpired
+                                  : kNormalTextSubdued,
                               overflow: TextOverflow.ellipsis)),
                     ]),
                     Text(title,
                         overflow: TextOverflow.ellipsis,
-                        style: kNormalTextStyle),
+                        style:
+                            expired ? kNormalTextDisabled : kNormalTextStyle),
                   ])),
-              Icon(CupertinoIcons.doc_text_viewfinder),
+              Icon(
+                CupertinoIcons.doc_text_viewfinder,
+                color: expired ? Colors.black26 : Colors.black,
+              ),
             ],
           ),
         ),
@@ -239,78 +251,116 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget foodTickets(List<Food> food) {
-    return Column(children: [
-      Text(tr('program.explainer'), style: kNormalTextSubdued),
-      SizedBox(height: 10),
-      for (var item in food)
-        InkWell(
-          onTap: () => showDialog(
-              context: Get.context!,
-              builder: foodDialog,
-              routeSettings: RouteSettings(arguments: item)),
-          child: Card(
-            color: getBackgroundColor(item),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-              child: Row(children: [
-                Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Text(
-                          settingsController.language.value == 'da'
-                              ? item.titleDa
-                              : item.titleEn,
-                          style: item.received == 1
-                              ? kNormalTextDisabled
-                              : kNormalTextBoldStyle),
-                      Text(
-                          "${formatDay(item.time)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
-                          style: item.received == 1
-                              ? kNormalTextDisabled
-                              : kNormalTextSubdued),
-                    ])),
-                Row(
-                  children: [
-                    Text(tr('profile.foodTicket'),
-                        style: item.received == 1
-                            ? kNormalTextDisabled
-                            : kNormalTextStyle),
-                    SizedBox(width: 5),
-                    Icon(Icons.info_outline,
-                        color: item.received == 1
-                            ? Colors.black26
-                            : Colors.black87)
-                  ],
-                ),
-              ]),
-            ),
-          ),
-        )
+  Widget buildUserFoodTimesCard() {
+    return textAndIconCard(tr('profile.foodTimes'), Icons.fastfood_outlined,
+        buildUsersFoodTickets(appController.user.food));
+  }
+
+  Widget buildUsersFoodTickets(List<Food> foodList) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+        child: foodList.isNotEmpty
+            ? Text(tr('program.food.ordered'), style: kNormalTextSubdued)
+            : Text(tr('program.food.notOrdered'), style: kNormalTextStyle),
+      ),
+      ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: foodList.length,
+        separatorBuilder: (context, int index) {
+          return SizedBox(height: 0);
+        },
+        itemBuilder: (buildContext, index) {
+          return foodTickets(foodList[index]);
+        },
+      ),
+      SizedBox(height: 8)
     ]);
   }
 
-  Widget buildUserWearCard() {
-    if (appController.user.wear.isEmpty) {
-      return textAndIconCard((tr('profile.wear.title')), Icons.checkroom,
-          oneTextRow(tr('profile.wear.noWear')));
-    }
+  Widget foodTickets(Food foodItem) {
+    return InkWell(
+      onTap: () => showDialog(
+          context: Get.context!,
+          builder: foodDialog,
+          routeSettings: RouteSettings(arguments: foodItem)),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.75),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+            ),
+          ],
+          color: getFoodColor(foodItem),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Row(children: [
+                      Text(
+                          "${formatDay(foodItem.time)} ${formatTime(foodItem.time)} - ${formatTime(foodItem.timeEnd)}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: foodItem.received == 0
+                                  ? Colors.black
+                                  : Colors.black26,
+                              fontWeight: FontWeight.bold)),
+                    ]),
+                    Text(
+                        Get.locale!.languageCode == 'da'
+                            ? foodItem.titleDa
+                            : foodItem.titleEn,
+                        overflow: TextOverflow.ellipsis,
+                        style: foodItem.received == 0
+                            ? kNormalTextStyle
+                            : kNormalTextDisabled),
+                  ])),
+              Row(children: [
+                Text(tr('profile.foodTicket'),
+                    style: foodItem.received == 0
+                        ? kNormalTextStyle
+                        : kNormalTextDisabled),
+                SizedBox(width: 8),
+                Icon(CupertinoIcons.barcode_viewfinder,
+                    color:
+                        foodItem.received == 0 ? Colors.black : Colors.black26)
+              ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
+  Widget buildUserWearCard() {
     return textAndIconCard(
         tr('profile.wear.title'),
-        Icons.checkroom,
-        ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: appController.user.wear.length,
-          separatorBuilder: (context, int index) {
-            return SizedBox(height: 10);
-          },
-          itemBuilder: (buildContext, index) {
-            return wearItem(appController.user.wear[index]);
-          },
-        ));
+        Icons.shopping_bag_outlined,
+        Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+            child: appController.user.wear.isEmpty
+                ? oneTextRow(tr('profile.wear.noWear'))
+                : ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: appController.user.wear.length,
+                    separatorBuilder: (context, int index) {
+                      return SizedBox(height: 10);
+                    },
+                    itemBuilder: (buildContext, index) {
+                      return wearItem(appController.user.wear[index]);
+                    },
+                  )));
   }
 
   Widget wearItem(Wear item) {
@@ -321,7 +371,11 @@ class ProfileScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(child: Text(title, style: kNormalTextStyle)),
+        Flexible(
+          child: Text(title,
+              style: kNormalTextStyle, overflow: TextOverflow.ellipsis),
+        ),
+        SizedBox(width: 8),
         Text(tr('profile.wear.received.${item.received}'),
             style: kNormalTextBoldStyle)
       ],
@@ -329,21 +383,20 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget buildUserSleepCard() {
-    if (appController.user.sleep.access == 0) {
-      return textAndIconCard((tr('profile.sleep.title')), Icons.bed,
-          oneTextRow(tr('profile.sleep.notSleeping')));
-    }
-
     return textAndIconCard(
         tr('profile.sleep.title'),
-        Icons.bed,
-        Column(children: [
-          twoTextRow(
-              tr('profile.sleep.location'), appController.user.sleep.areaName),
-          SizedBox(height: 10),
-          twoTextRow(tr('profile.sleep.mattressRented'),
-              tr('profile.sleep.mattress.${appController.user.sleep.mattress}'))
-        ]));
+        CupertinoIcons.bed_double,
+        Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+            child: appController.user.sleep.access == 0
+                ? Row(children: [oneTextRow(tr('profile.sleep.notSleeping'))])
+                : Column(children: [
+                    twoTextRow(tr('profile.sleep.location'),
+                        appController.user.sleep.areaName),
+                    SizedBox(height: 10),
+                    twoTextRow(tr('profile.sleep.mattressRented'),
+                        tr('profile.sleep.mattress.${appController.user.sleep.mattress}'))
+                  ])));
   }
 
   getFoodImage(Food item) {
@@ -373,16 +426,16 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Color getBackgroundColor(Food item) {
-    if (item.received == 1) return colorGrey;
-    if (item.titleEn.contains('Dinner')) return colorOrangeLight;
-    if (item.titleEn.contains('Breakfast')) return colorOrangeLight;
-    return Color(0xFF63BAAB);
+  Color getFoodColor(Food item) {
+    if (item.received == 1) return Color(0xFFD4E9EC);
+    if (item.titleEn.contains('Dinner')) return Color(0xFFDFE5D9);
+    if (item.titleEn.contains('Breakfast')) return Color(0xFFFDEB89);
+    return Color(0xFFD4E9EC);
   }
 
   Widget foodDialog(BuildContext context) {
-    final item = ModalRoute.of(context)!.settings.arguments as Food;
-    bool foodAvailable = item.received == 1 ? false : true;
+    final food = ModalRoute.of(context)!.settings.arguments as Food;
+    bool foodAvailable = food.received == 1 ? false : true;
 
     return AlertDialog(
         actions: [
@@ -390,6 +443,8 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(tr('common.close')))
         ],
+        backgroundColor: colorWhite,
+        surfaceTintColor: colorWhite,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         titlePadding: EdgeInsets.all(0),
         title: Column(children: [
@@ -399,24 +454,24 @@ class ProfileScreen extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
                 image: DecorationImage(
-                    image: AssetImage(getFoodImage(item)), fit: BoxFit.cover),
+                    image: AssetImage(getFoodImage(food)), fit: BoxFit.cover),
               ),
               height: 100),
           SizedBox(height: 5),
           Text(
-              context.locale.languageCode == 'da' ? item.titleDa : item.titleEn)
+              context.locale.languageCode == 'da' ? food.titleDa : food.titleEn)
         ]),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(context.locale.languageCode == 'da' ? item.textDa : item.textEn,
+          Text(context.locale.languageCode == 'da' ? food.textDa : food.textEn,
               style: kNormalTextStyle),
-          if (item.titleEn.contains('Breakfast'))
+          if (food.titleEn.contains('Breakfast'))
             Text(tr('profile.breakfastText'), style: kNormalTextSubdued),
           SizedBox(height: 10),
           if (foodAvailable == false)
             Text(tr('profile.foodHandedOut'), style: kNormalTextSubdued),
           if (foodAvailable)
             Text(
-                "${tr('profile.handout')}: ${formatDay(item.time)} ${formatTime(item.time)} - ${formatTime(item.timeEnd)}",
+                "${tr('profile.handout')}: ${formatDay(food.time)} ${formatTime(food.time)} - ${formatTime(food.timeEnd)}",
                 style: kNormalTextSubdued),
           if (foodAvailable) SizedBox(height: 10),
           if (foodAvailable)
@@ -438,6 +493,8 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(tr('common.close')))
         ],
+        backgroundColor: colorWhite,
+        surfaceTintColor: colorWhite,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         titlePadding: EdgeInsets.all(0),
         title: Column(children: [

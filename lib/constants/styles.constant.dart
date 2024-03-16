@@ -36,7 +36,9 @@ const kMenuCardHeaderStyle =
     TextStyle(color: Colors.black, fontWeight: FontWeight.bold);
 const kNormalTextSubdued =
     TextStyle(color: colorBlack, fontSize: 10, fontWeight: FontWeight.normal);
-const kNormalTextDisabled = TextStyle(color: Colors.black26, fontSize: 12);
+const kNormalTextSubduedExpired = TextStyle(
+    color: Colors.black26, fontSize: 10, fontWeight: FontWeight.normal);
+const kNormalTextDisabled = TextStyle(color: Colors.black26, fontSize: 16);
 const backgroundBoxDecorationStyle = BoxDecoration(
   image: DecorationImage(
     image: AssetImage('assets/images/backgrounds/background.jpg'),
