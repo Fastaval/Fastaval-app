@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/settings.controller.dart';
+import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
@@ -156,15 +157,6 @@ class ProfileScreen extends StatelessWidget {
         foodTickets(appController.user.food));
   }
 
-  Widget buildUserMessagesCard() {
-    String message = tr('profile.noMessagesRightNow');
-    if (appController.user.messages.isNotEmpty) {
-      message = appController.user.messages;
-    }
-    return textAndIconCard(tr('profile.messagesFromFastaval'),
-        Icons.speaker_notes, Text(message, style: kNormalTextStyle));
-  }
-
   Widget buildUserProgramCard() {
     return textAndTextCard(
         tr('profile.yourProgram'),
@@ -201,28 +193,47 @@ class ProfileScreen extends StatelessWidget {
           context: Get.context!,
           builder: activityDialog,
           routeSettings: RouteSettings(arguments: item)),
-      child: Card(
-        elevation: 3,
-        margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
-        child: Row(
-          children: [
-            Expanded(
-                child: Column(children: [
-              Row(children: [
-                Text(
-                    "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
-                    style: kNormalTextBoldStyle),
-                Flexible(
-                    child: Text(
-                        " - $activityType @ $room asasdasdasd asd asd asd asdasdasdasd",
-                        style: kNormalTextSubdued,
-                        overflow: TextOverflow.ellipsis)),
-              ]),
-              Text(title,
-                  overflow: TextOverflow.ellipsis, style: kNormalTextStyle),
-            ])),
-            Icon(CupertinoIcons.doc_text_viewfinder),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: Offset(0, 4),
+            ),
           ],
+          color: getActivityColor(item.activityType!),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Row(children: [
+                      Text(
+                          "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: colorBlack,
+                              fontWeight: FontWeight.bold)),
+                      Flexible(
+                          child: Text("  $activityType @ $room",
+                              style: kNormalTextSubdued,
+                              overflow: TextOverflow.ellipsis)),
+                    ]),
+                    Text(title,
+                        overflow: TextOverflow.ellipsis,
+                        style: kNormalTextStyle),
+                  ])),
+              Icon(CupertinoIcons.doc_text_viewfinder),
+            ],
+          ),
         ),
       ),
     );

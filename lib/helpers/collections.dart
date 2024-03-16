@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-final Map<String, Color> colorMap = {
-  'rolle': Colors.lightGreen.shade300,
-  'braet': Colors.blue.shade300,
-  'live': Colors.teal.shade400,
-  'ottoviteter': Colors.orangeAccent.shade400,
+Map<String, Color> colorMap = {
+  'rolle': Color(0xFFfeb951),
+  'braet': Color(0xBE64B5F6),
+  'live': Color(0xFFfeb951),
+  'ottoviteter': Color(0xBEFF9700),
   'junior': Colors.pink.shade300,
   'magic': Colors.purpleAccent.shade100,
   'workshop': Colors.amberAccent.shade200,
