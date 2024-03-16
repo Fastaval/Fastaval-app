@@ -8,6 +8,7 @@ import 'package:fastaval_app/models/food.model.dart';
 import 'package:fastaval_app/models/scheduling.model.dart';
 import 'package:fastaval_app/models/wear.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -47,8 +48,6 @@ class ProfileScreen extends StatelessWidget {
                     child: Obx(() => Column(
                           children: [
                             buildIdIcon(),
-                            if (appController.user.messages.isNotEmpty)
-                              buildUserMessagesCard(),
                             buildUserProgramCard(),
                             if (appController.user.food.isNotEmpty)
                               buildUserFoodTimesCard(),
@@ -68,24 +67,65 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget buildIdIcon() {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(20),
-          decoration:
-              BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-          child: Text(
-            appController.user.id.toString(),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 58, fontWeight: FontWeight.bold),
+    return Container(
+      margin: EdgeInsets.fromLTRB(16, 20, 16, 0),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                height: 70,
+              ),
+              Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 0.41),
+                    border: Border.all(color: colorWhite, width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row())
+            ],
           ),
-        ),
-        Text(
-          tr('profile.participantNumber'),
-          style: TextStyle(
-              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-      ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      appController.user.id.toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colorBlack,
+                        fontSize: 58,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(
+                  tr('profile.participantNumber'),
+                  style: TextStyle(
+                    color: colorOrange,
+                    fontSize: 21.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ])
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -128,10 +168,7 @@ class ProfileScreen extends StatelessWidget {
   Widget buildUserProgramCard() {
     return textAndTextCard(
         tr('profile.yourProgram'),
-        Text(
-          "${tr('common.updated')} ${formatDay(appController.userUpdateTime.value)} ${formatTime(appController.userUpdateTime.value)}",
-          style: kNormalTextSubdued,
-        ),
+        "${tr('common.updated')} ${formatDay(appController.userUpdateTime.value)} ${formatTime(appController.userUpdateTime.value)}",
         buildUsersProgram(appController.user.scheduling));
   }
 
@@ -141,7 +178,7 @@ class ProfileScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: schedule.length,
       separatorBuilder: (context, int index) {
-        return SizedBox(height: 10);
+        return SizedBox(height: 0);
       },
       itemBuilder: (buildContext, index) {
         return userProgramItem(schedule[index]);
@@ -160,29 +197,35 @@ class ProfileScreen extends StatelessWidget {
         : tr('profile.activityType.${item.activityType}');
 
     return InkWell(
-        onTap: () => showDialog(
-            context: Get.context!,
-            builder: activityDialog,
-            routeSettings: RouteSettings(arguments: item)),
-        child: Column(children: [
-          Row(children: [
-            Text(
-                "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
-                style: kNormalTextBoldStyle),
-            Flexible(
-                child: Text(" - $activityType @ $room",
-                    style: kNormalTextSubdued, overflow: TextOverflow.ellipsis))
-          ]),
-          Container(
-            child: Row(children: [
-              Flexible(
-                  child: Text(title,
-                      overflow: TextOverflow.ellipsis, style: kNormalTextStyle))
-            ]),
-          ),
-          SizedBox(height: 10),
-          Divider(height: 1, color: Colors.grey)
-        ]));
+      onTap: () => showDialog(
+          context: Get.context!,
+          builder: activityDialog,
+          routeSettings: RouteSettings(arguments: item)),
+      child: Card(
+        elevation: 3,
+        margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: Row(
+          children: [
+            Expanded(
+                child: Column(children: [
+              Row(children: [
+                Text(
+                    "${formatDay(item.start)} ${formatTime(item.start)}-${formatTime(item.stop)}",
+                    style: kNormalTextBoldStyle),
+                Flexible(
+                    child: Text(
+                        " - $activityType @ $room asasdasdasd asd asd asd asdasdasdasd",
+                        style: kNormalTextSubdued,
+                        overflow: TextOverflow.ellipsis)),
+              ]),
+              Text(title,
+                  overflow: TextOverflow.ellipsis, style: kNormalTextStyle),
+            ])),
+            Icon(CupertinoIcons.doc_text_viewfinder),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget foodTickets(List<Food> food) {

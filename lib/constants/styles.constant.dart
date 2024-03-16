@@ -10,7 +10,7 @@ final kTextBoxDecorationStyle = BoxDecoration(
     BoxShadow(color: Colors.black12, blurRadius: 6.0, offset: Offset(0, 2))
   ],
 );
-const kCardMargin = EdgeInsets.fromLTRB(16, 16, 16, 0);
+const kCardMargin = EdgeInsets.fromLTRB(16, 8, 16, 0);
 const kMenuCardMargin = EdgeInsets.fromLTRB(16, 16, 16, 0);
 const kCardPadding = EdgeInsets.all(16.0);
 const kCardContentPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
@@ -27,11 +27,15 @@ const kNormalTextClickableStyle = TextStyle(
 );
 const kNormalTextBoldStyle =
     TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold);
-const kCardHeaderStyle =
-    TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold);
+const kCardHeaderStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
 const kMenuCardHeaderStyle =
     TextStyle(color: Colors.black, fontWeight: FontWeight.bold);
-const kNormalTextSubdued = TextStyle(color: Colors.black54, fontSize: 12);
+const kNormalTextSubdued =
+    TextStyle(color: colorBlack, fontSize: 10, fontWeight: FontWeight.normal);
 const kNormalTextDisabled = TextStyle(color: Colors.black26, fontSize: 12);
 const backgroundBoxDecorationStyle = BoxDecoration(
   image: DecorationImage(

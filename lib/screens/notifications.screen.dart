@@ -50,10 +50,7 @@ class NotificationsScreen extends StatelessWidget {
                         children: [
                           Obx(() => textAndTextCard(
                               tr('notifications.title'),
-                              Text(
-                                "${tr('common.updated')} ${formatDay(notificationController.notificationListUpdatedAt.value)} ${formatTime(notificationController.notificationListUpdatedAt.value)}",
-                                style: kNormalTextSubdued,
-                              ),
+                              "${tr('common.updated')} ${formatDay(notificationController.notificationListUpdatedAt.value)} ${formatTime(notificationController.notificationListUpdatedAt.value)}",
                               listWidget(
                                   notificationController
                                       .notificationList.reversed

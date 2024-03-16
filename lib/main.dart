@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: Locale(Get.find<SettingsController>().language.value),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.orange),
+      theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'Roboto'),
       home: HomeScreen(),
     );
   }

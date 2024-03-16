@@ -104,19 +104,27 @@ Widget textAndIconCard(String title, IconData icon, content) {
       ]));
 }
 
-Widget textAndTextCard(String title, Text secondaryTitle, content) {
-  return Card(
-      surfaceTintColor: Colors.white,
-      color: Colors.white,
+Widget textAndTextCard(String title, String secondaryTitle, content) {
+  return Container(
       margin: kCardMargin,
-      elevation: kCardElevation,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0.41),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colorWhite, width: 1),
+      ),
       child: Column(children: [
-        ListTile(
-            trailing: secondaryTitle,
-            title: Text(title, style: kCardHeaderStyle)),
-        Row(children: [
-          Expanded(child: Padding(padding: kCardContentPadding, child: content))
-        ])
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title,
+                  style: kCardHeaderStyle, overflow: TextOverflow.ellipsis),
+              Text(secondaryTitle, style: kNormalTextSubdued),
+            ],
+          ),
+        ),
+        content
       ]));
 }
 

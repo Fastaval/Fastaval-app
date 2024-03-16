@@ -72,10 +72,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
                               )),
                           Obx(() => textAndTextCard(
                               tr('boardgames.title'),
-                              Text(
-                                "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
-                                style: kNormalTextSubdued,
-                              ),
+                              "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
                               buildGameList(context))),
                           const SizedBox(height: 30),
                         ],
