@@ -100,7 +100,7 @@ class HomeScreenState extends State<HomeScreen> {
       if (appController.loggedIn.value == true) ProfileScreen(),
       if (appController.loggedIn.value == false) LoginScreen(),
       InfoScreen(),
-      Programscreen(),
+      ProgramScreen(),
       MoreScreen()
     ];
   }

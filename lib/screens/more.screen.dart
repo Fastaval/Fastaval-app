@@ -11,14 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 
-class MoreScreen extends StatefulWidget {
-  const MoreScreen({super.key});
-
-  @override
-  State<MoreScreen> createState() => _MoreScreenState();
-}
-
-class _MoreScreenState extends State<MoreScreen> {
+class MoreScreen extends StatelessWidget {
   final notificationController = Get.find<NotificationController>();
   final appController = Get.find<AppController>();
 

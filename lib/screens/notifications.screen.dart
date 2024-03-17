@@ -45,18 +45,21 @@ class NotificationsScreen extends StatelessWidget {
                       notificationController.getNotifications();
                     },
                     child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
+                          SizedBox(height: 12),
                           Obx(() => textAndTextCard(
                               tr('notifications.title'),
                               "${tr('common.updated')} ${formatDay(notificationController.notificationListUpdatedAt.value)} ${formatTime(notificationController.notificationListUpdatedAt.value)}",
-                              listWidget(
-                                  notificationController
-                                      .notificationList.reversed
-                                      .toList(),
-                                  context))),
-                          const SizedBox(height: 30),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                                  child: listWidget(
+                                      notificationController
+                                          .notificationList.reversed
+                                          .toList(),
+                                      context)))),
+                          SizedBox(height: 80),
                         ],
                       ),
                     ),
@@ -70,14 +73,11 @@ class NotificationsScreen extends StatelessWidget {
 
   Widget listWidget(List<dynamic> notifications, context) {
     return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: notifications.length,
       separatorBuilder: (context, int index) {
-        return const Divider(
-          height: 20,
-          color: Colors.grey,
-        );
+        return Divider(height: 20, color: Colors.grey);
       },
       itemBuilder: (buildContext, index) {
         return notificationItem(notifications[index]);
@@ -89,15 +89,11 @@ class NotificationsScreen extends StatelessWidget {
     var tzOffset =
         (tz.getLocation('Europe/Copenhagen').currentTimeZone.offset / 1000)
             .round();
+
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(formatTime((notification.sendTime + tzOffset)))
-              ])),
+          padding: EdgeInsets.only(right: 10),
+          child: Text(formatTime((notification.sendTime + tzOffset)))),
       Expanded(
           child: Text(Get.locale?.languageCode == 'da'
               ? notification.da

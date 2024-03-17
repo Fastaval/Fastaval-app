@@ -7,14 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
-
-  @override
-  State<InfoScreen> createState() => _InfoScreen();
-}
-
-class _InfoScreen extends State<InfoScreen> {
+class InfoScreen extends StatelessWidget {
   final notoficationController = Get.find<NotificationController>();
   @override
   Widget build(context) {

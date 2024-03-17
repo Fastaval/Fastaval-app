@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/helpers/collections.dart';
@@ -9,14 +11,7 @@ import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Programscreen extends StatefulWidget {
-  const Programscreen({super.key});
-
-  @override
-  State<Programscreen> createState() => _ProgramscreenState();
-}
-
-class _ProgramscreenState extends State<Programscreen> {
+class ProgramScreen extends StatelessWidget {
   @override
   Widget build(context) {
     return DefaultTabController(
@@ -114,7 +109,8 @@ class _ProgramscreenState extends State<Programscreen> {
                     },
                   )),
             );
-          } else if (programSnap.hasError) {
+          }
+          if (programSnap.hasError) {
             screenState = [
               const Icon(Icons.error_outline, color: Colors.red, size: 60),
               Padding(
@@ -149,6 +145,9 @@ class _ProgramscreenState extends State<Programscreen> {
     ScrollController scrollController = ScrollController();
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
+
+    print("item");
+    inspect(item);
 
     return AlertDialog(
       insetPadding: EdgeInsets.all(10),

@@ -12,8 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 class BoardgameScreen extends GetView<BoardGameController> {
   final TextEditingController _searchController = TextEditingController();
 
-  BoardgameScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

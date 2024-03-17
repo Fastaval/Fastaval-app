@@ -114,7 +114,7 @@ Widget textAndTextCard(String title, String secondaryTitle, content) {
   return Container(
       margin: kCardMargin,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.41),
+        color: Color.fromRGBO(255, 255, 255, 0.5),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: colorWhite, width: 1),
       ),
