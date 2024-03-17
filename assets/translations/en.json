@@ -18,7 +18,7 @@
       "true": "Available"
     },
     "search": "Search...",
-    "title": "Board games"
+    "title": "Board Games"
   },
   "bottomNavigation": {
     "information": "Information",
@@ -141,7 +141,7 @@
   },
   "more": {
     "barcode": "Show Barcode",
-    "boardgames": "Board games",
+    "boardgames": "Board Games",
     "close": "Close",
     "map": {
       "gym": "Map - Mariagerfjord Gymnasium",
@@ -225,7 +225,7 @@
     }
   },
   "screenTitle": {
-    "boardgames": "Board games",
+    "boardgames": "Board Games",
     "info": "Information",
     "login": "Sign in",
     "more": "More",
