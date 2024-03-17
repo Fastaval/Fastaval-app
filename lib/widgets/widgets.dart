@@ -90,7 +90,7 @@ Widget textAndIconCard(String title, IconData icon, content) {
   return Container(
       margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.41),
+        color: Color.fromRGBO(255, 255, 255, 0.5),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: colorWhite, width: 1),
       ),
@@ -168,7 +168,7 @@ Widget threeTextRow(String leftText, String centerText, String rightText) {
 Widget twoTextRow(String textLeft, String textRight,
     {bool selectable = false, bool sidePadding = false}) {
   return Padding(
-      padding: EdgeInsets.symmetric(horizontal: sidePadding ? 16 : 0),
+      padding: EdgeInsets.only(left: sidePadding ? 8 : 0),
       child: Row(
         children: <Widget>[
           Expanded(flex: 4, child: Text(textLeft, style: kNormalTextStyle)),

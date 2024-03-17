@@ -64,137 +64,165 @@ class _InfoScreen extends State<InfoScreen> {
 }
 
 Widget _buildFastaWearCard() {
-  return textAndIconCard(tr('info.fastaWear.title'), Icons.checkroom,
-      Text(tr('info.fastaWear.text'), style: kNormalTextStyle));
+  return textAndIconCard(
+      tr('info.fastaWear.title'),
+      Icons.checkroom,
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: Row(children: [
+            Flexible(
+                child: Text(tr('info.fastaWear.text'), style: kNormalTextStyle))
+          ])));
 }
 
 Widget _buildLostFoundCard() {
-  return textAndIconCard(tr('info.lostAndFound.title'), Icons.move_to_inbox,
-      Text(tr('info.lostAndFound.text'), style: kNormalTextStyle));
+  return textAndIconCard(
+      tr('info.lostAndFound.title'),
+      Icons.move_to_inbox,
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: Row(
+            children: [
+              Text(tr('info.lostAndFound.text'), style: kNormalTextStyle)
+            ],
+          )));
 }
 
 Widget _buildOpenHoursCard() {
   return textAndIconCard(
-    tr('info.openHours.title'),
-    Icons.access_time,
-    Column(children: [
-      textRowHeader(tr('info.openHours.bar.title')),
-      twoTextRow(
-          tr('info.openHours.bar.day1'), kServiceOpeningHours["bar"]!["day1"]!,
-          sidePadding: true),
-      const SizedBox(height: 10),
-      textRowHeader(tr('info.openHours.boardGames.title')),
-      twoTextRow(tr('info.openHours.boardGames.day1'),
-          kServiceOpeningHours["boardGames"]!["day1"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.boardGames.day2'),
-          kServiceOpeningHours["boardGames"]!["day2"]!,
-          sidePadding: true),
-      const SizedBox(height: 10),
-      textRowHeader(tr('info.openHours.information.title')),
-      twoTextRow(tr('info.openHours.information.day1'),
-          kServiceOpeningHours["information"]!["day1"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.information.day2'),
-          kServiceOpeningHours["information"]!["day2"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.information.day3'),
-          kServiceOpeningHours["information"]!["day3"]!,
-          sidePadding: true),
-      const SizedBox(height: 10),
-      textRowHeader(tr('info.openHours.kiosk.title')),
-      twoTextRow(tr('info.openHours.kiosk.day1'),
-          kServiceOpeningHours["kiosk"]!["day1"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.kiosk.day2'),
-          kServiceOpeningHours["kiosk"]!["day2"]!,
-          sidePadding: true),
-      const SizedBox(height: 10),
-      textRowHeader(tr('info.openHours.oasis.title')),
-      twoTextRow(tr('info.openHours.oasis.day1'),
-          kServiceOpeningHours["oasis"]!["day1"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.oasis.day2'),
-          kServiceOpeningHours["oasis"]!["day2"]!,
-          sidePadding: true),
-      const SizedBox(height: 10),
-      textRowHeader(tr('info.openHours.coffeeCafe.title')),
-      twoTextRow(tr('info.openHours.coffeeCafe.day1'),
-          kServiceOpeningHours["coffeeCafe"]!["day1"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.coffeeCafe.day2'),
-          kServiceOpeningHours["coffeeCafe"]!["day2"]!,
-          sidePadding: true),
-      twoTextRow(tr('info.openHours.coffeeCafe.day3'),
-          kServiceOpeningHours["coffeeCafe"]!["day3"]!,
-          sidePadding: true),
-      const SizedBox(height: 20),
-      const SizedBox(height: 1, child: Divider(color: colorGrey)),
-      const SizedBox(height: 20),
-      textRowHeader(tr('info.stores.store1.title')),
-      twoTextRow(
-          tr('info.stores.store1.day1'), kStoreOpeningHours["store1"]!["day1"]!,
-          sidePadding: true),
-      const SizedBox(height: 10)
-    ]),
-  );
+      tr('info.openHours.title'),
+      Icons.access_time,
+      Padding(
+        padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+        child: Column(children: [
+          textRowHeader(tr('info.openHours.bar.title')),
+          twoTextRow(tr('info.openHours.bar.day1'),
+              kServiceOpeningHours["bar"]!["day1"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.boardGames.title')),
+          twoTextRow(tr('info.openHours.boardGames.day1'),
+              kServiceOpeningHours["boardGames"]!["day1"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.boardGames.day2'),
+              kServiceOpeningHours["boardGames"]!["day2"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.information.title')),
+          twoTextRow(tr('info.openHours.information.day1'),
+              kServiceOpeningHours["information"]!["day1"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.information.day2'),
+              kServiceOpeningHours["information"]!["day2"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.information.day3'),
+              kServiceOpeningHours["information"]!["day3"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.kiosk.title')),
+          twoTextRow(tr('info.openHours.kiosk.day1'),
+              kServiceOpeningHours["kiosk"]!["day1"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.kiosk.day2'),
+              kServiceOpeningHours["kiosk"]!["day2"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.oasis.title')),
+          twoTextRow(tr('info.openHours.oasis.day1'),
+              kServiceOpeningHours["oasis"]!["day1"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.oasis.day2'),
+              kServiceOpeningHours["oasis"]!["day2"]!,
+              sidePadding: true),
+          const SizedBox(height: 10),
+          textRowHeader(tr('info.openHours.coffeeCafe.title')),
+          twoTextRow(tr('info.openHours.coffeeCafe.day1'),
+              kServiceOpeningHours["coffeeCafe"]!["day1"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.coffeeCafe.day2'),
+              kServiceOpeningHours["coffeeCafe"]!["day2"]!,
+              sidePadding: true),
+          twoTextRow(tr('info.openHours.coffeeCafe.day3'),
+              kServiceOpeningHours["coffeeCafe"]!["day3"]!,
+              sidePadding: true),
+          const SizedBox(height: 20),
+          const SizedBox(height: 1, child: Divider(color: colorGrey)),
+          const SizedBox(height: 20),
+          textRowHeader(tr('info.stores.store1.title')),
+          twoTextRow(tr('info.stores.store1.day1'),
+              kStoreOpeningHours["store1"]!["day1"]!,
+              sidePadding: true),
+          const SizedBox(height: 10)
+        ]),
+      ));
 }
 
 Widget _buildSafeFastavalCard() {
   return textAndIconCard(
       tr('info.safe.title'),
       Icons.phone,
-      Column(children: [
-        twoTextRowWithTapAction(
-            tr('info.safe.dutyGeneral'),
-            kDutyGeneralPhoneNumber["name"]!,
-            Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber["value"])),
-        const SizedBox(height: 10),
-        twoTextRowWithTapAction(
-            tr('info.safe.heroForce'),
-            kHeroForcePhoneNumber["name"]!,
-            Uri(scheme: 'tel', path: kHeroForcePhoneNumber["value"])),
-        const SizedBox(height: 10),
-        twoTextRowWithTapAction(
-            tr('info.safe.safetyHost'),
-            kSafetyHostPhoneNumber["name"]!,
-            Uri(scheme: 'tel', path: kSafetyHostPhoneNumber["value"])),
-        const SizedBox(height: 10),
-        twoTextRowWithTapAction(tr('info.safe.safetyMail'), kSafeFastavalMail,
-            Uri(scheme: 'mailto', path: kSafeFastavalMail)),
-      ]));
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: Column(children: [
+            twoTextRowWithTapAction(
+                tr('info.safe.dutyGeneral'),
+                kDutyGeneralPhoneNumber["name"]!,
+                Uri(scheme: 'tel', path: kDutyGeneralPhoneNumber["value"])),
+            const SizedBox(height: 10),
+            twoTextRowWithTapAction(
+                tr('info.safe.heroForce'),
+                kHeroForcePhoneNumber["name"]!,
+                Uri(scheme: 'tel', path: kHeroForcePhoneNumber["value"])),
+            const SizedBox(height: 10),
+            twoTextRowWithTapAction(
+                tr('info.safe.safetyHost'),
+                kSafetyHostPhoneNumber["name"]!,
+                Uri(scheme: 'tel', path: kSafetyHostPhoneNumber["value"])),
+            const SizedBox(height: 10),
+            twoTextRowWithTapAction(
+                tr('info.safe.safetyMail'),
+                kSafeFastavalMail,
+                Uri(scheme: 'mailto', path: kSafeFastavalMail)),
+          ])));
 }
 
 Widget _buildTransportCard() {
   return textAndIconCard(
       tr('info.transportAndParking.title'),
       Icons.local_parking,
-      Column(
-        children: [
-          Text(tr('info.transportAndParking.text'), style: kNormalTextStyle),
-          const SizedBox(height: 20),
-          twoTextRowWithTapAction(
-              tr('info.transportAndParking.taxi1'),
-              kTaxi1PhoneNumber['name']!,
-              Uri(scheme: 'tel', path: kTaxi1PhoneNumber['value'])),
-          const SizedBox(height: 20),
-          twoTextRowWithTapAction(
-              tr('info.transportAndParking.taxi2'),
-              kTaxi2PhoneNumber['name']!,
-              Uri(scheme: 'tel', path: kTaxi2PhoneNumber['value']))
-        ],
-      ));
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: Column(
+            children: [
+              Text(tr('info.transportAndParking.text'),
+                  style: kNormalTextStyle),
+              const SizedBox(height: 20),
+              twoTextRowWithTapAction(
+                  tr('info.transportAndParking.taxi1'),
+                  kTaxi1PhoneNumber['name']!,
+                  Uri(scheme: 'tel', path: kTaxi1PhoneNumber['value'])),
+              const SizedBox(height: 20),
+              twoTextRowWithTapAction(
+                  tr('info.transportAndParking.taxi2'),
+                  kTaxi2PhoneNumber['name']!,
+                  Uri(scheme: 'tel', path: kTaxi2PhoneNumber['value']))
+            ],
+          )));
 }
 
 Widget _buildWifiCard() {
   return textAndIconCard(
       tr('info.wifi.title'),
       Icons.wifi,
-      Column(children: [
-        twoTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
-        const SizedBox(height: 10),
-        twoTextRow(tr('info.wifi.networkUser'), kWifiUser, selectable: true),
-        const SizedBox(height: 10),
-        twoTextRow(tr('info.wifi.networkCode'), kWifiPassword, selectable: true)
-      ]));
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: Column(children: [
+            twoTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
+            const SizedBox(height: 10),
+            twoTextRow(tr('info.wifi.networkUser'), kWifiUser,
+                selectable: true),
+            const SizedBox(height: 10),
+            twoTextRow(tr('info.wifi.networkCode'), kWifiPassword,
+                selectable: true)
+          ])));
 }
