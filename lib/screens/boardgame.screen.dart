@@ -25,71 +25,68 @@ class BoardgameScreen extends GetView<BoardGameController> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: [
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
+        child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: backgroundBoxDecorationStyle,
+            child: RefreshIndicator(
+              backgroundColor: colorWhite,
+              color: colorOrange,
+              onRefresh: () async {
+                controller.getBoardGames();
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                        child: Container(
+                          height: 40, // Set the desired height here
+                          child: TextField(
+                            controller: _searchController,
+                            onChanged: (value) =>
+                                controller.applyFilterToList(value),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: tr("boardgames.search"),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.clear),
+                                onPressed: () => {
+                                  _searchController.clear(),
+                                  controller.applyFilterToList()
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                          ),
+                        )),
+                    Obx(() => textAndTextCard(
+                        tr('boardgames.title'),
+                        "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                            child: buildGameList(context)))),
+                    SizedBox(height: 80),
+                  ],
+                ),
               ),
-              SizedBox(
-                  height: double.infinity,
-                  child: RefreshIndicator(
-                    backgroundColor: colorWhite,
-                    color: colorOrange,
-                    onRefresh: () async {
-                      controller.getBoardGames();
-                    },
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: kCardMargin,
-                              child: TextField(
-                                controller: _searchController,
-                                onChanged: (value) =>
-                                    controller.applyFilterToList(value),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: tr("boardgames.search"),
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () => {
-                                      _searchController.clear(),
-                                      controller.applyFilterToList()
-                                    },
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                ),
-                              )),
-                          Obx(() => textAndTextCard(
-                              tr('boardgames.title'),
-                              "${tr('common.updated')} ${formatDay(controller.boardgameListUpdatedAt.value)} ${formatTime(controller.boardgameListUpdatedAt.value)}",
-                              buildGameList(context))),
-                          const SizedBox(height: 30),
-                        ],
-                      ),
-                    ),
-                  ))
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }
 
   Widget buildGameList(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
+    return ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: controller.filteredList.length,
-      prototypeItem: boardGameItem(controller.boardgameList.first),
+      separatorBuilder: (context, int index) {
+        return Divider(height: 0, color: Colors.grey);
+      },
       itemBuilder: (buildContext, index) {
         return boardGameItem(controller.filteredList[index]);
       },
@@ -100,7 +97,7 @@ class BoardgameScreen extends GetView<BoardGameController> {
     return Container(
         color: !game.available ? Colors.red[100] : null,
         child: Column(children: [
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           InkWell(
               onTap: () => _launchDDB(game.bbgId),
               child: Row(
@@ -121,12 +118,11 @@ class BoardgameScreen extends GetView<BoardGameController> {
                           ]),
                         ])),
                     if (game.bbgId > 0)
-                      const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                           child: Icon(Icons.public)),
                   ])),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: Colors.grey)
+          SizedBox(height: 10)
         ]));
   }
 

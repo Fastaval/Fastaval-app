@@ -28,67 +28,64 @@ class MoreScreen extends StatelessWidget {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: backgroundBoxDecorationStyle,
-            ),
-            SizedBox(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Obx(() => Column(
-                      children: [
-                        if (appController.loggedIn.value == true)
-                          InkWell(
-                              child: menuCard(
-                                  tr('notifications.title'),
-                                  Icons.notifications_active_outlined,
-                                  true,
-                                  notificationController
-                                      .notificationsWaiting.value),
-                              onTap: () => {
-                                    Get.to(() => NotificationsScreen(),
-                                        transition: Transition.rightToLeft),
-                                    notificationController
-                                        .clearNotificationsWaiting()
-                                  }),
-                        InkWell(
-                          child: menuCard(tr('boardgames.title'),
-                              Icons.sports_esports_outlined, true),
-                          onTap: () => Get.to(() => BoardgameScreen(),
-                              transition: Transition.rightToLeft),
-                        ),
-                        InkWell(
-                            child:
-                                menuCard(tr('more.map.school'), Icons.school),
-                            onTap: () => fastaMap(context,
-                                const AssetImage('assets/images/school.jpg'))),
-                        InkWell(
-                            child: menuCard(
-                                tr('more.map.gym'), Icons.sports_tennis),
-                            onTap: () => fastaMap(
-                                context,
-                                const AssetImage(
-                                    'assets/images/sportscentre.jpg'))),
-                        SizedBox(height: 50),
-                        InkWell(
-                          child: menuCard(
-                              tr('more.settings'), Icons.settings, true),
-                          onTap: () => {
-                            NotificationController()
-                                .clearNotificationsWaiting(),
-                            Get.to(() => SettingsScreen(),
-                                transition: Transition.rightToLeft)
-                          },
-                        ),
-                      ],
-                    )),
-              ),
-            )
-          ],
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: backgroundBoxDecorationStyle,
+          child: Obx(() => Column(
+                children: [
+                  if (appController.loggedIn.value == true)
+                    InkWell(
+                      child: menuCard(
+                        tr('notifications.title'),
+                        Icons.notifications_active_outlined,
+                        true,
+                        notificationController.notificationsWaiting.value,
+                      ),
+                      onTap: () => {
+                        Get.to(() => NotificationsScreen(),
+                            transition: Transition.rightToLeft),
+                        notificationController.clearNotificationsWaiting(),
+                      },
+                    ),
+                  InkWell(
+                    child: menuCard(
+                      tr('boardgames.title'),
+                      Icons.sports_esports_outlined,
+                      true,
+                    ),
+                    onTap: () => Get.to(() => BoardgameScreen(),
+                        transition: Transition.rightToLeft),
+                  ),
+                  InkWell(
+                    child: menuCard(tr('more.map.school'), Icons.school),
+                    onTap: () => fastaMap(
+                        context, AssetImage('assets/images/school.jpg')),
+                  ),
+                  InkWell(
+                    child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
+                    onTap: () => fastaMap(
+                        context, AssetImage('assets/images/sportscentre.jpg')),
+                  ),
+                  SizedBox(height: 50),
+                  InkWell(
+                    child: menuCard(tr('more.settings'), Icons.settings, true),
+                    onTap: () => {
+                      NotificationController().clearNotificationsWaiting(),
+                      Get.to(() => SettingsScreen(),
+                          transition: Transition.rightToLeft),
+                    },
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                          padding: EdgeInsets.only(bottom: 8, right: 16),
+                          child: Text('1.1.3-20 | © 2024 Fastaval IT')),
+                    ),
+                  ),
+                ],
+              )),
         ),
       ),
     );
@@ -110,7 +107,7 @@ Future fastaMap(BuildContext context, AssetImage image) {
                   backgroundColor: Colors.orange,
                   radius: 20,
                   child: IconButton(
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close),
                       color: Colors.black,
                       onPressed: () => Navigator.pop(context)),
                 ),

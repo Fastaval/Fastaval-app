@@ -1,3 +1,5 @@
+import 'package:fastaval_app/helpers/formatting.dart';
+
 class Boardgame {
   int id;
   String name;
@@ -14,7 +16,7 @@ class Boardgame {
 
   Boardgame.fromJson(dynamic json)
       : id = json['id'],
-        name = json['name'],
+        name = json['name'].toString().capitalizeString(),
         available = json['available'],
         fastavalGame = json['fastavalGame'],
         bbgId = json['bggId'] ?? 0;
