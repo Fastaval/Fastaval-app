@@ -7,6 +7,7 @@ import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:fastaval_app/services/activities.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Programscreen extends StatefulWidget {
   const Programscreen({super.key});
@@ -145,9 +146,10 @@ class _ProgramscreenState extends State<Programscreen> {
   }
 
   Widget programItemDialog(BuildContext context) {
+    ScrollController scrollController = ScrollController();
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
-    print('item: $item');
+
     return AlertDialog(
       insetPadding: EdgeInsets.all(10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -158,11 +160,13 @@ class _ProgramscreenState extends State<Programscreen> {
             onPressed: () => Navigator.pop(context),
             child: Text(tr('common.close'))),
       ],
+      backgroundColor: colorWhite,
+      surfaceTintColor: colorWhite,
       titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
       title: Column(
         children: [
           Text(
-            context.locale.languageCode == 'da'
+            Get.locale?.languageCode == 'da'
                 ? details.daTitle
                 : details.enTitle,
           ),
@@ -182,30 +186,35 @@ class _ProgramscreenState extends State<Programscreen> {
             Text(
                 details.playHours == 1 ? tr('common.hour') : tr('common.hours'))
           ]),
-          SizedBox(height: 5),
+          SizedBox(height: 4),
           Row(children: [
             Text('${tr('common.players')}: ',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text('${details.minPlayers} - ${details.maxPlayers}'),
           ]),
-          SizedBox(height: 5),
+          SizedBox(height: 4),
           Row(children: [
             Text('${tr('common.language')}: ',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text(getLanguage(details.language)),
           ]),
-          SizedBox(height: 5),
+          SizedBox(height: 4),
           Text(tr('common.description'),
               style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 2),
+          SizedBox(height: 4),
           SizedBox(
             height: 250,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Text(
-                context.locale.languageCode == 'da'
-                    ? details.daText
-                    : details.enText,
+            child: Scrollbar(
+              controller: scrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                controller: scrollController,
+                child: Text(
+                  Get.locale?.languageCode == 'da'
+                      ? details.daText
+                      : details.enText,
+                ),
               ),
             ),
           )
