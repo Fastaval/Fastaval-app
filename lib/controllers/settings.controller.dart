@@ -23,7 +23,7 @@ class SettingsController extends GetxController {
   init() async {
     String foundLanguage = await storageService.getString(kLangKey);
     if (foundLanguage.isEmpty) {
-      var defaultLang = Get.deviceLocale!.languageCode;
+      var defaultLang = Get.deviceLocale!.languageCode == 'da' ? 'da' : 'en';
       updateLanguage(defaultLang);
       return Locale(defaultLang);
     }
