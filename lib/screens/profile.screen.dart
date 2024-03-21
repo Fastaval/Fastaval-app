@@ -2,6 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
+import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
@@ -17,6 +18,7 @@ import 'package:get/get.dart';
 class ProfileScreen extends StatelessWidget {
   final appController = Get.find<AppController>();
   final settingsController = Get.find<SettingsController>();
+  final programCtrl = Get.find<ProgramController>();
 
   @override
   Widget build(context) {
@@ -485,18 +487,23 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget activityDialog(BuildContext context) {
-    final item = ModalRoute.of(context)!.settings.arguments as Scheduling;
+    ScrollController scrollController = ScrollController();
+    var item = ModalRoute.of(context)!.settings.arguments as Scheduling;
+    var details = programCtrl.activityMap[item.id]!;
 
     return AlertDialog(
+        insetPadding: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        actionsPadding: EdgeInsets.all(5),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(tr('common.close')))
+              child: Text(tr('common.close'))),
         ],
         backgroundColor: colorWhite,
         surfaceTintColor: colorWhite,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        titlePadding: EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         title: Column(children: [
           Container(
               decoration: BoxDecoration(
@@ -507,7 +514,7 @@ class ProfileScreen extends StatelessWidget {
                     fit: BoxFit.cover),
               ),
               height: 100),
-          SizedBox(height: 5),
+          SizedBox(height: 8),
           Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Text(context.locale.languageCode == 'da'
@@ -523,14 +530,14 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(tr('profile.activityType.${item.activityType}')),
             ]),
-            SizedBox(height: 5),
+            SizedBox(height: 8),
             Row(children: [
               Text('${tr('common.time')}: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
                   "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}"),
             ]),
-            SizedBox(height: 5),
+            SizedBox(height: 8),
             Row(children: [
               Text('${tr('common.place')}: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),
@@ -538,6 +545,26 @@ class ProfileScreen extends StatelessWidget {
                   ? item.roomDa!
                   : item.roomEn!),
             ]),
+            SizedBox(height: 8),
+            Text('${tr('common.description')}:',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            SizedBox(
+              height: 250,
+              child: Scrollbar(
+                controller: scrollController,
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  controller: scrollController,
+                  child: Text(
+                    Get.locale?.languageCode == 'da'
+                        ? details.daText
+                        : details.enText,
+                  ),
+                ),
+              ),
+            )
           ],
         ));
   }

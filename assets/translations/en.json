@@ -21,6 +21,7 @@
     "title": "Board Games"
   },
   "bottomNavigation": {
+    "favorites": "Favorites",
     "information": "Information",
     "login": "Sign in",
     "more": "More",
@@ -110,10 +111,10 @@
       "title": "Transportation & Parking"
     },
     "wifi": {
+      "explainer": "Once connected, enter your mobile phone number with + and then the country code in front of it, e.g. +49 for Germany. You will then receive an SMS with a code you need to enter to access the internet.",
       "networkCode": "Code",
       "networkName": "Network",
       "networkUser": "User name",
-      "explainer": "Once connected, enter your mobile phone number with + and then the country code in front of it, e.g. +49 for Germany. You will then receive an SMS with a code you need to enter to access the internet.",
       "title": "WiFi"
     }
   },
@@ -200,8 +201,8 @@
   },
   "program": {
     "food": {
-      "ordered": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30",
-      "notOrdered": "You have not ordered food at Fastaval"
+      "notOrdered": "You have not ordered food at Fastaval",
+      "ordered": "If there is no queue or you need to catch a scenario, you are welcome to collect your food between 17:30 and 19:30"
     },
     "friday": {
       "long": "Friday",
@@ -233,7 +234,8 @@
     "notifications": "Notifications",
     "profile": "Profile",
     "program": "Program",
-    "settings": "Settings"
+    "settings": "Settings",
+    "favorites": "Favorites"
   },
   "settings": {
     "title": "Settings"

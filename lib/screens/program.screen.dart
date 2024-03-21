@@ -1,17 +1,17 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
+import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
-import 'package:fastaval_app/services/activities.service.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProgramScreen extends StatelessWidget {
+  final programCtrl = Get.find<ProgramController>();
+
   @override
   Widget build(context) {
     return DefaultTabController(
@@ -59,95 +59,29 @@ class ProgramScreen extends StatelessWidget {
       );
 
   Widget buildday(String day) {
-    List<ActivityRun>? runlist = [];
-    Map<int, ActivityItem> activityMap = <int, ActivityItem>{};
-
-    final Future<List<ActivityItem>> activityList =
-        getDay(day).then((List<ActivityItem> list) {
-      for (ActivityItem activity in list) {
-        if (activity.type != 'system') {
-          activityMap.putIfAbsent(activity.id, () => activity);
-          for (ActivityRun run in activity.runs) {
-            if (formatTimestampToDateTime(run.start)
-                    .toString()
-                    .substring(0, 10) ==
-                day) {
-              runlist.add(run);
-            }
-          }
-        }
-      }
-      runlist.sort((a, b) => a.start - b.start);
-      return list;
-    });
-
-    return FutureBuilder(
-        future: activityList,
-        builder: (context, programSnap) {
-          List<Widget> screenState;
-          if (programSnap.hasData) {
-            return SizedBox(
-              child: Container(
-                  alignment: Alignment.topCenter,
-                  child: ListView.builder(
-                    itemCount: runlist.length,
-                    itemBuilder: (context, index) {
-                      ActivityRun item = runlist[index];
-                      return InkWell(
-                        child: programListItem(
-                            activityMap[item.activity]!,
-                            item,
-                            getActivityColor(activityMap[item.activity]!.type)),
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: programItemDialog,
-                          routeSettings: RouteSettings(
-                            arguments: [item, activityMap[item.activity]],
-                          ),
-                        ),
-                      );
-                    },
-                  )),
-            );
-          }
-          if (programSnap.hasError) {
-            screenState = [
-              const Icon(Icons.error_outline, color: Colors.red, size: 60),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${programSnap.error}'),
-              ),
-            ];
-          } else {
-            screenState = [
-              const SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: CircularProgressIndicator(
-                      color: colorWhite, backgroundColor: colorOrange)),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text(tr('program.loading'),
-                    style: const TextStyle(fontSize: 18)),
-              ),
-            ];
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: screenState,
+    return ListView.builder(
+      itemCount: programCtrl.runList[day]!.length,
+      itemBuilder: (context, index) {
+        ActivityRun item = programCtrl.runList[day]![index];
+        return InkWell(
+          child: programListItem(programCtrl.activityMap[item.activity]!, item,
+              getActivityColor(programCtrl.activityMap[item.activity]!.type)),
+          onTap: () => showDialog(
+            context: context,
+            builder: programItemDialog,
+            routeSettings: RouteSettings(
+              arguments: [item, programCtrl.activityMap[item.activity]],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget programItemDialog(BuildContext context) {
     ScrollController scrollController = ScrollController();
     var [ActivityRun item, ActivityItem details] =
         ModalRoute.of(context)!.settings.arguments as List;
-
-    print("item");
-    inspect(item);
 
     return AlertDialog(
       insetPadding: EdgeInsets.all(10),
@@ -186,22 +120,28 @@ class ProgramScreen extends StatelessWidget {
             Text(
                 details.playHours == 1 ? tr('common.hour') : tr('common.hours'))
           ]),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
           Row(children: [
             Text('${tr('common.players')}: ',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text('${details.minPlayers} - ${details.maxPlayers}'),
           ]),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
           Row(children: [
             Text('${tr('common.language')}: ',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text(getLanguage(details.language)),
           ]),
-          SizedBox(height: 4),
-          Text(tr('common.description'),
+          SizedBox(height: 8),
+          Row(children: [
+            Text('${tr('common.place')}: ',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(item.localeName),
+          ]),
+          SizedBox(height: 8),
+          Text('${tr('common.description')}:',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
           SizedBox(
             height: 250,
             child: Scrollbar(

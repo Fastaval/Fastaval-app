@@ -21,6 +21,7 @@
     "title": "Brætspil"
   },
   "bottomNavigation": {
+    "favorites": "Favoritter",
     "information": "Information",
     "login": "Log ind",
     "more": "Mere",
@@ -110,10 +111,10 @@
       "title": "Transport & parkering"
     },
     "wifi": {
+      "explainer": "Efter du har forbundet skal du angive dit mobilnummer. Herefter modtager du en SMS med en kode du skal angive for at få adgang til internettet.",
       "networkCode": "Kode",
       "networkName": "Netværk",
       "networkUser": "Brugernavn",
-      "explainer": "Efter du har forbundet skal du angive dit mobilnummer. Herefter modtager du en SMS med en kode du skal angive for at få adgang til internettet.",
       "title": "WiFi"
     }
   },
@@ -200,8 +201,8 @@
   },
   "program": {
     "food": {
-      "ordered": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30",
-      "notOrdered": "Du har ikke bestilt mad på Fastaval"
+      "notOrdered": "Du har ikke bestilt mad på Fastaval",
+      "ordered": "Hvis der ikke er kø, eller du skal nå et scenarie, må du gerne hente din mad i hele perioden mellem 17:30 og 19:30"
     },
     "friday": {
       "long": "Fredag",
@@ -233,7 +234,8 @@
     "notifications": "Notifikationer",
     "profile": "Profil",
     "program": "Program",
-    "settings": "Indstillinger"
+    "settings": "Indstillinger",
+    "favorites": "Favoritter"
   },
   "settings": {
     "title": "Indstillinger"

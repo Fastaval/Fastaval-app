@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/screens/favorites.screen.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
 import 'package:fastaval_app/screens/more.screen.dart';
@@ -10,6 +11,7 @@ import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +58,6 @@ class HomeScreenState extends State<HomeScreen> {
               onTap: onNavClick,
               items: bottomNavItems(),
               selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-              unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
               backgroundColor: colorOrangeDark,
               selectedItemColor: colorWhite,
               unselectedItemColor: Colors.white54,
@@ -86,6 +87,9 @@ class HomeScreenState extends State<HomeScreen> {
           icon: const Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
+          icon: const Icon(CupertinoIcons.heart_fill),
+          label: tr('bottomNavigation.favorites')),
+      BottomNavigationBarItem(
           icon: badges.Badge(
               showBadge: notificationController.notificationsWaiting.value &&
                   notificationController.notificationList.isNotEmpty,
@@ -101,6 +105,7 @@ class HomeScreenState extends State<HomeScreen> {
       if (appController.loggedIn.value == false) LoginScreen(),
       InfoScreen(),
       ProgramScreen(),
+      FavoritesScreen(),
       MoreScreen()
     ];
   }

@@ -3,6 +3,7 @@ import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/boardgame.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:fastaval_app/screens/home.screen.dart';
 import 'package:fastaval_app/services/config.service.dart';
@@ -30,6 +31,7 @@ void main() async {
 
   await Get.put(SettingsController()).init();
   await Get.put(AppController()).init();
+  await Get.put(ProgramController()).init();
   await Get.put(BoardGameController()).init();
   await Get.put(NotificationController()).init();
 
