@@ -113,6 +113,7 @@
       "networkCode": "Kode",
       "networkName": "Netværk",
       "networkUser": "Brugernavn",
+      "explainer": "Efter du har forbundet skal du angive dit mobilnummer. Herefter modtager du en SMS med en kode du skal angive for at få adgang til internettet.",
       "title": "WiFi"
     }
   },

@@ -113,6 +113,7 @@
       "networkCode": "Code",
       "networkName": "Network",
       "networkUser": "User name",
+      "explainer": "Once connected, enter your mobile phone number with + and then the country code in front of it, e.g. +49 for Germany. You will then receive an SMS with a code you need to enter to access the internet.",
       "title": "WiFi"
     }
   },

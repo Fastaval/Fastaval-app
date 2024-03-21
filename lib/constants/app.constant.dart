@@ -1,4 +1,4 @@
-const kWifiNetworkName = 'SNET';
+const kWifiNetworkName = 'ITCN-Hotspot';
 const kWifiUser = 'mfg-guest@mf-gym.dk';
 const kWifiPassword = 'Fjernvarme2022';
 const kTaxi1PhoneNumber = {"value": "+4598525354", "name": "98 52 53 54"};

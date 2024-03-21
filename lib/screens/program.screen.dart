@@ -168,6 +168,7 @@ class ProgramScreen extends StatelessWidget {
             Get.locale?.languageCode == 'da'
                 ? details.daTitle
                 : details.enTitle,
+            textAlign: TextAlign.center,
           ),
           if (details.author.isNotEmpty)
             Text(details.author,

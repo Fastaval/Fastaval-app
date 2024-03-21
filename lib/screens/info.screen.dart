@@ -210,13 +210,15 @@ Widget _buildWifiCard() {
       Icons.wifi,
       Padding(
           padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
-          child: Column(children: [
-            twoTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
-            const SizedBox(height: 10),
-            twoTextRow(tr('info.wifi.networkUser'), kWifiUser,
-                selectable: true),
-            const SizedBox(height: 10),
-            twoTextRow(tr('info.wifi.networkCode'), kWifiPassword,
-                selectable: true)
-          ])));
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              twoTextRow(tr('info.wifi.networkName'), kWifiNetworkName),
+              const SizedBox(height: 10),
+              Text(
+                tr('info.wifi.explainer'),
+                style: kNormalTextStyle,
+              )
+            ],
+          )));
 }
