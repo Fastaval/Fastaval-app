@@ -263,7 +263,7 @@ class ProfileScreen extends StatelessWidget {
       Padding(
         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         child: foodList.isNotEmpty
-            ? Text(tr('program.food.ordered'), style: kNormalTextSubdued)
+            ? Text(tr('program.food.ordered'))
             : Text(tr('program.food.notOrdered'), style: kNormalTextStyle),
       ),
       ListView.separated(
@@ -351,7 +351,7 @@ class ProfileScreen extends StatelessWidget {
         Padding(
             padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
             child: appController.user.wear.isEmpty
-                ? oneTextRow(tr('profile.wear.noWear'))
+                ? Row(children: [oneTextRow(tr('profile.wear.noWear'))])
                 : ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -489,7 +489,7 @@ class ProfileScreen extends StatelessWidget {
   Widget activityDialog(BuildContext context) {
     ScrollController scrollController = ScrollController();
     var item = ModalRoute.of(context)!.settings.arguments as Scheduling;
-    var details = programCtrl.activityMap[item.id]!;
+    var details = programCtrl.activityMap[item.id];
 
     return AlertDialog(
         insetPadding: EdgeInsets.all(10),
@@ -538,33 +538,36 @@ class ProfileScreen extends StatelessWidget {
                   "${formatDay(item.start)} ${formatTime(item.start)} - ${formatTime(item.stop)}"),
             ]),
             SizedBox(height: 8),
-            Row(children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('${tr('common.place')}: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(context.locale.languageCode == 'da'
-                  ? item.roomDa!
-                  : item.roomEn!),
+              Flexible(
+                  child: Text(context.locale.languageCode == 'da'
+                      ? item.roomDa!
+                      : item.roomEn!)),
             ]),
-            SizedBox(height: 8),
-            Text('${tr('common.description')}:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            SizedBox(
-              height: 250,
-              child: Scrollbar(
-                controller: scrollController,
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+            if (details != null) ...[
+              SizedBox(height: 8),
+              Text('${tr('common.description')}:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              SizedBox(
+                height: 250,
+                child: Scrollbar(
                   controller: scrollController,
-                  child: Text(
-                    Get.locale?.languageCode == 'da'
-                        ? details.daText
-                        : details.enText,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                    controller: scrollController,
+                    child: Text(
+                      Get.locale?.languageCode == 'da'
+                          ? details.daText
+                          : details.enText,
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
+            ]
           ],
         ));
   }

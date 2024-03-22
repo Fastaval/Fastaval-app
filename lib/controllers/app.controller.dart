@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/models/user.model.dart';
-import 'package:fastaval_app/services/local_storage.service.dart';
 import 'package:fastaval_app/services/user.service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AppController extends GetxController {
-  final LocalStorageService storageService = LocalStorageService();
   final loggedIn = false.obs;
   final navIndex = 1.obs;
   late User user;

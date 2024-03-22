@@ -41,9 +41,9 @@ class InfoScreen extends StatelessWidget {
                       _buildSafeFastavalCard(),
                       _buildOpenHoursCard(),
                       _buildWifiCard(),
-                      _buildFastaWearCard(),
                       _buildLostFoundCard(),
                       _buildTransportCard(),
+                      _buildFastaWearCard(),
                       SizedBox(height: 80)
                     ],
                   ),
@@ -60,7 +60,7 @@ class InfoScreen extends StatelessWidget {
 Widget _buildFastaWearCard() {
   return textAndIconCard(
       tr('info.fastaWear.title'),
-      Icons.checkroom,
+      Icons.shopping_bag_outlined,
       Padding(
           padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
           child: Row(children: [

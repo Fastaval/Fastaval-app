@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
@@ -8,58 +12,83 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+final programCtrl = Get.find<ProgramController>();
 final notificationController = Get.find<NotificationController>();
 
 Widget oneTextRow(String text) {
   return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
 }
 
-Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
-  return Padding(
-      padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-      child: Row(
-        children: [
-          SizedBox(
-            height: 40,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border(
-                    left: BorderSide(width: 5, color: color),
-                    right: BorderSide(width: 1, color: Colors.grey.shade300)),
-              ),
+Widget programListItem(
+    ActivityItem activity, ActivityRun run, Color color, BuildContext context) {
+  return Stack(
+    children: [
+      Positioned.fill(
+          child: InkWell(
+              onTap: () => showDialog(
+                    context: context,
+                    builder: programItemDialog,
+                    routeSettings: RouteSettings(
+                      arguments: [run, programCtrl.activityMap[activity.id]],
+                    ),
+                  ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        formatTime(run.start),
-                        style: TextStyle(color: Colors.grey.shade500),
-                      ),
-                    ]),
-              ),
-            ),
-          ),
-          SizedBox(width: 10),
-          Flexible(
-            child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          Get.locale?.languageCode == 'da'
-                              ? activity.daTitle
-                              : activity.enTitle,
-                          overflow: TextOverflow.visible,
+                  padding: EdgeInsets.fromLTRB(10, 5, 48, 5),
+                  child: Row(children: [
+                    SizedBox(
+                      height: 40,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(width: 5, color: color),
+                              right: BorderSide(
+                                  width: 1, color: Colors.grey.shade300)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  formatTime(run.start),
+                                  style: TextStyle(color: Colors.grey.shade500),
+                                ),
+                              ]),
                         ),
                       ),
-                      Icon(CupertinoIcons.heart_fill)
-                    ])),
-          ),
-        ],
-      ));
+                    ),
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                Get.locale?.languageCode == 'da'
+                                    ? activity.daTitle
+                                    : activity.enTitle,
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
+                          ]),
+                    )
+                  ])))),
+      Align(
+        alignment: Alignment.centerRight,
+        child: Obx(() => IconButton(
+            onPressed: () => {inspect(run), programCtrl.toggleFavorite(run.id)},
+            icon: programCtrl.favoritesList.contains(run.id)
+                ? Icon(
+                    CupertinoIcons.heart_fill,
+                    color: colorOrangeDark,
+                  )
+                : Icon(
+                    CupertinoIcons.heart,
+                    color: colorOrangeDark,
+                  ))),
+      ),
+    ],
+  );
 }
 
 Widget menuCard(String title, IconData icon,
@@ -209,5 +238,113 @@ Widget twoTextRowWithTapAction(String title, String link, Uri url) {
                 textAlign: TextAlign.right, style: kNormalTextClickableStyle)),
       ),
     ],
+  );
+}
+
+Widget programItemDialog(BuildContext context) {
+  ScrollController scrollController = ScrollController();
+  var [ActivityRun run, ActivityItem activity] =
+      ModalRoute.of(context)!.settings.arguments as List;
+
+  return AlertDialog(
+    insetPadding: EdgeInsets.all(10),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+    actionsPadding: EdgeInsets.all(5),
+    actions: [
+      TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(tr('common.close'))),
+    ],
+    backgroundColor: colorWhite,
+    surfaceTintColor: colorWhite,
+    titlePadding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+    title: Stack(
+      alignment: Alignment.center,
+      children: [
+        Padding(
+            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+            child: Column(
+              children: [
+                Text(
+                  Get.locale?.languageCode == 'da'
+                      ? activity.daTitle
+                      : activity.enTitle,
+                  textAlign: TextAlign.center,
+                ),
+                if (activity.author.isNotEmpty)
+                  Text(activity.author,
+                      style: TextStyle(fontSize: 12, color: Colors.grey))
+              ],
+            )),
+        Align(
+          alignment: Alignment.topRight,
+          child: Obx(() => IconButton(
+              onPressed: () =>
+                  {inspect(run), programCtrl.toggleFavorite(run.id)},
+              icon: programCtrl.favoritesList.contains(run.id)
+                  ? Icon(
+                      CupertinoIcons.heart_fill,
+                      color: colorOrangeDark,
+                    )
+                  : Icon(
+                      CupertinoIcons.heart,
+                      color: colorOrangeDark,
+                    ))),
+        )
+      ],
+    ),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(children: [
+          Text('${tr('common.runtime')}: ',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('${activity.playHours.toInt()} '),
+          Text(activity.playHours == 1 ? tr('common.hour') : tr('common.hours'))
+        ]),
+        SizedBox(height: 8),
+        Row(children: [
+          Text('${tr('common.players')}: ',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('${activity.minPlayers} - ${activity.maxPlayers}'),
+        ]),
+        SizedBox(height: 8),
+        Row(children: [
+          Text('${tr('common.language')}: ',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(getLanguage(activity.language)),
+        ]),
+        SizedBox(height: 8),
+        Row(children: [
+          Text('${tr('common.place')}: ',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(run.localeName),
+        ]),
+        if (activity.daText.isNotEmpty) ...[
+          SizedBox(height: 8),
+          Text('${tr('common.description')}:',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          SizedBox(
+            height: 250,
+            child: Scrollbar(
+              controller: scrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                controller: scrollController,
+                child: Text(
+                  Get.locale?.languageCode == 'da'
+                      ? activity.daText
+                      : activity.enText,
+                ),
+              ),
+            ),
+          )
+        ]
+      ],
+    ),
   );
 }

@@ -2,8 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/helpers/collections.dart';
-import 'package:fastaval_app/helpers/formatting.dart';
-import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -63,103 +61,12 @@ class ProgramScreen extends StatelessWidget {
       itemCount: programCtrl.runList[day]!.length,
       itemBuilder: (context, index) {
         ActivityRun item = programCtrl.runList[day]![index];
-        return InkWell(
-          child: programListItem(programCtrl.activityMap[item.activity]!, item,
-              getActivityColor(programCtrl.activityMap[item.activity]!.type)),
-          onTap: () => showDialog(
-            context: context,
-            builder: programItemDialog,
-            routeSettings: RouteSettings(
-              arguments: [item, programCtrl.activityMap[item.activity]],
-            ),
-          ),
-        );
+        return programListItem(
+            programCtrl.activityMap[item.activity]!,
+            item,
+            getActivityColor(programCtrl.activityMap[item.activity]!.type),
+            context);
       },
-    );
-  }
-
-  Widget programItemDialog(BuildContext context) {
-    ScrollController scrollController = ScrollController();
-    var [ActivityRun item, ActivityItem details] =
-        ModalRoute.of(context)!.settings.arguments as List;
-
-    return AlertDialog(
-      insetPadding: EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-      actionsPadding: EdgeInsets.all(5),
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(tr('common.close'))),
-      ],
-      backgroundColor: colorWhite,
-      surfaceTintColor: colorWhite,
-      titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-      title: Column(
-        children: [
-          Text(
-            Get.locale?.languageCode == 'da'
-                ? details.daTitle
-                : details.enTitle,
-            textAlign: TextAlign.center,
-          ),
-          if (details.author.isNotEmpty)
-            Text(details.author,
-                style: TextStyle(fontSize: 12, color: Colors.grey))
-        ],
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(children: [
-            Text('${tr('common.runtime')}: ',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${details.playHours.toInt()} '),
-            Text(
-                details.playHours == 1 ? tr('common.hour') : tr('common.hours'))
-          ]),
-          SizedBox(height: 8),
-          Row(children: [
-            Text('${tr('common.players')}: ',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${details.minPlayers} - ${details.maxPlayers}'),
-          ]),
-          SizedBox(height: 8),
-          Row(children: [
-            Text('${tr('common.language')}: ',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(getLanguage(details.language)),
-          ]),
-          SizedBox(height: 8),
-          Row(children: [
-            Text('${tr('common.place')}: ',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(item.localeName),
-          ]),
-          SizedBox(height: 8),
-          Text('${tr('common.description')}:',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
-          SizedBox(
-            height: 250,
-            child: Scrollbar(
-              controller: scrollController,
-              thumbVisibility: true,
-              child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                controller: scrollController,
-                child: Text(
-                  Get.locale?.languageCode == 'da'
-                      ? details.daText
-                      : details.enText,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 }
