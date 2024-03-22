@@ -3,6 +3,7 @@ import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -43,12 +44,18 @@ Widget programListItem(ActivityItem activity, ActivityRun run, Color color) {
           Flexible(
             child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(Get.locale?.languageCode == 'da'
-                          ? activity.daTitle
-                          : activity.enTitle)
+                      Flexible(
+                        child: Text(
+                          Get.locale?.languageCode == 'da'
+                              ? activity.daTitle
+                              : activity.enTitle,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                      Icon(CupertinoIcons.heart_fill)
                     ])),
           ),
         ],
