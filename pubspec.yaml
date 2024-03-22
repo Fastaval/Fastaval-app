@@ -39,7 +39,7 @@ dependencies:
   firebase_core: ^2.27.1
   firebase_messaging: ^14.7.20
   firebase_remote_config: ^4.3.18
-  firebase_analytics: ^10.8.6
+  firebase_analytics: ^10.8.10
   app_tracking_transparency: ^2.0.4
   photo_view: ^0.14.0
   badges: ^3.1.2
