@@ -125,10 +125,12 @@
       "dialogYes": "Ja tak",
       "title": "Beskeder fra Fastaval"
     },
-    "enterParticipantNumber": "Indtast deltager nummer",
+    "enterParticipantNumber": "Indtast deltagernummer",
     "enterPassword": "Indtast kodeord",
     "forgotPassword": "Glemt kodeord?",
-    "participantNumber": "Deltager nummer",
+    "helpText": "Du finder dit deltagernummer og kodeord i din bekræftelsesmail.",
+    "helpTitle": "Hjælp til login",
+    "participantNumber": "Deltagernummer",
     "password": "Kodeord",
     "permissionsWarning": {
       "description": "Vi bekymrer os om dit privatliv og datasikkerhed. Du kan være sikker på, at den sporing, som denne app bruger, kun er for at tillade os at sende dig notifikationer.",
@@ -174,7 +176,7 @@
     "handout": "Udleveres",
     "messagesFromFastaval": "Beskeder Fra Fastaval",
     "noMessagesRightNow": "Fastaval har ingen beskeder til dig lige nu",
-    "participantNumber": "Deltager nummer",
+    "participantNumber": "Deltagernummer",
     "scanBarcode": "Vis stregkoden når du skal have udleveret mad",
     "sleep": {
       "location": "Sove lokation",
@@ -228,14 +230,14 @@
   },
   "screenTitle": {
     "boardgames": "Brætspil",
+    "favorites": "Favoritter",
     "info": "Information",
     "login": "Log ind",
     "more": "Mere",
     "notifications": "Notifikationer",
     "profile": "Profil",
     "program": "Program",
-    "settings": "Indstillinger",
-    "favorites": "Favoritter"
+    "settings": "Indstillinger"
   },
   "settings": {
     "title": "Indstillinger"

@@ -15,35 +15,36 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorOrangeDark,
+        foregroundColor: colorWhite,
+        toolbarHeight: 25,
+        centerTitle: true,
+        titleTextStyle: kAppBarTextStyle,
+        title: Text(tr('screenTitle.login')),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: Stack(
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: backgroundBoxDecorationStyle,
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: backgroundBoxDecorationStyle,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(48, 100, 48, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildUserIdInput(),
+                SizedBox(height: 16.0),
+                _buildPasswordInput(),
+                SizedBox(height: 48.0),
+                _buildLoginButton(),
+                SizedBox(height: 16.0),
+                Text(tr('login.helpTitle'), style: kLabelStyle),
+                Text(textAlign: TextAlign.center, tr('login.helpText')),
+              ],
             ),
-            SizedBox(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 120.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 30.0),
-                    _buildUserIdInput(),
-                    const SizedBox(height: 30.0),
-                    _buildPasswordInput(),
-                    const SizedBox(height: 30.0),
-                    _buildLoginButton(),
-                  ],
-                ),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

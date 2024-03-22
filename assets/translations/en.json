@@ -128,6 +128,8 @@
     "enterParticipantNumber": "Enter participant number",
     "enterPassword": "Enter password",
     "forgotPassword": "Forgot password?",
+    "helpText": "You will find your participant number and password in your confirmation email.",
+    "helpTitle": "Login help",
     "participantNumber": "Participant number",
     "password": "Password",
     "permissionsWarning": {
@@ -228,14 +230,14 @@
   },
   "screenTitle": {
     "boardgames": "Board Games",
+    "favorites": "Favorites",
     "info": "Information",
     "login": "Sign in",
     "more": "More",
     "notifications": "Notifications",
     "profile": "Profile",
     "program": "Program",
-    "settings": "Settings",
-    "favorites": "Favorites"
+    "settings": "Settings"
   },
   "settings": {
     "title": "Settings"

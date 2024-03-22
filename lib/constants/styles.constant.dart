@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kHintTextStyle = TextStyle(color: colorWhite);
-const kLabelStyle = TextStyle(color: colorWhite, fontWeight: FontWeight.bold);
+const kLabelStyle = TextStyle(color: colorBlack, fontWeight: FontWeight.bold);
 final kTextBoxDecorationStyle = BoxDecoration(
   color: colorOrangeDark,
   border: Border.all(color: Colors.black12, width: 2),
