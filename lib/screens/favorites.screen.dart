@@ -44,7 +44,6 @@ class FavoritesScreen extends StatelessWidget {
   }
 
   Widget buildFavorites() {
-    // Make a new list of runs based on the list of favorites, and then sort them by start time
     var sortedFavorites = programCtrl.favorites
         .map((id) => programCtrl.runs[id])
         .toList()
@@ -58,12 +57,9 @@ class FavoritesScreen extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: sortedFavorites.length,
-                separatorBuilder: (context, int index) {
-                  return SizedBox(height: 0);
-                },
-                itemBuilder: (buildContext, index) {
-                  return favoriteItem(sortedFavorites[index]);
-                },
+                separatorBuilder: (context, int index) => SizedBox(height: 0),
+                itemBuilder: (buildContext, index) =>
+                    favoriteItem(sortedFavorites[index]),
               ),
               SizedBox(height: 8)
             ],
@@ -159,7 +155,7 @@ class FavoritesScreen extends StatelessWidget {
         ],
         backgroundColor: colorWhite,
         surfaceTintColor: colorWhite,
-        titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+        titlePadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
         title: Stack(
           children: [
             Column(children: [

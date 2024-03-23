@@ -8,8 +8,10 @@ import 'package:fastaval_app/screens/settings.screen.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MoreScreen extends StatelessWidget {
   final notificationCtrl = Get.find<NotificationController>();
@@ -17,6 +19,12 @@ class MoreScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
+    var newsletter = Uri.parse(
+        'https://fastaval.us21.list-manage.com/subscribe?u=0929f085b293ddfa9eb2bc60a&id=13f4440b66');
+    var x = Uri.parse('https://twitter.com/fastaval');
+    var facebook = Uri.parse('https://www.facebook.com/Fastaval');
+    var instagram = Uri.parse('https://www.instagram.com/fastaval/');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
@@ -68,11 +76,69 @@ class MoreScreen extends StatelessWidget {
                         transition: Transition.rightToLeft),
                   ),
                   Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                          padding: EdgeInsets.only(bottom: 8, right: 16),
-                          child: Text('1.1.4-21 | © 2024 Fastaval IT')),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                onPressed: () =>
+                                    canLaunchUrl(facebook).then((allowed) => {
+                                          if (allowed)
+                                            launchUrl(facebook,
+                                                mode: LaunchMode
+                                                    .externalApplication),
+                                        }),
+                                icon: FaIcon(FontAwesomeIcons.facebook,
+                                    size: 40, color: colorBlack)),
+                            SizedBox(width: 24),
+                            IconButton(
+                                onPressed: () =>
+                                    canLaunchUrl(instagram).then((allowed) => {
+                                          if (allowed)
+                                            launchUrl(instagram,
+                                                mode: LaunchMode
+                                                    .externalApplication),
+                                        }),
+                                icon: FaIcon(FontAwesomeIcons.instagram,
+                                    size: 40, color: colorBlack)),
+                            SizedBox(width: 24),
+                            IconButton(
+                                onPressed: () =>
+                                    canLaunchUrl(x).then((allowed) => {
+                                          if (allowed)
+                                            launchUrl(x,
+                                                mode: LaunchMode
+                                                    .externalApplication),
+                                        }),
+                                icon: FaIcon(FontAwesomeIcons.xTwitter,
+                                    size: 40, color: colorBlack)),
+                            SizedBox(width: 24),
+                            IconButton(
+                                onPressed: () =>
+                                    canLaunchUrl(newsletter).then((allowed) => {
+                                          if (allowed)
+                                            launchUrl(newsletter,
+                                                mode: LaunchMode
+                                                    .externalApplication),
+                                        }),
+                                icon: FaIcon(FontAwesomeIcons.envelopeOpenText,
+                                    size: 40, color: colorBlack))
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        Text(tr('more.socialMedia'),
+                            style: kNormalTextStyle,
+                            textAlign: TextAlign.center),
+                        SizedBox(height: 24),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 8, right: 16),
+                                child: Text('1.2.0 © 2024 Fastaval IT',
+                                    style: kNormalTextSubdued)))
+                      ],
                     ),
                   ),
                 ],
@@ -83,26 +149,24 @@ class MoreScreen extends StatelessWidget {
   }
 }
 
-Future fastaMap(BuildContext context, AssetImage image) {
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Stack(children: [
-          PhotoView(imageProvider: image),
-          Positioned(
-              right: 10,
-              top: 10,
-              child: Material(
-                color: Colors.transparent,
-                child: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  radius: 20,
-                  child: IconButton(
-                      icon: Icon(Icons.close),
-                      color: Colors.black,
-                      onPressed: () => Navigator.pop(context)),
-                ),
-              ))
-        ]);
-      });
-}
+Future fastaMap(BuildContext context, AssetImage image) => showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Stack(children: [
+        PhotoView(imageProvider: image),
+        Positioned(
+            right: 10,
+            top: 10,
+            child: Material(
+              color: Colors.transparent,
+              child: CircleAvatar(
+                backgroundColor: Colors.orange,
+                radius: 20,
+                child: IconButton(
+                    icon: Icon(Icons.close),
+                    color: Colors.black,
+                    onPressed: () => Navigator.pop(context)),
+              ),
+            ))
+      ]);
+    });

@@ -14,9 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 final programCtrl = Get.find<ProgramController>();
 final notificationController = Get.find<NotificationController>();
 
-Widget oneTextRow(String text) {
-  return Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
-}
+Widget oneTextRow(String text) =>
+    Text(text, style: kNormalTextStyle, overflow: TextOverflow.ellipsis);
 
 Widget programListItem(
     ActivityItem activity, ActivityRun run, Color color, BuildContext context) {
@@ -90,23 +89,22 @@ Widget programListItem(
 Widget menuCard(String title, IconData icon,
     [bool hasSubMenu = false, showBadge = false]) {
   return Card(
-      surfaceTintColor: Colors.white,
-      color: Colors.white,
+      surfaceTintColor: colorWhite,
+      color: colorWhite,
       margin: kMenuCardMargin,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: const BorderSide(color: Colors.black12, width: 1)),
-      elevation: 1,
+          side: BorderSide(color: Colors.black12, width: 1)),
+      elevation: 5,
       child: Column(children: [
         ListTile(
           trailing:
               hasSubMenu ? Icon(Icons.keyboard_arrow_right_outlined) : null,
           title: Row(
             children: [
+              Icon(icon),
               Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0), child: Icon(icon)),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Text(title, style: kMenuCardHeaderStyle)),
               if (showBadge)
                 Badge(
@@ -190,36 +188,12 @@ Widget textAndItemCard(String title, Widget secondaryTitle, content) {
       ]));
 }
 
-Widget textRowHeader(String text) {
-  return Row(mainAxisSize: MainAxisSize.max, children: [
-    Expanded(
-        child: Text(text,
-            style: kNormalTextBoldStyle, overflow: TextOverflow.ellipsis))
-  ]);
-}
-
-Widget threeTextRow(String leftText, String centerText, String rightText) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
+Widget textRowHeader(String text) =>
+    Row(mainAxisSize: MainAxisSize.max, children: [
       Expanded(
-        flex: 2,
-        child: Text(leftText,
-            textAlign: TextAlign.center, style: kNormalTextStyle),
-      ),
-      Expanded(
-        flex: 5,
-        child: Text(centerText,
-            textAlign: TextAlign.left, style: kNormalTextStyle),
-      ),
-      Expanded(
-        flex: 4,
-        child: Text(rightText,
-            textAlign: TextAlign.right, style: kNormalTextStyle, maxLines: 4),
-      ),
-    ],
-  );
-}
+          child: Text(text,
+              style: kNormalTextBoldStyle, overflow: TextOverflow.ellipsis))
+    ]);
 
 Widget twoTextRow(String textLeft, String textRight,
     {bool selectable = false, bool sidePadding = false}) {
@@ -248,11 +222,10 @@ Widget twoTextRowWithTapAction(String title, String link, Uri url) {
         flex: 9,
         child: GestureDetector(
             onTap: () {
-              canLaunchUrl(url).then((bool result) async {
-                if (result) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                }
-              });
+              canLaunchUrl(url).then((allowed) => {
+                    if (allowed)
+                      {launchUrl(url, mode: LaunchMode.externalApplication)}
+                  });
             },
             child: Text(link,
                 textAlign: TextAlign.right, style: kNormalTextClickableStyle)),
@@ -278,7 +251,7 @@ Widget programItemDialog(BuildContext context) {
     insetPadding: EdgeInsets.all(10),
     contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
     actionsPadding: EdgeInsets.all(5),
-    titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+    titlePadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
     title: Stack(
       children: [
         Column(children: [

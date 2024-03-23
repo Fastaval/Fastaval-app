@@ -47,12 +47,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Setting the top bar in system to same color as app
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: colorOrangeDark,
       statusBarColor: colorOrangeDark,
       statusBarIconBrightness: Brightness.light,

@@ -34,7 +34,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
+  static FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAYfeO9vOnHlm4RikA7eEbmFmRXmSnwitk',
     appId: '1:998751652413:web:76c4d76c9b3c0aade67854',
     messagingSenderId: '998751652413',
@@ -44,7 +44,7 @@ class DefaultFirebaseOptions {
     measurementId: 'G-6DMQGHY748',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
+  static FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBEkmeEFlapNnW_VEvNzhCzrmZ9RSGcDk4',
     appId: '1:998751652413:android:eeb224c27a4fc564e67854',
     messagingSenderId: '998751652413',
@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'fastaval-it.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
+  static FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBUR48lZrkRKb3DVLPLMGiTZP4ImFvN_xc',
     appId: '1:998751652413:ios:97a588cd97e45cc5e67854',
     messagingSenderId: '998751652413',

@@ -26,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
           child: SizedBox(
             height: double.infinity,
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [settingsCard(tr('common.language'), Icons.language)],
               ),
@@ -44,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
         margin: kMenuCardMargin,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Colors.black12, width: 1)),
+            side: BorderSide(color: Colors.black12, width: 1)),
         elevation: 1,
         child: Column(children: [
           ListTile(

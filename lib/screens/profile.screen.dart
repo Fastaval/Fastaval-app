@@ -48,9 +48,9 @@ class ProfileScreen extends StatelessWidget {
               buildUserFoodTimesCard(),
               buildUserSleepCard(),
               buildUserWearCard(),
-              SizedBox(height: 30.0),
+              SizedBox(height: 30),
               buildLogoutButton(),
-              SizedBox(height: 30.0),
+              SizedBox(height: 30),
             ],
           ),
         ),
@@ -58,126 +58,113 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildIdIcon() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16, 20, 16, 0),
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              SizedBox(height: 70),
-              Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 0.41),
-                  border: Border.all(color: colorWhite, width: 1),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      appCtrl.user.id.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: colorBlack,
-                        fontSize: 58,
-                        fontWeight: FontWeight.bold,
+  Widget buildIdIcon() => Container(
+        margin: EdgeInsets.fromLTRB(16, 20, 16, 0),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 70),
+                Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 0.41),
+                    border: Border.all(color: colorWhite, width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        appCtrl.user.id.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: colorBlack,
+                          fontSize: 58,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  tr('profile.participantNumber'),
-                  style: TextStyle(
-                      color: colorOrange,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold),
-                )
-              ])
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildLogoutButton() {
-    return Padding(
-        padding: EdgeInsets.all(40),
-        child: SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.white)),
-            onPressed: () => {appCtrl.logout()},
-            child: Text(
-              tr('login.signOut'),
-              style: TextStyle(
-                  color: Colors.deepOrange,
-                  letterSpacing: 1.5,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ));
-  }
-
-  Widget buildUserProgramCard() {
-    return Obx(() => textAndItemCard(
-        tr('profile.yourProgram'),
-        appCtrl.fetchingUser.isTrue
-            ? SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: colorOrangeDark,
-                ),
-              )
-            : Text(
-                "${tr('common.updated')} ${formatDay(appCtrl.userUpdateTime.value)} ${formatTime(appCtrl.userUpdateTime.value)}",
-                style: kNormalTextSubdued,
-              ),
-        buildUsersProgram(appCtrl.user.scheduling)));
-  }
-
-  Widget buildUsersProgram(List<Scheduling> schedule) {
-    return Column(
-      children: [
-        SizedBox(height: 8),
-        ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: schedule.length,
-          separatorBuilder: (context, int index) {
-            return SizedBox(height: 0);
-          },
-          itemBuilder: (buildContext, index) {
-            return userProgramItem(schedule[index]);
-          },
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    tr('profile.participantNumber'),
+                    style: TextStyle(
+                        color: colorOrange,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold),
+                  )
+                ])
+              ],
+            )
+          ],
         ),
-        SizedBox(height: 8)
-      ],
-    );
-  }
+      );
+
+  Widget buildLogoutButton() => Padding(
+      padding: EdgeInsets.all(40),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
+          onPressed: () => appCtrl.logout(),
+          child: Text(
+            tr('login.signOut'),
+            style: TextStyle(
+                color: Colors.deepOrange,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ));
+
+  Widget buildUserProgramCard() => Obx(() => textAndItemCard(
+      tr('profile.yourProgram'),
+      appCtrl.fetchingUser.isTrue
+          ? SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: colorOrangeDark,
+              ),
+            )
+          : Text(
+              "${tr('common.updated')} ${formatDay(appCtrl.userUpdateTime.value)} ${formatTime(appCtrl.userUpdateTime.value)}",
+              style: kNormalTextSubdued),
+      buildUsersProgram(appCtrl.user.scheduling)));
+
+  Widget buildUsersProgram(List<Scheduling> schedule) => Column(
+        children: [
+          SizedBox(height: 8),
+          ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: schedule.length,
+            separatorBuilder: (context, int index) => SizedBox(height: 0),
+            itemBuilder: (buildContext, index) =>
+                userProgramItem(schedule[index]),
+          ),
+          SizedBox(height: 8)
+        ],
+      );
 
   Widget userProgramItem(Scheduling item) {
     var room = Get.locale!.languageCode == 'da' ? item.roomDa : item.roomEn;
@@ -260,16 +247,11 @@ class ProfileScreen extends StatelessWidget {
             : Text(tr('program.food.notOrdered'), style: kNormalTextStyle),
       ),
       ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: foodList.length,
-        separatorBuilder: (context, int index) {
-          return SizedBox(height: 0);
-        },
-        itemBuilder: (buildContext, index) {
-          return foodTickets(foodList[index]);
-        },
-      ),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: foodList.length,
+          separatorBuilder: (context, int index) => SizedBox(height: 0),
+          itemBuilder: (buildContext, index) => foodTickets(foodList[index])),
       SizedBox(height: 8)
     ]);
   }
@@ -337,29 +319,25 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildUserWearCard() {
-    return textAndIconCard(
-        tr('profile.wear.title'),
-        Icons.shopping_bag_outlined,
-        Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
-            child: appCtrl.user.wear.isEmpty
-                ? Row(children: [oneTextRow(tr('profile.wear.noWear'))])
-                : ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: appCtrl.user.wear.length,
-                    separatorBuilder: (context, int index) {
-                      return SizedBox(height: 10);
-                    },
-                    itemBuilder: (buildContext, index) {
-                      return wearItem(appCtrl.user.wear[index]);
-                    },
-                  )));
-  }
+  Widget buildUserWearCard() => textAndIconCard(
+      tr('profile.wear.title'),
+      Icons.shopping_bag_outlined,
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: appCtrl.user.wear.isEmpty
+              ? Row(children: [oneTextRow(tr('profile.wear.noWear'))])
+              : ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: appCtrl.user.wear.length,
+                  separatorBuilder: (context, int index) =>
+                      SizedBox(height: 10),
+                  itemBuilder: (buildContext, index) =>
+                      wearItem(appCtrl.user.wear[index]),
+                )));
 
   Widget wearItem(Wear item) {
-    String title = settingsCtrl.language.value == 'da'
+    String title = Get.locale!.languageCode == 'da'
         ? "${item.amount} stk. ${item.titleDa}"
         : "${item.amount} pcs. ${item.titleEn}";
 
@@ -377,22 +355,20 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildUserSleepCard() {
-    return textAndIconCard(
-        tr('profile.sleep.title'),
-        CupertinoIcons.bed_double,
-        Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
-            child: appCtrl.user.sleep.access == 0
-                ? Row(children: [oneTextRow(tr('profile.sleep.notSleeping'))])
-                : Column(children: [
-                    twoTextRow(tr('profile.sleep.location'),
-                        appCtrl.user.sleep.areaName),
-                    SizedBox(height: 10),
-                    twoTextRow(tr('profile.sleep.mattressRented'),
-                        tr('profile.sleep.mattress.${appCtrl.user.sleep.mattress}'))
-                  ])));
-  }
+  Widget buildUserSleepCard() => textAndIconCard(
+      tr('profile.sleep.title'),
+      CupertinoIcons.bed_double,
+      Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 24, 16),
+          child: appCtrl.user.sleep.access == 0
+              ? Row(children: [oneTextRow(tr('profile.sleep.notSleeping'))])
+              : Column(children: [
+                  twoTextRow(tr('profile.sleep.location'),
+                      appCtrl.user.sleep.areaName),
+                  SizedBox(height: 10),
+                  twoTextRow(tr('profile.sleep.mattressRented'),
+                      tr('profile.sleep.mattress.${appCtrl.user.sleep.mattress}'))
+                ])));
 
   getFoodImage(Food item) {
     if (item.titleEn.contains('Dinner')) {
@@ -401,6 +377,7 @@ class ProfileScreen extends StatelessWidget {
     if (item.titleEn.contains('Breakfast')) {
       return 'assets/images/breakfast.jpg';
     }
+
     return 'assets/images/lunch.jpg';
   }
 
@@ -478,7 +455,7 @@ class ProfileScreen extends StatelessWidget {
         insetPadding: EdgeInsets.all(10),
         actionsPadding: EdgeInsets.all(5),
         contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+        titlePadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
         title: Column(children: [
           Container(
               decoration: BoxDecoration(

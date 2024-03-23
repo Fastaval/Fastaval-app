@@ -27,6 +27,7 @@ class SettingsController extends GetxController {
       updateLanguage(defaultLang);
       return Locale(defaultLang);
     }
+
     language(foundLanguage);
     return Locale(foundLanguage);
   }

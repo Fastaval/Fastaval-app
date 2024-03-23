@@ -1,19 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart';
 
-formatDay(int? time) {
-  return DateFormat.E(Get.locale!.languageCode == 'da' ? 'da_DK' : 'en_UK')
-      .format(formatTimestampToDateTime(time!))
-      .capitalizeString();
-}
+formatDay(int? time) =>
+    DateFormat.E(Get.locale!.languageCode == 'da' ? 'da_DK' : 'en_UK')
+        .format(formatTimestampToDateTime(time!))
+        .capitalizeString();
 
-String formatTime(int? time) {
-  return DateFormat('HH:mm').format(formatTimestampToDateTime(time!));
-}
+String formatTime(int? time) =>
+    DateFormat('HH:mm').format(formatTimestampToDateTime(time!));
 
-DateTime formatTimestampToDateTime(int timeInUnixTime) {
-  return DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
-}
+DateTime formatTimestampToDateTime(int timeInUnixTime) =>
+    DateTime.fromMillisecondsSinceEpoch(timeInUnixTime * 1000);
 
 String getLanguage(String language) {
   switch (language) {
@@ -29,7 +26,5 @@ String getLanguage(String language) {
 }
 
 extension StringExtensions on String {
-  String capitalizeString() {
-    return "${this[0].toUpperCase()}${substring(1)}";
-  }
+  String capitalizeString() => "${this[0].toUpperCase()}${substring(1)}";
 }
