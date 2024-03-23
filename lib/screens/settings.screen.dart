@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
-  final store = Get.find<SettingsController>();
+  final settingsCtrl = Get.find<SettingsController>();
 
   @override
   Widget build(context) {
@@ -53,9 +53,9 @@ class SettingsScreen extends StatelessWidget {
                   DropdownMenuItem(value: 'da', child: Text('Dansk')),
                   DropdownMenuItem(value: 'en', child: Text('English')),
                 ],
-                value: store.language.value,
+                value: settingsCtrl.language.value,
                 onChanged: (Object? value) =>
-                    {store.updateLanguage(value as String)}),
+                    {settingsCtrl.updateLanguage(value as String)}),
             title: Row(
               children: [
                 Padding(

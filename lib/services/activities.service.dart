@@ -4,20 +4,19 @@ import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/program.model.dart';
 import 'package:fastaval_app/services/config.service.dart';
 import 'package:fastaval_app/services/local_storage.service.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ActivitiesService {
   static const String kFavoritesKey = 'FAVORITES_KEY24';
   final LocalStorageService storageService = LocalStorageService();
 
-  retrieveFavorites() async {
+  Future<List> retrieveFavorites() async {
     String favoritesString = await storageService.getString(kFavoritesKey);
     if (favoritesString == '') return [];
     return jsonDecode(favoritesString);
   }
 
-  storeFavorites(RxList favorites) {
+  storeFavorites(List favorites) {
     String favoritesString = jsonEncode(favorites);
     storageService.setString(kFavoritesKey, favoritesString);
   }

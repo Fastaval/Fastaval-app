@@ -8,14 +8,15 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class InfoScreen extends StatelessWidget {
-  final notoficationController = Get.find<NotificationController>();
+  final notoficationCtrl = Get.find<NotificationController>();
+
   @override
   Widget build(context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 25,
+        toolbarHeight: 40,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.info')),

@@ -4,17 +4,17 @@ import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/notification.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:timezone/standalone.dart' as tz;
 
 class NotificationsScreen extends StatelessWidget {
-  final notificationController = Get.find<NotificationController>();
+  final notificationCtrl = Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
-    notificationController.clearNotificationsWaiting();
+    notificationCtrl.clearNotificationsWaiting();
 
     return Scaffold(
       appBar: AppBar(
@@ -23,47 +23,32 @@ class NotificationsScreen extends StatelessWidget {
         toolbarHeight: 40,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
+        actions: [
+          IconButton(
+              onPressed: () => notificationCtrl.getNotifications(),
+              icon: Icon(CupertinoIcons.refresh))
+        ],
         title: Text(tr('screenTitle.notifications')),
       ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
+      body: Container(
+        height: double.infinity,
+        decoration: backgroundBoxDecorationStyle,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
             children: [
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: backgroundBoxDecorationStyle,
+              SizedBox(height: 12),
+              Obx(
+                () => textAndTextCard(
+                  tr('notifications.title'),
+                  "${tr('common.updated')} ${formatDay(notificationCtrl.notificationListUpdatedAt.value)} ${formatTime(notificationCtrl.notificationListUpdatedAt.value)}",
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                    child: notificationList(context),
+                  ),
+                ),
               ),
-              SizedBox(
-                  height: double.infinity,
-                  child: RefreshIndicator(
-                    backgroundColor: colorWhite,
-                    color: colorOrange,
-                    onRefresh: () async {
-                      notificationController.getNotifications();
-                    },
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 12),
-                          Obx(() => textAndTextCard(
-                              tr('notifications.title'),
-                              "${tr('common.updated')} ${formatDay(notificationController.notificationListUpdatedAt.value)} ${formatTime(notificationController.notificationListUpdatedAt.value)}",
-                              Padding(
-                                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
-                                  child: listWidget(
-                                      notificationController
-                                          .notificationList.reversed
-                                          .toList(),
-                                      context)))),
-                          SizedBox(height: 80),
-                        ],
-                      ),
-                    ),
-                  ))
+              SizedBox(height: 80),
             ],
           ),
         ),
@@ -71,18 +56,23 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  Widget listWidget(List<dynamic> notifications, context) {
-    return ListView.separated(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: notifications.length,
-      separatorBuilder: (context, int index) {
-        return Divider(height: 20, color: Colors.grey);
-      },
-      itemBuilder: (buildContext, index) {
-        return notificationItem(notifications[index]);
-      },
-    );
+  Widget notificationList(context) {
+    var notifications = notificationCtrl.notificationList.reversed.toList();
+
+    return notifications.isNotEmpty
+        ? ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: notifications.length,
+            separatorBuilder: (context, int index) =>
+                Divider(height: 20, color: Colors.grey),
+            itemBuilder: (buildContext, index) =>
+                notificationItem(notifications[index]),
+          )
+        : Padding(
+            child: Text(tr('notifications.noNotificationsFound'),
+                style: kNormalTextStyle),
+            padding: EdgeInsets.fromLTRB(16, 48, 16, 48));
   }
 
   Widget notificationItem(InfosysNotification notification) {
@@ -93,7 +83,14 @@ class NotificationsScreen extends StatelessWidget {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
           padding: EdgeInsets.only(right: 10),
-          child: Text(formatTime((notification.sendTime + tzOffset)))),
+          child: Column(
+            children: [
+              Text(formatTime(notification.sendTime + tzOffset),
+                  style: kNormalTextBoldStyle),
+              Text(formatDay(notification.sendTime + tzOffset),
+                  style: kNormalTextBoldStyle)
+            ],
+          )),
       Expanded(
           child: Text(Get.locale?.languageCode == 'da'
               ? notification.da

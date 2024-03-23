@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 class BoardGameController extends GetxController {
   RxList boardgameList = [].obs;
   RxList filteredList = [].obs;
-  var boardgameListUpdatedAt = 0.obs;
+  RxInt listUpdatedAt = 0.obs;
+  RxBool showSearchClear = false.obs;
 
   init() {
     getBoardGames();
@@ -19,19 +20,19 @@ class BoardGameController extends GetxController {
   }
 
   _updateBoardgameList(List<Boardgame> gamesList) {
-    boardgameList.value = RxList(gamesList);
-    boardgameListUpdatedAt(
-        (DateTime.now().millisecondsSinceEpoch / 1000).round());
-    applyFilterToList();
+    boardgameList(gamesList);
+    listUpdatedAt((DateTime.now().millisecondsSinceEpoch / 1000).round());
   }
 
   applyFilterToList([String? filter]) {
-    filteredList.value = filter == null
+    showSearchClear(filter != null && filter.isNotEmpty);
+
+    filteredList(filter != null && filter.isNotEmpty
         ? boardgameList
-        : boardgameList
             .where((game) =>
                 game.name.toLowerCase().contains(filter.toLowerCase()))
-            .toList();
+            .toList()
+        : boardgameList);
   }
 }
 
@@ -48,5 +49,5 @@ Future<List<Boardgame>> fetchBoardgames() async {
     return boardgames;
   }
 
-  throw Exception('Failed to load boardgames');
+  throw Exception('Failed to load board games');
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:fastaval_app/controllers/program.controller.dart';
+import 'package:fastaval_app/helpers/collections.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
@@ -27,7 +28,7 @@ Widget programListItem(
                     context: context,
                     builder: programItemDialog,
                     routeSettings: RouteSettings(
-                      arguments: [run, programCtrl.activityMap[activity.id]],
+                      arguments: [run, programCtrl.activities[activity.id]],
                     ),
                   ),
               child: Padding(
@@ -76,7 +77,7 @@ Widget programListItem(
         child: Obx(() => IconButton(
             onPressed: () => programCtrl.toggleFavorite(run.id),
             icon: Icon(
-              programCtrl.favoritesList.contains(run.id)
+              programCtrl.favorites.contains(run.id)
                   ? CupertinoIcons.heart_fill
                   : CupertinoIcons.heart,
               color: colorOrangeDark,
@@ -165,6 +166,30 @@ Widget textAndTextCard(String title, String secondaryTitle, content) {
       ]));
 }
 
+Widget textAndItemCard(String title, Widget secondaryTitle, content) {
+  return Container(
+      margin: kCardMargin,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0.5),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colorWhite, width: 1),
+      ),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title,
+                  style: kCardHeaderStyle, overflow: TextOverflow.ellipsis),
+              secondaryTitle,
+            ],
+          ),
+        ),
+        content
+      ]));
+}
+
 Widget textRowHeader(String text) {
   return Row(mainAxisSize: MainAxisSize.max, children: [
     Expanded(
@@ -242,50 +267,51 @@ Widget programItemDialog(BuildContext context) {
       ModalRoute.of(context)!.settings.arguments as List;
 
   return AlertDialog(
-    insetPadding: EdgeInsets.all(10),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-    actionsPadding: EdgeInsets.all(5),
     actions: [
       TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(tr('common.close'))),
     ],
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     backgroundColor: colorWhite,
     surfaceTintColor: colorWhite,
-    titlePadding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+    insetPadding: EdgeInsets.all(10),
+    contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+    actionsPadding: EdgeInsets.all(5),
+    titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
     title: Stack(
-      alignment: Alignment.center,
       children: [
-        Padding(
-            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-            child: Column(
-              children: [
-                Text(
-                  Get.locale?.languageCode == 'da'
+        Column(children: [
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                image: DecorationImage(
+                    image: AssetImage(getActivityImageLocation(activity.type)),
+                    fit: BoxFit.cover),
+              ),
+              height: 100),
+          SizedBox(height: 8),
+          Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Text(
+                  context.locale.languageCode == 'da'
                       ? activity.daTitle
                       : activity.enTitle,
-                  textAlign: TextAlign.center,
-                ),
-                if (activity.author.isNotEmpty)
-                  Text(activity.author,
-                      style: TextStyle(fontSize: 12, color: Colors.grey))
-              ],
-            )),
+                  textAlign: TextAlign.center))
+        ]),
         Align(
-          alignment: Alignment.topRight,
-          child: Obx(() => IconButton(
-              onPressed: () => programCtrl.toggleFavorite(run.id),
-              icon: programCtrl.favoritesList.contains(run.id)
-                  ? Icon(
-                      CupertinoIcons.heart_fill,
-                      color: colorOrangeDark,
-                    )
-                  : Icon(
-                      CupertinoIcons.heart,
-                      color: colorOrangeDark,
-                    ))),
-        )
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 16, 0),
+              child: Obx(() => IconButton(
+                  onPressed: () => programCtrl.toggleFavorite(run.id),
+                  icon: Icon(
+                      programCtrl.favorites.contains(run.id)
+                          ? CupertinoIcons.heart_fill
+                          : CupertinoIcons.heart,
+                      color: colorOrangeDark))),
+            )),
       ],
     ),
     content: Column(

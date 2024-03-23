@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
+import 'package:fastaval_app/controllers/program.controller.dart';
 import 'package:fastaval_app/screens/favorites.screen.dart';
 import 'package:fastaval_app/screens/info.screen.dart';
 import 'package:fastaval_app/screens/login.screen.dart';
@@ -10,7 +11,6 @@ import 'package:fastaval_app/screens/more.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
-import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   final appCtrl = Get.find<AppController>();
   final notificationCtrl = Get.find<NotificationController>();
+  final programCtrl = Get.find<ProgramController>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onNavClick(int index) {
+  onNavClick(int index) {
     appCtrl.updateNavIndex(index);
   }
 
@@ -85,10 +86,9 @@ class HomeScreenState extends State<HomeScreen> {
       BottomNavigationBarItem(
           icon: const Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
-      if (programCtrl.favoritesList.isNotEmpty)
-        BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.heart_fill),
-            label: tr('bottomNavigation.favorites')),
+      BottomNavigationBarItem(
+          icon: const Icon(CupertinoIcons.heart_fill),
+          label: tr('bottomNavigation.favorites')),
       BottomNavigationBarItem(
           icon: badges.Badge(
               showBadge: notificationCtrl.notificationsWaiting.value &&
@@ -104,7 +104,7 @@ class HomeScreenState extends State<HomeScreen> {
       appCtrl.loggedIn.value == true ? ProfileScreen() : LoginScreen(),
       InfoScreen(),
       ProgramScreen(),
-      if (programCtrl.favoritesList.isNotEmpty) FavoritesScreen(),
+      FavoritesScreen(),
       MoreScreen()
     ];
   }

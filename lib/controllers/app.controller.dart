@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AppController extends GetxController {
+  final fetchingUser = false.obs;
   final loggedIn = false.obs;
   final navIndex = 1.obs;
   late User user;
@@ -32,11 +33,13 @@ class AppController extends GetxController {
   }
 
   updateUserProfile() async {
+    fetchingUser(true);
     User newUser = await fetchUser(user.id.toString(), user.password);
     newUser.password = user.password;
 
     await UserService().setUser(newUser);
     updateUser(newUser);
+    fetchingUser(false);
   }
 
   Future<void> login(String id, String password) async {

@@ -1,4 +1,15 @@
 {
+  "activityType": {
+    "braet": "Brætspil",
+    "designer": "Designer",
+    "gds": "Heltestyrke",
+    "junior": "Junior",
+    "magic": "Magic spil",
+    "ottoviteter": "Aktivitet",
+    "rolle": "Spiller",
+    "spilleder": "Spilleder",
+    "system": "Aktivitet"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -17,6 +28,7 @@
       "false": "Ikke ledigt",
       "true": "Ledigt"
     },
+    "noGamesFound": "Ingen brætspil fundet. Prøv at ændre din søgning.",
     "search": "Søg...",
     "title": "Brætspil"
   },
@@ -46,6 +58,10 @@
   },
   "error": {
     "login": "Fejl i brugernavn eller password"
+  },
+  "favorites": {
+    "noFavorites": "Du har ingen favoritter endnu.\n\nMed favoritter kan du skabe dig et bedre overblik over events du gerne vil huske, og have dem samlet på et sted.\n\nTryk på hjertet ved et event i programmet for at tilføje det til dine favoritter.",
+    "yourFavorites": "Dine favoritter"
   },
   "info": {
     "fastaWear": {
@@ -156,19 +172,10 @@
     "title": "Mere"
   },
   "notifications": {
+    "noNotificationsFound": "Ingen notifikationer fundet.\n\nBare rolig, du vil blive informeret her, hvis der sker noget vigtigt.",
     "title": "Notifikationer"
   },
   "profile": {
-    "activityType": {
-      "braet": "Brætspil",
-      "designer": "Designer",
-      "gds": "Heltestyrke",
-      "junior": "Junior",
-      "ottoviteter": "Ottovitet",
-      "rolle": "Spiller",
-      "spilleder": "Spilleder",
-      "system": "Fastavitet"
-    },
     "breakfastText": "Groft brød, pålæg, kogte æg, frugt og grønt, samt morgenmadsprodukter med yoghurt, mælk eller skyr",
     "foodHandedOut": "Maden er udleveret",
     "foodTicket": "Madbillet",

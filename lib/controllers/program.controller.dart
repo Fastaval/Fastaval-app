@@ -1,3 +1,4 @@
+import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/helpers/formatting.dart';
 import 'package:fastaval_app/models/activity_item.model.dart';
 import 'package:fastaval_app/models/activity_run.model.dart';
@@ -8,11 +9,13 @@ import 'package:get/get.dart';
 class ProgramController extends GetxController {
   final LocalStorageService storageService = LocalStorageService();
   final ActivitiesService activitiesService = ActivitiesService();
+  final appCtrl = Get.find<AppController>();
 
-  Map<int, ActivityItem> activityMap = {};
-  RxList favoritesList = [].obs;
-  Map<String, List<ActivityItem>> programList = {};
-  Map<String, List<ActivityRun>> runList = {};
+  RxMap activities = {}.obs;
+  RxMap runs = {}.obs;
+  RxList favorites = [].obs;
+  RxMap activityItemForDay = {}.obs;
+  RxMap activityRunForDay = {}.obs;
 
   init() async {
     await addDayToList("2024-03-27");
@@ -25,41 +28,38 @@ class ProgramController extends GetxController {
   }
 
   addDayToList(day) async {
-    List<ActivityRun>? runlist = [];
-
     await activitiesService.getDay(day).then((list) {
+      List runlist = [];
+      activityItemForDay[day] = list;
+
       for (ActivityItem activity in list) {
         if (activity.type != 'system') {
-          activityMap[activity.id] = activity;
+          activities[activity.id] = activity;
           for (ActivityRun run in activity.runs) {
             if (formatTimestampToDateTime(run.start)
                     .toString()
                     .substring(0, 10) ==
                 day) {
+              runs[run.id] = run;
               runlist.add(run);
             }
           }
         }
       }
 
-      runlist.sort((a, b) => a.start - b.start);
-
-      runList[day] = runlist;
-      programList[day] = list;
+      activityRunForDay[day] = runlist..sort((a, b) => a.start - b.start);
     });
   }
 
   getFavoritesFromStorage() async {
-    await activitiesService.retrieveFavorites().then((favorites) {
-      favoritesList(favorites);
+    await activitiesService.retrieveFavorites().then((favoritesList) {
+      favorites(favoritesList);
     });
   }
 
   toggleFavorite(int id) {
-    favoritesList.contains(id)
-        ? favoritesList.remove(id)
-        : favoritesList.add(id);
+    favorites.contains(id) ? favorites.remove(id) : favorites.add(id);
 
-    activitiesService.storeFavorites(favoritesList);
+    activitiesService.storeFavorites(favorites.toList());
   }
 }

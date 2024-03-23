@@ -18,7 +18,7 @@ class ProgramScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: colorOrangeDark,
             foregroundColor: colorWhite,
-            toolbarHeight: 25,
+            toolbarHeight: 40,
             centerTitle: true,
             titleTextStyle: kAppBarTextStyle,
             title: Text(tr('screenTitle.program')),
@@ -58,13 +58,13 @@ class ProgramScreen extends StatelessWidget {
 
   Widget buildday(String day) {
     return ListView.builder(
-      itemCount: programCtrl.runList[day]!.length,
+      itemCount: programCtrl.activityRunForDay[day]!.length,
       itemBuilder: (context, index) {
-        ActivityRun item = programCtrl.runList[day]![index];
+        ActivityRun item = programCtrl.activityRunForDay[day]![index];
         return programListItem(
-            programCtrl.activityMap[item.activity]!,
+            programCtrl.activities[item.activity]!,
             item,
-            getActivityColor(programCtrl.activityMap[item.activity]!.type),
+            getActivityColor(programCtrl.activities[item.activity]!.type),
             context);
       },
     );

@@ -15,7 +15,18 @@ Map<String, Color> colorMap = {
   'figur': Colors.red.shade300
 };
 
-/// Returns the color associated with the given activity type.
+Map<String, String> activityImageMap = {
+  'gds': 'assets/images/gds.jpg',
+  'spilleder': 'assets/images/gamemaster.jpg',
+  'rolle': 'assets/images/player.jpg',
+  'braet': 'assets/images/boardgame.jpg',
+  'junior': 'assets/images/junior.png',
+};
+
 Color getActivityColor(String type) {
   return colorMap[type] ?? Colors.grey;
+}
+
+String getActivityImageLocation(type) {
+  return activityImageMap[type] ?? 'assets/images/fastaval.png';
 }

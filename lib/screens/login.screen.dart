@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController userIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final appController = Get.find<AppController>();
-  final notificationController = Get.find<NotificationController>();
+  final TextEditingController userIdInput = TextEditingController();
+  final TextEditingController passwordInput = TextEditingController();
+  final appCtrl = Get.find<AppController>();
+  final notificationCtrl = Get.find<NotificationController>();
 
   @override
   Widget build(context) {
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 25,
+        toolbarHeight: 40,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.login')),
@@ -57,10 +57,9 @@ class LoginScreen extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
         onPressed: () async => {
-          await appController.login(
-              userIdController.text, passwordController.text),
-          if (appController.loggedIn.value == true)
-            notificationController.getNotificationsAndSetWaiting(),
+          await appCtrl.login(userIdInput.text, passwordInput.text),
+          if (appCtrl.loggedIn.value == true)
+            notificationCtrl.getNotificationsAndSetWaiting(),
         },
         child: Text(
           tr('login.signIn'),
@@ -86,7 +85,7 @@ class LoginScreen extends StatelessWidget {
           decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: passwordController,
+            controller: passwordInput,
             keyboardType: TextInputType.number,
             obscureText: true,
             style: const TextStyle(color: Colors.white),
@@ -114,7 +113,7 @@ class LoginScreen extends StatelessWidget {
           decoration: kTextBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: userIdController,
+            controller: userIdInput,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(

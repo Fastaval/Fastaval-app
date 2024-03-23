@@ -1,4 +1,15 @@
 {
+  "activityType": {
+    "braet": "Board game",
+    "designer": "Designer",
+    "gds": "Hero Force",
+    "junior": "Junior",
+    "magic": "Magic Game",
+    "ottoviteter": "Activity",
+    "rolle": "Player",
+    "spilleder": "Gamemaster",
+    "system": "Activity"
+  },
   "app": {
     "title": "Fastaval"
   },
@@ -14,16 +25,17 @@
   "boardgames": {
     "fastavalGame": "is a Fastaval game",
     "gameAvailable": {
-      "false": "Not available",
+      "false": "Not Available",
       "true": "Available"
     },
+    "noGamesFound": "No board games found. Try searching for something else.",
     "search": "Search...",
     "title": "Board Games"
   },
   "bottomNavigation": {
     "favorites": "Favorites",
     "information": "Information",
-    "login": "Sign in",
+    "login": "Sign In",
     "more": "More",
     "profil": "Profile",
     "program": "Program"
@@ -46,6 +58,10 @@
   },
   "error": {
     "login": "Error in participant number or password"
+  },
+  "favorites": {
+    "noFavorites": "You have no favorites yet.\n\nWith favorites, you can have a better overview of events you want to remember and have them collected in one place.\n\nPress the heart icon next to an event in the program to add it to your favorites.",
+    "yourFavorites": "Your Favorites"
   },
   "info": {
     "fastaWear": {
@@ -156,19 +172,10 @@
     "title": "More"
   },
   "notifications": {
+    "noNotificationsFound": "No notifications found.\n\nDon't worry, you will be informed here if anything important happens.",
     "title": "Notifications"
   },
   "profile": {
-    "activityType": {
-      "braet": "Boardgame",
-      "designer": "Designer",
-      "gds": "Hero Force",
-      "junior": "Junior",
-      "ottoviteter": "Ottotivity",
-      "rolle": "Player",
-      "spilleder": "Gamemaster",
-      "system": "Fastativity"
-    },
     "breakfastText": "Hearty bread, spreads, boiled eggs, fruits and vegetable as well as cereal with yoghurt, milk or skyr",
     "foodHandedOut": "The food has been handed out",
     "foodTicket": "Meal ticket",

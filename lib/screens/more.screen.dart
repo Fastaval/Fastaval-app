@@ -12,8 +12,8 @@ import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 
 class MoreScreen extends StatelessWidget {
-  final notificationController = Get.find<NotificationController>();
-  final appController = Get.find<AppController>();
+  final notificationCtrl = Get.find<NotificationController>();
+  final appCtrl = Get.find<AppController>();
 
   @override
   Widget build(context) {
@@ -21,7 +21,7 @@ class MoreScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 25,
+        toolbarHeight: 40,
         centerTitle: true,
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.more')),
@@ -34,47 +34,38 @@ class MoreScreen extends StatelessWidget {
           decoration: backgroundBoxDecorationStyle,
           child: Obx(() => Column(
                 children: [
-                  if (appController.loggedIn.value == true)
+                  if (appCtrl.loggedIn.value == true)
                     InkWell(
                       child: menuCard(
                         tr('notifications.title'),
                         Icons.notifications_active_outlined,
                         true,
-                        notificationController.notificationsWaiting.value,
+                        notificationCtrl.notificationsWaiting.value,
                       ),
                       onTap: () => {
                         Get.to(() => NotificationsScreen(),
                             transition: Transition.rightToLeft),
-                        notificationController.clearNotificationsWaiting(),
+                        notificationCtrl.clearNotificationsWaiting(),
                       },
                     ),
                   InkWell(
-                    child: menuCard(
-                      tr('boardgames.title'),
-                      Icons.sports_esports_outlined,
-                      true,
-                    ),
-                    onTap: () => Get.to(() => BoardgameScreen(),
-                        transition: Transition.rightToLeft),
-                  ),
+                      child: menuCard(tr('boardgames.title'),
+                          Icons.sports_esports_outlined, true),
+                      onTap: () => Get.to(() => BoardgameScreen(),
+                          transition: Transition.rightToLeft)),
                   InkWell(
-                    child: menuCard(tr('more.map.school'), Icons.school),
-                    onTap: () => fastaMap(
-                        context, AssetImage('assets/images/school.jpg')),
-                  ),
+                      child: menuCard(tr('more.map.school'), Icons.school),
+                      onTap: () => fastaMap(
+                          context, AssetImage('assets/images/school.jpg'))),
                   InkWell(
-                    child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
-                    onTap: () => fastaMap(
-                        context, AssetImage('assets/images/sportscentre.jpg')),
-                  ),
+                      child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
+                      onTap: () => fastaMap(context,
+                          AssetImage('assets/images/sportscentre.jpg'))),
                   SizedBox(height: 50),
                   InkWell(
                     child: menuCard(tr('more.settings'), Icons.settings, true),
-                    onTap: () => {
-                      NotificationController().clearNotificationsWaiting(),
-                      Get.to(() => SettingsScreen(),
-                          transition: Transition.rightToLeft),
-                    },
+                    onTap: () => Get.to(() => SettingsScreen(),
+                        transition: Transition.rightToLeft),
                   ),
                   Expanded(
                     child: Align(
