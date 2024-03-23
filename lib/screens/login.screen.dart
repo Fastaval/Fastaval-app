@@ -3,7 +3,6 @@ import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/app.controller.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -23,14 +22,14 @@ class LoginScreen extends StatelessWidget {
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.login')),
       ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: backgroundBoxDecorationStyle,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(48, 100, 48, 0),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: backgroundBoxDecorationStyle,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(48, 100, 48, 0),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -41,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                 _buildLoginButton(),
                 SizedBox(height: 16.0),
                 Text(tr('login.helpTitle'), style: kLabelStyle),
-                Text(textAlign: TextAlign.center, tr('login.helpText')),
+                Text(textAlign: TextAlign.center, tr('login.helpText'))
               ],
             ),
           ),
