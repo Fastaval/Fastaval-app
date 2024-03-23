@@ -14,8 +14,8 @@ class ConfigService {
       'APItest': 'https://infosys-test.fastaval.dk/api'
     });
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(minutes: 10),
+      fetchTimeout: Duration(minutes: 1),
+      minimumFetchInterval: Duration(minutes: 10),
     ));
     await _remoteConfig.fetchAndActivate();
   }

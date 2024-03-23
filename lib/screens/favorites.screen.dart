@@ -155,7 +155,7 @@ class FavoritesScreen extends StatelessWidget {
         ],
         backgroundColor: colorWhite,
         surfaceTintColor: colorWhite,
-        titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+        titlePadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
         title: Stack(
           children: [
             Column(children: [

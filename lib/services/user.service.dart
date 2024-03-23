@@ -18,7 +18,7 @@ final settingsController = Get.find<SettingsController>();
 final appController = Get.find<AppController>();
 
 class UserService {
-  static const String kUserKey = 'USER_KEY24';
+  static String kUserKey = 'USER_KEY24';
   final LocalStorageService storageService = LocalStorageService();
 
   Future<User?> getUserFromStorage() async {
@@ -112,7 +112,7 @@ Future<void> askForTrackingPermission(BuildContext context) async {
       await AppTrackingTransparency.trackingAuthorizationStatus;
   if (status == TrackingStatus.notDetermined) {
     await showCustomTrackingDialog(context);
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(Duration(milliseconds: 200));
     await AppTrackingTransparency.requestTrackingAuthorization();
   }
 }

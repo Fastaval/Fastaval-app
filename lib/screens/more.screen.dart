@@ -136,7 +136,7 @@ class MoreScreen extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 8, right: 16),
-                                child: Text('1.2.0 | © 2024 Fastaval IT',
+                                child: Text('1.2.0 - © 2024 Fastaval IT',
                                     style: kNormalTextSubdued)))
                       ],
                     ),
@@ -149,26 +149,24 @@ class MoreScreen extends StatelessWidget {
   }
 }
 
-Future fastaMap(BuildContext context, AssetImage image) {
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Stack(children: [
-          PhotoView(imageProvider: image),
-          Positioned(
-              right: 10,
-              top: 10,
-              child: Material(
-                color: Colors.transparent,
-                child: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  radius: 20,
-                  child: IconButton(
-                      icon: Icon(Icons.close),
-                      color: Colors.black,
-                      onPressed: () => Navigator.pop(context)),
-                ),
-              ))
-        ]);
-      });
-}
+Future fastaMap(BuildContext context, AssetImage image) => showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Stack(children: [
+        PhotoView(imageProvider: image),
+        Positioned(
+            right: 10,
+            top: 10,
+            child: Material(
+              color: Colors.transparent,
+              child: CircleAvatar(
+                backgroundColor: Colors.orange,
+                radius: 20,
+                child: IconButton(
+                    icon: Icon(Icons.close),
+                    color: Colors.black,
+                    onPressed: () => Navigator.pop(context)),
+              ),
+            ))
+      ]);
+    });

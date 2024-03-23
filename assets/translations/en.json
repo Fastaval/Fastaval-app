@@ -113,21 +113,19 @@
       "safetyMail": "Safety mail",
       "title": "Safe Fastaval"
     },
+
     "stores": {
-      "stores": {
-        "store1": {
-          "day1": "Thu-Sat",
-          "title": "Epic Panda"
-        },
-        "store2": {
-          "day1": "Thu-Sat",
-          "title": "Bunkern Esbjerg"
-        },
-        "store3": {
-          "day1": "Saturday",
-          "title": "Artist Alley popup shops @ Fællesområdet"
-        },
-        "title": "Butikker"
+      "store1": {
+        "day1": "Thu-Sat",
+        "title": "Epic Panda"
+      },
+      "store2": {
+        "day1": "Thu-Sat",
+        "title": "Bunkern Esbjerg"
+      },
+      "store3": {
+        "day1": "Saturday",
+        "title": "Artist Alley popup shops @ Common area"
       },
       "title": "Shops"
     },
