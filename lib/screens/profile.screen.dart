@@ -12,7 +12,6 @@ import 'package:fastaval_app/models/wear.model.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -26,43 +25,32 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
         foregroundColor: colorWhite,
-        toolbarHeight: 25,
+        toolbarHeight: 40,
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () => appController.updateUserProfile(),
+              icon: Icon(CupertinoIcons.refresh))
+        ],
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('screenTitle.profile')),
       ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: backgroundBoxDecorationStyle,
-            ),
-            SizedBox(
-                height: double.infinity,
-                child: RefreshIndicator(
-                  backgroundColor: colorWhite,
-                  color: colorOrange,
-                  onRefresh: () => appController.updateUserProfile(),
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: Obx(() => Column(
-                          children: [
-                            buildIdIcon(),
-                            buildUserProgramCard(),
-                            buildUserFoodTimesCard(),
-                            buildUserSleepCard(),
-                            buildUserWearCard(),
-                            SizedBox(height: 30.0),
-                            buildLogoutButton(),
-                            SizedBox(height: 30.0),
-                          ],
-                        )),
-                  ),
-                ))
-          ],
+      body: Container(
+        decoration: backgroundBoxDecorationStyle,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Obx(() => Column(
+                children: [
+                  buildIdIcon(),
+                  buildUserProgramCard(),
+                  buildUserFoodTimesCard(),
+                  buildUserSleepCard(),
+                  buildUserWearCard(),
+                  SizedBox(height: 30.0),
+                  buildLogoutButton(),
+                  SizedBox(height: 30.0),
+                ],
+              )),
         ),
       ),
     );

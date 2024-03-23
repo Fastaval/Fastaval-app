@@ -10,6 +10,7 @@ import 'package:fastaval_app/screens/more.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/profile.screen.dart';
 import 'package:fastaval_app/screens/program.screen.dart';
+import 'package:fastaval_app/widgets/widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,21 +24,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  final appController = Get.find<AppController>();
-  final notificationController = Get.find<NotificationController>();
+  final appCtrl = Get.find<AppController>();
+  final notificationCtrl = Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
-        notificationController.getNotificationsAndSetWaiting();
+        notificationCtrl.getNotificationsAndSetWaiting();
         Get.to(() => NotificationsScreen(), transition: Transition.rightToLeft);
       }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        notificationController.getNotificationsAndSetWaiting();
+        notificationCtrl.getNotificationsAndSetWaiting();
       }
     });
 
@@ -50,11 +51,10 @@ class HomeScreenState extends State<HomeScreen> {
         return false;
       },
       child: Scaffold(
-        body: SafeArea(
-            child: Obx(() => _screens()[appController.navIndex.value])),
+        body: SafeArea(child: Obx(() => _screens()[appCtrl.navIndex.value])),
         bottomNavigationBar: Obx(() => BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              currentIndex: appController.navIndex.value,
+              currentIndex: appCtrl.navIndex.value,
               onTap: onNavClick,
               items: bottomNavItems(),
               selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -67,32 +67,32 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void onNavClick(int index) {
-    appController.updateNavIndex(index);
+    appCtrl.updateNavIndex(index);
   }
 
   bottomNavItems() {
     return [
-      if (appController.loggedIn.value == true)
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.person_outline),
-            label: tr('bottomNavigation.profil')),
-      if (appController.loggedIn.value == false)
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.login_outlined),
-            label: tr('bottomNavigation.login')),
+      appCtrl.loggedIn.value == true
+          ? BottomNavigationBarItem(
+              icon: const Icon(Icons.person_outline),
+              label: tr('bottomNavigation.profil'))
+          : BottomNavigationBarItem(
+              icon: const Icon(Icons.login_outlined),
+              label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.info_outline),
           label: tr('bottomNavigation.information')),
       BottomNavigationBarItem(
           icon: const Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
-      BottomNavigationBarItem(
-          icon: const Icon(CupertinoIcons.heart_fill),
-          label: tr('bottomNavigation.favorites')),
+      if (programCtrl.favoritesList.isNotEmpty)
+        BottomNavigationBarItem(
+            icon: const Icon(CupertinoIcons.heart_fill),
+            label: tr('bottomNavigation.favorites')),
       BottomNavigationBarItem(
           icon: badges.Badge(
-              showBadge: notificationController.notificationsWaiting.value &&
-                  notificationController.notificationList.isNotEmpty,
+              showBadge: notificationCtrl.notificationsWaiting.value &&
+                  notificationCtrl.notificationList.isNotEmpty,
               position: badges.BadgePosition.topEnd(top: -2, end: -5),
               child: const Icon(Icons.more_horiz_outlined)),
           label: tr('bottomNavigation.more')),
@@ -101,11 +101,10 @@ class HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _screens() {
     return [
-      if (appController.loggedIn.value == true) ProfileScreen(),
-      if (appController.loggedIn.value == false) LoginScreen(),
+      appCtrl.loggedIn.value == true ? ProfileScreen() : LoginScreen(),
       InfoScreen(),
       ProgramScreen(),
-      FavoritesScreen(),
+      if (programCtrl.favoritesList.isNotEmpty) FavoritesScreen(),
       MoreScreen()
     ];
   }

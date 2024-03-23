@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/settings.controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -19,27 +18,20 @@ class SettingsScreen extends StatelessWidget {
         titleTextStyle: kAppBarTextStyle,
         title: Text(tr('settings.title')),
       ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Stack(
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: backgroundBoxDecorationStyle,
-            ),
-            SizedBox(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    settingsCard(tr('common.language'), Icons.language)
-                  ],
-                ),
+      body: SafeArea(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: backgroundBoxDecorationStyle,
+          child: SizedBox(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [settingsCard(tr('common.language'), Icons.language)],
               ),
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

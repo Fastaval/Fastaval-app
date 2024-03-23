@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/notification.controller.dart';
@@ -76,16 +74,13 @@ Widget programListItem(
       Align(
         alignment: Alignment.centerRight,
         child: Obx(() => IconButton(
-            onPressed: () => {inspect(run), programCtrl.toggleFavorite(run.id)},
-            icon: programCtrl.favoritesList.contains(run.id)
-                ? Icon(
-                    CupertinoIcons.heart_fill,
-                    color: colorOrangeDark,
-                  )
-                : Icon(
-                    CupertinoIcons.heart,
-                    color: colorOrangeDark,
-                  ))),
+            onPressed: () => programCtrl.toggleFavorite(run.id),
+            icon: Icon(
+              programCtrl.favoritesList.contains(run.id)
+                  ? CupertinoIcons.heart_fill
+                  : CupertinoIcons.heart,
+              color: colorOrangeDark,
+            ))),
       ),
     ],
   );
@@ -280,8 +275,7 @@ Widget programItemDialog(BuildContext context) {
         Align(
           alignment: Alignment.topRight,
           child: Obx(() => IconButton(
-              onPressed: () =>
-                  {inspect(run), programCtrl.toggleFavorite(run.id)},
+              onPressed: () => programCtrl.toggleFavorite(run.id),
               icon: programCtrl.favoritesList.contains(run.id)
                   ? Icon(
                       CupertinoIcons.heart_fill,

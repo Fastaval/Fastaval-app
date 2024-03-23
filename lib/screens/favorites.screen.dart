@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fastaval_app/constants/styles.constant.dart';
 import 'package:fastaval_app/controllers/program.controller.dart';
@@ -10,6 +12,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
+    print('favorites');
+    inspect(programCtrl.favoritesList.value);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorOrangeDark,
