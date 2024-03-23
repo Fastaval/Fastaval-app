@@ -60,8 +60,8 @@ class HomeScreenState extends State<HomeScreen> {
               items: bottomNavItems(),
               selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
               backgroundColor: colorOrangeDark,
-              selectedItemColor: colorWhite,
-              unselectedItemColor: Colors.white54,
+              selectedItemColor: colorBlack,
+              unselectedItemColor: Colors.black45,
             )),
       ),
     );
@@ -75,26 +75,36 @@ class HomeScreenState extends State<HomeScreen> {
     return [
       appCtrl.loggedIn.value == true
           ? BottomNavigationBarItem(
-              icon: const Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              icon: Icon(Icons.person_outline),
               label: tr('bottomNavigation.profil'))
           : BottomNavigationBarItem(
-              icon: const Icon(Icons.login_outlined),
+              activeIcon: Icon(CupertinoIcons.square_arrow_right_fill),
+              icon: Icon(CupertinoIcons.square_arrow_right),
               label: tr('bottomNavigation.login')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.info_outline),
+          activeIcon: Icon(Icons.info),
+          icon: Icon(Icons.info_outline),
           label: tr('bottomNavigation.information')),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.calendar_month_outlined),
+          activeIcon: Icon(Icons.calendar_month),
+          icon: Icon(Icons.calendar_month_outlined),
           label: tr('bottomNavigation.program')),
       BottomNavigationBarItem(
-          icon: const Icon(CupertinoIcons.heart_fill),
+          activeIcon: Icon(CupertinoIcons.heart_fill),
+          icon: Icon(CupertinoIcons.heart),
           label: tr('bottomNavigation.favorites')),
       BottomNavigationBarItem(
+          activeIcon: badges.Badge(
+              showBadge: notificationCtrl.notificationsWaiting.value &&
+                  notificationCtrl.notificationList.isNotEmpty,
+              position: badges.BadgePosition.topEnd(top: -2, end: -2),
+              child: Icon(CupertinoIcons.ellipsis_circle_fill)),
           icon: badges.Badge(
               showBadge: notificationCtrl.notificationsWaiting.value &&
                   notificationCtrl.notificationList.isNotEmpty,
-              position: badges.BadgePosition.topEnd(top: -2, end: -5),
-              child: const Icon(Icons.more_horiz_outlined)),
+              position: badges.BadgePosition.topEnd(top: -2, end: -2),
+              child: Icon(CupertinoIcons.ellipsis_circle)),
           label: tr('bottomNavigation.more')),
     ];
   }
