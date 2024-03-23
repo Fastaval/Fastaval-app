@@ -128,8 +128,7 @@ class MoreScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 8),
-                        Text(
-                            tr('Besøg vores sociale medier, og skriv dig op til vores nyhedsbrev'),
+                        Text(tr('more.socialMedia'),
                             style: kNormalTextStyle,
                             textAlign: TextAlign.center),
                         SizedBox(height: 24),
@@ -137,7 +136,7 @@ class MoreScreen extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 8, right: 16),
-                                child: Text('1.2.0-22 | © 2024 Fastaval IT',
+                                child: Text('1.2.0 | © 2024 Fastaval IT',
                                     style: kNormalTextSubdued)))
                       ],
                     ),
