@@ -260,16 +260,11 @@ class ProfileScreen extends StatelessWidget {
             : Text(tr('program.food.notOrdered'), style: kNormalTextStyle),
       ),
       ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: foodList.length,
-        separatorBuilder: (context, int index) {
-          return SizedBox(height: 0);
-        },
-        itemBuilder: (buildContext, index) {
-          return foodTickets(foodList[index]);
-        },
-      ),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: foodList.length,
+          separatorBuilder: (context, int index) => SizedBox(height: 0),
+          itemBuilder: (buildContext, index) => foodTickets(foodList[index])),
       SizedBox(height: 8)
     ]);
   }

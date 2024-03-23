@@ -90,13 +90,13 @@ Widget programListItem(
 Widget menuCard(String title, IconData icon,
     [bool hasSubMenu = false, showBadge = false]) {
   return Card(
-      surfaceTintColor: Colors.white,
-      color: Colors.white,
+      surfaceTintColor: colorWhite,
+      color: colorWhite,
       margin: kMenuCardMargin,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: const BorderSide(color: Colors.black12, width: 1)),
-      elevation: 1,
+      elevation: 5,
       child: Column(children: [
         ListTile(
           trailing:

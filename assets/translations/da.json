@@ -115,6 +115,14 @@
     },
     "stores": {
       "store1": {
+        "day1": "Tor-Lør",
+        "title": "Epic Panda"
+      },
+      "store2": {
+        "day1": "Tor-Lør",
+        "title": "Bunkern Esbjerg"
+      },
+      "store3": {
         "day1": "Lørdag",
         "title": "Artist Alley popup shops @ Fællesområdet"
       },
@@ -169,6 +177,7 @@
     },
     "messages": "Notifikationer",
     "settings": "Indstillinger",
+    "socialMedia": "Besøg vores sociale medier, og skriv dig op til vores nyhedsbrev",
     "title": "Mere"
   },
   "notifications": {

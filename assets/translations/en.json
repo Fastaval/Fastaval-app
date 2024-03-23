@@ -114,9 +114,20 @@
       "title": "Safe Fastaval"
     },
     "stores": {
-      "store1": {
-        "day1": "Saturday",
-        "title": "Artist Alley popup shops @ Common area"
+      "stores": {
+        "store1": {
+          "day1": "Thu-Sat",
+          "title": "Epic Panda"
+        },
+        "store2": {
+          "day1": "Thu-Sat",
+          "title": "Bunkern Esbjerg"
+        },
+        "store3": {
+          "day1": "Saturday",
+          "title": "Artist Alley popup shops @ Fællesområdet"
+        },
+        "title": "Butikker"
       },
       "title": "Shops"
     },
@@ -169,6 +180,7 @@
     },
     "messages": "Notifications",
     "settings": "Settings",
+    "socialMedia": "Visit our social media and sign up for our newsletter",
     "title": "More"
   },
   "notifications": {
