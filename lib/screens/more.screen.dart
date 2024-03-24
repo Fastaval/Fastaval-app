@@ -6,6 +6,7 @@ import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/settings.screen.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,7 +49,7 @@ class MoreScreen extends StatelessWidget {
                     InkWell(
                       child: menuCard(
                         tr('notifications.title'),
-                        Icons.notifications_active_outlined,
+                        Icons.notifications_outlined,
                         true,
                         notificationCtrl.notificationsWaiting.value,
                       ),
@@ -64,10 +65,12 @@ class MoreScreen extends StatelessWidget {
                       onTap: () => Get.to(() => BoardgameScreen(),
                           transition: Transition.rightToLeft)),
                   InkWell(
-                      child: menuCard(tr('more.map.school'), Icons.school),
+                      child: menuCard(tr('more.map.school'),
+                          CupertinoIcons.map_pin_ellipse),
                       onTap: () => fastaMap(context, AssetImage(school))),
                   InkWell(
-                      child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
+                      child: menuCard(
+                          tr('more.map.gym'), CupertinoIcons.map_pin_ellipse),
                       onTap: () => fastaMap(context, AssetImage(gym))),
                   SizedBox(height: 50),
                   InkWell(
