@@ -15,6 +15,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:update_available/update_available.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -40,6 +41,8 @@ class HomeScreenState extends State<HomeScreen> {
         notificationCtrl.getNotificationsAndSetWaiting();
       }
     });
+
+    printAvailability();
 
     return NotificationListener(
       onNotification: (notification) {
@@ -112,4 +115,18 @@ class HomeScreenState extends State<HomeScreen> {
         FavoritesScreen(),
         MoreScreen()
       ];
+}
+
+printAvailability() async {
+  final availability = await getUpdateAvailability();
+
+  final text = switch (availability) {
+    UpdateAvailable() =>
+      "There's an update to you app! Please, update it so you have access to the latest features!",
+    NoUpdateAvailable() => 'No update is available for your app.',
+    UnknownAvailability() =>
+      "It was not possible to determine if there is or not an update for your app.",
+  };
+
+  print(text);
 }
