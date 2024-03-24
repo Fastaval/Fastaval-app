@@ -29,25 +29,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.1
+  app_tracking_transparency: ^2.0.4
+  badges: ^3.1.2
   barcode_widget: ^2.0.4
-  shared_preferences: ^2.2.2
-  url_launcher: ^6.2.5
+  cupertino_icons: ^1.0.6
   easy_localization: ^3.0.4
-  fluttertoast: ^8.2.4
-  flutter_local_notifications: ^17.0.0
+  firebase_analytics: ^10.8.10
   firebase_core: ^2.27.1
   firebase_messaging: ^14.7.20
   firebase_remote_config: ^4.3.18
-  firebase_analytics: ^10.8.10
-  app_tracking_transparency: ^2.0.4
-  photo_view: ^0.14.0
-  badges: ^3.1.2
-  cupertino_icons: ^1.0.6
-  get: ^4.6.6
-  timezone: ^0.9.2
+  flutter_local_notifications: ^17.0.0
+  fluttertoast: ^8.2.4
   font_awesome_flutter: ^10.7.0
+  get: ^4.6.6
+  http: ^1.2.1
+  photo_view: ^0.14.0
+  shared_preferences: ^2.2.2
+  timezone: ^0.9.2
   upgrader: ^10.0.1
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:
