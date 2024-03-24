@@ -24,6 +24,8 @@ class MoreScreen extends StatelessWidget {
     var x = Uri.parse('https://twitter.com/fastaval');
     var facebook = Uri.parse('https://www.facebook.com/Fastaval');
     var instagram = Uri.parse('https://www.instagram.com/fastaval/');
+    var school = 'assets/images/mariagerfjord_${Get.locale!.languageCode}.jpg';
+    var gym = 'assets/images/idraetcenter_${Get.locale!.languageCode}.jpg';
 
     return Scaffold(
       appBar: AppBar(
@@ -63,12 +65,10 @@ class MoreScreen extends StatelessWidget {
                           transition: Transition.rightToLeft)),
                   InkWell(
                       child: menuCard(tr('more.map.school'), Icons.school),
-                      onTap: () => fastaMap(
-                          context, AssetImage('assets/images/school.jpg'))),
+                      onTap: () => fastaMap(context, AssetImage(school))),
                   InkWell(
                       child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
-                      onTap: () => fastaMap(context,
-                          AssetImage('assets/images/sportscentre.jpg'))),
+                      onTap: () => fastaMap(context, AssetImage(gym))),
                   SizedBox(height: 50),
                   InkWell(
                     child: menuCard(tr('more.settings'), Icons.settings, true),
