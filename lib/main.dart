@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:update_available/update_available.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'constants/firebase.constant.dart';
 
@@ -35,17 +35,6 @@ void main() async {
   await Get.put(ProgramController()).init();
   await Get.put(BoardGameController()).init();
   await Get.put(NotificationController()).init();
-
-  final updateAvailability = await getUpdateAvailability();
-
-  var text = switch (updateAvailability) {
-    UpdateAvailable() => "There's an update available!",
-    NoUpdateAvailable() => "There's no update available!",
-    UnknownAvailability() =>
-      "Sorry, couldn't determine if there is or not an available update!",
-  };
-
-  print(text);
 
   runApp(
     EasyLocalization(
@@ -83,7 +72,7 @@ class MyApp extends StatelessWidget {
       locale: Locale(Get.find<SettingsController>().language.value),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'Roboto'),
-      home: HomeScreen(),
+      home: UpgradeAlert(child: HomeScreen()),
     );
   }
 }
