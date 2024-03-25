@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:upgrader/upgrader.dart';
 
 import 'constants/firebase.constant.dart';
 
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
       locale: Locale(Get.find<SettingsController>().language.value),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'Roboto'),
-      home: HomeScreen(),
+      home: UpgradeAlert(child: HomeScreen()),
     );
   }
 }

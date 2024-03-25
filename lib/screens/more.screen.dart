@@ -6,6 +6,7 @@ import 'package:fastaval_app/screens/boardgame.screen.dart';
 import 'package:fastaval_app/screens/notifications.screen.dart';
 import 'package:fastaval_app/screens/settings.screen.dart';
 import 'package:fastaval_app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,6 +25,8 @@ class MoreScreen extends StatelessWidget {
     var x = Uri.parse('https://twitter.com/fastaval');
     var facebook = Uri.parse('https://www.facebook.com/Fastaval');
     var instagram = Uri.parse('https://www.instagram.com/fastaval/');
+    var school = 'assets/images/mariagerfjord_${Get.locale!.languageCode}.jpg';
+    var gym = 'assets/images/idraetcenter_${Get.locale!.languageCode}.jpg';
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +49,7 @@ class MoreScreen extends StatelessWidget {
                     InkWell(
                       child: menuCard(
                         tr('notifications.title'),
-                        Icons.notifications_active_outlined,
+                        Icons.notifications_outlined,
                         true,
                         notificationCtrl.notificationsWaiting.value,
                       ),
@@ -62,13 +65,13 @@ class MoreScreen extends StatelessWidget {
                       onTap: () => Get.to(() => BoardgameScreen(),
                           transition: Transition.rightToLeft)),
                   InkWell(
-                      child: menuCard(tr('more.map.school'), Icons.school),
-                      onTap: () => fastaMap(
-                          context, AssetImage('assets/images/school.jpg'))),
+                      child: menuCard(tr('more.map.school'),
+                          CupertinoIcons.map_pin_ellipse),
+                      onTap: () => fastaMap(context, AssetImage(school))),
                   InkWell(
-                      child: menuCard(tr('more.map.gym'), Icons.sports_tennis),
-                      onTap: () => fastaMap(context,
-                          AssetImage('assets/images/sportscentre.jpg'))),
+                      child: menuCard(
+                          tr('more.map.gym'), CupertinoIcons.map_pin_ellipse),
+                      onTap: () => fastaMap(context, AssetImage(gym))),
                   SizedBox(height: 50),
                   InkWell(
                     child: menuCard(tr('more.settings'), Icons.settings, true),
@@ -136,7 +139,7 @@ class MoreScreen extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 8, right: 16),
-                                child: Text('1.2.0 © 2024 Fastaval IT',
+                                child: Text('1.2.1 © Fastaval IT',
                                     style: kNormalTextSubdued)))
                       ],
                     ),

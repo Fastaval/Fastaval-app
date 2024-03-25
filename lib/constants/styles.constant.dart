@@ -10,8 +10,7 @@ BoxDecoration kTextBoxDecorationStyle = BoxDecoration(
 );
 BoxDecoration backgroundBoxDecorationStyle = BoxDecoration(
   image: DecorationImage(
-      image: AssetImage('assets/images/backgrounds/background.jpg'),
-      fit: BoxFit.cover),
+      image: AssetImage('assets/images/background.jpg'), fit: BoxFit.cover),
 );
 
 double kCardElevation = 5;
