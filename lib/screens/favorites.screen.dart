@@ -167,9 +167,10 @@ class FavoritesScreen extends StatelessWidget {
                     image: DecorationImage(
                         image:
                             AssetImage(getActivityImageLocation(activity.type)),
-                        fit: BoxFit.cover),
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.topCenter),
                   ),
-                  height: 100),
+                  height: 150),
               SizedBox(height: 8),
               Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

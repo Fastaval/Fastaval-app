@@ -19,8 +19,10 @@ Map<String, String> activityImageMap = {
   'gds': 'assets/images/gds.jpg',
   'spilleder': 'assets/images/gamemaster.jpg',
   'rolle': 'assets/images/player.jpg',
+  'live': 'assets/images/player.jpg',
   'braet': 'assets/images/boardgame.jpg',
   'junior': 'assets/images/junior.png',
+  'magic': 'assets/images/magic.jpg',
 };
 
 Color getActivityColor(String type) {
