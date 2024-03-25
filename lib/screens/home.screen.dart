@@ -59,7 +59,7 @@ class HomeScreenState extends State<HomeScreen> {
               selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
               backgroundColor: colorOrangeDark,
               selectedItemColor: colorBlack,
-              unselectedItemColor: Colors.black45,
+              unselectedItemColor: Colors.black54,
             )),
       ),
     );
