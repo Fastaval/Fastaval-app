@@ -139,7 +139,7 @@ class MoreScreen extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 8, right: 16),
-                                child: Text('1.2.1 © Fastaval IT',
+                                child: Text('1.2.3 © Fastaval IT',
                                     style: kNormalTextSubdued)))
                       ],
                     ),

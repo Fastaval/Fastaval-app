@@ -21,7 +21,7 @@ Map<String, String> activityImageMap = {
   'rolle': 'assets/images/player.jpg',
   'live': 'assets/images/player.jpg',
   'braet': 'assets/images/boardgame.jpg',
-  'junior': 'assets/images/junior.png',
+  'junior': 'assets/images/junior.jpg',
   'magic': 'assets/images/magic.jpg',
 };
 
@@ -30,5 +30,5 @@ Color getActivityColor(String type) {
 }
 
 String getActivityImageLocation(type) {
-  return activityImageMap[type] ?? 'assets/images/fastaval.png';
+  return activityImageMap[type] ?? 'assets/images/fastaval.jpg';
 }
