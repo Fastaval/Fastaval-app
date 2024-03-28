@@ -16,7 +16,7 @@ BoxDecoration backgroundBoxDecorationStyle = BoxDecoration(
 double kCardElevation = 5;
 
 EdgeInsets kCardMargin = EdgeInsets.fromLTRB(16, 8, 16, 0);
-EdgeInsets kMenuCardMargin = EdgeInsets.fromLTRB(16, 16, 16, 0);
+EdgeInsets kMenuCardMargin = EdgeInsets.fromLTRB(16, 8, 16, 0);
 EdgeInsets kCardPadding = EdgeInsets.all(16.0);
 EdgeInsets kCardContentPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
 
