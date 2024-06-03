@@ -36,7 +36,7 @@ dependencies:
   easy_localization: ^3.0.4
   firebase_analytics: ^10.8.10
   firebase_core: ^2.27.1
-  firebase_messaging: ^14.7.20
+  firebase_messaging: ^14.9.4
   firebase_remote_config: ^4.3.18
   flutter_local_notifications: ^17.0.0
   fluttertoast: ^8.2.4
