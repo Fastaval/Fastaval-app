@@ -34,7 +34,7 @@ dependencies:
   barcode_widget: ^2.0.4
   cupertino_icons: ^1.0.6
   easy_localization: ^3.0.4
-  firebase_analytics: ^10.8.10
+  firebase_analytics: ^10.10.7
   firebase_core: ^2.27.1
   firebase_messaging: ^14.7.20
   firebase_remote_config: ^4.3.18
